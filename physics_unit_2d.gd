@@ -3,9 +3,8 @@ extends CharacterBody2D
 class_name PhysicsUnit2D
 
 @export var _information: UnitInformation
-@export_flags_2d_physics var _mask: int
+@export_flags_2d_physics var init_mask: int = 0
 @export var pose_controller: PoseController2D
-@export var stat_handler: StatHandler
 @export var init_collider: CollisionShape2D
 
 
@@ -17,6 +16,7 @@ var _current: CollisionShape2D = null
 
 var _on_floor: bool = false
 var _on_ceil: bool = false
+var _on_wall: bool = false
 
 
 func get_information() -> UnitInformation:
@@ -48,25 +48,15 @@ func _notification(what: int) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint(): return
+	if Engine.is_editor_hint() or _current == null: return
 
-	if _current == null: return
-
-	var shape_cast_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
-	shape_cast_param.collide_with_bodies = true
-	shape_cast_param.collision_mask = _mask
-	shape_cast_param.motion = Vector2(0., floor_snap_length)
-	shape_cast_param.shape = _current.shape
-
-	var result: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(
-		shape_cast_param
-	)
-	
-	if result:
-		_on_floor = true
-	else:
-		velocity.y += get_gravity().y * delta
-		_on_floor = false
+	if _on_floor:
+		#if velocity.y > 0.:
+		_on_floor = snap_on_floor()
+	#else:
+		#velocity.y += 970. * delta
+		#print("get_gravity")
+		#print(velocity)
 
 	var collision: KinematicCollision2D = move_and_collide(velocity * delta)
 
@@ -78,15 +68,55 @@ func _physics_process(delta: float) -> void:
 			_slide(collision, delta)
 
 
+func snap_on_floor() -> bool:
+	if velocity.y < 0.: return false
+	
+	var result: KinematicCollision2D = move_and_collide(
+		Vector2(0., 1.) * floor_snap_length, true, safe_margin, false
+	)
+	
+	if result:
+		#global_position.y = result.get_position().y
+		return true
+	
+	return false
+
+
+
 # OVERRIDE
 func _collide_ev_handler(_collision: KinematicCollision2D) -> void:
 	pass
+
+
+#func _is_colliding_with_floor() -> bool:
+	#var shape_cast_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	#shape_cast_param.collide_with_bodies = true
+	#shape_cast_param.collision_mask = _mask
+	#shape_cast_param.motion = Vector2(0., floor_snap_length)
+	#shape_cast_param.shape = _current.shape
+#
+	#var result: Array[Dictionary] = get_world_2d().direct_space_state.intersect_shape(
+		#shape_cast_param
+	#)
+#
+	#return !result.is_empty()
 
 
 # OVERRIDE
 func _slide(_collision: KinematicCollision2D, delta: float) -> void:
 	var _normal: Vector2 = _collision.get_normal()
 	var _remainder: Vector2 = _collision.get_remainder()
+	
+	if motion_mode == MOTION_MODE_GROUNDED:
+		if _collision.get_angle(up_direction) <= floor_max_angle + .01:
+			_on_floor = true
+			#print("Floor")
+		elif _collision.get_angle(- up_direction) <= floor_max_angle + .01:
+			_on_ceil = true
+			#print("Ceil")
+		else:
+			_on_wall = true
+			#print("Wall")
 
 	_remainder = velocity.slide(_normal)
 	

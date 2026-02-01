@@ -109,13 +109,12 @@ script = ExtResource("12_oudfo")
 idle_pose = NodePath("../Idle")
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("idle_pose", "fall_pose")]
+[node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("idle_pose")]
 script = ExtResource("14_d6rpx")
 idle_pose = NodePath("../Idle")
-fall_pose = NodePath("../Fall")
-jump_ttp = 0.357
-jump_ttd = 0.356
-double_jump = false
+jump_height = null
+jump_ttp = null
+jump_ttd = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Slide" type="Node2D" parent="PoseController2D" unique_id=1260520246]
@@ -167,3 +166,4 @@ offset_right = 26.0
 offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
+text = "state: "

@@ -13,6 +13,11 @@ enum {
 @export var jump_pose: Pose2D
 
 
+#func _enter() -> void:
+	#if agent is PhysicsUnit2D:
+		#agent.velocity.y = 0.
+
+
 func _fixed_update(_delta: float) -> void:
 	var input_dir: Vector2 = Vector2.ZERO
 	var is_sprint: bool = Input.is_action_pressed("dash")
@@ -29,6 +34,10 @@ func _fixed_update(_delta: float) -> void:
 			current_speed, unit_speed, _delta * agent.get_information().acceleration
 		)
 
+	if Input.is_action_just_pressed("jump"):
+		change_pose(jump_pose)
+
 	if input_dir == Vector2.ZERO:
 		get_controller().change_pose(idle_pose)
+		return
 	

@@ -2,9 +2,11 @@
 extends Pose2D
 
 
-func _enter(data: Dictionary = {}) -> void:
-	if !data.is_empty():
-		pass
+func _enter(_data: Dictionary = {}) -> void:
+	pass
+
+
+func _update(_delta: float) -> void:
 	pass
 
 

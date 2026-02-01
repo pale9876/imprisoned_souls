@@ -33,9 +33,19 @@ func _ready() -> void:
 	if blackboard_plan:
 		_blackboard = blackboard_plan.create_blackboard(self)
 
+	pose_changed.connect(_pose_changed)
 
-func _pose_changed() -> void:
-	pass
+func _pose_changed(state_name: StringName) -> void:
+	var current_pose: String = monitor_label.text
+	var next_pose_name: String = String(state_name)
+	var unit_name: String = String(agent.name)
+	
+	if current_pose != next_pose_name:
+		monitor_label.text = ("State: " + next_pose_name)
+		if !current_pose.is_empty():
+			print(
+				unit_name, " :: Pose Changed => ", current_pose, " to ", next_pose_name
+			)
 
 
 func _process(delta: float) -> void:
@@ -130,7 +140,7 @@ func change_pose_from_name(pose_name: StringName) -> bool:
 	return true
 
 
-func change_pose(_pose: Pose2D) -> bool:
+func change_pose(_pose: Pose2D, data: Dictionary = {}) -> bool:
 	if !get_children().has(_pose):
 		return false
 	

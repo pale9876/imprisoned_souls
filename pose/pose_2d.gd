@@ -29,7 +29,7 @@ func _enter_tree() -> void:
 
 
 # OVERRIDE
-func _enter() -> void:
+func _enter(data: Dictionary = {}) -> void:
 	pass
 
 
@@ -56,8 +56,8 @@ func _move_agent() -> bool:
 	if agent is not PhysicsUnit2D: return false
 	
 	
-	
 	return true
+
 
 func get_agent_information() -> UnitInformation:
 	return agent.get_information() if agent is PhysicsUnit2D else null
@@ -65,3 +65,10 @@ func get_agent_information() -> UnitInformation:
 
 func _get_act_direciton() -> void:
 	pass
+
+
+func change_pose(pose: Pose2D, data: Dictionary = {}) -> void:
+	var result: bool = get_controller().change_pose(pose)
+	
+	if !result:
+		printerr(agent.name, ":: Cannot Changed to target Pose => ", pose.name)

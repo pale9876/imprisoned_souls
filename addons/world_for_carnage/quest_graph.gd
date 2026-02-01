@@ -2,8 +2,6 @@
 extends GraphNode
 
 
-
-
 func _ready() -> void:
 	set_slot(
 		0,

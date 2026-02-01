@@ -7,5 +7,4 @@ resource_local_to_scene = true
 script = ExtResource("1_c8ql2")
 name = "RedHood"
 dash_scale = 1.6
-jump_force = 650.0
 metadata/_custom_type_script = "uid://cukf7tedk28ls"

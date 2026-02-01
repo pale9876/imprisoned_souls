@@ -11,13 +11,17 @@ enum Mode {
 
 @export var mode: Mode = Mode.KINEMATIC
 @export var radius: float = 5.
+@export var hsplit: int = 1
+@export var vsplit: int = 1
 
 
 var _objs: Array[Object]
 
 
 var id: int = -1:
-	get(): id += 1; return id
+	get():
+		id += 1
+		return id
 
 
 func init_id() -> void:

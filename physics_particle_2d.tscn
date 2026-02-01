@@ -4,3 +4,5 @@
 
 [node name="PhysicsParticle2D" type="MultiMeshInstance2D" unique_id=2146432360]
 script = ExtResource("1_mjrkq")
+hsplit = null
+vsplit = null

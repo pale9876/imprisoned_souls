@@ -8,6 +8,7 @@ extends Pose2D
 
 func _fixed_update(_delta: float) -> void:
 	var input_dir: Vector2 = Vector2.ZERO
+	
 	if agent == InputHandler.player:
 		input_dir = InputHandler.get_input_dir()
 	
@@ -21,3 +22,5 @@ func _fixed_update(_delta: float) -> void:
 	if agent is PhysicsUnit2D:
 		if agent._on_floor:
 			get_controller().change_pose(idle_pose)
+		else:
+			agent.velocity.y += 970. * _delta

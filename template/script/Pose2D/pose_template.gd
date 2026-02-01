@@ -8,7 +8,7 @@
 extends Pose2D
 
 
-func _enter() -> void:
+func _enter(_data: Dictionary = {}) -> void:
 	pass
 
 
