@@ -35,6 +35,7 @@ func _ready() -> void:
 
 	pose_changed.connect(_pose_changed)
 
+
 func _pose_changed(state_name: StringName) -> void:
 	var current_pose: String = monitor_label.text
 	var next_pose_name: String = String(state_name)

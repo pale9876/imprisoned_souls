@@ -9,12 +9,12 @@
 [ext_resource type="Script" uid="uid://jr0f7own2t7o" path="res://screen_effect_canvas_layer.gd" id="5_65mt0"]
 [ext_resource type="Shader" uid="uid://c7rlgm1ootd5g" path="res://shader/rain_drop.gdshader" id="6_tkxnt"]
 
-[sub_resource type="Resource" id="Resource_rb1vg"]
+[sub_resource type="Resource" id="Resource_1tx2p"]
 resource_local_to_scene = true
 script = ExtResource("3_1tx2p")
 metadata/_custom_type_script = "uid://cxckpw1sbak1o"
 
-[sub_resource type="Resource" id="Resource_tl212"]
+[sub_resource type="Resource" id="Resource_3t6qa"]
 resource_local_to_scene = true
 script = ExtResource("4_3t6qa")
 name = "RedHood"
@@ -34,10 +34,11 @@ shader_parameter/blur = 0.426000020235
 [node name="Player" parent="." unique_id=74662124 instance=ExtResource("2_65mt0")]
 physics_interpolation_mode = 1
 position = Vector2(173, 384)
-character_stat = SubResource("Resource_rb1vg")
-_information = SubResource("Resource_tl212")
+character_stat = SubResource("Resource_1tx2p")
+_information = SubResource("Resource_3t6qa")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1051751708]
+offset = Vector2(0, -125)
 position_smoothing_enabled = true
 
 [node name="CameraProducer" type="Node2D" parent="." unique_id=137806958]
