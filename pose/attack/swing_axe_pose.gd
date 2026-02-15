@@ -2,6 +2,10 @@
 extends Pose2D
 
 
+@export var idle_pose: Pose2D
+
+
+
 func _enter(_data: Dictionary = {}) -> void:
 	pass
 

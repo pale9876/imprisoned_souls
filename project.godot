@@ -24,7 +24,8 @@ resources_spreadsheet_view/freeze_first_column=true
 
 [application]
 
-config/name="ProjectR"
+config/name="project_revenant"
+config/description="프로젝트 레버넌트"
 run/main_scene="uid://2cbinw3drmxd"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"

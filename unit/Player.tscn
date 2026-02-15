@@ -25,6 +25,11 @@
 size = Vector2(32, 112)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_tvasn"]
+var/direction/name = &"direction"
+var/direction/type = 5
+var/direction/value = Vector2(0, 0)
+var/direction/hint = 0
+var/direction/hint_string = ""
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dtqjt"]
 size = Vector2(20, 42)
@@ -122,8 +127,9 @@ metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 script = ExtResource("15_r3kul")
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="SwingAxe" type="Node2D" parent="PoseController2D" unique_id=560126016]
+[node name="SwingAxe" type="Node2D" parent="PoseController2D" unique_id=560126016 node_paths=PackedStringArray("idle_pose")]
 script = ExtResource("15_43kp2")
+idle_pose = NodePath("../Idle")
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="InnerUIMark" type="Control" parent="." unique_id=8464707]

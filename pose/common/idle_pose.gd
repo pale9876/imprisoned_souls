@@ -9,7 +9,7 @@ extends Pose2D
 
 func _fixed_update(_delta: float) -> void:
 	var input_dir: Vector2 = Vector2.ZERO
-	input_dir = InputHandler.get_input_dir()
+	input_dir = get_agent_input_direction()
 	
 	if agent is PhysicsUnit2D:
 		var current_speed: float = agent.velocity.x

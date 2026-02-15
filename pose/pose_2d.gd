@@ -6,6 +6,21 @@ class_name Pose2D
 var agent: Node = null
 
 
+@export var hurtbox: Hurtbox2D
+@export var animation: Node
+@export var init_anim: String = ""
+
+
+func _ready() -> void:
+	if hurtbox != null:
+		hurtbox.area_shape_entered.connect(_hitbox_entered_ev_handler)
+		hurtbox.area_shape_exited.connect(_hitbox_exited_ev_handler)
+
+	if animation != null:
+		if animation is AnimationPlayer:
+			animation.animation_finished.connect(_animation_finished_ev_handler)
+
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_VISIBILITY_CHANGED:
 		_visible_changed()
@@ -25,7 +40,17 @@ func _visible_changed() -> void:
 
 
 func _enter_tree() -> void:
-	assert(get_parent() is PoseController2D)
+	var parent: Node = get_parent()
+	
+	if parent == null:
+		printerr("포즈는 반드시 포즈컨트롤러의 자식으로 있어야 합니다.")
+		process_mode = Node.PROCESS_MODE_DISABLED
+		return
+	
+	if parent is not PoseController2D:
+		printerr("포즈는 반드시 포즈컨트롤러의 자식으로 있어야 합니다.")
+		process_mode = Node.PROCESS_MODE_DISABLED
+		pass
 
 
 # OVERRIDE
@@ -52,19 +77,40 @@ func get_controller() -> PoseController2D:
 	return get_parent() as PoseController2D
 
 
-func _move_agent() -> bool:
-	if agent is not PhysicsUnit2D: return false
+func get_agent_input_direction() -> Vector2:
+	var _controller: PoseController2D = get_controller()
 	
+	if agent is PhysicsUnit2D:
+		if InputHandler.player == agent:
+			return InputHandler.get_input_dir()
+		else:
+			if _controller != null:
+				var blackboard: Blackboard = _controller.get_blackboard()
+				if blackboard != null:
+					if blackboard.has_var("direction"):
+						return blackboard.get_var("direction", Vector2())
 	
-	return true
+	return Vector2()
 
 
 func get_agent_information() -> UnitInformation:
 	return agent.get_information() if agent is PhysicsUnit2D else null
 
 
-func _get_act_direciton() -> void:
+# OVERRIDE
+func _hitbox_entered_ev_handler(area_rid: RID, area: Area2D, area_shape_idx: int, local_shape_idx: int) -> void:
 	pass
+
+
+#OVERRIDE
+func _hitbox_exited_ev_handler(area_rid: RID, area: Area2D, area_shape_idx: int, local_shape_idx: int) -> void:
+	pass
+
+
+#OVERRIDE
+func _animation_finished_ev_handler(anim_name: StringName) -> void:
+	pass
+
 
 
 func change_pose(pose: Pose2D, data: Dictionary = {}) -> void:
