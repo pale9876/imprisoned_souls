@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="3_kne1u"]
 [ext_resource type="Script" uid="uid://cuxvpat0q3ao5" path="res://inventory.gd" id="4_l6ohk"]
 [ext_resource type="Texture2D" uid="uid://cysooqp63xp0h" path="res://aseprite/concept/redhood/red_hood_placeholder.png" id="6_ekjla"]
+[ext_resource type="Script" uid="uid://cgcaapeww3aqf" path="res://unit/emote_module.gd" id="6_qc4e2"]
 [ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurt_box.gd" id="6_tdg3f"]
 [ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="7_3tkgg"]
 [ext_resource type="Script" uid="uid://x7od6vrds4mc" path="res://unit_event_handler.gd" id="7_dtqjt"]
@@ -15,14 +16,49 @@
 [ext_resource type="Script" uid="uid://bvtcqfou8eqqb" path="res://jump_pose.gd" id="14_d6rpx"]
 [ext_resource type="Script" uid="uid://brmieo4y1kg10" path="res://pose/attack/swing_axe_pose.gd" id="15_43kp2"]
 [ext_resource type="Script" uid="uid://dq4ddyr3wyitk" path="res://slide.gd" id="15_r3kul"]
+[ext_resource type="Script" uid="uid://cdb4dyqk3exd" path="res://pose/pose_2d.gd" id="16_03by7"]
 [ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://unit/inner_progress_ui.gd" id="16_lel03"]
 [ext_resource type="Script" uid="uid://5bgh3jgqmfuq" path="res://unit/inner_ui_marker.gd" id="16_smflj"]
+[ext_resource type="Script" uid="uid://ty1kbk87uf5i" path="res://unit/hitbox_2d.gd" id="17_mr50o"]
 [ext_resource type="Texture2D" uid="uid://bw53vkkeekuxe" path="res://aseprite/concept/ui/health_progress_over.png" id="17_tvasn"]
 [ext_resource type="Texture2D" uid="uid://6worj7stjxkc" path="res://aseprite/concept/ui/health_progress.png" id="18_43kp2"]
 [ext_resource type="Texture2D" uid="uid://cegfid37q12r5" path="res://aseprite/concept/ui/health_progress_under.png" id="19_03by7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rwas"]
 size = Vector2(32, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_03by7"]
+size = Vector2(32, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mr50o"]
+size = Vector2(80, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ht2g"]
+size = Vector2(96, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dwq1"]
+size = Vector2(96, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q2f5d"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtqjt"]
+size = Vector2(32, 104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qc4e2"]
+size = Vector2(80, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48k13"]
+size = Vector2(16, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_03by7"]
+radius = 40.792156
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjhpk"]
+size = Vector2(96, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fa2e"]
+size = Vector2(20, 96)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_tvasn"]
 var/direction/name = &"direction"
@@ -31,8 +67,8 @@ var/direction/value = Vector2(0, 0)
 var/direction/hint = 0
 var/direction/hint_string = ""
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtqjt"]
-size = Vector2(20, 42)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fj1yc"]
+size = Vector2(82, 64)
 
 [sub_resource type="Curve" id="Curve_tvasn"]
 _data = [Vector2(0, 0), 0.0, 3.2873197, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -42,10 +78,13 @@ point_count = 2
 offsets = PackedFloat32Array(0.36764705, 1)
 colors = PackedColorArray(1, 0, 0, 1, 0.3137255, 0, 0.3137255, 1)
 
-[node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("pose_controller", "init_collider")]
+[node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("emote_module", "inventory", "hurtbox", "pose_controller", "init_collider")]
 collision_layer = 0
 script = ExtResource("1_kpjcp")
+emote_module = NodePath("EmoteModule")
+inventory = NodePath("Inventory")
 character_stat = ExtResource("2_eoet1")
+hurtbox = NodePath("HurtBox")
 _information = ExtResource("2_lel03")
 init_mask = 1
 pose_controller = NodePath("PoseController2D")
@@ -58,6 +97,7 @@ script = ExtResource("4_l6ohk")
 script = ExtResource("7_dtqjt")
 
 [node name="PlaceHolder" type="Sprite2D" parent="." unique_id=610565242]
+visible = false
 position = Vector2(0, -64)
 texture = ExtResource("6_ekjla")
 
@@ -67,16 +107,127 @@ shape = SubResource("RectangleShape2D_0rwas")
 debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
 script = ExtResource("3_kne1u")
 
+[node name="Crouch" type="CollisionShape2D" parent="." unique_id=1502071311]
+visible = false
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_03by7")
+disabled = true
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Slide" type="CollisionShape2D" parent="." unique_id=1017682778]
+visible = false
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_mr50o")
+disabled = true
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Down" type="CollisionShape2D" parent="." unique_id=1053738742]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_1ht2g")
+disabled = true
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Aerial" type="CollisionShape2D" parent="." unique_id=650290981]
+visible = false
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_8dwq1")
+disabled = true
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Death" type="CollisionShape2D" parent="." unique_id=1385115604]
+visible = false
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_q2f5d")
+disabled = true
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=973652727 node_paths=PackedStringArray("_root", "init_shape")]
+collision_layer = 0
+monitoring = false
+script = ExtResource("6_tdg3f")
+_root = NodePath("..")
+init_shape = NodePath("Idle")
+mask = 1
+
+[node name="Idle" type="CollisionShape2D" parent="HurtBox" unique_id=1489290861]
+position = Vector2(0, -52)
+shape = SubResource("RectangleShape2D_dtqjt")
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Slide" type="CollisionShape2D" parent="HurtBox" unique_id=444208618]
+visible = false
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_qc4e2")
+disabled = true
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Crouch" type="CollisionShape2D" parent="HurtBox" unique_id=623701947]
+visible = false
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_48k13")
+disabled = true
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Aerial" type="CollisionShape2D" parent="HurtBox" unique_id=2116105788]
+visible = false
+position = Vector2(0, -56)
+shape = SubResource("CircleShape2D_03by7")
+disabled = true
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Down" type="CollisionShape2D" parent="HurtBox" unique_id=712538248]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_mjhpk")
+disabled = true
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Jump" type="CollisionShape2D" parent="HurtBox" unique_id=895920704]
+visible = false
+position = Vector2(0, -56)
+shape = SubResource("RectangleShape2D_4fa2e")
+disabled = true
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
 [node name="PoseController2D" type="Node2D" parent="." unique_id=296513422 node_paths=PackedStringArray("agent", "pose", "init_pose", "monitor_label")]
 script = ExtResource("7_3tkgg")
 agent = NodePath("..")
 blackboard_plan = SubResource("BlackboardPlan_tvasn")
 pose = {
+&"Aerial": NodePath("Aerial"),
+&"Crouch": NodePath("Crouch"),
+&"Down": NodePath("Down"),
 &"Fall": NodePath("Fall"),
 &"Idle": NodePath("Idle"),
 &"Jump": NodePath("Jump"),
+&"JumpSwingAxe": NodePath("JumpSwingAxe"),
 &"Move": NodePath("Move"),
+&"Panic": NodePath("Panic"),
 &"Slide": NodePath("Slide"),
+&"Swedge": NodePath("Swedge"),
 &"SwingAxe": NodePath("SwingAxe")
 }
 init_pose = NodePath("Idle")
@@ -88,49 +239,93 @@ script = ExtResource("8_l6ohk")
 move_pose = NodePath("../Move")
 fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
+hurtbox_shape = &"Idle"
 
-[node name="HurtBox" type="Area2D" parent="PoseController2D/Idle" unique_id=973652727]
-collision_layer = 0
-monitoring = false
-script = ExtResource("6_tdg3f")
-mask = 1
-
-[node name="NotificationShape2D" type="CollisionShape2D" parent="PoseController2D/Idle/HurtBox" unique_id=1489290861]
-position = Vector2(0, -21)
-shape = SubResource("RectangleShape2D_dtqjt")
-debug_color = Color(0.81960785, 0, 0, 0.101960786)
-script = ExtResource("3_kne1u")
-metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
-
-[node name="Move" type="Node2D" parent="PoseController2D" unique_id=651046877 node_paths=PackedStringArray("idle_pose", "fall_pose", "jump_pose")]
+[node name="Move" type="Node2D" parent="PoseController2D" unique_id=651046877 node_paths=PackedStringArray("fall_pose", "jump_pose")]
+visible = false
 script = ExtResource("10_3tkgg")
-idle_pose = NodePath("../Idle")
 fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="Fall" type="Node2D" parent="PoseController2D" unique_id=2130794940 node_paths=PackedStringArray("idle_pose")]
-script = ExtResource("12_oudfo")
-idle_pose = NodePath("../Idle")
+[node name="Crouch" type="Node2D" parent="PoseController2D" unique_id=1526035717]
+visible = false
+script = ExtResource("16_03by7")
+hurtbox_shape = &"Crouch"
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("idle_pose", "fall_pose")]
+[node name="Fall" type="Node2D" parent="PoseController2D" unique_id=2130794940]
+visible = false
+script = ExtResource("12_oudfo")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("fall_pose")]
+visible = false
 script = ExtResource("14_d6rpx")
-idle_pose = NodePath("../Idle")
 fall_pose = NodePath("../Fall")
 jump_ttp = 0.357
 jump_ttd = 0.356
 double_jump = false
+hurtbox_shape = &"Jump"
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Slide" type="Node2D" parent="PoseController2D" unique_id=1260520246]
+visible = false
 script = ExtResource("15_r3kul")
+hurtbox_shape = &"Slide"
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="SwingAxe" type="Node2D" parent="PoseController2D" unique_id=560126016 node_paths=PackedStringArray("idle_pose")]
+[node name="Aerial" type="Node2D" parent="PoseController2D" unique_id=449408485]
+visible = false
+script = ExtResource("16_03by7")
+hurtbox_shape = &"Aerial"
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="SwingAxe" type="Node2D" parent="PoseController2D" unique_id=560126016 node_paths=PackedStringArray("idle_pose", "hitbox")]
+visible = false
 script = ExtResource("15_43kp2")
 idle_pose = NodePath("../Idle")
+hitbox = NodePath("Hitbox2D")
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="Hitbox2D" type="Area2D" parent="PoseController2D/SwingAxe" unique_id=244537151]
+visible = false
+monitoring = false
+monitorable = false
+script = ExtResource("17_mr50o")
+
+[node name="FirstSwing" type="CollisionShape2D" parent="PoseController2D/SwingAxe/Hitbox2D" unique_id=1695801132]
+visible = false
+position = Vector2(32, -52)
+shape = SubResource("RectangleShape2D_fj1yc")
+disabled = true
+debug_color = Color(0.16078432, 0.93333334, 0.9098039, 0)
+script = ExtResource("3_kne1u")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="JumpSwingAxe" type="Node2D" parent="PoseController2D" unique_id=1860970650]
+visible = false
+script = ExtResource("16_03by7")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="Panic" type="Node2D" parent="PoseController2D" unique_id=1911069608]
+visible = false
+script = ExtResource("16_03by7")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="Down" type="Node2D" parent="PoseController2D" unique_id=2044347466]
+visible = false
+script = ExtResource("16_03by7")
+hurtbox_shape = &"Down"
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="Swedge" type="Node2D" parent="PoseController2D" unique_id=264465517]
+visible = false
+script = ExtResource("16_03by7")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="EmoteModule" type="Node2D" parent="." unique_id=444501349]
+script = ExtResource("6_qc4e2")
 
 [node name="InnerUIMark" type="Control" parent="." unique_id=8464707]
 layout_mode = 3
@@ -144,8 +339,9 @@ offset_bottom = -136.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_smflj")
-mark_line = 20.715
-bold = 1.095
+show_mark = true
+mark_line = 25.0
+bold = 1.0
 
 [node name="GradientProgress2D" type="Node2D" parent="InnerUIMark" unique_id=45944978]
 script = ExtResource("16_lel03")

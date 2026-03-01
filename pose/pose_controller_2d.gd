@@ -22,6 +22,10 @@ var _blackboard: Blackboard = null
 var _current: Pose2D = null
 
 
+func _enter_tree() -> void:
+	pass
+	
+
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
@@ -66,8 +70,8 @@ func _physics_process(delta: float) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
 		_updated()
-	elif what == NOTIFICATION_VISIBILITY_CHANGED:
-		_visibility_changed_ev_handler()
+	#elif what == NOTIFICATION_VISIBILITY_CHANGED:
+		#_visibility_changed_ev_handler()
 
 
 func _updated() -> void:
@@ -78,10 +82,14 @@ func _updated() -> void:
 			node.agent = agent
 
 
-func _visibility_changed_ev_handler() -> void:
-	for node: Node in get_children():
-		if node is Node2D:
-			node.visible = visible
+#func _visibility_changed_ev_handler() -> void:
+	#for node: Node in get_children():
+		#if node is Node2D:
+			#node.visible = (_current == node and self.visible)
+
+
+func _pose_visible_changed_update(p: Pose2D) -> void:
+	change_init_pose(p)
 
 
 func remove_pose(_pose: Pose2D) -> bool:
@@ -100,12 +108,10 @@ func add_pose(_pose: Pose2D) -> bool:
 	return true
 
 
-func get_current_pose() -> Pose2D:
-	return _current
+func get_current_pose() -> Pose2D: return _current
 
 
-func get_poses() -> Array[Pose2D]:
-	return pose.values()
+func get_poses() -> Array[Pose2D]: return pose.values()
 
 
 func get_list() -> PackedStringArray:
@@ -118,11 +124,10 @@ func get_list() -> PackedStringArray:
 	return result
 
 
-func has_pose(pose_name: StringName) -> bool:
-	return pose.has(pose_name)
+func has_pose(pose_name: StringName) -> bool: return pose.has(pose_name)
 
 
-func change_pose_from_name(pose_name: StringName) -> bool:
+func change_pose_from_name(pose_name: StringName, _data: Dictionary = {}) -> bool:
 	if !has_pose(pose_name): return false
 	
 	var prev_pose: Pose2D = get_current_pose()
@@ -134,14 +139,14 @@ func change_pose_from_name(pose_name: StringName) -> bool:
 	for _pose: Pose2D in get_poses():
 		if next_pose == _pose:
 			_current = next_pose
-			_pose._enter()
+			_pose._enter(_data)
 	
 	assert(_current != null)
 	pose_changed.emit()
 	return true
 
 
-func change_pose(_pose: Pose2D, data: Dictionary = {}) -> bool:
+func change_pose(_pose: Pose2D, _data: Dictionary = {}) -> bool:
 	if !get_children().has(_pose):
 		return false
 	
@@ -149,13 +154,32 @@ func change_pose(_pose: Pose2D, data: Dictionary = {}) -> bool:
 	
 	if prev_pose != null:
 		prev_pose._exit()
+		prev_pose.visible = false
 
-	_current = _pose
-	if !Engine.is_editor_hint(): _pose._enter()
+	if !Engine.is_editor_hint():
+		_current = _pose
+		_pose._enter(_data)
+		pose_changed.emit(_current.name)
 	
-	assert(_current != null)
+	_pose.visible = true
 	
-	pose_changed.emit(_current.name)
+	return true
+
+
+func change_init_pose(_pose: Pose2D) -> bool:
+	if !has_pose(_pose.name): return false
+	
+	init_pose.visible = false
+	init_pose = _pose
+	
+	if agent is Character:
+		var _pose_hurtbox: StringName = _pose.hurtbox_shape
+		var _hurtbox: Hurtbox2D = agent.hurtbox
+		if _hurtbox and !_pose_hurtbox.is_empty():
+			var err: bool = _hurtbox.change_shape(_pose_hurtbox)
+			if !err:
+				printerr("Error :: 해당 포즈의 피격박스가 존재하지 않습니다.")
+	
 	return true
 
 

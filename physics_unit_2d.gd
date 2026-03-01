@@ -7,7 +7,6 @@ class_name PhysicsUnit2D
 @export var pose_controller: PoseController2D
 @export var init_collider: CollisionShape2D
 
-
 var _collider: Dictionary[StringName, CollisionShape2D] = {}
 
 @export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_DEFAULT)
@@ -86,6 +85,21 @@ func snap_on_floor() -> bool:
 # OVERRIDE
 func _collide_ev_handler(_collision: KinematicCollision2D) -> void:
 	pass
+
+
+func _change_init_collider() -> void:
+	pass
+
+
+func find_collider(node_name: StringName) -> int:
+	for node: Node in get_children():
+		pass
+	
+	var result: int = get_children().find_custom(
+		func(node: Node) -> bool:
+			return node.name == node_name
+	)
+	return result
 
 
 #func _is_colliding_with_floor() -> bool:

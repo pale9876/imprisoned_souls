@@ -3,20 +3,73 @@ extends Area2D
 class_name Hurtbox2D
 
 
-var _root: Node = null
+enum State {
+	통상 = 0,
+	하단회피 = 1,
+	상단회피 = 1 << 1,
+	원거리면역 = 1 << 2,
+	근거리면역 = 1 << 3,
+}
 
+
+@export var _root: Node = null
+@export var flip: bool:
+	set(toggle):
+		flip = toggle
+		scale.x = - scale.x
+@export var init_shape: CollisionShape2D = null
+
+@export_flags(
+	"하단회피", "상단회피",
+	"원거리면역", "근거리면역",
+) var state: int = State.통상
+
+@export var danger: bool = false
 
 @export_flags_2d_physics var mask: int = 0: set = set_mask
 
+#var _current: CollisionShape2D = null
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_VISIBILITY_CHANGED:
 		monitorable = visible
 		
 		for node: Node in get_children():
-			if node is Node2D:
-				node.visible = visible
+			if init_shape == node:
+				node.visible = true
+			node.visible = visible
+
+
+func _enter_tree() -> void:
+	if init_shape:
+		change_shape(init_shape.name)
+
 
 func set_mask(value: int) -> void:
 	mask = value
 	collision_mask = mask
+
+
+func change_shape(s_name: StringName) -> bool:
+	var _index: int = _find_shape(s_name)
+	var result: bool = _index > -1
+	
+	return result
+
+
+func _find_shape(node_name: StringName) -> int:
+	var result: int = -1
+
+	for n: Node in get_children():
+		if n is NotificationShape2D:
+			var is_equal: bool = node_name == n.name
+			n.visible = is_equal
+			if is_equal:
+				result = n.get_index()
+				#_current = n
+
+	return result
+
+
+func change_shapes(shape_names: Array[StringName]) -> void:
+	pass

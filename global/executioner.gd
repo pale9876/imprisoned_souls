@@ -1,33 +1,36 @@
 extends Node
 
 
-var events: Array = []
-
+var events: Array[Event] = []
 
 
 func _physics_process(delta: float) -> void:
-	pass
+	if !events.is_empty():
+		for ev: Event in events:
+			_execute(ev)
 
 
-func _execute() -> void:
-	pass
+func _execute(ev: Event) -> bool:
+	if !Global.main_scene: return false
+	
+	ev.info
+	
+	return true
 
 
 func append_ev(_from: Node, _to: Node, _ev: Dictionary) -> void:
-	pass
-
-
-static func create_ev(_from: Node, _to: Node, _ev: Dictionary) -> Event:
-	var ev: Event = Event.new(_from, _to, _ev)
-	return ev
+	var ev: Event = Event.create_ev(_from, _to, _ev)
+	events.push_back(ev)
 
 
 class Event:
 	var from: Node
 	var to: Node
 	var info: Dictionary
-	
-	func _init(_from: Node, _to: Node, _info: Dictionary) -> void:
-		from = _from
-		to = _to
-		info = _info
+
+	static func create_ev(_from: Node, _to: Node, _info: Dictionary) -> Event:
+		var ev: Event = Event.new()
+		ev.from = _from
+		ev.to = _to
+		ev.info = _info
+		return ev
