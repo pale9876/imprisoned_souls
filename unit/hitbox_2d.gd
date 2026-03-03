@@ -3,10 +3,16 @@ extends Area2D
 class_name Hitbox2D
 
 
+@export var hitbox_info: HitboxInfo
+
+
 @export var flip: bool = false:
 	set(toggle):
 		flip = toggle
 		scale.x = - scale.x
+
+
+var _cache: Array[Node2D] = []
 
 
 func _init() -> void:
@@ -40,7 +46,14 @@ func _hurtbox_entered(
 	) -> void:
 	
 	if area is Hurtbox2D:
-		pass
+		var hurtbox_noti_shape_2d_id: int = area.shape_find_owner(area_shape_index)
+		
+		
+		var agent: Node = area.get_root()
+		if agent != null:
+			if agent is Character:
+				pass
+				#agent.check_hit()
 
 
 func _hurtbox_exited(
@@ -55,7 +68,6 @@ func _hurtbox_exited(
 		#var local_shape_node = shape_owner_get_owner(local_shape_owner)
 
 		var hurtbox_noti_shape_2d_id: int = area.shape_find_owner(area_shape_index)
-		print(hurtbox_noti_shape_2d_id)
 
 
 func get_agent() -> Node:

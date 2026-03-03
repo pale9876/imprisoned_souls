@@ -1,6 +1,6 @@
 @tool
-extends PhysicsUnit2D
+extends Character
 class_name Enemy
 
 
-@export var bt_player: BTPlayer
+@export var action_bt_player: BTPlayer

@@ -3,15 +3,23 @@
 extends PhysicsUnit2D
 class_name Character
 
-@export var emote_module: Node
+
+@export var emote_bt_module: BTPlayer
 @export var inventory: Inventory
 @export var character_stat: CharacterStat
 @export var hurtbox: Hurtbox2D
+@export var ev_handler: EventHandler:
+	set(handler):
+		ev_handler = handler
+		if ev_handler:
+			ev_handler.owner = self
 
 
 func _ready() -> void:
-	hurtbox.area_shape_entered.connect(_area_entered)
-	hurtbox.area_shape_exited.connect(_area_exited)
+	if !Engine.is_editor_hint():
+		if hurtbox:
+			hurtbox.area_shape_entered.connect(_area_entered)
+			hurtbox.area_shape_exited.connect(_area_exited)
 
 
 func load_character() -> void:
@@ -21,14 +29,12 @@ func load_character() -> void:
 func _area_entered(
 	rid: RID, area: Area2D, area_shape_idx: int, local_shape_idx: int
 ) -> void:
-	
 	pass
 
 
 func _area_exited(
 	rid: RID, area: Area2D, area_shape_idx: int, local_shape_idx: int
 ) -> void:
-	
 	pass
 
 

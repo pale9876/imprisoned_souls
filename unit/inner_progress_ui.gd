@@ -52,10 +52,24 @@ var _trauma_value: float = 1.:
 
 var _gradient_texture: ImageTexture = null
 
+
+@export var blink: bool = false:
+	set(press):
+		_blink()
+	get:
+		return false
+
+
 func set_trauma_value(value: float) -> void:
 	var tween: Tween = create_tween()
 	_trauma_value = value
-	
+
+
+
+func _blink() -> void:
+	pass
+
+
 
 
 func _draw() -> void:
@@ -103,6 +117,7 @@ func _update_gradient_progress_image() -> void:
 		)
 
 	progress_image.blend_rect_mask(image, progress_image, Rect2i(Vector2i.ZERO, progress_texture_size), Vector2i.ZERO)
+
 
 	if _gradient_texture:
 		_gradient_texture.update(progress_image)

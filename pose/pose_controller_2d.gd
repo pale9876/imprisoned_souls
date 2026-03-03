@@ -24,7 +24,7 @@ var _current: Pose2D = null
 
 func _enter_tree() -> void:
 	pass
-	
+
 
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
@@ -68,8 +68,13 @@ func _physics_process(delta: float) -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
-		_updated()
+	match what:
+		NOTIFICATION_PARENTED:
+			var parent: Node = get_parent()
+			if parent is Character:
+				agent = parent
+		NOTIFICATION_CHILD_ORDER_CHANGED:
+			_updated()
 	#elif what == NOTIFICATION_VISIBILITY_CHANGED:
 		#_visibility_changed_ev_handler()
 
@@ -190,3 +195,6 @@ func pose_is_child(node: Pose2D) -> bool:
 
 
 func get_blackboard() -> Blackboard: return _blackboard
+
+
+func get_current_animation() -> String: return ""

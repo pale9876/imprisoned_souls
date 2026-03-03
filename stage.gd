@@ -31,3 +31,4 @@ func _notification(what: int) -> void:
 			
 			if node is EntrancePoint2D:
 				pass
+	

@@ -73,3 +73,8 @@ func _find_shape(node_name: StringName) -> int:
 
 func change_shapes(shape_names: Array[StringName]) -> void:
 	pass
+
+
+
+func get_root() -> Node:
+	return _root
