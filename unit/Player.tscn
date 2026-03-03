@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="7_3tkgg"]
 [ext_resource type="Script" uid="uid://c7f8wtnojavju" path="res://pose/common/idle_pose.gd" id="8_l6ohk"]
 [ext_resource type="Script" uid="uid://ch4rv3vox4xoi" path="res://pose/common/move_pose.gd" id="10_3tkgg"]
+[ext_resource type="Texture2D" uid="uid://6hjhhsl583ej" path="res://aseprite/concept/redhood/red_hood_idle_right.png" id="11_4fa2e"]
 [ext_resource type="Script" uid="uid://brke4wqg4iytx" path="res://pose/common/fall_pose.gd" id="12_oudfo"]
 [ext_resource type="Script" uid="uid://bvtcqfou8eqqb" path="res://jump_pose.gd" id="14_d6rpx"]
 [ext_resource type="Script" uid="uid://brmieo4y1kg10" path="res://pose/attack/swing_axe_pose.gd" id="15_43kp2"]
@@ -72,6 +73,33 @@ var/direction/type = 5
 var/direction/value = Vector2(0, 0)
 var/direction/hint = 0
 var/direction/hint_string = ""
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fa2e"]
+atlas = ExtResource("11_4fa2e")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj1yc"]
+atlas = ExtResource("11_4fa2e")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1ht2g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fa2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fj1yc")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
 
 [sub_resource type="Resource" id="Resource_mjhpk"]
 script = ExtResource("18_48k13")
@@ -264,17 +292,22 @@ pose = {
 &"Swedge": NodePath("Swedge"),
 &"SwingAxe": NodePath("SwingAxe")
 }
-init_pose = NodePath("SwingAxe")
+init_pose = NodePath("Idle")
 debug = true
 monitor_label = NodePath("../InnerUIMark/State")
 
-[node name="Idle" type="Node2D" parent="PoseController2D" unique_id=1827049041 node_paths=PackedStringArray("move_pose", "fall_pose", "jump_pose")]
-visible = false
+[node name="Idle" type="Node2D" parent="PoseController2D" unique_id=1827049041 node_paths=PackedStringArray("move_pose", "fall_pose", "jump_pose", "animation")]
 script = ExtResource("8_l6ohk")
 move_pose = NodePath("../Move")
 fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
 hurtbox_shape = &"Idle"
+animation = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PoseController2D/Idle" unique_id=1347092807]
+sprite_frames = SubResource("SpriteFrames_1ht2g")
+animation = &"left"
+offset = Vector2(0, -64)
 
 [node name="Move" type="Node2D" parent="PoseController2D" unique_id=651046877 node_paths=PackedStringArray("fall_pose", "jump_pose")]
 visible = false
@@ -394,7 +427,6 @@ progress_value = 1.0
 value_curve = SubResource("Curve_tvasn")
 gradient = true
 gradient_value = SubResource("Gradient_ekjla")
-blink = null
 
 [node name="State" type="Label" parent="InnerUIMark" unique_id=2123176147]
 layout_mode = 1

@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://bfbjm7uk83tv0"]
 
+[ext_resource type="Texture2D" uid="uid://bcvaoqgahiygm" path="res://aseprite/icon/ui_select_class.png" id="1_0le4k"]
+[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="2_2edb8"]
+
 [node name="Control" type="Control" unique_id=373818471]
 layout_mode = 3
 anchors_preset = 15
@@ -8,10 +11,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=258796785]
+[node name="TextureMarginContainer" type="MarginContainer" parent="." unique_id=756216774]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -391.0
+offset_bottom = -151.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("2_2edb8")
+texture = ExtResource("1_0le4k")
+_margin_left = 16
+_margin_top = 16
+_margin_right = 16
+_margin_bottom = 16
+metadata/_custom_type_script = "uid://b0w7ljww2qduf"
+
+[node name="Control" type="Control" parent="TextureMarginContainer" unique_id=1284806197]
+layout_mode = 2

@@ -10,24 +10,21 @@ var agent: Node = null
 @export var init_anim: String
 
 
-func _enter_tree() -> void:
-	var parent: Node = get_parent()
-	
-	assert(parent != null, "해당 포즈의 포즈 컨트롤러가 존재하지 않습니다.")
-	assert(parent is PoseController2D, "부모노드가 PoseController2D가 아닙니다. ")
-
-
-func _ready() -> void:
-	if animation != null:
-		if animation is AnimationPlayer:
-			animation.animation_finished.connect(_animation_finished_ev_handler)
-
-
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_VISIBILITY_CHANGED:
-		_visible_changed()
-	elif what == NOTIFICATION_PATH_RENAMED:
-		_renamed()
+	match what:
+		NOTIFICATION_ENTER_TREE:
+			var parent: Node = get_parent()
+			if !Engine.is_editor_hint():
+				assert(parent != null, "해당 포즈의 포즈 컨트롤러가 존재하지 않습니다.")
+				assert(parent is PoseController2D, "부모노드가 PoseController2D가 아닙니다. ")
+		NOTIFICATION_READY:
+			if animation != null:
+				if animation is AnimationPlayer:
+					animation.animation_finished.connect(_animation_finished_ev_handler)
+		NOTIFICATION_VISIBILITY_CHANGED:
+			_visible_changed()
+		NOTIFICATION_PATH_RENAMED:
+			_renamed()
 
 
 func _renamed() -> void:

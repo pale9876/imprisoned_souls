@@ -18,19 +18,7 @@ var _on_ceil: bool = false
 var _on_wall: bool = false
 
 
-func get_information() -> UnitInformation:
-	return _information
-
-
-func _init() -> void:
-	motion_mode = MOTION_MODE_GROUNDED
-	up_direction = Vector2.UP
-	collision_layer = 0
-
-
-func _enter_tree() -> void:
-	if !Engine.is_editor_hint():
-		_current = init_collider
+func get_information() -> UnitInformation: return _information
 
 
 func _update() -> void:
@@ -42,8 +30,16 @@ func _update() -> void:
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_CHILD_ORDER_CHANGED:
-		_update()
+	match what:
+		NOTIFICATION_POSTINITIALIZE:
+			motion_mode = MOTION_MODE_GROUNDED
+			up_direction = Vector2.UP
+			collision_layer = 0
+		NOTIFICATION_ENTER_TREE:
+			if !Engine.is_editor_hint():
+				_current = init_collider
+		NOTIFICATION_CHILD_ORDER_CHANGED:
+			_update()
 
 
 func _physics_process(delta: float) -> void:
@@ -158,3 +154,7 @@ func change_collider(c_name: String) -> bool:
 			collider.visible = false
 	
 	return true
+
+
+func get_mass() -> Vector2:
+	return velocity * get_information().weight

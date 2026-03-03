@@ -72,8 +72,17 @@ func _find_shape(node_name: StringName) -> int:
 
 
 func change_shapes(shape_names: Array[StringName]) -> void:
-	pass
-
+	var cache: PackedInt64Array = []
+	var children: Array[Node] = get_children()
+	
+	for shape_name: StringName in shape_names:
+		var node: Node = get_node_or_null(NodePath(shape_name))
+		if node:
+			var node_idx: int = node.get_index()
+			cache.push_back(node_idx)
+	
+	for node: Node in children:
+		node.visible = cache.has(node.get_index()) and node is NotificationShape2D
 
 
 func get_root() -> Node:
