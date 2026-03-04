@@ -15,12 +15,17 @@ class_name Character
 			ev_handler.owner = self
 
 
+func _init() -> void:
+	if !chara_info:
+		chara_info = CharacterInformation.new()
+
+
 func _notification(what: int) -> void:
 	super(what)
 	match what:
 		NOTIFICATION_POSTINITIALIZE:
-			if !chara_info:
-				chara_info = CharacterInformation.new()
+			pass
+
 		NOTIFICATION_READY:
 			if !Engine.is_editor_hint():
 				if hurtbox:

@@ -3,15 +3,20 @@ extends Node2D
 class_name PoseController2D
 
 
-signal pose_changed(state_name: StringName)
+signal pose_changed(pose_name: StringName)
+#signal init_pose_changed(pose_name: StringName)
 
 
 @export var agent: Node
 @export var blackboard_plan: BlackboardPlan = BlackboardPlan.new()
 var _blackboard: Blackboard = null
 
-@export var pose: Dictionary[StringName, Pose2D]
-@export var init_pose: Pose2D = null
+@export var _poses: Dictionary[StringName, Pose2D]
+@export var init_pose: Pose2D = null:
+	set(_pose):
+		init_pose = _pose
+		for pose: Pose2D in get_poses():
+			pose.visible = (pose == _pose)
 
 
 @export_category("DEBUG")
@@ -22,17 +27,15 @@ var _blackboard: Blackboard = null
 var _current: Pose2D = null
 
 
-func _enter_tree() -> void:
-	pass
-
-
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	
 	_updated()
 	
 	if init_pose != null:
-		assert( pose_is_child(init_pose) and change_pose(init_pose) )
+		assert(
+			pose_is_child(init_pose) and change_pose(init_pose)
+			)
 
 	if blackboard_plan:
 		_blackboard = blackboard_plan.create_blackboard(self)
@@ -67,23 +70,32 @@ func _physics_process(delta: float) -> void:
 		_current._fixed_update(delta)
 
 
+func _editor_pose_visibility_changed() -> void:
+	pass
+
+
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_PARENTED:
 			var parent: Node = get_parent()
 			if parent is Character:
 				agent = parent
+
 		NOTIFICATION_CHILD_ORDER_CHANGED:
 			_updated()
-	#elif what == NOTIFICATION_VISIBILITY_CHANGED:
-		#_visibility_changed_ev_handler()
+
+		NOTIFICATION_ENTER_TREE:
+			pass
+			
+		NOTIFICATION_READY:
+			pass
 
 
 func _updated() -> void:
-	pose.clear()
+	_poses.clear()
 	for node: Node in get_children():
 		if node is Pose2D:
-			pose[node.name] = node
+			_poses[node.name] = node
 			node.agent = agent
 
 
@@ -93,22 +105,22 @@ func _updated() -> void:
 			#node.visible = (_current == node and self.visible)
 
 
-func _pose_visible_changed_update(p: Pose2D) -> void:
-	change_init_pose(p)
+#func _pose_visible_changed_update(p: Pose2D) -> void:
+	#change_init_pose(p)
 
 
 func remove_pose(_pose: Pose2D) -> bool:
-	if !pose.has(_pose.name): return false
+	if !_poses.has(_pose.name): return false
 	
-	pose.erase(_pose.name)
+	_poses.erase(_pose.name)
 	return true
 
 
 func add_pose(_pose: Pose2D) -> bool:
-	if pose.has(_pose.name):
+	if _poses.has(_pose.name):
 		return false
 	
-	pose[_pose.name] = _pose
+	_poses[_pose.name] = _pose
 	_pose.agent = agent
 	return true
 
@@ -116,11 +128,11 @@ func add_pose(_pose: Pose2D) -> bool:
 func get_current_pose() -> Pose2D: return _current
 
 
-func get_poses() -> Array[Pose2D]: return pose.values()
+func get_poses() -> Array[Pose2D]: return _poses.values()
 
 
 func get_list() -> PackedStringArray:
-	var list: Array = pose.keys()
+	var list: Array = _poses.keys()
 	var result: PackedStringArray = []
 	
 	for n: StringName in list:
@@ -129,14 +141,14 @@ func get_list() -> PackedStringArray:
 	return result
 
 
-func has_pose(pose_name: StringName) -> bool: return pose.has(pose_name)
+func has_pose(pose_name: StringName) -> bool: return _poses.has(pose_name)
 
 
 func change_pose_from_name(pose_name: StringName, _data: Dictionary = {}) -> bool:
 	if !has_pose(pose_name): return false
 	
 	var prev_pose: Pose2D = get_current_pose()
-	var next_pose: Pose2D = pose[pose_name]
+	var next_pose: Pose2D = _poses[pose_name]
 	
 	if prev_pose != null:
 		prev_pose._exit()
@@ -152,8 +164,7 @@ func change_pose_from_name(pose_name: StringName, _data: Dictionary = {}) -> boo
 
 
 func change_pose(_pose: Pose2D, _data: Dictionary = {}) -> bool:
-	if !get_children().has(_pose):
-		return false
+	if !get_children().has(_pose): return false
 	
 	var prev_pose: Pose2D = get_current_pose()
 	
@@ -171,10 +182,17 @@ func change_pose(_pose: Pose2D, _data: Dictionary = {}) -> bool:
 	return true
 
 
+func pose_visibility_changed() -> void:
+	pass
+
+
 func change_init_pose(_pose: Pose2D) -> bool:
 	if !has_pose(_pose.name): return false
 	
-	init_pose.visible = false
+	if init_pose:
+		init_pose.visible = false
+		init_pose = null
+
 	init_pose = _pose
 	
 	#if agent is Character:

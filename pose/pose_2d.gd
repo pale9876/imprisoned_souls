@@ -5,9 +5,14 @@ class_name Pose2D
 
 var agent: Node = null
 
+
 #@export var hurtbox_shape: StringName = &""
 @export var animation: Node
+@export var anim_prifix: StringName = &"Left"
 #@export var init_anim: String
+
+
+var _visible_changed: bool = false
 
 
 func _notification(what: int) -> void:
@@ -15,14 +20,17 @@ func _notification(what: int) -> void:
 		NOTIFICATION_ENTER_TREE:
 			var parent: Node = get_parent()
 			if !Engine.is_editor_hint():
-				assert(parent != null, "해당 포즈의 포즈 컨트롤러가 존재하지 않습니다.")
+				assert(parent, "해당 포즈의 포즈 컨트롤러가 존재하지 않습니다.")
 				assert(parent is PoseController2D, "부모노드가 PoseController2D가 아닙니다. ")
 		NOTIFICATION_READY:
-			if animation != null:
-				if animation is AnimationPlayer:
-					animation.animation_finished.connect(_animation_finished_ev_handler)
+			if !Engine.is_editor_hint():
+				if animation:
+					if animation is AnimationPlayer:
+						animation.animation_finished.connect(_animation_finished_ev_handler)
+					elif animation is AnimatedSprite2D:
+						animation.animation_finished.connect(_animation_finished_ev_handler.bind(animation.get_animation()))
 		NOTIFICATION_VISIBILITY_CHANGED:
-			_visible_changed()
+			_visibitiliy_changed()
 		NOTIFICATION_PATH_RENAMED:
 			_renamed()
 
@@ -35,19 +43,16 @@ func _renamed() -> void:
 	visible = false
 
 
-func _visible_changed() -> void:
+func _visibitiliy_changed() -> void:
 	for node: Node in get_children():
 		node.visible = visible
 		
+	# 씨발 자식에다 부모호출 하면 버그가 너무 많아.
 	if Engine.is_editor_hint():
 		var parent: Node = get_parent()
-		
-		if parent != null:
+		if parent:
 			if parent is PoseController2D:
-				if parent.visible and visible:
-					if parent.init_pose != self:
-						parent._pose_visible_changed_update(self)
-
+				pass
 
 # OVERRIDE
 func _enter(data: Dictionary = {}) -> void:
@@ -69,7 +74,12 @@ func _exit() -> void:
 	pass
 
 
-func get_controller() -> PoseController2D: return get_parent() as PoseController2D
+func get_controller() -> PoseController2D:
+	var parent: Node = get_parent()
+	if parent:
+		if parent is PoseController2D:
+			return parent
+	return null
 
 
 func get_agent_input_direction() -> Vector2:

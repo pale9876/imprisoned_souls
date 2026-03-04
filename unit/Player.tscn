@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c3xwqsfprgbn4"]
 
 [ext_resource type="Script" uid="uid://dqgansavg6p5n" path="res://player.gd" id="1_kpjcp"]
-[ext_resource type="Resource" uid="uid://d0fhc3kbwh5sj" path="res://chara/red_hood/red_hoot_stat.tres" id="2_eoet1"]
+[ext_resource type="Script" uid="uid://cxckpw1sbak1o" path="res://chara/chara_stat.gd" id="2_4fa2e"]
 [ext_resource type="Resource" uid="uid://4ntuwag3k035" path="res://chara/red_hood/red_hood_info.tres" id="2_lel03"]
 [ext_resource type="Script" uid="uid://debij5ysrxgsw" path="res://character_event_handler.gd" id="3_48k13"]
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="3_kne1u"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://ch4rv3vox4xoi" path="res://pose/common/move_pose.gd" id="10_3tkgg"]
 [ext_resource type="Texture2D" uid="uid://6hjhhsl583ej" path="res://aseprite/concept/redhood/red_hood_idle_right.png" id="11_4fa2e"]
 [ext_resource type="Script" uid="uid://brke4wqg4iytx" path="res://pose/common/fall_pose.gd" id="12_oudfo"]
+[ext_resource type="Script" uid="uid://cyu0tsofpo1cs" path="res://unit/crouch.gd" id="13_fj1yc"]
 [ext_resource type="Script" uid="uid://bvtcqfou8eqqb" path="res://jump_pose.gd" id="14_d6rpx"]
 [ext_resource type="Script" uid="uid://brmieo4y1kg10" path="res://pose/attack/swing_axe_pose.gd" id="15_43kp2"]
 [ext_resource type="Script" uid="uid://dq4ddyr3wyitk" path="res://slide.gd" id="15_r3kul"]
@@ -26,6 +27,10 @@
 [ext_resource type="Texture2D" uid="uid://cegfid37q12r5" path="res://aseprite/concept/ui/health_progress_under.png" id="19_03by7"]
 [ext_resource type="Script" uid="uid://c6vvodxxuqpw2" path="res://unit/emote_bt_module.gd" id="25_4fa2e"]
 [ext_resource type="Script" uid="uid://bh1jn3y0bxqlk" path="res://bt/task/unit_agent/idle_tick.gd" id="25_mjhpk"]
+
+[sub_resource type="Resource" id="Resource_fj1yc"]
+script = ExtResource("2_4fa2e")
+metadata/_custom_type_script = "uid://cxckpw1sbak1o"
 
 [sub_resource type="Resource" id="Resource_4fa2e"]
 script = ExtResource("3_48k13")
@@ -146,7 +151,7 @@ collision_layer = 0
 script = ExtResource("1_kpjcp")
 emote_bt_module = NodePath("EmoteBT")
 inventory = NodePath("Inventory")
-character_stat = ExtResource("2_eoet1")
+chara_info = SubResource("Resource_fj1yc")
 hurtbox = NodePath("HurtBox")
 ev_handler = SubResource("Resource_4fa2e")
 _information = ExtResource("2_lel03")
@@ -273,11 +278,11 @@ debug_color = Color(0.81960785, 0, 0, 0.101960786)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
-[node name="PoseController2D" type="Node2D" parent="." unique_id=296513422 node_paths=PackedStringArray("agent", "pose", "init_pose", "monitor_label")]
+[node name="PoseController2D" type="Node2D" parent="." unique_id=296513422 node_paths=PackedStringArray("agent", "_poses", "init_pose", "monitor_label")]
 script = ExtResource("7_3tkgg")
 agent = NodePath("..")
 blackboard_plan = SubResource("BlackboardPlan_tvasn")
-pose = {
+_poses = {
 &"Aerial": NodePath("Aerial"),
 &"Crouch": NodePath("Crouch"),
 &"Down": NodePath("Down"),
@@ -296,13 +301,14 @@ init_pose = NodePath("Idle")
 debug = true
 monitor_label = NodePath("../InnerUIMark/State")
 
-[node name="Idle" type="Node2D" parent="PoseController2D" unique_id=1827049041 node_paths=PackedStringArray("move_pose", "fall_pose", "jump_pose", "animation")]
+[node name="Idle" type="Node2D" parent="PoseController2D" unique_id=1827049041 node_paths=PackedStringArray("move_pose", "fall_pose", "jump_pose", "crouch_pose", "animation")]
 script = ExtResource("8_l6ohk")
 move_pose = NodePath("../Move")
 fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
-hurtbox_shape = &"Idle"
+crouch_pose = NodePath("../Crouch")
 animation = NodePath("AnimatedSprite2D")
+anim_prifix = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PoseController2D/Idle" unique_id=1347092807]
 sprite_frames = SubResource("SpriteFrames_1ht2g")
@@ -314,17 +320,20 @@ visible = false
 script = ExtResource("10_3tkgg")
 fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="Crouch" type="Node2D" parent="PoseController2D" unique_id=1526035717]
+[node name="Crouch" type="Node2D" parent="PoseController2D" unique_id=1526035717 node_paths=PackedStringArray("idle_pose")]
 visible = false
-script = ExtResource("16_03by7")
-hurtbox_shape = &"Crouch"
+script = ExtResource("13_fj1yc")
+idle_pose = NodePath("../Idle")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Fall" type="Node2D" parent="PoseController2D" unique_id=2130794940]
 visible = false
 script = ExtResource("12_oudfo")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("fall_pose")]
@@ -334,19 +343,19 @@ fall_pose = NodePath("../Fall")
 jump_ttp = 0.357
 jump_ttd = 0.356
 double_jump = false
-hurtbox_shape = &"Jump"
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Slide" type="Node2D" parent="PoseController2D" unique_id=1260520246]
 visible = false
 script = ExtResource("15_r3kul")
-hurtbox_shape = &"Slide"
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Aerial" type="Node2D" parent="PoseController2D" unique_id=449408485]
 visible = false
 script = ExtResource("16_03by7")
-hurtbox_shape = &"Aerial"
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="SwingAxe" type="Node2D" parent="PoseController2D" unique_id=560126016 node_paths=PackedStringArray("idle_pose", "hitbox")]
@@ -354,6 +363,7 @@ visible = false
 script = ExtResource("15_43kp2")
 idle_pose = NodePath("../Idle")
 hitbox = NodePath("Hitbox2D")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Hitbox2D" type="Area2D" parent="PoseController2D/SwingAxe" unique_id=244537151]
@@ -375,28 +385,31 @@ metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 [node name="JumpSwingAxe" type="Node2D" parent="PoseController2D" unique_id=1860970650]
 visible = false
 script = ExtResource("16_03by7")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Panic" type="Node2D" parent="PoseController2D" unique_id=1911069608]
 visible = false
 script = ExtResource("16_03by7")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Down" type="Node2D" parent="PoseController2D" unique_id=2044347466]
 visible = false
 script = ExtResource("16_03by7")
-hurtbox_shape = &"Down"
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Swedge" type="Node2D" parent="PoseController2D" unique_id=264465517]
 visible = false
 script = ExtResource("16_03by7")
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Grab" type="Node2D" parent="PoseController2D" unique_id=1593220304]
 visible = false
 script = ExtResource("16_03by7")
-hurtbox_shape = &"Grab"
+anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="InnerUIMark" type="Control" parent="." unique_id=8464707]

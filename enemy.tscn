@@ -1,17 +1,36 @@
 [gd_scene format=3 uid="uid://dl0361ddhjawn"]
 
 [ext_resource type="Script" uid="uid://drbj4nearqfgn" path="res://enemy.gd" id="1_iifgy"]
+[ext_resource type="Script" uid="uid://cxckpw1sbak1o" path="res://chara/chara_stat.gd" id="2_3yqyl"]
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="2_epg4t"]
 [ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox.gd" id="3_3yqyl"]
 [ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="4_wujgv"]
+[ext_resource type="Script" uid="uid://bh1jn3y0bxqlk" path="res://bt/task/unit_agent/idle_tick.gd" id="5_3yqyl"]
+[ext_resource type="Script" uid="uid://cdb4dyqk3exd" path="res://pose/pose_2d.gd" id="7_wujgv"]
+
+[sub_resource type="Resource" id="Resource_wujgv"]
+script = ExtResource("2_3yqyl")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hb8ge"]
-size = Vector2(16, 40)
+size = Vector2(32, 72)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_8y0th"]
 
+[sub_resource type="BTAction" id="BTAction_wujgv"]
+script = ExtResource("5_3yqyl")
+
+[sub_resource type="BTSequence" id="BTSequence_hb8ge"]
+children = [SubResource("BTAction_wujgv")]
+
+[sub_resource type="BTSelector" id="BTSelector_epg4t"]
+children = [SubResource("BTSequence_hb8ge")]
+
+[sub_resource type="BTSequence" id="BTSequence_3yqyl"]
+children = [SubResource("BTSelector_epg4t")]
+
 [sub_resource type="BehaviorTree" id="BehaviorTree_qkyai"]
 blackboard_plan = SubResource("BlackboardPlan_8y0th")
+root_task = SubResource("BTSequence_3yqyl")
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_e1ltt"]
 
@@ -20,13 +39,14 @@ blackboard_plan = SubResource("BlackboardPlan_8y0th")
 [node name="Enemy" type="CharacterBody2D" unique_id=920069953 node_paths=PackedStringArray("hurtbox", "pose_controller", "init_collider")]
 collision_layer = 0
 script = ExtResource("1_iifgy")
+chara_info = SubResource("Resource_wujgv")
 hurtbox = NodePath("Hurtbox2D")
 pose_controller = NodePath("PoseController2D")
 init_collider = NodePath("Idle")
 metadata/_custom_type_script = "uid://drbj4nearqfgn"
 
 [node name="Idle" type="CollisionShape2D" parent="." unique_id=1570392151]
-position = Vector2(0, -20)
+position = Vector2(0, -36)
 shape = SubResource("RectangleShape2D_hb8ge")
 debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
 script = ExtResource("2_epg4t")
@@ -43,8 +63,22 @@ metadata/_custom_type_script = "uid://c342mx8mdc4sm"
 behavior_tree = SubResource("BehaviorTree_qkyai")
 blackboard_plan = SubResource("BlackboardPlan_e1ltt")
 
-[node name="PoseController2D" type="Node2D" parent="." unique_id=1948440605 node_paths=PackedStringArray("agent")]
+[node name="PoseController2D" type="Node2D" parent="." unique_id=1948440605 node_paths=PackedStringArray("agent", "_poses", "init_pose")]
 script = ExtResource("4_wujgv")
 agent = NodePath("..")
 blackboard_plan = SubResource("BlackboardPlan_of7eg")
+_poses = {
+&"Idle": NodePath("Idle"),
+&"Move": NodePath("Move")
+}
+init_pose = NodePath("Idle")
 metadata/_custom_type_script = "uid://dgpate5wpm75e"
+
+[node name="Idle" type="Node2D" parent="PoseController2D" unique_id=144094236]
+script = ExtResource("7_wujgv")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"
+
+[node name="Move" type="Node2D" parent="PoseController2D" unique_id=363506100]
+visible = false
+script = ExtResource("7_wujgv")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"

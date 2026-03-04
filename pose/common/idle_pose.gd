@@ -7,11 +7,14 @@ extends Pose2D
 @export var jump_pose: Pose2D
 @export var crouch_pose: Pose2D
 
+@export var collider_init: String = "Idle"
+@export var hurt_shape_init: String = "Idle"
+
 
 func _enter(data: Dictionary = {}) -> void:
-	#var err: bool = hurtbox.change_shape(&"Idle")
-	#if !err:
-		#print()
+	if agent is Character:
+		agent.hurtbox.change_shape("Idle")
+		agent.change_collider("Idle")
 	pass
 
 
@@ -20,7 +23,11 @@ func _fixed_update(_delta: float) -> void:
 	input_dir = get_agent_input_direction()
 
 	if input_dir.x != 0.:
-		get_controller().change_pose(move_pose)
+		change_pose(move_pose)
+		return
+	
+	if input_dir.y > 0.:
+		change_pose(crouch_pose)
 		return
 	
 	_friction(_delta)

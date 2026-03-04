@@ -2,10 +2,12 @@
 extends CharacterBody2D
 class_name PhysicsUnit2D
 
+
 @export var _information: UnitInformation
 @export_flags_2d_physics var init_mask: int = 0
 @export var pose_controller: PoseController2D
 @export var init_collider: CollisionShape2D
+
 
 var _collider: Dictionary[StringName, CollisionShape2D] = {}
 
@@ -22,28 +24,46 @@ var _on_wall: bool = false
 
 func get_information() -> UnitInformation: return _information
 
+
+func _init() -> void:
+	motion_mode = MOTION_MODE_GROUNDED
+	up_direction = Vector2.UP
+	collision_layer = 0
+	if !_information:
+		_information = UnitInformation.new()
+	
+
+
 func _notification(what: int) -> void:
 	match what:
-		NOTIFICATION_POSTINITIALIZE:
-			motion_mode = MOTION_MODE_GROUNDED
-			up_direction = Vector2.UP
-			collision_layer = 0
 		NOTIFICATION_ENTER_TREE:
 			if !Engine.is_editor_hint():
 				_current = init_collider
+		
 		NOTIFICATION_CHILD_ORDER_CHANGED:
 			_collider.clear()
-	
 			for node: Node in get_children():
 				if node is CollisionShape2D:
 					_collider[node.name] = node
 					if node is NotificationShape2D:
 						if !init_collider:
-							_change_init_collider()
-							init_collider = node
+							_change_init_collider(node)
 				elif node is PoseController2D:
 					pose_controller = node
 		
+		NOTIFICATION_VISIBILITY_CHANGED:
+			_visibility_changed(visible)
+
+
+func _visibility_changed(toggle: bool) -> void:
+	if !Engine.is_editor_hint():
+		set_process(toggle)
+		set_physics_process(toggle)
+		process_mode = (
+			Node.PROCESS_MODE_DISABLED if !toggle
+			else Node.PROCESS_MODE_INHERIT
+		)
+
 
 
 func _physics_process(delta: float) -> void:
@@ -51,7 +71,7 @@ func _physics_process(delta: float) -> void:
 
 	if _on_floor:
 		#if velocity.y > 0.:
-		_on_floor = snap_on_floor()
+		_on_floor = _snap_on_floor()
 	#else:
 		#velocity.y += 970. * delta
 		#print("get_gravity")
@@ -67,11 +87,14 @@ func _physics_process(delta: float) -> void:
 			_slide(collision, delta)
 
 
-func snap_on_floor() -> bool:
+func _snap_on_floor() -> bool:
 	if velocity.y < 0.: return false
 	
 	var result: KinematicCollision2D = move_and_collide(
-		Vector2(0., 1.) * floor_snap_length, true, safe_margin, false
+		Vector2(0., 1.) * floor_snap_length,
+		true,
+		safe_margin,
+		false
 	)
 	
 	if result:
@@ -87,18 +110,21 @@ func _collide_ev_handler(_collision: KinematicCollision2D) -> void:
 	pass
 
 
-func _change_init_collider() -> void:
-	pass
+func _change_init_collider(node: Node) -> void:
+	if node is NotificationShape2D:
+		init_collider = node
+	
+	for child: Node in get_children():
+		if child is NotificationShape2D:
+			child.visible = child == node
 
 
 func find_collider(node_name: StringName) -> int:
-	for node: Node in get_children():
-		pass
-	
 	var result: int = get_children().find_custom(
 		func(node: Node) -> bool:
 			return node.name == node_name
 	)
+	
 	return result
 
 
