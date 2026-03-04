@@ -9,12 +9,13 @@ const DEFAULT_COLLISION_COLOR: Color = Color("00c2921e")
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_PARENTED:
-		_collider_changed_ev_handler()
-	elif what == NOTIFICATION_VISIBILITY_CHANGED:
-		_visibility_changed_ev_handler()
-	elif what == NOTIFICATION_PATH_RENAMED:
-		_renamed_ev_handler()
+	match what:
+		NOTIFICATION_PARENTED:
+			_collider_changed_ev_handler()
+		NOTIFICATION_VISIBILITY_CHANGED:
+			_visibility_changed_ev_handler()
+		NOTIFICATION_PATH_RENAMED:
+			_renamed_ev_handler()
 
 
 func _renamed_ev_handler() -> void:

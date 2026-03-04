@@ -5,9 +5,9 @@ class_name Pose2D
 
 var agent: Node = null
 
-@export var hurtbox_shape: StringName
+#@export var hurtbox_shape: StringName = &""
 @export var animation: Node
-@export var init_anim: String
+#@export var init_anim: String
 
 
 func _notification(what: int) -> void:
@@ -28,7 +28,7 @@ func _notification(what: int) -> void:
 
 
 func _renamed() -> void:
-	hurtbox_shape = get_name()
+	#hurtbox_shape = get_name()
 	var parent: Node = get_parent()
 	if parent is PoseController2D:
 		parent._updated()
@@ -108,3 +108,8 @@ func change_pose(pose: Pose2D, data: Dictionary = {}) -> void:
 	
 	if !result:
 		printerr(agent.name, ":: Cannot Changed to target Pose => ", pose.name)
+
+
+
+func get_suffix() -> String:
+	return ""

@@ -31,18 +31,40 @@ enum State {
 #var _current: CollisionShape2D = null
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_VISIBILITY_CHANGED:
-		monitorable = visible
+	match what:
+		NOTIFICATION_POSTINITIALIZE:
+			monitoring = false
+			monitorable = true
 		
-		for node: Node in get_children():
-			if init_shape == node:
-				node.visible = true
-			node.visible = visible
+		NOTIFICATION_ENTER_TREE:
+			var _parent: Node = get_parent()
+			if _parent != null:
+				if _parent is Character:
+					_parent.hurtbox = self
+					_root = _parent
+					if !Engine.is_editor_hint():
+						pass
 
+			if init_shape:
+				change_shape(init_shape.name)
 
-func _enter_tree() -> void:
-	if init_shape:
-		change_shape(init_shape.name)
+		NOTIFICATION_VISIBILITY_CHANGED:
+			monitorable = visible
+			
+			for node: Node in get_children():
+				if init_shape == node:
+					node.visible = true
+				node.visible = visible
+
+		NOTIFICATION_EXIT_TREE:
+			if get_root():
+				if _root:
+					if _root is Character:
+						_root.hurtbox = null
+					_root = null
+
+		NOTIFICATION_CHILD_ORDER_CHANGED:
+			pass
 
 
 func set_mask(value: int) -> void:

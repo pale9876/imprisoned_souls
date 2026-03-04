@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://6aa818j2226f"]
+
+[ext_resource type="Script" uid="uid://bavbyksnmat07" path="res://npc.gd" id="1_ln5al"]
+[ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox.gd" id="2_3g7p0"]
+[ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="2_6h37w"]
+[ext_resource type="Script" uid="uid://cuxvpat0q3ao5" path="res://inventory.gd" id="3_w8yn3"]
+[ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="5_l2w3a"]
+[ext_resource type="Script" uid="uid://cdb4dyqk3exd" path="res://pose/pose_2d.gd" id="6_rniuo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fghl5"]
+size = Vector2(16, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2w3a"]
+size = Vector2(16, 20)
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_feo43"]
+
+[node name="Template" type="CharacterBody2D" unique_id=200347281 node_paths=PackedStringArray("inventory", "hurtbox", "init_collider")]
+script = ExtResource("1_ln5al")
+inventory = NodePath("Inventory")
+hurtbox = NodePath("Hurtbox2D")
+init_collider = NodePath("Idle")
+metadata/_custom_type_script = "uid://bavbyksnmat07"
+
+[node name="Idle" type="CollisionShape2D" parent="." unique_id=1739304575]
+position = Vector2(0, -18.5)
+shape = SubResource("RectangleShape2D_fghl5")
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("2_6h37w")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Hurtbox2D" type="Area2D" parent="." unique_id=610223174 node_paths=PackedStringArray("_root", "init_shape")]
+script = ExtResource("2_3g7p0")
+_root = NodePath("..")
+init_shape = NodePath("Idle")
+metadata/_custom_type_script = "uid://c342mx8mdc4sm"
+
+[node name="Idle" type="CollisionShape2D" parent="Hurtbox2D" unique_id=2006840014]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_l2w3a")
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("2_6h37w")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Inventory" type="Node" parent="." unique_id=1462610130]
+script = ExtResource("3_w8yn3")
+metadata/_custom_type_script = "uid://cuxvpat0q3ao5"
+
+[node name="PoseController2D" type="Node2D" parent="." unique_id=874023068 node_paths=PackedStringArray("agent", "pose", "init_pose")]
+script = ExtResource("5_l2w3a")
+agent = NodePath("..")
+blackboard_plan = SubResource("BlackboardPlan_feo43")
+pose = {
+&"Idle": NodePath("Idle")
+}
+init_pose = NodePath("Idle")
+metadata/_custom_type_script = "uid://dgpate5wpm75e"
+
+[node name="Idle" type="Node2D" parent="PoseController2D" unique_id=2070240549]
+visible = false
+script = ExtResource("6_rniuo")
+metadata/_custom_type_script = "uid://cdb4dyqk3exd"

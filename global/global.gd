@@ -18,16 +18,17 @@ var screen_joypad: CanvasLayer = null
 var main_scene: Node = null
 
 
+#func _notification(what: int) -> void:
+	#match what:
+		#pass
+
+
 func _enter_tree() -> void:
 	os = OS.get_name()
-	if os == "Windows":
-		pass
-	elif os == "Android":
-		screen_joypad = SCREEN_JOY_PAD.instantiate()
-		
-	elif os == "Web":
-		pass
-
+	print("구동환경: ", os)
+	match os:
+		_:
+			pass
 
 func _ready() -> void:
 	pass

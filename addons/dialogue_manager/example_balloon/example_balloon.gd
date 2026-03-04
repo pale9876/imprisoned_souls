@@ -1,5 +1,4 @@
-extends CanvasLayer
-#class_name DialogueManagerExampleBalloon
+class_name DialogueManagerExampleBalloon extends CanvasLayer
 ## A basic dialogue balloon for use with Dialogue Manager.
 
 
@@ -11,6 +10,9 @@ extends CanvasLayer
 
 ## If running as a [Node] in a scene then auto start the dialogue.
 @export var auto_start: bool = false
+
+## If all other input is blocked as long as dialogue is shown.
+@export var will_block_other_input: bool = true
 
 ## The action to use for advancing the dialogue
 @export var next_action: StringName = &"ui_accept"
@@ -71,7 +73,7 @@ var mutation_cooldown: Timer = Timer.new()
 
 func _ready() -> void:
 	balloon.hide()
-	DialogueManager.mutated.connect(_on_mutated)
+	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
 	# If the responses menu doesn't have a next action set, use this one
 	if responses_menu.next_action.is_empty():
@@ -93,7 +95,8 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
-	get_viewport().set_input_as_handled()
+	if will_block_other_input:
+		get_viewport().set_input_as_handled()
 
 
 func _notification(what: int) -> void:

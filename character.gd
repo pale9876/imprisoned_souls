@@ -6,7 +6,7 @@ class_name Character
 
 @export var emote_bt_module: BTPlayer
 @export var inventory: Inventory
-@export var character_stat: CharacterStat
+@export var chara_info: CharacterInformation
 @export var hurtbox: Hurtbox2D
 @export var ev_handler: EventHandler:
 	set(handler):
@@ -15,23 +15,30 @@ class_name Character
 			ev_handler.owner = self
 
 
-func _ready() -> void:
-	if !Engine.is_editor_hint():
-		if hurtbox:
-			hurtbox.area_shape_entered.connect(_area_entered)
-			hurtbox.area_shape_exited.connect(_area_exited)
+func _notification(what: int) -> void:
+	super(what)
+	match what:
+		NOTIFICATION_POSTINITIALIZE:
+			if !chara_info:
+				chara_info = CharacterInformation.new()
+		NOTIFICATION_READY:
+			if !Engine.is_editor_hint():
+				if hurtbox:
+					hurtbox.area_shape_entered.connect(_area_entered)
+					hurtbox.area_shape_exited.connect(_area_exited)
 
 
 func load_character() -> void:
 	pass
 
 
+# OVERRIDE
 func _area_entered(
 	rid: RID, area: Area2D, area_shape_idx: int, local_shape_idx: int
 ) -> void:
 	pass
 
-
+# OVERRIDE
 func _area_exited(
 	rid: RID, area: Area2D, area_shape_idx: int, local_shape_idx: int
 ) -> void:
@@ -56,3 +63,7 @@ func _중간에_물체가_있는지_확인(from: Vector2, to: Vector2, exclude: 
 		pass
 	
 	return false
+
+
+func get_chara_name() -> StringName:
+	return chara_info.name if chara_info != null else &""

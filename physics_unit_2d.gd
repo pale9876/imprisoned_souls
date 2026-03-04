@@ -12,22 +12,15 @@ var _collider: Dictionary[StringName, CollisionShape2D] = {}
 @export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_DEFAULT)
 var _current: CollisionShape2D = null
 
-
+@export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_DEFAULT)
 var _on_floor: bool = false
+@export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_DEFAULT)
 var _on_ceil: bool = false
+@export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_DEFAULT)
 var _on_wall: bool = false
 
 
 func get_information() -> UnitInformation: return _information
-
-
-func _update() -> void:
-	_collider.clear()
-	
-	for node: Node in get_children():
-		if node is CollisionShape2D:
-			_collider[node.name] = node
-
 
 func _notification(what: int) -> void:
 	match what:
@@ -39,7 +32,18 @@ func _notification(what: int) -> void:
 			if !Engine.is_editor_hint():
 				_current = init_collider
 		NOTIFICATION_CHILD_ORDER_CHANGED:
-			_update()
+			_collider.clear()
+	
+			for node: Node in get_children():
+				if node is CollisionShape2D:
+					_collider[node.name] = node
+					if node is NotificationShape2D:
+						if !init_collider:
+							_change_init_collider()
+							init_collider = node
+				elif node is PoseController2D:
+					pose_controller = node
+		
 
 
 func _physics_process(delta: float) -> void:

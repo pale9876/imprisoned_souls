@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://dl0361ddhjawn"]
+
+[ext_resource type="Script" uid="uid://drbj4nearqfgn" path="res://enemy.gd" id="1_iifgy"]
+[ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="2_epg4t"]
+[ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox.gd" id="3_3yqyl"]
+[ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="4_wujgv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hb8ge"]
+size = Vector2(16, 40)
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_8y0th"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_qkyai"]
+blackboard_plan = SubResource("BlackboardPlan_8y0th")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_e1ltt"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_of7eg"]
+
+[node name="Enemy" type="CharacterBody2D" unique_id=920069953 node_paths=PackedStringArray("hurtbox", "pose_controller", "init_collider")]
+collision_layer = 0
+script = ExtResource("1_iifgy")
+hurtbox = NodePath("Hurtbox2D")
+pose_controller = NodePath("PoseController2D")
+init_collider = NodePath("Idle")
+metadata/_custom_type_script = "uid://drbj4nearqfgn"
+
+[node name="Idle" type="CollisionShape2D" parent="." unique_id=1570392151]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_hb8ge")
+debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
+script = ExtResource("2_epg4t")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
+
+[node name="Hurtbox2D" type="Area2D" parent="." unique_id=501086813 node_paths=PackedStringArray("_root")]
+scale = Vector2(-1, 1)
+collision_mask = 0
+script = ExtResource("3_3yqyl")
+_root = NodePath("..")
+metadata/_custom_type_script = "uid://c342mx8mdc4sm"
+
+[node name="ActionBTPlayer" type="BTPlayer" parent="." unique_id=907874365]
+behavior_tree = SubResource("BehaviorTree_qkyai")
+blackboard_plan = SubResource("BlackboardPlan_e1ltt")
+
+[node name="PoseController2D" type="Node2D" parent="." unique_id=1948440605 node_paths=PackedStringArray("agent")]
+script = ExtResource("4_wujgv")
+agent = NodePath("..")
+blackboard_plan = SubResource("BlackboardPlan_of7eg")
+metadata/_custom_type_script = "uid://dgpate5wpm75e"

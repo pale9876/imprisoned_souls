@@ -177,13 +177,14 @@ func change_init_pose(_pose: Pose2D) -> bool:
 	init_pose.visible = false
 	init_pose = _pose
 	
-	if agent is Character:
-		var _pose_hurtbox: StringName = _pose.hurtbox_shape
-		var _hurtbox: Hurtbox2D = agent.hurtbox
-		if _hurtbox and !_pose_hurtbox.is_empty():
-			var err: bool = _hurtbox.change_shape(_pose_hurtbox)
-			if !err:
-				printerr("Error :: 해당 포즈의 피격박스가 존재하지 않습니다.")
+	#if agent is Character:
+		#if _pose.
+		#if _hurtbox and !_pose_hurtbox.is_empty():
+			#var _pose_hurtbox: StringName = _pose.hurtbox_shape
+			#var _hurtbox: Hurtbox2D = agent.hurtbox
+			#var err: bool = _hurtbox.change_shape(_pose_hurtbox)
+			#if !err:
+				#printerr("Error :: 해당 포즈의 피격박스가 존재하지 않습니다.")
 	
 	return true
 
@@ -197,4 +198,13 @@ func pose_is_child(node: Pose2D) -> bool:
 func get_blackboard() -> Blackboard: return _blackboard
 
 
-func get_current_animation() -> String: return ""
+func get_current_animation() -> StringName:
+	var current_pose: Pose2D = get_current_pose()
+	if current_pose.animation:
+		var anim: Node = current_pose.animation
+		if anim is AnimatedSprite2D:
+			return anim.animation
+		elif anim is AnimationPlayer:
+			return anim.current_animation
+	
+	return &""

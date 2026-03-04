@@ -15,19 +15,21 @@ class_name Hitbox2D
 var _cache: Array[Node2D] = []
 
 
-func _init() -> void:
-	monitorable = false
-
-
-func _enter_tree() -> void:
-	if !Engine.is_editor_hint():
-		area_shape_entered.connect(_hurtbox_entered)
-		area_shape_exited.connect(_hurtbox_exited)
-
-
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_VISIBILITY_CHANGED:
-		_visibility_changed()
+	match what:
+		NOTIFICATION_POSTINITIALIZE:
+			monitorable = false
+		
+		NOTIFICATION_ENTER_TREE:
+			if !Engine.is_editor_hint():
+				area_shape_entered.connect(_hurtbox_entered)
+				area_shape_exited.connect(_hurtbox_exited)
+		
+		NOTIFICATION_VISIBILITY_CHANGED:
+			_visibility_changed()
+
+		NOTIFICATION_EXIT_TREE:
+			_clear()
 
 
 func _clear() -> void:

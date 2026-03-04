@@ -1,7 +1,7 @@
 extends Resource
-class_name CharacterStat
+class_name CharacterInformation
 
-
+@export var name: StringName = &""
 @export var hp: int = 100
 @export var attack: float = 1.
 @export var defense: float = 1.
