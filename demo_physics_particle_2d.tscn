@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://br8b3svh4ojr"]
 
 [ext_resource type="Texture2D" uid="uid://baxiekdre3h1b" path="res://aseprite/concept/object/tree.png" id="2_5i056"]
-[ext_resource type="Script" uid="uid://h4t3476hyyky" path="res://bounce_razor_2d.gd" id="2_b6vrk"]
-[ext_resource type="Script" uid="uid://1rev7iohq18j" path="res://alined_multi_mesh_instance_2d.gd" id="3_5i056"]
+[ext_resource type="Script" uid="uid://h4t3476hyyky" path="res://script/bounce_razor_2d.gd" id="2_b6vrk"]
+[ext_resource type="Script" uid="uid://1rev7iohq18j" path="res://script/alined_multi_mesh_instance_2d.gd" id="3_5i056"]
 [ext_resource type="Script" uid="uid://cpvaw3605xhvb" path="res://mesh_instance_path_2d.gd" id="4_ggw0e"]
 
 [sub_resource type="Curve2D" id="Curve2D_ggw0e"]

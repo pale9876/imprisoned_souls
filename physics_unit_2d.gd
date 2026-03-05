@@ -31,7 +31,6 @@ func _init() -> void:
 	collision_layer = 0
 	if !_information:
 		_information = UnitInformation.new()
-	
 
 
 func _notification(what: int) -> void:

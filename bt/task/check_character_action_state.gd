@@ -1,6 +1,4 @@
-#@tool
 extends BTAction
-class_name PlayBoringAnimationBTTask
 
 
 func _enter() -> void:
@@ -8,7 +6,7 @@ func _enter() -> void:
 
 
 func _tick(delta: float) -> Status:
-	#agent
-	#return RUNNING
+	if agent is Character:
+		pass
 	
-	return SUCCESS
+	return FAILURE

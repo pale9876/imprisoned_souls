@@ -1,6 +1,7 @@
 @tool
 extends MultiMeshInstance2D
 class_name AlignedMultiMeshInstance2D
+# 패스를 따라 여러개의 스프라이트를 나란히 놓고 싶을 때에 사용함. Path2D를 자식으로 필요함.
 
 
 @export var instance_texture: Texture2D:

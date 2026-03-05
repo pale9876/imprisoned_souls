@@ -23,9 +23,6 @@ func _init() -> void:
 func _notification(what: int) -> void:
 	super(what)
 	match what:
-		NOTIFICATION_POSTINITIALIZE:
-			pass
-
 		NOTIFICATION_READY:
 			if !Engine.is_editor_hint():
 				if hurtbox:
@@ -72,3 +69,7 @@ func _중간에_물체가_있는지_확인(from: Vector2, to: Vector2, exclude: 
 
 func get_chara_name() -> StringName:
 	return chara_info.name if chara_info != null else &""
+
+
+func get_emote_state() -> String:
+	return emote_bt_module.state

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dqgansavg6p5n" path="res://player.gd" id="1_kpjcp"]
 [ext_resource type="Script" uid="uid://cxckpw1sbak1o" path="res://chara/chara_stat.gd" id="2_4fa2e"]
 [ext_resource type="Resource" uid="uid://4ntuwag3k035" path="res://chara/red_hood/red_hood_info.tres" id="2_lel03"]
-[ext_resource type="Script" uid="uid://debij5ysrxgsw" path="res://character_event_handler.gd" id="3_48k13"]
+[ext_resource type="Script" uid="uid://debij5ysrxgsw" path="res://script/character_event_handler.gd" id="3_48k13"]
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="3_kne1u"]
 [ext_resource type="Script" uid="uid://cuxvpat0q3ao5" path="res://inventory.gd" id="4_l6ohk"]
 [ext_resource type="Texture2D" uid="uid://cysooqp63xp0h" path="res://aseprite/concept/redhood/red_hood_placeholder.png" id="6_ekjla"]
@@ -26,7 +26,6 @@
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="18_48k13"]
 [ext_resource type="Texture2D" uid="uid://cegfid37q12r5" path="res://aseprite/concept/ui/health_progress_under.png" id="19_03by7"]
 [ext_resource type="Script" uid="uid://c6vvodxxuqpw2" path="res://unit/emote_bt_module.gd" id="25_4fa2e"]
-[ext_resource type="Script" uid="uid://bh1jn3y0bxqlk" path="res://bt/task/unit_agent/idle_tick.gd" id="25_mjhpk"]
 
 [sub_resource type="Resource" id="Resource_fj1yc"]
 script = ExtResource("2_4fa2e")
@@ -35,6 +34,57 @@ metadata/_custom_type_script = "uid://cxckpw1sbak1o"
 [sub_resource type="Resource" id="Resource_4fa2e"]
 script = ExtResource("3_48k13")
 metadata/_custom_type_script = "uid://debij5ysrxgsw"
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_mjhpk"]
+
+[sub_resource type="GDScript" id="GDScript_4fa2e"]
+script/source = "extends BTAction
+class_name IdleTick
+
+
+@export_range(1., 20., .01) var time: float = 1.
+var _time: float = 0.
+
+
+func _tick(delta: float) -> Status:
+	if agent is Character:
+		var pose_controller: PoseController2D = agent.pose_controller
+		if pose_controller:
+			if pose_controller.has_pose(&\"Idle\"):
+				if pose_controller.get_current_pose().name == &\"Idle\":
+					if _time > 0.:
+						_time -= delta
+						return RUNNING
+					else:
+						_time = time
+						return SUCCESS
+	
+	_time = time
+	return FAILURE
+"
+
+[sub_resource type="BTAction" id="BTAction_4fa2e"]
+script = SubResource("GDScript_4fa2e")
+time = 5.0
+
+[sub_resource type="BTSequence" id="BTSequence_mjhpk"]
+custom_name = "Idle"
+children = [SubResource("BTAction_4fa2e")]
+
+[sub_resource type="BTSequence" id="BTSequence_4fa2e"]
+
+[sub_resource type="BTSelector" id="BTSelector_fj1yc"]
+children = [SubResource("BTSequence_mjhpk"), SubResource("BTSequence_4fa2e")]
+
+[sub_resource type="BTSequence" id="BTSequence_48k13"]
+custom_name = "MainSeq"
+children = [SubResource("BTSelector_fj1yc")]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_4fa2e"]
+blackboard_plan = SubResource("BlackboardPlan_mjhpk")
+root_task = SubResource("BTSequence_48k13")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_48k13"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rwas"]
 size = Vector2(32, 112)
@@ -121,31 +171,6 @@ point_count = 2
 offsets = PackedFloat32Array(0.36764705, 1)
 colors = PackedColorArray(1, 0, 0, 1, 0.3137255, 0, 0.3137255, 1)
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_mjhpk"]
-
-[sub_resource type="BTAction" id="BTAction_4fa2e"]
-script = ExtResource("25_mjhpk")
-time = 5.0
-
-[sub_resource type="BTSequence" id="BTSequence_mjhpk"]
-custom_name = "Idle"
-children = [SubResource("BTAction_4fa2e")]
-
-[sub_resource type="BTSequence" id="BTSequence_4fa2e"]
-
-[sub_resource type="BTSelector" id="BTSelector_fj1yc"]
-children = [SubResource("BTSequence_mjhpk"), SubResource("BTSequence_4fa2e")]
-
-[sub_resource type="BTSequence" id="BTSequence_48k13"]
-custom_name = "MainSeq"
-children = [SubResource("BTSelector_fj1yc")]
-
-[sub_resource type="BehaviorTree" id="BehaviorTree_4fa2e"]
-blackboard_plan = SubResource("BlackboardPlan_mjhpk")
-root_task = SubResource("BTSequence_48k13")
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_48k13"]
-
 [node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("emote_bt_module", "inventory", "hurtbox", "pose_controller", "init_collider")]
 collision_layer = 0
 script = ExtResource("1_kpjcp")
@@ -161,6 +186,11 @@ init_collider = NodePath("Idle")
 
 [node name="Inventory" type="Node" parent="." unique_id=379199741]
 script = ExtResource("4_l6ohk")
+
+[node name="EmoteBT" type="BTPlayer" parent="." unique_id=953030233]
+behavior_tree = SubResource("BehaviorTree_4fa2e")
+blackboard_plan = SubResource("BlackboardPlan_48k13")
+script = ExtResource("25_4fa2e")
 
 [node name="PlaceHolder" type="Sprite2D" parent="." unique_id=610565242]
 visible = false
@@ -308,54 +338,51 @@ fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
 crouch_pose = NodePath("../Crouch")
 animation = NodePath("AnimatedSprite2D")
-anim_prifix = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PoseController2D/Idle" unique_id=1347092807]
 sprite_frames = SubResource("SpriteFrames_1ht2g")
 animation = &"left"
 offset = Vector2(0, -64)
 
-[node name="Move" type="Node2D" parent="PoseController2D" unique_id=651046877 node_paths=PackedStringArray("fall_pose", "jump_pose")]
+[node name="Move" type="Node2D" parent="PoseController2D" unique_id=651046877 node_paths=PackedStringArray("idle_pose", "fall_pose", "jump_pose")]
 visible = false
 script = ExtResource("10_3tkgg")
+idle_pose = NodePath("../Idle")
 fall_pose = NodePath("../Fall")
 jump_pose = NodePath("../Jump")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Crouch" type="Node2D" parent="PoseController2D" unique_id=1526035717 node_paths=PackedStringArray("idle_pose")]
 visible = false
 script = ExtResource("13_fj1yc")
 idle_pose = NodePath("../Idle")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="Fall" type="Node2D" parent="PoseController2D" unique_id=2130794940]
+[node name="Fall" type="Node2D" parent="PoseController2D" unique_id=2130794940 node_paths=PackedStringArray("idle_pose", "move_pose")]
 visible = false
 script = ExtResource("12_oudfo")
-anim_prifix = null
+idle_pose = NodePath("../Idle")
+move_pose = NodePath("../Move")
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
-[node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("fall_pose")]
+[node name="Jump" type="Node2D" parent="PoseController2D" unique_id=2067267275 node_paths=PackedStringArray("idle_pose", "fall_pose")]
 visible = false
 script = ExtResource("14_d6rpx")
+idle_pose = NodePath("../Idle")
 fall_pose = NodePath("../Fall")
 jump_ttp = 0.357
 jump_ttd = 0.356
 double_jump = false
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Slide" type="Node2D" parent="PoseController2D" unique_id=1260520246]
 visible = false
 script = ExtResource("15_r3kul")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Aerial" type="Node2D" parent="PoseController2D" unique_id=449408485]
 visible = false
 script = ExtResource("16_03by7")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="SwingAxe" type="Node2D" parent="PoseController2D" unique_id=560126016 node_paths=PackedStringArray("idle_pose", "hitbox")]
@@ -363,7 +390,6 @@ visible = false
 script = ExtResource("15_43kp2")
 idle_pose = NodePath("../Idle")
 hitbox = NodePath("Hitbox2D")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Hitbox2D" type="Area2D" parent="PoseController2D/SwingAxe" unique_id=244537151]
@@ -385,31 +411,26 @@ metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 [node name="JumpSwingAxe" type="Node2D" parent="PoseController2D" unique_id=1860970650]
 visible = false
 script = ExtResource("16_03by7")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Panic" type="Node2D" parent="PoseController2D" unique_id=1911069608]
 visible = false
 script = ExtResource("16_03by7")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Down" type="Node2D" parent="PoseController2D" unique_id=2044347466]
 visible = false
 script = ExtResource("16_03by7")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Swedge" type="Node2D" parent="PoseController2D" unique_id=264465517]
 visible = false
 script = ExtResource("16_03by7")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="Grab" type="Node2D" parent="PoseController2D" unique_id=1593220304]
 visible = false
 script = ExtResource("16_03by7")
-anim_prifix = null
 metadata/_custom_type_script = "uid://cdb4dyqk3exd"
 
 [node name="InnerUIMark" type="Control" parent="." unique_id=8464707]
@@ -454,8 +475,3 @@ offset_right = 26.0
 offset_bottom = -17.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="EmoteBT" type="BTPlayer" parent="." unique_id=953030233]
-behavior_tree = SubResource("BehaviorTree_4fa2e")
-blackboard_plan = SubResource("BlackboardPlan_48k13")
-script = ExtResource("25_4fa2e")

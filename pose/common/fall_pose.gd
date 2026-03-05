@@ -21,6 +21,6 @@ func _fixed_update(_delta: float) -> void:
 
 	if agent is PhysicsUnit2D:
 		if agent._on_floor:
-			get_controller().change_pose(idle_pose)
+			change_pose(idle_pose)
 		else:
 			agent.velocity.y += 970. * _delta

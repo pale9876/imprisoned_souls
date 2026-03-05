@@ -5,7 +5,9 @@
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="2_epg4t"]
 [ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox.gd" id="3_3yqyl"]
 [ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="4_wujgv"]
-[ext_resource type="Script" uid="uid://bh1jn3y0bxqlk" path="res://bt/task/unit_agent/idle_tick.gd" id="5_3yqyl"]
+[ext_resource type="Script" uid="uid://6cvyi424t0gf" path="res://script/action_bt_player.gd" id="6_dxifv"]
+[ext_resource type="Script" uid="uid://craqurdqerdqk" path="res://bt/task/check_is_idle.gd" id="6_e1ltt"]
+[ext_resource type="Script" uid="uid://c6vvodxxuqpw2" path="res://unit/emote_bt_module.gd" id="6_hb8ge"]
 [ext_resource type="Script" uid="uid://cdb4dyqk3exd" path="res://pose/pose_2d.gd" id="7_wujgv"]
 
 [sub_resource type="Resource" id="Resource_wujgv"]
@@ -16,14 +18,21 @@ size = Vector2(32, 72)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_8y0th"]
 
-[sub_resource type="BTAction" id="BTAction_wujgv"]
-script = ExtResource("5_3yqyl")
+[sub_resource type="BTComment" id="BTComment_e1ltt"]
+custom_name = "유휴상태가 지속된다면 캐릭터가 지루해합니다."
+
+[sub_resource type="BTAction" id="BTAction_hb8ge"]
+script = ExtResource("6_e1ltt")
 
 [sub_resource type="BTSequence" id="BTSequence_hb8ge"]
-children = [SubResource("BTAction_wujgv")]
+custom_name = "Check Character is boring"
+children = [SubResource("BTComment_e1ltt"), SubResource("BTAction_hb8ge")]
+
+[sub_resource type="BTSequence" id="BTSequence_dxifv"]
+custom_name = "Chase Player"
 
 [sub_resource type="BTSelector" id="BTSelector_epg4t"]
-children = [SubResource("BTSequence_hb8ge")]
+children = [SubResource("BTSequence_hb8ge"), SubResource("BTSequence_dxifv")]
 
 [sub_resource type="BTSequence" id="BTSequence_3yqyl"]
 children = [SubResource("BTSelector_epg4t")]
@@ -33,6 +42,30 @@ blackboard_plan = SubResource("BlackboardPlan_8y0th")
 root_task = SubResource("BTSequence_3yqyl")
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_e1ltt"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_dxifv"]
+
+[sub_resource type="BTAction" id="BTAction_dxifv"]
+script = ExtResource("6_e1ltt")
+
+[sub_resource type="BTWait" id="BTWait_pwjut"]
+duration = 42.0
+
+[sub_resource type="BTSequence" id="BTSequence_pwjut"]
+children = [SubResource("BTAction_dxifv"), SubResource("BTWait_pwjut")]
+
+[sub_resource type="BTSelector" id="BTSelector_n0g06"]
+children = [SubResource("BTSequence_pwjut")]
+
+[sub_resource type="BTSequence" id="BTSequence_ar8e5"]
+custom_name = "MainSequence"
+children = [SubResource("BTSelector_n0g06")]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_doop2"]
+blackboard_plan = SubResource("BlackboardPlan_dxifv")
+root_task = SubResource("BTSequence_ar8e5")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_5hcft"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_of7eg"]
 
@@ -62,6 +95,13 @@ metadata/_custom_type_script = "uid://c342mx8mdc4sm"
 [node name="ActionBTPlayer" type="BTPlayer" parent="." unique_id=907874365]
 behavior_tree = SubResource("BehaviorTree_qkyai")
 blackboard_plan = SubResource("BlackboardPlan_e1ltt")
+script = ExtResource("6_dxifv")
+
+[node name="EmoteBTModule" type="BTPlayer" parent="." unique_id=1328689751]
+behavior_tree = SubResource("BehaviorTree_doop2")
+blackboard_plan = SubResource("BlackboardPlan_5hcft")
+script = ExtResource("6_hb8ge")
+metadata/_custom_type_script = "uid://c6vvodxxuqpw2"
 
 [node name="PoseController2D" type="Node2D" parent="." unique_id=1948440605 node_paths=PackedStringArray("agent", "_poses", "init_pose")]
 script = ExtResource("4_wujgv")

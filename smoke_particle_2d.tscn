@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bwadv5l3b6l3o"]
 
-[ext_resource type="Script" uid="uid://c7xax1hnt0vpn" path="res://cartoon_particle_2d.gd" id="1_jtn6c"]
+[ext_resource type="Script" uid="uid://c7xax1hnt0vpn" path="res://script/cartoon_particle_2d.gd" id="1_jtn6c"]
 
 [node name="CartoonParticle2D" type="MultiMeshInstance2D" unique_id=191938860]
 script = ExtResource("1_jtn6c")

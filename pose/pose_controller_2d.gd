@@ -15,8 +15,8 @@ var _blackboard: Blackboard = null
 @export var init_pose: Pose2D = null:
 	set(_pose):
 		init_pose = _pose
-		for pose: Pose2D in get_poses():
-			pose.visible = (pose == _pose)
+		for p: Pose2D in get_poses():
+			p.visible = (p == _pose)
 
 
 @export_category("DEBUG")
