@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0kmtrenhlnxh"
-path="res://.godot/imported/hanging_from_the_miseries_and_misfortunes_of_war_by_JacquesCallot.jpg-7c101137c1ee8fcbcada40e8139aef01.ctex"
+uid="uid://d2g6507bdh4k4"
+path="res://.godot/imported/father.jpg-eb409bd88f6b65b3004b03414885d554.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/concept/reference/hanging_from_the_miseries_and_misfortunes_of_war_by_JacquesCallot.jpg"
-dest_files=["res://.godot/imported/hanging_from_the_miseries_and_misfortunes_of_war_by_JacquesCallot.jpg-7c101137c1ee8fcbcada40e8139aef01.ctex"]
+source_file="res://aseprite/reference/father.jpg"
+dest_files=["res://.godot/imported/father.jpg-eb409bd88f6b65b3004b03414885d554.ctex"]
 
 [params]
 

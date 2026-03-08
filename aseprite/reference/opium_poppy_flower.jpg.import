@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cretyxd7klmvn"
-path="res://.godot/imported/opium_poppy_flower.jpg-499300d2001f093b54794d53f6b5cef7.ctex"
+path="res://.godot/imported/opium_poppy_flower.jpg-43f7ccac29c11e3975e19e21ea8095cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/concept/reference/opium_poppy_flower.jpg"
-dest_files=["res://.godot/imported/opium_poppy_flower.jpg-499300d2001f093b54794d53f6b5cef7.ctex"]
+source_file="res://aseprite/reference/opium_poppy_flower.jpg"
+dest_files=["res://.godot/imported/opium_poppy_flower.jpg-43f7ccac29c11e3975e19e21ea8095cc.ctex"]
 
 [params]
 

@@ -85,12 +85,18 @@ debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
 script = ExtResource("2_epg4t")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
-[node name="Hurtbox2D" type="Area2D" parent="." unique_id=501086813 node_paths=PackedStringArray("_root")]
+[node name="Hurtbox2D" type="Area2D" parent="." unique_id=501086813 node_paths=PackedStringArray("_root", "init_shape")]
 scale = Vector2(-1, 1)
 collision_mask = 0
 script = ExtResource("3_3yqyl")
 _root = NodePath("..")
+init_shape = [null]
 metadata/_custom_type_script = "uid://c342mx8mdc4sm"
+
+[node name="Idle" type="CollisionShape2D" parent="Hurtbox2D" unique_id=1535247691]
+debug_color = Color(0.81960785, 0, 0, 0.101960786)
+script = ExtResource("2_epg4t")
+metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
 [node name="ActionBTPlayer" type="BTPlayer" parent="." unique_id=907874365]
 behavior_tree = SubResource("BehaviorTree_qkyai")

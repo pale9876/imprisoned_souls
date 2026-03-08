@@ -1,14 +1,19 @@
 @tool
 extends BTPlayer
+class_name ActionBTPlayer
+
+
+signal state_changed(str: String)
+
 
 
 var _state: String = "Idle"
 var target: Node2D = null
 
 
-func _enter_tree() -> void:
-	agent_node
-
 
 func get_target() -> Node2D: return target
-func change_state(str: String) -> void: _state = str
+
+func change_state(str: String) -> void:
+	_state = str
+	state_changed.emit(str)

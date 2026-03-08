@@ -253,7 +253,7 @@ collision_layer = 0
 monitoring = false
 script = ExtResource("6_tdg3f")
 _root = NodePath("..")
-init_shape = NodePath("Idle")
+init_shape = [NodePath("Idle")]
 mask = 1
 
 [node name="Idle" type="CollisionShape2D" parent="HurtBox" unique_id=1489290861]
@@ -264,46 +264,36 @@ script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
 [node name="Slide" type="CollisionShape2D" parent="HurtBox" unique_id=444208618]
-visible = false
 position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_qc4e2")
-disabled = true
 debug_color = Color(0.81960785, 0, 0, 0.101960786)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
 [node name="Crouch" type="CollisionShape2D" parent="HurtBox" unique_id=623701947]
-visible = false
 position = Vector2(0, -32)
 shape = SubResource("RectangleShape2D_48k13")
-disabled = true
 debug_color = Color(0.81960785, 0, 0, 0.101960786)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
 [node name="Aerial" type="CollisionShape2D" parent="HurtBox" unique_id=2116105788]
-visible = false
 position = Vector2(0, -56)
 shape = SubResource("CircleShape2D_03by7")
-disabled = true
 debug_color = Color(0.81960785, 0, 0, 0.101960786)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
 [node name="Down" type="CollisionShape2D" parent="HurtBox" unique_id=712538248]
-visible = false
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_mjhpk")
-disabled = true
 debug_color = Color(0.81960785, 0, 0, 0.101960786)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
 [node name="Jump" type="CollisionShape2D" parent="HurtBox" unique_id=895920704]
-visible = false
 position = Vector2(0, -56)
 shape = SubResource("RectangleShape2D_4fa2e")
-disabled = true
 debug_color = Color(0.81960785, 0, 0, 0.101960786)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"

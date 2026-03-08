@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5ayr77ufjtll"
-path="res://.godot/imported/flintlock_blunderbuss.jpg-63864db6d37ae89ee6ebb98db29f32f2.ctex"
+uid="uid://0kmtrenhlnxh"
+path="res://.godot/imported/hanging_from_the_miseries_and_misfortunes_of_war_by_JacquesCallot.jpg-6d7d830b2bca538ee1bcfe7fe7f13148.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/concept/reference/flintlock_blunderbuss.jpg"
-dest_files=["res://.godot/imported/flintlock_blunderbuss.jpg-63864db6d37ae89ee6ebb98db29f32f2.ctex"]
+source_file="res://aseprite/reference/hanging_from_the_miseries_and_misfortunes_of_war_by_JacquesCallot.jpg"
+dest_files=["res://.godot/imported/hanging_from_the_miseries_and_misfortunes_of_war_by_JacquesCallot.jpg-6d7d830b2bca538ee1bcfe7fe7f13148.ctex"]
 
 [params]
 

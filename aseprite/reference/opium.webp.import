@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2g6507bdh4k4"
-path="res://.godot/imported/father.jpg-4c95b560adb47c49ebe403be80922b58.ctex"
+uid="uid://bbl5da7iibwqn"
+path="res://.godot/imported/opium.webp-2d4b934ce7ebc080928d61b10cdf6698.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/concept/reference/father.jpg"
-dest_files=["res://.godot/imported/father.jpg-4c95b560adb47c49ebe403be80922b58.ctex"]
+source_file="res://aseprite/reference/opium.webp"
+dest_files=["res://.godot/imported/opium.webp-2d4b934ce7ebc080928d61b10cdf6698.ctex"]
 
 [params]
 

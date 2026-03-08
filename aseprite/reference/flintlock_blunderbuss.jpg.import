@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd5hb7vhloxuk"
-path="res://.godot/imported/red_hood.webp-ad5cf457e5efe75841f39c42f7167ee5.ctex"
+uid="uid://5ayr77ufjtll"
+path="res://.godot/imported/flintlock_blunderbuss.jpg-4b066cf74c75138199c794ba0b370658.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/concept/reference/red_hood.webp"
-dest_files=["res://.godot/imported/red_hood.webp-ad5cf457e5efe75841f39c42f7167ee5.ctex"]
+source_file="res://aseprite/reference/flintlock_blunderbuss.jpg"
+dest_files=["res://.godot/imported/flintlock_blunderbuss.jpg-4b066cf74c75138199c794ba0b370658.ctex"]
 
 [params]
 

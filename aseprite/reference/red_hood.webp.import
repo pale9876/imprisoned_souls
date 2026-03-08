@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbl5da7iibwqn"
-path="res://.godot/imported/opium.webp-1f058e2b2772f2f4218c9dae27b6ac2d.ctex"
+uid="uid://cd5hb7vhloxuk"
+path="res://.godot/imported/red_hood.webp-6ef21842193637cc009a63754eae4d8f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/concept/reference/opium.webp"
-dest_files=["res://.godot/imported/opium.webp-1f058e2b2772f2f4218c9dae27b6ac2d.ctex"]
+source_file="res://aseprite/reference/red_hood.webp"
+dest_files=["res://.godot/imported/red_hood.webp-6ef21842193637cc009a63754eae4d8f.ctex"]
 
 [params]
 

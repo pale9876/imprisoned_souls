@@ -17,7 +17,8 @@ enum State {
 	set(toggle):
 		flip = toggle
 		scale.x = - scale.x
-@export var init_shape: CollisionShape2D = null
+
+@export var init_shape: Array[NotificationShape2D] = []
 
 @export_flags(
 	"하단회피", "상단회피",
@@ -28,7 +29,6 @@ enum State {
 
 @export_flags_2d_physics var mask: int = 0: set = set_mask
 
-#var _current: CollisionShape2D = null
 
 func _notification(what: int) -> void:
 	match what:
@@ -45,14 +45,17 @@ func _notification(what: int) -> void:
 					if !Engine.is_editor_hint():
 						pass
 
-			if init_shape:
-				change_shape(init_shape.name)
+		NOTIFICATION_READY:
+			if !init_shape.is_empty():
+				change_shapes(
+					get_init_shapes()
+				)
 
 		NOTIFICATION_VISIBILITY_CHANGED:
 			monitorable = visible
 			
 			for node: Node in get_children():
-				if init_shape == node:
+				if init_shape.has(node):
 					node.visible = true
 				node.visible = visible
 
@@ -66,6 +69,14 @@ func _notification(what: int) -> void:
 		NOTIFICATION_CHILD_ORDER_CHANGED:
 			pass
 
+
+func get_init_shapes() -> PackedStringArray:
+	var result: PackedStringArray = []
+	for child: Node in get_children():
+		if child is NotificationShape2D and init_shape.has(child):
+			result.push_back(child.name)
+
+	return result
 
 func set_mask(value: int) -> void:
 	mask = value
@@ -104,7 +115,8 @@ func change_shapes(shape_names: Array[StringName]) -> void:
 			cache.push_back(node_idx)
 	
 	for node: Node in children:
-		node.visible = cache.has(node.get_index()) and node is NotificationShape2D
+		if node is NotificationShape2D:
+			node.visible = cache.has(node.get_index())
 
 
 func get_root() -> Node:
