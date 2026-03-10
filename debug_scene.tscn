@@ -27,6 +27,7 @@ shader_parameter/blur = 0.426000020235
 script = ExtResource("9_3t6qa")
 
 [node name="DebugScene" type="Node2D" unique_id=32418687]
+metadata/_edit_vertical_guides_ = [-93.0]
 
 [node name="Stage" parent="." unique_id=1100972656 instance=ExtResource("1_7lgay")]
 

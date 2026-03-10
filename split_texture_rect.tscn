@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://s6yyh45upc82"]
+
+[ext_resource type="Script" uid="uid://de81ff1ldxyju" path="res://split_texture_rect.gd" id="1_va30r"]
+[ext_resource type="Texture2D" uid="uid://bjammpo5iljw6" path="res://aseprite/reference/Saya.(Saya.no.Uta).full.352179.jpg" id="2_c1su6"]
+[ext_resource type="Texture2D" uid="uid://d4bktd58troel" path="res://aseprite/reference/Saya.(Saya.no.Uta).full.159658.jpg" id="3_1aemm"]
+[ext_resource type="Texture2D" uid="uid://cukmei53aovwu" path="res://aseprite/reference/Tsukuba.You.1024.315167.webp" id="4_h87kt"]
+[ext_resource type="Texture2D" uid="uid://cqol32kmhnaxq" path="res://aseprite/reference/Tsukuba.You.1024.315168.webp" id="5_esrq2"]
+
+[node name="SlideTextureRect" type="Control" unique_id=1908428346]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_va30r")
+_texture = Array[Texture2D]([ExtResource("3_1aemm"), ExtResource("2_c1su6"), ExtResource("4_h87kt"), ExtResource("5_esrq2")])
+offset = 3.0
