@@ -11,5 +11,6 @@ point_count = 1
 [node name="SilkPhysicsCurveLine2D" type="Node2D" unique_id=461431377]
 script = ExtResource("1_eua4g")
 curve2d = SubResource("Curve2D_eua4g")
-end_point = Vector2(150, 100)
-points = PackedVector2Array(0, 0, 37.5, 25, 75, 50, 112.5, 75, 150, 100)
+end_point = Vector2(100, 0)
+step = 5
+points = PackedVector2Array(0, 0, -2.5562515, 34.812897, 33.333332, 0, 0, 50, 66.666664, 16.166666, 83.33333, 48.5, 100, 0)
