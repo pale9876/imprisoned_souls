@@ -2,15 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cc6v877ktp63e" path="res://silk_physics_curve_line_2d.gd" id="1_eua4g"]
 
-[sub_resource type="Curve2D" id="Curve2D_eua4g"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0)
-}
-point_count = 1
-
 [node name="SilkPhysicsCurveLine2D" type="Node2D" unique_id=461431377]
 script = ExtResource("1_eua4g")
-curve2d = SubResource("Curve2D_eua4g")
 end_point = Vector2(100, 0)
 step = 5
-points = PackedVector2Array(0, 0, -2.5562515, 34.812897, 33.333332, 0, 0, 50, 66.666664, 16.166666, 83.33333, 48.5, 100, 0)
+points = PackedVector2Array(0, 0, 16.666666, 0, 33.333332, 0, 50, 0, 66.666664, 0, 83.33333, 0, 100, 0)

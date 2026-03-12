@@ -3,21 +3,10 @@ extends Node2D
 class_name SilkPhysicsCurveLine2D
 
 
-enum State{
-	CCD,
-	JOINT,
-	CAST,
-}
-
-
-
 signal length_changed(value: float)
 
 
 @export var test_mode: bool = false
-@export var state: State = State.CAST
-
-@export var curve2d: Curve2D
 
 @export var start_point: Vector2 = Vector2.ZERO:
 	set(value):
@@ -58,7 +47,7 @@ func _양_끝점의_길이() -> float:
 
 
 func _create_points() -> void:
-	points.clear()
+	_clear_points()
 	
 	points.push_back(start_point)
 	
@@ -69,10 +58,7 @@ func _create_points() -> void:
 		points.push_back(point)
 	
 	points.push_back(end_point)
-	
-	if state != State.CAST:
-		# TODO: PhysicsServer2D에서 body, shape 생성
-		pass
+
 
 
 func _get_default_gravity(_delta: float) -> Vector2:
@@ -93,70 +79,64 @@ func _physics_process(delta: float) -> void:
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 	
 	if !Engine.is_editor_hint() or (test_mode and Engine.is_editor_hint()):
-		if state == State.CAST:
-			for i: int in range(1, step + 1, 1):
-				var current_pnt: Vector2 = points[i]
-				var left_pnt: Vector2 = points[i - 1]
-				var right_pnt: Vector2 = points[i + 1]
-				var dist_to_left_pnt: float = current_pnt.distance_squared_to(left_pnt)
-				var dist_to_right_pnt: float = current_pnt.distance_squared_to(right_pnt)
-				var dist_pbp: float = dist_point_by_point()
+		for iter: int in range(0, (step / 2.) + 2, 1):
+			if iter != (step / 2.) + 1:
+				var left_point: Vector2 = points[iter + 1]
+				var right_point: Vector2 = points[(points.size() - 1) - (iter + 1)]
 				
-				var current_position_is_left: bool = i < (step / 2. + 1)
-				var current_position_is_middle: bool = i == step / 2. + 1
-				var current_position_is_right: bool = i > step / 2. + 1
+				#var is_left_point_is_on_floor: bool = _point_is_on_floor(left_point, space_state)
+				#var is_right_point_is_on_floor: bool = _point_is_on_floor(right_point, space_state)
+				#
+				#if is_left_point_is_on_floor and is_right_point_is_on_floor:
+					#continue # 왼쪽 포인트 오른쪽 포인트 모두 물리체와 충돌 시, 다음 루프로 건너뜀.
 				
-				var is_current_dist_less_by_left: bool = dist_to_left_pnt < dist_pbp ** 2
-				var is_current_dist_less_by_right: bool = dist_to_right_pnt < dist_pbp ** 2
+				#var 최대좌표: Vector2 = left_point if right_point.y < left_point.y else right_point
 				
-				if !_point_is_on_floor(points[i], space_state) and (is_current_dist_less_by_left or is_current_dist_less_by_right):
-					var current_pos: Vector2 = global_position + points[i]
-					var next_pos: Vector2 = current_pos + _get_default_gravity(delta)
-					
-					if current_position_is_left:
-						var direction: Vector2 = current_pos.direction_to(next_pos)
-						if left_pnt.distance_squared_to(next_pos) > dist_pbp ** 2:
-							var _fixed_pos: Vector2 = direction * dist_pbp
-							next_pos = _fixed_pos
-						
-						if right_pnt.distance_squared_to(next_pos) < dist_pbp ** 2:
-							var right_pnt_global_pos: Vector2 = right_pnt + global_position
-							var current_dist: float = right_pnt_global_pos.distance_to(next_pos)
-							direction = right_pnt_global_pos.direction_to(next_pos)
-							var _fixed_pos: Vector2 = direction * (dist_pbp - current_dist)
-							next_pos += _fixed_pos
-					elif current_position_is_right:
-						pass
-					
-					var ray_result: Dictionary = _point_is_colliding(current_pos, next_pos, space_state)
-					
-					if !ray_result.is_empty():
-						var collide_point: Vector2 = ray_result.position
-						var normal: Vector2 = ray_result.normal
-						var reminder: Vector2 = current_pos - next_pos
-						
-					else:
-						points[i] = next_pos
-					
-	
+				var purpose_point: Vector2 = left_point + (_get_default_gravity(delta))
+				
+				_move_points(iter, purpose_point)
+			else:
+				pass
+
 		queue_redraw()
 
+
+func _move_points(_range: int, to: Vector2) -> void:
+	var max_idx: int = points.size() - 1
+	var mid_idx: int = int(max_idx / 2.)
+	
+	for i: int in range(_range + 1, max_idx - (_range + 1), 1):
+		var neighbor: Vector2 = points[i - 1] if i < mid_idx else points[i + 1]
+		var _dir: Vector2 = neighbor.direction_to(to)
+		if neighbor.distance_squared_to(to) < dist_point_by_point() ** 2:
+			points[i].y = to.y
+		else:
+			points[i].y = (_dir * dist_point_by_point()).y
+
+
+
+func point_to_global(pnt: Vector2) -> Vector2:
+	return pnt + global_position
+
+
 # RAYCASTING
-func _point_is_colliding(current_point: Vector2, purposing_position: Vector2, space_state: PhysicsDirectSpaceState2D) -> Dictionary:
+func _point_is_colliding(point: Vector2, to: Vector2, space_state: PhysicsDirectSpaceState2D) -> Dictionary:
 	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(
-		current_point, purposing_position, mask
+		point_to_global(point),
+		point_to_global(to),
+		mask
 	)
 	query.hit_from_inside = true
 	
 	var result: Dictionary = space_state.intersect_ray( query )
 
 	return result
-	
+
 
 # POINT CASTING
-func _point_is_on_floor(pnt: Vector2, space_state: PhysicsDirectSpaceState2D) -> bool:
+func _point_is_on_floor(point: Vector2, space_state: PhysicsDirectSpaceState2D) -> bool:
 	var p_query: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
-	p_query.position = pnt
+	p_query.position = point_to_global(point)
 	p_query.collide_with_bodies = true
 	p_query.collision_mask = mask
 	var p_result: Array[Dictionary] = space_state.intersect_point(p_query)
@@ -224,5 +204,6 @@ func _exit_tree() -> void:
 func _clear_points() -> void:
 	points.clear()
 	
-	for rid: RID in points_rid:
-		PhysicsServer2D.free_rid(rid)
+	if !points_rid.is_empty():
+		for rid: RID in points_rid:
+			PhysicsServer2D.free_rid(rid)
