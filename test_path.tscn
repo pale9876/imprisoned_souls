@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cqswfmeg4d5fp"]
+
+[sub_resource type="Curve2D" id="Curve2D_vaf1k"]
+bake_interval = 10.0
+_data = {
+"points": PackedVector2Array(0, -200, 0, 200, 0, 0, -200, 0, 200, 0, 200, 200, 0, 200, -0.513158, -73.76313, 400, 0)
+}
+point_count = 3
+
+[node name="Path2D" type="Path2D" unique_id=1961754942]
+curve = SubResource("Curve2D_vaf1k")
