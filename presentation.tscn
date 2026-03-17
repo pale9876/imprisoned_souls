@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dmojp4uoydd3f"]
+
+[ext_resource type="Script" uid="uid://ffkmintqoksd" path="res://presentation.gd" id="1_5buq6"]
+[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="1_rjcjf"]
+[ext_resource type="Script" uid="uid://c4qg1fwkbc384" path="res://presentation_scene.gd" id="2_w5moa"]
+
+[node name="GameInformation" type="Control" unique_id=218766479]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5buq6")
+title = "GameInformation"
+scenes = Dictionary[int, String]({
+0: "Scene1"
+})
+
+[node name="Scene1" type="Control" parent="." unique_id=1773792671]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_w5moa")
+
+[node name="NinePatchMarginContainer" type="MarginContainer" parent="Scene1" unique_id=1053985989]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_rjcjf")
+_margin_left = 10
+_margin_top = 10
+_margin_right = 10
+_margin_bottom = 10
+metadata/_custom_type_script = "uid://b0w7ljww2qduf"

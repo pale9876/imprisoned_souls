@@ -1,6 +1,6 @@
 @tool
 extends MarginContainer
-class_name NinePatchContainer
+class_name NinePatchMarginContainer
 
 #const PLACEHOLDER: Texture2D = preload("uid://bcvaoqgahiygm")
 
