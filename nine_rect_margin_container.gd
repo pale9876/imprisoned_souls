@@ -19,43 +19,44 @@ enum Margin
 		update_texture()
 		queue_redraw()
 
+
 @export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY)
 var _region: Rect2
 
+
 @export_group("Margin")
+
 @export var _margin_left: int = 0:
 	set(value):
 		_margin_left = value
-		if _margin_left > 0:
-			set_margin(Margin.LEFT, _margin_left)
+		set_margin(Margin.LEFT, value)
 		queue_redraw()
+
 @export var _margin_top: int = 0:
 	set(value):
 		_margin_top = value
-		if _margin_top > 0:
-			set_margin(Margin.TOP, _margin_top)
+		set_margin(Margin.TOP, value)
 		queue_redraw()
+
 @export var _margin_right: int = 0:
 	set(value):
 		_margin_right = value
-		if _margin_right > 0:
-			set_margin(Margin.RIGHT, _margin_right)
+		set_margin(Margin.RIGHT, value)
 		queue_redraw()
+
 @export var _margin_bottom: int = 0:
 	set(value):
 		_margin_bottom = value
-		if _margin_bottom > 0:
-			set_margin(Margin.BOTTOM, _margin_bottom)
+		set_margin(Margin.BOTTOM, value)
 		queue_redraw()
-
-#@export var draw_center: bool = true
 
 
 var canvas_rid: RID
 
-
 func set_margin(type: Margin, value: int) -> void:
 	var _str: String = ""
+	
+	if value < 0: return
 	
 	match type:
 		Margin.LEFT:
@@ -80,6 +81,7 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
 			canvas_rid = get_canvas_item()
+
 		NOTIFICATION_RESIZED:
 			queue_redraw()
 

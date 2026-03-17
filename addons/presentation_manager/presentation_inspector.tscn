@@ -12,13 +12,35 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2jwq7")
 
-[node name="NinePatchMarginContainer" type="MarginContainer" parent="." unique_id=614610450]
+[node name="TabContainer" type="TabContainer" parent="." unique_id=2043568781]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+tab_alignment = 1
+current_tab = 0
+tabs_visible = false
+
+[node name="Pressentation" type="TabBar" parent="TabContainer" unique_id=93513354]
+unique_name_in_owner = true
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Pressentation" unique_id=26926852]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchMarginContainer" type="MarginContainer" parent="TabContainer/Pressentation/ScrollContainer" unique_id=614610450]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -30,25 +52,32 @@ _margin_right = 5
 _margin_bottom = 5
 metadata/_custom_type_script = "uid://b0w7ljww2qduf"
 
-[node name="VSplitContainer" type="VSplitContainer" parent="NinePatchMarginContainer" unique_id=190750263]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Pressentation/ScrollContainer/NinePatchMarginContainer" unique_id=68618626]
 layout_mode = 2
-split_offsets = PackedInt32Array(23, 307)
-collapsed = true
-split_offset = 23
 
-[node name="Label" type="Label" parent="NinePatchMarginContainer/VSplitContainer" unique_id=373679619]
+[node name="Label" type="Label" parent="TabContainer/Pressentation/ScrollContainer/NinePatchMarginContainer/VBoxContainer" unique_id=373679619]
 layout_mode = 2
 text = "Presentation Title"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="NinePatchMarginContainer/VSplitContainer" unique_id=1987737792]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchMarginContainer/VSplitContainer" unique_id=68618626]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Pressentation/ScrollContainer/NinePatchMarginContainer/VBoxContainer" unique_id=462013766]
 layout_mode = 2
 
-[node name="AddScene" type="Button" parent="NinePatchMarginContainer/VSplitContainer/VBoxContainer" unique_id=614609873]
+[node name="AddScene" type="Button" parent="TabContainer/Pressentation/ScrollContainer/NinePatchMarginContainer/VBoxContainer" unique_id=614609873]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Add Scene"
+
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/Pressentation/ScrollContainer/NinePatchMarginContainer/VBoxContainer" unique_id=1316083317]
+layout_mode = 2
+
+[node name="ClearAllScenes" type="Button" parent="TabContainer/Pressentation/ScrollContainer/NinePatchMarginContainer/VBoxContainer" unique_id=1418643000]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Clear All Scenes"
+
+[node name="Scene" type="TabBar" parent="TabContainer" unique_id=2032593357]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
