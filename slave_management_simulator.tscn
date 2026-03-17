@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bwrn4w7gjrq2y"]
+
+[ext_resource type="Script" uid="uid://c0vs0bec2o1dl" path="res://mouse_interactable_area_2d.gd" id="1_8qn1a"]
+[ext_resource type="Script" uid="uid://bv8jgicw64qw7" path="res://scene_camera_2d.gd" id="2_sr0vo"]
+
+[node name="Node2D" type="Node2D" unique_id=926680205]
+
+[node name="MouseInteractableArea2D" type="Node2D" parent="." unique_id=433992381]
+script = ExtResource("1_8qn1a")
+
+[node name="SceneCamera2D" type="Camera2D" parent="." unique_id=326800775]
+script = ExtResource("2_sr0vo")
+metadata/_custom_type_script = "uid://bv8jgicw64qw7"
