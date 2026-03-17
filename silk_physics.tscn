@@ -6,4 +6,5 @@
 script = ExtResource("1_tkps4")
 test_mode = true
 end_point = Vector2(300, 300)
+inout_max_ratio = 90.0
 points = PackedVector2Array(0, 0, -50, 50, 250, 350, 300, 300)
