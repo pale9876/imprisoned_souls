@@ -4,7 +4,9 @@
 [ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="1_rjcjf"]
 [ext_resource type="Script" uid="uid://c4qg1fwkbc384" path="res://presentation_scene.gd" id="2_w5moa"]
 
-[node name="GameInformation" type="Control" unique_id=218766479]
+[sub_resource type="LabelSettings" id="LabelSettings_w5moa"]
+
+[node name="Game_Information" type="Control" unique_id=218766479]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5buq6")
-title = "GameInformation"
+title = "Game Information"
 scenes = Dictionary[int, String]({
 0: "Scene1"
 })
@@ -43,3 +45,10 @@ _margin_top = 10
 _margin_right = 10
 _margin_bottom = 10
 metadata/_custom_type_script = "uid://b0w7ljww2qduf"
+
+[node name="CenterContainer" type="CenterContainer" parent="Scene1/NinePatchMarginContainer" unique_id=187434187]
+layout_mode = 2
+
+[node name="PresentationTitle" type="Label" parent="Scene1/NinePatchMarginContainer/CenterContainer" unique_id=1516683045]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_w5moa")

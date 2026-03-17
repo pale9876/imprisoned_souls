@@ -10,10 +10,11 @@ const NOTIFICATION_PRESENTATION_RENAMED: int = 1100
 	set(value):
 		title = value
 		notification(NOTIFICATION_PRESENTATION_RENAMED)
-		
+
 
 @export var scenes: Dictionary[int, String] = {}
 
+@export var title_scene: PresentationScene
 
 
 func _notification(what: int) -> void:
@@ -30,8 +31,10 @@ func _notification(what: int) -> void:
 			if title.is_empty(): return
 			
 			var fix: String = title.replace(" ", "_")
+			for node: Node in get_children():
+				if node.name == title:
+					pass
 			name = StringName(fix)
-
 
 
 func clear_scenes() -> void:
@@ -51,4 +54,4 @@ func list_scenes() -> Dictionary[int, String]:
 
 
 class SavePres extends Resource:
-	var title: String = "New Presentation"
+	var title: String = ""

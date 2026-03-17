@@ -4,9 +4,13 @@ extends EditorPlugin
 
 const PRESENTATION_INSPECTOR_SCENE: PackedScene = preload("uid://vj3mtpe7yn1q")
 
+const NOTIFICATION_PRESENTATION_SELECTED: int = 1200
+const NOTIFICATION_SCENE_SELECTED: int = 1201
+
 
 var presentation_dock: EditorDock
 var presentation_inspector: PresentationInspector = null
+
 
 
 func _enter_tree() -> void:
@@ -15,19 +19,35 @@ func _enter_tree() -> void:
 		presentation_inspector = PRESENTATION_INSPECTOR_SCENE.instantiate()
 		add_dock(presentation_dock)
 
-
+		EditorInterface.get_inspector().edited_object_changed.connect(_on_edit_object_changed)
 
 
 func _on_edit_object_changed() -> void:
-	pass
+	var inspector: EditorInspector = EditorInterface.get_inspector()
+	
+	var _edit: Object = inspector.get_edited_object()
+	
+	if _edit is Presentation:
+		notification(NOTIFICATION_PRESENTATION_SELECTED)
 
+	elif _edit is PresentationScene:
+		notification(NOTIFICATION_SCENE_SELECTED)
+	
 
 func _notification(what: int) -> void:
-	pass
-
+	match what:
+		NOTIFICATION_ENTER_TREE:
+			pass
+	
+		NOTIFICATION_PRESENTATION_SELECTED:
+			pass
+		
+		NOTIFICATION_SCENE_SELECTED:
+			pass
 
 func _exit_tree() -> void:
 	if presentation_inspector:
 		remove_dock(presentation_dock)
 		presentation_inspector.queue_free()
-		
+
+		EditorInterface.get_inspector().edited_object_changed.disconnect(_on_edit_object_changed)

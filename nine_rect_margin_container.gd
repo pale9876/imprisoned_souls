@@ -48,7 +48,7 @@ var _region: Rect2
 			set_margin(Margin.BOTTOM, _margin_bottom)
 		queue_redraw()
 
-@export var draw_center: bool = true
+#@export var draw_center: bool = true
 
 
 var canvas_rid: RID
