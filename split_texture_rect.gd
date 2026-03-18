@@ -3,12 +3,13 @@ extends Control
 class_name SlideTextureRect
 
 
-const NOTIFICATION_TEXTURE_ADDED: int = 1100
-const NOTIFICATION_TEXTURE_CLEARED: int = 1101
-
+const NOTIFICATION_TEXTURE_ADDED: int = 1000
+const NOTIFICATION_TEXTURE_CLEARED: int = 1001
 
 signal texture_changed()
 
+@export var auto_slide: bool = false
+@export var time: float = 3.
 
 @export_custom(PROPERTY_HINT_ARRAY_TYPE, "", PROPERTY_USAGE_DEFAULT)
 var _texture: Array[Texture2D]
@@ -22,12 +23,7 @@ var _add_texture_btn: Callable = _editor_add_texture
 var _clear_btn: Callable = _clear
 
 
-var max_progress: float:
-	get:
-		return float(_texture.size()) - 1. if _texture.size() > 1 else 0.
-
-
-var offset: float = 0.:
+@export var offset: float = 0.:
 	get: return offset
 	set(value):
 		offset = value
@@ -41,31 +37,33 @@ func _notification(what: int) -> void:
 			RenderingServer.canvas_item_clear(canvas_item_rid)
 			
 			if !_texture.is_empty():
-				# draw 
-				for i: int in range(_texture.size()):
-					if i == 0:
-						var background_texture: Texture2D = _texture[0]
-						
-						RenderingServer.canvas_item_add_texture_rect_region(
-							canvas_item_rid, Rect2(Vector2(), get_size()),
-							background_texture.get_rid(), Rect2(Vector2(), background_texture.get_size()),
-							#modulate,
-						)
-					else:
-						var _tex: Texture2D = _texture[i]
-						var _texture_progress: float = clampf(offset - float(i - 1.), 0., 1.)
-						var _sz: Vector2 = get_size()
-						_sz.x *= _texture_progress
-						
-						var _texture_size: Vector2 = _tex.get_size()
-						_texture_size.x *= _texture_progress
-						
-						RenderingServer.canvas_item_add_texture_rect_region(
-							canvas_item_rid,
-							Rect2(Vector2(), _sz),
-							_tex.get_rid(),
-							Rect2(Vector2(), _texture_size)
-						)
+				# draw texture
+				var current_idx: int = int(offset) % _texture.size()
+				var bg_texture: Texture2D = _texture[current_idx]
+				var target_texture: Texture2D = _texture[(current_idx + 1) % _texture.size()]
+				
+				RenderingServer.canvas_item_add_texture_rect_region(
+					canvas_item_rid, Rect2(Vector2(), get_size()),
+					bg_texture.get_rid(), Rect2(Vector2(), bg_texture.get_size()),
+				)
+				
+				var _texture_progress: float = clampf(
+					offset - floor(offset), 0., 1.
+				)
+
+				var _sz: Vector2 = get_size()
+				_sz.x *= _texture_progress
+				
+				var target_size: Vector2 = target_texture.get_size()
+				target_size.x *= _texture_progress
+				
+				RenderingServer.canvas_item_add_texture_rect_region(
+					canvas_item_rid,
+					Rect2(Vector2(), _sz),
+					target_texture.get_rid(),
+					Rect2(Vector2(), target_size)
+				)
+
 
 		NOTIFICATION_TEXTURE_ADDED:
 			if Engine.is_editor_hint():
@@ -76,29 +74,26 @@ func _notification(what: int) -> void:
 				print("Texture Cleared")
 
 
-func _validate_property(property: Dictionary) -> void:
-	if property.name == "offset":
-		property.hint = PROPERTY_HINT_RANGE
-		property.hint_string = "0.0, " + str(max_progress) + ", 0.01"
-		property.usage = PROPERTY_USAGE_DEFAULT
-
-#func _get_property_list() -> Array[Dictionary]:
-	#var result: Array[Dictionary] = []
-	#
-	#result.push_back(
-		#{
-			#"name": 
-		#}
-	#)
-	#
-	#return
-
-
 func _gui_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint(): return
 
 	if event is InputEventMouseMotion:
 		var dragged: Vector2 = event.relative
+
+
+func _slide_next() -> void:
+	var current_idx: int = int(floorf(offset))
+	var next_idx: int = current_idx + 1
+	
+	
+	var tween: Tween = create_tween()
+	tween.tween_property(
+		self, "offset", float(next_idx), 1.
+	)
+	
+	await tween.finished
+	
+	texture_changed.emit()
 
 
 func _clear() -> void:
