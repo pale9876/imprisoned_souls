@@ -24,8 +24,12 @@ resources_spreadsheet_view/freeze_first_column=true
 
 [application]
 
-config/name="project_revenant"
-config/description="프로젝트 레버넌트"
+config/name="Restrictions of the Souls"
+config/description="구속된 영혼들, 복제인간에 대한 이야기들을 다룹니다.
+
+Author: Sohn Seongho
+장르: 코스믹 호러
+등급: 자율적, 17세 이상"
 run/main_scene="uid://2cbinw3drmxd"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"

@@ -2,12 +2,18 @@
 
 [ext_resource type="Script" uid="uid://c0vs0bec2o1dl" path="res://mouse_interactable_area_2d.gd" id="1_8qn1a"]
 [ext_resource type="Script" uid="uid://bv8jgicw64qw7" path="res://scene_camera_2d.gd" id="2_sr0vo"]
+[ext_resource type="Script" uid="uid://ci422twdsgjl2" path="res://mangania_unit_2d.gd" id="3_2g3mv"]
 
 [node name="Node2D" type="Node2D" unique_id=926680205]
 
 [node name="MouseInteractableArea2D" type="Node2D" parent="." unique_id=433992381]
+visible = false
 script = ExtResource("1_8qn1a")
 
 [node name="SceneCamera2D" type="Camera2D" parent="." unique_id=326800775]
 script = ExtResource("2_sr0vo")
 metadata/_custom_type_script = "uid://bv8jgicw64qw7"
+
+[node name="ManganiaUnit2D" type="Node2D" parent="." unique_id=962794465]
+script = ExtResource("3_2g3mv")
+color = Color(0.64705884, 0.84705883, 0.84705883, 0.11372549)
