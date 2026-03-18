@@ -38,6 +38,7 @@ InputHandler="*uid://e3v8nla7qwf3"
 QuestSystem="*uid://b05aindhdg27l"
 Executioner="*uid://db6qoudfuxmol"
 ImageSelector="*uid://bkb1epbrwsfbn"
+EssaRealTimeControlSystem="*uid://bd1ydcgvjlqn3"
 
 [display]
 
