@@ -8,8 +8,11 @@ const NOTIFICATION_TEXTURE_CLEARED: int = 1001
 
 signal texture_changed()
 
+@export var transition_curve: Curve = Curve.new()
 @export var auto_slide: bool = false
 @export var time: float = 3.
+var _time: float = .0
+
 
 @export_custom(PROPERTY_HINT_ARRAY_TYPE, "", PROPERTY_USAGE_DEFAULT)
 var _texture: Array[Texture2D]
@@ -30,8 +33,26 @@ var _clear_btn: Callable = _clear
 		queue_redraw()
 
 
+
+func _process(delta: float) -> void:
+	pass
+
+
 func _notification(what: int) -> void:
 	match what:
+		
+		NOTIFICATION_ENTER_TREE:
+			_time = time
+		
+		NOTIFICATION_PROCESS:
+			var _delta: float = get_process_delta_time()
+			if auto_slide:
+				_time -= _delta
+
+			if _time < 0.:
+				_time = time
+				_slide_next()
+		
 		NOTIFICATION_DRAW:
 			var canvas_item_rid: RID = get_canvas_item()
 			RenderingServer.canvas_item_clear(canvas_item_rid)
@@ -85,11 +106,18 @@ func _slide_next() -> void:
 	var current_idx: int = int(floorf(offset))
 	var next_idx: int = current_idx + 1
 	
-	
 	var tween: Tween = create_tween()
-	tween.tween_property(
-		self, "offset", float(next_idx), 1.
-	)
+	
+	if transition_curve:
+		tween.tween_property(
+			self, "offset", float(next_idx), 1.
+		).set_custom_interpolator(
+			func(value: float) -> float: return transition_curve.sample_baked(value)
+		)
+	else:
+		tween.tween_property(
+			self, "offset", float(next_idx), .6
+		).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	
 	await tween.finished
 	
