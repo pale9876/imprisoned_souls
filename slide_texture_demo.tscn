@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cqol32kmhnaxq" path="res://aseprite/reference/Tsukuba.You.1024.315168.webp" id="5_lvivc"]
 
 [sub_resource type="Curve" id="Curve_b6p6w"]
-_data = [Vector2(0, 0), 0.0, 3.0381894, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 3.621188, 0, 0, Vector2(0.8439716, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="SlideTextureRect" type="Control" unique_id=1908428346]
@@ -20,4 +20,4 @@ grow_vertical = 2
 script = ExtResource("1_b6p6w")
 transition_curve = SubResource("Curve_b6p6w")
 _texture = Array[Texture2D]([ExtResource("2_v1vot"), ExtResource("3_xr3jk"), ExtResource("4_krc4s"), ExtResource("5_lvivc")])
-offset = 50.0
+offset = 65.0

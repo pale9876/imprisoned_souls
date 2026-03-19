@@ -27,11 +27,13 @@ var _clear_btn: Callable = _clear
 
 
 @export var offset: float = 0.:
-	get: return offset
+	get: return abs(offset)
 	set(value):
 		offset = value
 		queue_redraw()
 
+
+var _hold: bool = false
 
 
 func _process(delta: float) -> void:
@@ -40,12 +42,15 @@ func _process(delta: float) -> void:
 
 func _notification(what: int) -> void:
 	match what:
+		NOTIFICATION_MOUSE_EXIT:
+			_hold = false
 		
 		NOTIFICATION_ENTER_TREE:
 			_time = time
 		
 		NOTIFICATION_PROCESS:
 			var _delta: float = get_process_delta_time()
+
 			if auto_slide:
 				_time -= _delta
 
@@ -53,6 +58,9 @@ func _notification(what: int) -> void:
 				_time = time
 				_slide_next()
 		
+			if Engine.is_editor_hint(): return
+			_hold = DisplayServer.mouse_get_button_state() == MOUSE_BUTTON_LEFT and !auto_slide
+
 		NOTIFICATION_DRAW:
 			var canvas_item_rid: RID = get_canvas_item()
 			RenderingServer.canvas_item_clear(canvas_item_rid)
@@ -94,12 +102,12 @@ func _notification(what: int) -> void:
 			if Engine.is_editor_hint():
 				print("Texture Cleared")
 
-
 func _gui_input(event: InputEvent) -> void:
-	if Engine.is_editor_hint(): return
-
 	if event is InputEventMouseMotion:
-		var dragged: Vector2 = event.relative
+		if _hold:
+			var dragged: Vector2 = event.relative
+			offset += dragged.x * .001
+
 
 
 func _slide_next() -> void:
