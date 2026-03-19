@@ -16,4 +16,4 @@ metadata/_custom_type_script = "uid://bv8jgicw64qw7"
 
 [node name="ManganiaUnit2D" type="Node2D" parent="." unique_id=962794465]
 script = ExtResource("3_2g3mv")
-color = Color(0.64705884, 0.84705883, 0.84705883, 0.11372549)
+color = Color(0.64705884, 0.84705883, 0.84705883, 0.7411765)

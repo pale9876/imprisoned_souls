@@ -35,16 +35,18 @@ func _notification(what: int) -> void:
 		NOTIFICATION_ENTER_TREE:
 			var space: RID = get_world_2d().space
 
-			body_rid = PhysicsServer2D.body_create()
-			for res: CollideInfo in collider:
-				var shape_rid: RID = res.rid
-				PhysicsServer2D.body_add_shape(
-					body_rid,
-					res.rid,
-					get_global_transform() if !collision_draw_up else Transform2D(0., Vector2.ONE, 0., - res.position),
-					false
-				)
-				PhysicsServer2D.shape_set_data(shape_rid, res.size)
+			print(create_body_rid())
+
+			if !collider.is_empty():
+				for res: CollideInfo in collider:
+					var shape_rid: RID = res.rid
+					PhysicsServer2D.body_add_shape(
+						body_rid,
+						res.rid,
+						get_global_transform() if !collision_draw_up else Transform2D(0., Vector2.ONE, 0., - res.position),
+						false
+					)
+					PhysicsServer2D.shape_set_data(shape_rid, res.size)
 
 			PhysicsServer2D.body_set_space(body_rid, space)
 			PhysicsServer2D.body_set_mode(body_rid, PhysicsServer2D.BODY_MODE_KINEMATIC)
@@ -58,33 +60,44 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_DRAW:
 			var canvas_item: RID = get_canvas_item()
-			var shape_transform: Transform2D = PhysicsServer2D.body_get_shape_transform(body_rid, 0)
-			print(PhysicsServer2D.shape_get_data(
-						PhysicsServer2D.body_get_shape(body_rid, 0)
-					))
-			RenderingServer.canvas_item_add_rect(
-				canvas_item,
-				Rect2(
-					shape_transform.origin,
-					PhysicsServer2D.shape_get_data(
-						PhysicsServer2D.body_get_shape(body_rid, 0)
-					)
-				),
-				color
-			)
+			var shape_count: int = PhysicsServer2D.body_get_shape_count(body_rid)
+			if shape_count > 0:
+				for i: int in range(shape_count):
+					print(PhysicsServer2D.shape_get_data(PhysicsServer2D.body_get_shape(body_rid, i)))
+			
+			#var shape_transform: Transform2D = PhysicsServer2D.body_get_shape_transform(body_rid, 0)
+			#print(PhysicsServer2D.shape_get_data(
+						#PhysicsServer2D.body_get_shape(body_rid, 0)
+					#))
+			#RenderingServer.canvas_item_add_rect(
+				#canvas_item,
+				#Rect2(
+					#shape_transform.origin,
+					#PhysicsServer2D.shape_get_data(
+						#PhysicsServer2D.body_get_shape(body_rid, 0)
+					#)
+				#),
+				#color
+			#)
 
 		NOTIFICATION_EXIT_TREE:
 			PhysicsServer2D.free_rid(body_rid)
 
 
-#func get_shape_rid(shape_name: StringName) -> RID:
-	#if !collisions.has(shape_name): return RID()
-	#return collisions[shape_name].get_rid()
-
-
 func get_body_rid() -> RID:
 	return body_rid
 
+
+func create_body_rid() -> RID:
+	var rid: RID = PhysicsServer2D.body_create()
+	body_rid = rid
+	return body_rid
+
+
+func create_collider_shape(size: Vector2) -> RID:
+	var rid: RID = PhysicsServer2D.rectangle_shape_create()
+
+	return rid
 
 func create_collider(collider_name: StringName) -> void:
 	var res: CollideInfo = CollideInfo.new()
