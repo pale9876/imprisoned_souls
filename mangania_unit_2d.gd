@@ -6,14 +6,14 @@ class_name ManganiaUnit2D
 var body_rid: RID
 
 @export var collision_draw_up: bool = true
-#@export var size: Vector2 = Vector2(10., 10.)
 
-var collider: Array[CollideInfo]
+@export var collider: Array[CollideInfo]
 
 @export var color: Color = Color(0.647, 0.529, 0.847, 0.89)
 
 @export_flags_2d_physics var mask: int = 1
 @export_flags_2d_physics var layer: int = 1
+
 
 # OVERRIDE
 func _process(delta: float) -> void:
@@ -35,14 +35,16 @@ func _notification(what: int) -> void:
 		NOTIFICATION_ENTER_TREE:
 			var space: RID = get_world_2d().space
 
-			print(create_body_rid())
+			create_body_rid()
 
 			if !collider.is_empty():
 				for res: CollideInfo in collider:
-					var shape_rid: RID = res.rid
+					res.shape_rid = PhysicsServer2D.rectangle_shape_create()
+					var shape_rid: RID = res.shape_rid
+					
 					PhysicsServer2D.body_add_shape(
 						body_rid,
-						res.rid,
+						res.shape_rid,
 						get_global_transform() if !collision_draw_up else Transform2D(0., Vector2.ONE, 0., - res.position),
 						false
 					)
@@ -63,22 +65,15 @@ func _notification(what: int) -> void:
 			var shape_count: int = PhysicsServer2D.body_get_shape_count(body_rid)
 			if shape_count > 0:
 				for i: int in range(shape_count):
-					print(PhysicsServer2D.shape_get_data(PhysicsServer2D.body_get_shape(body_rid, i)))
-			
-			#var shape_transform: Transform2D = PhysicsServer2D.body_get_shape_transform(body_rid, 0)
-			#print(PhysicsServer2D.shape_get_data(
-						#PhysicsServer2D.body_get_shape(body_rid, 0)
-					#))
-			#RenderingServer.canvas_item_add_rect(
-				#canvas_item,
-				#Rect2(
-					#shape_transform.origin,
-					#PhysicsServer2D.shape_get_data(
-						#PhysicsServer2D.body_get_shape(body_rid, 0)
-					#)
-				#),
-				#color
-			#)
+					var shape_data: Variant = (PhysicsServer2D.shape_get_data(
+						PhysicsServer2D.body_get_shape(body_rid, i))
+					)
+					
+					var shape_xform: Transform2D = PhysicsServer2D.body_get_shape_transform(body_rid, i)
+					var shape_pos: Vector2 = shape_xform.origin
+					
+					draw_rect(Rect2(shape_pos, shape_data), color)
+
 
 		NOTIFICATION_EXIT_TREE:
 			PhysicsServer2D.free_rid(body_rid)
@@ -94,15 +89,10 @@ func create_body_rid() -> RID:
 	return body_rid
 
 
-func create_collider_shape(size: Vector2) -> RID:
-	var rid: RID = PhysicsServer2D.rectangle_shape_create()
-
-	return rid
-
 func create_collider(collider_name: StringName) -> void:
 	var res: CollideInfo = CollideInfo.new()
 	res.name = collider_name
-	res.rid = PhysicsServer2D.rectangle_shape_create()
+	res.shape_rid = PhysicsServer2D.rectangle_shape_create()
 	res.owner = self
 	res._index = collider.size()
 
@@ -132,17 +122,3 @@ func _update_collider_index() -> void:
 			body_rid, index, res.rid
 		)
 		index += 1
-
-
-class CollideInfo extends RefCounted:
-	var _index: int = -1
-	var name: StringName = &""
-	var position: Vector2 = Vector2()
-	var size: Vector2 = Vector2(10., 10.)
-	var disabled: bool = true
-	var rid: RID
-	var owner: ManganiaUnit2D
-
-
-	func get_rid() -> RID: return rid
-	func get_owner() -> ManganiaUnit2D: return owner
