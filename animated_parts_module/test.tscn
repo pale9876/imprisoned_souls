@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="3_kxige"]
 [ext_resource type="Script" uid="uid://bv8jgicw64qw7" path="res://scene_camera_2d.gd" id="4_rrvww"]
 [ext_resource type="Script" uid="uid://ci422twdsgjl2" path="res://mangania_unit_2d.gd" id="5_bev4p"]
+[ext_resource type="Script" uid="uid://br7fksvlapvok" path="res://collide_info.gd" id="6_0rd70"]
 [ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad_2d.gd" id="6_dseeu"]
 [ext_resource type="Script" uid="uid://d16i88d7475ot" path="res://hurt_box.gd" id="6_mijng"]
 
@@ -16,7 +17,17 @@ metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 script = ExtResource("3_kxige")
 metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 
+[sub_resource type="Resource" id="Resource_mijng"]
+script = ExtResource("6_0rd70")
+name = &"Idle"
+metadata/_custom_type_script = "uid://br7fksvlapvok"
+
 [node name="Node2D" type="Node2D" unique_id=1400297344]
+
+[node name="SceneCamera2D" type="Camera2D" parent="." unique_id=117875486]
+zoom = Vector2(0.575, 0.575)
+script = ExtResource("4_rrvww")
+metadata/_custom_type_script = "uid://bv8jgicw64qw7"
 
 [node name="AnimatedPartsModule" type="Node2D" parent="." unique_id=9520551]
 position = Vector2(-104, -72)
@@ -33,13 +44,9 @@ draw_center = false
 color = Color(0, 0.74, 0.7276667, 0.25882354)
 metadata/_custom_type_script = "uid://obsbb3h5biim"
 
-[node name="SceneCamera2D" type="Camera2D" parent="." unique_id=117875486]
-zoom = Vector2(0.575, 0.575)
-script = ExtResource("4_rrvww")
-metadata/_custom_type_script = "uid://bv8jgicw64qw7"
-
 [node name="ManganiaUnit2D" type="Node2D" parent="." unique_id=444636936]
 script = ExtResource("5_bev4p")
+collider = Array[ExtResource("6_0rd70")]([SubResource("Resource_mijng")])
 metadata/_custom_type_script = "uid://ci422twdsgjl2"
 
 [node name="Hurtbox" type="Node2D" parent="ManganiaUnit2D" unique_id=1769846153]

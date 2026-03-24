@@ -101,6 +101,7 @@ func create_awareness(space: RID) -> void:
 
 
 func move_squad(to) -> void:
+	
 	# TODO: move toward to target
 	
 	notification(NOTIFICATION_TRANSFORM_CHANGED)

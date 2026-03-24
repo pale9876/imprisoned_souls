@@ -1,10 +1,21 @@
 @tool
 extends EditorInspectorPlugin
-class_name InspectorExtendPlugin
+class_name CollideInfoEditorPlugin
 
 
-func _can_handle(object: Object) -> bool:
-	return object is ManganiaUnit2D
+const NOTIFICATION_COLLIDER_INFO_UPDATED: int = 21100
+
+
+func _can_handle(obj: Object) -> bool:
+	return is_unit(obj) or is_hurtbox(obj)
+
+
+func is_hurtbox(obj: Object) -> bool:
+	return obj is Hurtbox
+
+
+func is_unit(obj: Object) -> bool:
+	return obj is ManganiaUnit2D
 
 
 func _parse_property(
@@ -20,7 +31,7 @@ func _parse_property(
 	if obj is ManganiaUnit2D:
 		if name == "collider":
 			var data: Array = obj.collider
-			var multi_shape_property: MultiShapeProperty = MultiShapeProperty.new(obj, data)
+			var multi_shape_property: MultiShapeProperty = MultiShapeProperty.new(obj)
 			add_property_editor(name, multi_shape_property)
 			
 			return true
@@ -36,13 +47,12 @@ class MultiShapeProperty extends EditorProperty:
 	var show_editor_btn: Button = Button.new()
 
 	var edit: Object
-	var data: Variant
 
 	var property_container: VBoxContainer
 
-	func _init(obj: Object, _data: Variant = null) -> void:
+	func _init(obj: Object) -> void:
 		edit = obj
-		if _data: data = _data
+		
 		show_editor_btn.text = "View Info"
 		
 		add_child(show_editor_btn)
@@ -51,9 +61,11 @@ class MultiShapeProperty extends EditorProperty:
 		show_editor_btn.button_up.connect(_show_editor_btn_pressed)
 		_window = MultiShapeEditorWindow.new()
 
+		var scroll_container: ScrollContainer = ScrollContainer.new()
 		var margin_container: MarginContainer = MarginContainer.new()
 
 		_window.add_child(margin_container)
+		margin_container.add_child(scroll_container)
 		add_child(_window)
 		
 		margin_container.add_theme_constant_override("margin_top", 5)
@@ -63,7 +75,6 @@ class MultiShapeProperty extends EditorProperty:
 		
 		property_container = VBoxContainer.new()
 		margin_container.add_child(property_container)
-		
 
 
 	func _notification(what: int) -> void:
@@ -74,8 +85,6 @@ class MultiShapeProperty extends EditorProperty:
 
 	func _show_editor_btn_pressed() -> void:
 		_window.popup_centered(Vector2i(400, 400))
-		
-
 
 
 	func clear_properties() -> void:
@@ -84,44 +93,104 @@ class MultiShapeProperty extends EditorProperty:
 
 
 	func _update_property() -> void:
-		clear_properties()
+		if edit is ManganiaUnit2D:
+			for res: CollideInfo in edit.collider:
+				var info_container: CollideInfoContainer = CollideInfoContainer.new()
+				info_container.res = res
+				property_container.add_child(info_container)
+				
+				#set_data(hbox, "Name", res.name)
+				var shape_name_edit: LineEdit = LineEdit.new()
+				shape_name_edit.text = res.name
+				shape_name_edit.placeholder_text = "CollideName"
+				shape_name_edit.text_submitted.connect(
+					func(new_text: String) -> void:
+						info_container.res.name = new_text
+						print("collide info name changed")
+				)
+				info_container.add_child(shape_name_edit)
+				
+				var shape_rid_label: Label = Label.new()
+				info_container.add_child(shape_rid_label)
+				shape_rid_label.text = str(res._shape)
+				
+				#set_data(hbox, "Position", res.position)
+				var pos_value_edits: Array[LineEdit] = set_vector_value(info_container, res.position, "Position")
+				var pos_x_edit: LineEdit = pos_value_edits[0]
+				pos_x_edit.text_submitted.connect(
+					func(new_text: String) -> void:
+						if new_text.is_valid_float():
+							var new_value: float = new_text.to_float()
+							res.positoin.x = new_value
+							print("collider info position X value changed")
+				)
+				
+				var pos_y_edit: LineEdit = pos_value_edits[1]
+				pos_y_edit.text_submitted.connect(
+					func(new_text: String) -> void:
+						pass
+				)
+				
+				
+				#set_data(hbox, "Size", res.size)
+				var size_value_edits: Array[LineEdit] = set_vector_value(info_container, res.size, "Size")
+				var size_x_edit: LineEdit = size_value_edits[0]
+				
+				var size_y_edit: LineEdit = size_value_edits[1]
+				
+				
+				#set_data(hbox, "Disabled", res.disabled)
+				set_toggle(info_container, "Disabled", res.disabled)
 
-		if data is Array:
-			for res: Variant in data:
-				if res is CollideInfo:
-					var hbox: HBoxContainer = HBoxContainer.new()
-					property_container.add_child(hbox)
-					
-					set_data(hbox, "Name", res.name)
-					
-					var label: Label = Label.new()
-					hbox.add_child(label)
-					label.text = str(res.shape_rid)
-					
-					set_data(hbox, "Position", res.position)
-					set_data(hbox, "Size", res.size)
-					set_data(hbox, "Disabled", res.disabled)
-		
 		var add_collider_btn: Button = Button.new()
-		property_container.add_child(add_collider_btn)
 		add_collider_btn.text = "Add Collider"
 		add_collider_btn.button_up.connect(_add_collider_btn_pressed)
+		property_container.add_child(add_collider_btn)
+
+
+	func set_toggle(at: Control, value_name: String, value: bool) -> CheckBox:
+		var checkbox: CheckBox = CheckBox.new()
+
+		checkbox.text = value_name
+		checkbox.button_pressed = value
+
+		at.add_child(checkbox)
+		
+		return checkbox
+
+
+	func set_vector_value(at: Control, value: Vector2, label_text: String) -> Array[LineEdit]:
+		var vector_hbox: HBoxContainer = HBoxContainer.new()
+		var vector_label: Label = Label.new()
+		vector_label.text = label_text
+		vector_hbox.add_child(vector_label)
+		
+		var vector_x_edit: LineEdit = LineEdit.new()
+		vector_x_edit.placeholder_text = "X"
+		vector_x_edit.text = str(value.x)
+		vector_hbox.add_child(vector_x_edit)
+
+		var vector_y_edit: LineEdit = LineEdit.new()
+		vector_y_edit.placeholder_text = "Y"
+		vector_y_edit.text = str(value.y)
+		vector_hbox.add_child(vector_y_edit)
+
+		at.add_child(vector_hbox)
+		
+		return [vector_x_edit, vector_y_edit]
+
 
 	func _add_collider_btn_pressed() -> void:
 		if edit is ManganiaUnit2D:
 			edit.collider.push_back(
-				edit.create_collider(&"NewCollider")
+				edit.create_collider(&"new_collider")
 			)
 			_update_property()
 			print("updated")
 
 
-	func set_data(attr_container: HBoxContainer, v_name: String, value: Variant) -> void:
-		var line_edit: LineEdit = LineEdit.new()
-		line_edit.placeholder_text = v_name
-		if value:
-			line_edit.text = str(value)
-		attr_container.add_child(line_edit)
+	class CollideInfoContainer extends HBoxContainer:
+		var res: CollideInfo = null
 
 
 	class MultiShapeEditorWindow extends PopupPanel:

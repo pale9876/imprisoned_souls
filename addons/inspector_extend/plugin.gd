@@ -2,13 +2,13 @@
 extends EditorPlugin
 
 
-var plugin: EditorInspectorPlugin
+var collide_info_editor_plugin: CollideInfoEditorPlugin = null
 
 
 func _enter_tree() -> void:
-	plugin = InspectorExtendPlugin.new()
-	add_inspector_plugin(plugin)
+	collide_info_editor_plugin = CollideInfoEditorPlugin.new()
+	add_inspector_plugin(collide_info_editor_plugin)
 
 func _exit_tree() -> void:
-	if plugin:
-		remove_inspector_plugin(plugin)
+	if collide_info_editor_plugin:
+		remove_inspector_plugin(collide_info_editor_plugin)

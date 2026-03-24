@@ -19,3 +19,6 @@ func get_shape_rid() -> RID: return _shape
 
 func get_owner() -> ManganiaUnit2D: return _owner
 func get_index() -> int: return _index
+
+func set_owner(unit: ManganiaUnit2D) -> void:
+	_owner = unit
