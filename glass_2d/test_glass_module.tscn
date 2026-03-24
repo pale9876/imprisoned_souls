@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d0t85vijjq6ge"]
+
+[ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://glass_2d.gd" id="1_h0lqs"]
+[ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_hmbtr"]
+
+[node name="test_glass_module" type="Node2D" unique_id=982921829]
+
+[node name="ReflectionGlass2D" type="Node2D" parent="." unique_id=367757292]
+script = ExtResource("1_h0lqs")
+polygon = PackedVector2Array(0, 0, 0, 100, 100, 100, 100, 0)
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1486779280]
+position = Vector2(-48, 152)
+texture = ExtResource("2_hmbtr")

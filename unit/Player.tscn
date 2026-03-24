@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c3xwqsfprgbn4"]
 
 [ext_resource type="Script" uid="uid://dqgansavg6p5n" path="res://player.gd" id="1_kpjcp"]
-[ext_resource type="Script" uid="uid://cxckpw1sbak1o" path="res://chara/chara_stat.gd" id="2_4fa2e"]
+[ext_resource type="Script" uid="uid://cxckpw1sbak1o" path="res://chara/character_information.gd" id="2_4fa2e"]
 [ext_resource type="Resource" uid="uid://4ntuwag3k035" path="res://chara/red_hood/red_hood_info.tres" id="2_lel03"]
 [ext_resource type="Script" uid="uid://debij5ysrxgsw" path="res://script/character_event_handler.gd" id="3_48k13"]
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="3_kne1u"]

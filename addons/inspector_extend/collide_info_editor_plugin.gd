@@ -30,7 +30,6 @@ func _parse_property(
 
 	if obj is ManganiaUnit2D:
 		if name == "collider":
-			var data: Array = obj.collider
 			var multi_shape_property: MultiShapeProperty = MultiShapeProperty.new(obj)
 			add_property_editor(name, multi_shape_property)
 			
@@ -42,12 +41,10 @@ func _parse_property(
 class MultiShapeProperty extends EditorProperty:
 	const NOTIFICATION_PROPERTY_VALUE_CHANGED: int = 2001
 	
-	var _window: MultiShapeEditorWindow
-
-	var show_editor_btn: Button = Button.new()
-
 	var edit: Object
-
+	
+	var _window: MultiShapeEditorWindow
+	var show_editor_btn: Button = Button.new()
 	var property_container: VBoxContainer
 
 	func _init(obj: Object) -> void:
@@ -95,11 +92,12 @@ class MultiShapeProperty extends EditorProperty:
 	func _update_property() -> void:
 		if edit is ManganiaUnit2D:
 			for res: CollideInfo in edit.collider:
+				# Create CollideInfo Hbox Container
 				var info_container: CollideInfoContainer = CollideInfoContainer.new()
 				info_container.res = res
 				property_container.add_child(info_container)
 				
-				#set_data(hbox, "Name", res.name)
+				# Set CollideInfo Name
 				var shape_name_edit: LineEdit = LineEdit.new()
 				shape_name_edit.text = res.name
 				shape_name_edit.placeholder_text = "CollideName"
@@ -114,33 +112,47 @@ class MultiShapeProperty extends EditorProperty:
 				info_container.add_child(shape_rid_label)
 				shape_rid_label.text = str(res._shape)
 				
-				#set_data(hbox, "Position", res.position)
+				#Set Position Data
 				var pos_value_edits: Array[LineEdit] = set_vector_value(info_container, res.position, "Position")
 				var pos_x_edit: LineEdit = pos_value_edits[0]
+				var vec2_value_changed: Callable = func(new_text: String, property: StringName, xy: bool, message: String = "") -> void:
+					if new_text.is_valid_float():
+						res.set(
+							property, Vector2(new_text.to_float(), res.get(property).y) if xy else Vector2(res.get(property).x, new_text.to_float())
+						)
+						
+						print(message)
+
+				var toggle_changed: Callable = func(toggle: bool, property: StringName) -> void:
+					pass
+
 				pos_x_edit.text_submitted.connect(
-					func(new_text: String) -> void:
-						if new_text.is_valid_float():
-							var new_value: float = new_text.to_float()
-							res.positoin.x = new_value
-							print("collider info position X value changed")
+					vec2_value_changed.bind(&"position", true, "collider info position X value changed")
 				)
 				
 				var pos_y_edit: LineEdit = pos_value_edits[1]
 				pos_y_edit.text_submitted.connect(
-					func(new_text: String) -> void:
-						pass
+					vec2_value_changed.bind(&"position", false, "collider info position Y value changed")
 				)
 				
 				
 				#set_data(hbox, "Size", res.size)
 				var size_value_edits: Array[LineEdit] = set_vector_value(info_container, res.size, "Size")
 				var size_x_edit: LineEdit = size_value_edits[0]
-				
+				size_x_edit.text_submitted.connect(
+					vec2_value_changed.bind(&"size", true, "collider info size X value changed")
+				)
 				var size_y_edit: LineEdit = size_value_edits[1]
-				
+				size_y_edit.text_submitted.connect(
+					vec2_value_changed.bind(&"size", false, "collider info size Y value changed")
+				)
 				
 				#set_data(hbox, "Disabled", res.disabled)
-				set_toggle(info_container, "Disabled", res.disabled)
+				var disabled_checkbox: CheckBox = set_toggle(info_container, "Disabled", res.disabled)
+				disabled_checkbox.toggled.connect(
+					func(toggle: bool) -> void:
+						pass
+				)
 
 		var add_collider_btn: Button = Button.new()
 		add_collider_btn.text = "Add Collider"
@@ -185,12 +197,16 @@ class MultiShapeProperty extends EditorProperty:
 			edit.collider.push_back(
 				edit.create_collider(&"new_collider")
 			)
+			# clear infos
 			_update_property()
-			print("updated")
+			print("collide info updated")
 
 
 	class CollideInfoContainer extends HBoxContainer:
 		var res: CollideInfo = null
+		
+		func get_info() -> CollideInfo:
+			return res
 
 
 	class MultiShapeEditorWindow extends PopupPanel:
