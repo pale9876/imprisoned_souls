@@ -36,6 +36,7 @@ func _notification(what: int) -> void:
 			var space: RID = get_world_2d().space
 
 			create_body_rid()
+			PhysicsServer2D.body_attach_object_instance_id(body_rid, get_instance_id())
 
 			if !collider.is_empty():
 				for res: CollideInfo in collider:
@@ -73,6 +74,10 @@ func _notification(what: int) -> void:
 					var shape_pos: Vector2 = shape_xform.origin
 					
 					draw_rect(Rect2(shape_pos, shape_data), color)
+
+
+		NOTIFICATION_TRANSFORM_CHANGED:
+			pass
 
 
 		NOTIFICATION_EXIT_TREE:

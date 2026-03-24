@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://56x11x112vuw"]
+
+[ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad_2d.gd" id="1_1fi7v"]
+
+[node name="SquadDemo" type="Node2D" unique_id=2071484249]
+
+[node name="Squad2D" type="Node2D" parent="." unique_id=400247296]
+script = ExtResource("1_1fi7v")
+metadata/_custom_type_script = "uid://dtvvil6gqipt6"

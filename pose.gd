@@ -42,12 +42,12 @@ func _enter(_data: Dictionary = {}) -> void:
 	pass
 
 
-# OVERRIDE
+# OVERRIDE:: 매 렌더링 타임마다 실행되는 함수
 func _update(_delta: float) -> void:
 	pass
 
 
-# OVERRIDE
+# OVERRIDE:: 매 물리 틱마다 실행되는 함수
 func _tick(_delta: float) -> void:
 	pass
 
