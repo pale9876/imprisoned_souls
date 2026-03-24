@@ -1,9 +1,10 @@
+@tool
 extends Node2D
 class_name Hurtbox
 
 
 var area_rid: RID
-var colliders: Array
+var colliders: Array[CollideInfo]
 
 
 func _init() -> void:

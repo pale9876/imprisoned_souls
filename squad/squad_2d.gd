@@ -27,7 +27,10 @@ func _notification(what: int) -> void:
 					member.create_body(get_world_2d().space, global_position)
 		
 		NOTIFICATION_PHYSICS_PROCESS:
-			pass
+			if !Engine.is_editor_hint(): return
+
+			if !members.is_empty():
+				pass
 
 
 		NOTIFICATION_DRAW:

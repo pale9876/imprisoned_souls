@@ -36,7 +36,6 @@ func _notification(what: int) -> void:
 			var space: RID = get_world_2d().space
 
 			create_body_rid()
-			PhysicsServer2D.body_attach_object_instance_id(body_rid, get_instance_id())
 
 			if !collider.is_empty():
 				for res: CollideInfo in collider:
@@ -60,6 +59,10 @@ func _notification(what: int) -> void:
 			# Set Collision Layer & Mask
 			PhysicsServer2D.body_set_collision_layer(body_rid, layer)
 			PhysicsServer2D.body_set_collision_mask(body_rid, mask)
+			
+			# Attach body to object
+			PhysicsServer2D.body_attach_object_instance_id(body_rid, get_instance_id())
+			
 
 		NOTIFICATION_DRAW:
 			var canvas_item: RID = get_canvas_item()

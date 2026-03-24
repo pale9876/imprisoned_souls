@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bv8jgicw64qw7" path="res://scene_camera_2d.gd" id="4_rrvww"]
 [ext_resource type="Script" uid="uid://ci422twdsgjl2" path="res://mangania_unit_2d.gd" id="5_bev4p"]
 [ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad_2d.gd" id="6_dseeu"]
+[ext_resource type="Script" uid="uid://d16i88d7475ot" path="res://hurt_box.gd" id="6_mijng"]
 
 [sub_resource type="Resource" id="Resource_bev4p"]
 script = ExtResource("3_kxige")
@@ -40,6 +41,10 @@ metadata/_custom_type_script = "uid://bv8jgicw64qw7"
 [node name="ManganiaUnit2D" type="Node2D" parent="." unique_id=444636936]
 script = ExtResource("5_bev4p")
 metadata/_custom_type_script = "uid://ci422twdsgjl2"
+
+[node name="Hurtbox" type="Node2D" parent="ManganiaUnit2D" unique_id=1769846153]
+script = ExtResource("6_mijng")
+metadata/_custom_type_script = "uid://d16i88d7475ot"
 
 [node name="Squad2D" type="Node2D" parent="." unique_id=819789039]
 script = ExtResource("6_dseeu")

@@ -124,3 +124,7 @@ func notify_message(message: String, data: Dictionary) -> void:
 
 func get_transform() -> Transform2D:
 	return Transform2D(0., _position)
+
+
+func get_gravity(delta: float) -> Vector2:
+	return Vector2.DOWN * 970. * delta
