@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Praemonitus" format=3 uid="uid://brmamwhsrcvvc"]
+
+[ext_resource type="Script" uid="uid://dyxlqvtncfhrr" path="res://resource/perk/praemonitus.gd" id="1_5vp3q"]
+
+[resource]
+script = ExtResource("1_5vp3q")
+perk_name = &"유비무환"
+metadata/_custom_type_script = "uid://dyxlqvtncfhrr"
