@@ -22,3 +22,13 @@ func get_index() -> int: return _index
 
 func set_owner(unit: ManganiaUnit2D) -> void:
 	_owner = unit
+
+
+static func create(collider_name: StringName) -> CollideInfo:
+	var res: CollideInfo = CollideInfo.new()
+	
+	res.name = collider_name
+	res._shape = PhysicsServer2D.rectangle_shape_create()
+	res.disabled = true
+
+	return res

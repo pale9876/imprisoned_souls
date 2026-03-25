@@ -11,6 +11,7 @@ const NOTIFICAITON_LAYER_CHANGED: int = 2013
 
 var _body: RID
 
+
 @export var collision_draw_up: bool = true:
 	set(toggle):
 		collision_draw_up = toggle
@@ -49,8 +50,6 @@ func _draw() -> void:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
-			if Engine.is_editor_hint(): return
-			
 			var space: RID = get_world_2d().space
 
 			create_body_rid()
@@ -80,21 +79,10 @@ func _notification(what: int) -> void:
 			
 			# Attach body to object
 			PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
-			
+
 
 		NOTIFICATION_DRAW:
-			var canvas_item: RID = get_canvas_item()
-			var shape_count: int = PhysicsServer2D.body_get_shape_count(_body)
-			if shape_count > 0:
-				for i: int in range(shape_count):
-					var shape_data: Variant = (PhysicsServer2D.shape_get_data(
-						PhysicsServer2D.body_get_shape(_body, i))
-					)
-					
-					var shape_xform: Transform2D = PhysicsServer2D.body_get_shape_transform(_body, i)
-					var shape_pos: Vector2 = shape_xform.origin
-					
-					draw_rect(Rect2(shape_pos, shape_data), color)
+			pass
 
 
 		NOTIFICATION_TRANSFORM_CHANGED:
@@ -102,12 +90,17 @@ func _notification(what: int) -> void:
 
 
 		NOTIFICATION_EXIT_TREE:
-			if Engine.is_editor_hint(): return
-			PhysicsServer2D.free_rid(_body)
+			if _body.is_valid():
+				PhysicsServer2D.free_rid(_body)
 
 
 		NOTIFICATION_COLLIDER_CHANGED:
-			pass
+			PhysicsServer2D.body_clear_shapes(_body)
+
+
+func _update_collider() -> void:
+	pass
+
 
 
 func get_body_rid() -> RID:
@@ -121,11 +114,7 @@ func create_body_rid() -> RID:
 
 
 func create_collider(collider_name: StringName) -> void:
-	var res: CollideInfo = CollideInfo.new()
-	res.name = collider_name
-	res._shape = PhysicsServer2D.rectangle_shape_create()
-	res._index = collider.size()
-	res._owner = self
+	var res: CollideInfo = CollideInfo.create(collider_name)
 
 	collider.push_back(res)
 
