@@ -1,22 +1,10 @@
+@tool
 extends Resource
 class_name Currency
 
 
-@export var empire_livre: int
-@export var yen: int
-@export var point_credit: float
-
-var total_value: int:
-	get:
-		return get_total_value()
+const NOTIFICATION_ADD_CURRENCY: int = 31001
 
 
-#func get_total_denier() -> int:
-	#return (livre * 240) + (sol * 12) + denier
-
-
-func change_to_livre() -> int:
-	return 0
-
-func get_total_value() -> int:
-	return 0
+@export var monetary_name: StringName = &"Yen"
+@export var currency_value: float = 1.

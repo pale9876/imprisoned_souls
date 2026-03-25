@@ -43,6 +43,7 @@ QuestSystem="*uid://b05aindhdg27l"
 Executioner="*uid://db6qoudfuxmol"
 ImageSelector="*uid://bkb1epbrwsfbn"
 EssaRealTimeControlSystem="*uid://bd1ydcgvjlqn3"
+GameCurrencyManager="*uid://p54o01yyn0u3"
 
 [display]
 
@@ -63,6 +64,10 @@ script/templates_search_path="res://template/script"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot-sqlite/plugin.cfg", "res://addons/inspector_extend/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg")
+
+[global]
+
+currency_resource_path="res://"
 
 [input]
 
