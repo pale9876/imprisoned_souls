@@ -12,8 +12,6 @@ class_name ReflectableGlass2D
 @export var debug: bool = true
 @export var color: Color = Color(0.459, 0.597, 0.878, 1.0)
 
-@export var subviewport: SubViewport
-
 var _viewport: RID
 var _camera: RID
 
@@ -30,12 +28,9 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
 			if Engine.is_editor_hint(): return
-			#subviewport.world_2d = get_world_2d()
-			#RenderingServer.canvas_item_clear(canvas_item)
 			
 			var canvas: RID = get_world_2d().canvas
 			var canvas_item: RID = get_canvas_item()
-			#var sub_canvas: RID = RenderingServer.canvas_create()
 			
 			_viewport = RenderingServer.viewport_create()
 			
@@ -45,31 +40,20 @@ func _notification(what: int) -> void:
 			
 			var rid: RID = RenderingServer.viewport_get_texture(_viewport)
 			
-			#var image: Image = RenderingServer.texture_2d_get(rid)
-			#var texture: ImageTexture = ImageTexture.create_from_image(image)
-			
 			RenderingServer.canvas_item_add_texture_rect(
 				canvas_item, Rect2(0., 0., 100., 100.), rid
 			)
-			
-			
-			
-			pass
 
 
 		NOTIFICATION_EXIT_TREE:
 			if Engine.is_editor_hint(): return
 			
-			RenderingServer.free_rid(_viewport)
+			if _viewport.is_valid():
+				RenderingServer.free_rid(_viewport)
 
 
 		NOTIFICATION_PROCESS:
 			if Engine.is_editor_hint(): return
-			
-			var canvas_item: RID = get_canvas_item()
-			
-			#RenderingServer.canvas_item_clear(canvas_item)
-			#
 
 
 		NOTIFICATION_PHYSICS_PROCESS:

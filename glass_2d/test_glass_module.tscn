@@ -3,27 +3,16 @@
 [ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://glass_2d.gd" id="1_h0lqs"]
 [ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_hmbtr"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_h0lqs"]
-viewport_path = NodePath("Sprite2D/SubViewport")
-
 [node name="test_glass_module" type="Node2D" unique_id=982921829]
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1486779280]
 position = Vector2(80, 120)
 texture = ExtResource("2_hmbtr")
 
-[node name="ReflectionGlass2D" type="Node2D" parent="." unique_id=367757292 node_paths=PackedStringArray("subviewport")]
+[node name="ReflectionGlass2D" type="Node2D" parent="." unique_id=367757292]
 position = Vector2(232, 104)
 script = ExtResource("1_h0lqs")
 polygon = PackedVector2Array(0, 0, 0, 100, 100, 100, 100, 0)
-subviewport = NodePath("../Sprite2D/SubViewport")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=885650247]
-position = Vector2(1056, 336)
-scale = Vector2(1.4609375, 0.80468756)
-texture = SubResource("ViewportTexture_h0lqs")
-
-[node name="SubViewport" type="SubViewport" parent="Sprite2D" unique_id=949715100]
-
-[node name="Camera2D" type="Camera2D" parent="Sprite2D/SubViewport" unique_id=802149377]
-anchor_mode = 0
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1227556385]
+position = Vector2(480, 232)
