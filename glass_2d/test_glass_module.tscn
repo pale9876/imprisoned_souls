@@ -18,6 +18,7 @@ position = Vector2(72, 80)
 texture = ExtResource("2_yblwx")
 
 [node name="ViewportReplicator2D" type="Node2D" parent="." unique_id=367757292]
+position = Vector2(232, 128)
 script = ExtResource("1_h0lqs")
 polygon = PackedVector2Array(0, 0, 0, 100, 100, 100, 100, 0)
 cull_mask = 2
