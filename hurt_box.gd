@@ -12,7 +12,6 @@ const NOTIFICATION_COLLIDER_CHANGED: int = 24000
 var _area: RID
 
 
-
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
