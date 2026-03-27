@@ -1,47 +1,56 @@
 [gd_scene format=3 uid="uid://ds211wvrsmwow"]
 
 [ext_resource type="Script" uid="uid://b27vxt546j4o2" path="res://small_bt/behavior_tree_editor.gd" id="1_gpuad"]
-[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://small_bt/small_behavior_tree.gd" id="2_0gy62"]
+[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://small_bt/behavior_tree.gd" id="2_0gy62"]
 [ext_resource type="Script" uid="uid://cf6j52q1b8ig0" path="res://small_bt/sequence.gd" id="3_g705i"]
 [ext_resource type="Script" uid="uid://bfoug6lpwx1fe" path="res://small_bt/task.gd" id="4_6dul7"]
 
 [sub_resource type="Resource" id="Resource_0gy62"]
 script = ExtResource("4_6dul7")
+name = "Task"
 metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
 
 [sub_resource type="Resource" id="Resource_g705i"]
 script = ExtResource("4_6dul7")
+name = "Task"
 metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
 
 [sub_resource type="Resource" id="Resource_6dul7"]
 script = ExtResource("3_g705i")
 task = Array[ExtResource("4_6dul7")]([SubResource("Resource_0gy62"), SubResource("Resource_g705i")])
+name = "Sequence"
 metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
 
 [sub_resource type="Resource" id="Resource_vb4o5"]
 script = ExtResource("4_6dul7")
+name = "Task"
 metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
 
 [sub_resource type="Resource" id="Resource_1f544"]
 script = ExtResource("4_6dul7")
+name = "Task"
 metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
 
 [sub_resource type="Resource" id="Resource_jg756"]
 script = ExtResource("4_6dul7")
+name = "Task"
 metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
 
 [sub_resource type="Resource" id="Resource_kmhio"]
 script = ExtResource("3_g705i")
 task = Array[ExtResource("4_6dul7")]([SubResource("Resource_1f544"), SubResource("Resource_jg756")])
+name = "Sequence"
 metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
 
 [sub_resource type="Resource" id="Resource_axaah"]
 script = ExtResource("4_6dul7")
+name = "Task"
 metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
 
 [sub_resource type="Resource" id="Resource_a1ck3"]
 script = ExtResource("3_g705i")
 task = Array[ExtResource("4_6dul7")]([SubResource("Resource_6dul7"), SubResource("Resource_vb4o5"), SubResource("Resource_kmhio"), SubResource("Resource_axaah")])
+name = "Sequence"
 metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
 
 [sub_resource type="Resource" id="Resource_5y2qr"]
