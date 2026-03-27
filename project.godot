@@ -32,6 +32,7 @@ Author: Sohn Seongho
 등급: 자율적, 17세 이상"
 run/main_scene="uid://2cbinw3drmxd"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+run/max_fps=144
 config/icon="res://icon.svg"
 
 [autoload]
@@ -50,6 +51,7 @@ GameCurrencyManager="*uid://p54o01yyn0u3"
 window/size/viewport_width=640
 window/size/viewport_height=360
 window/energy_saving/keep_screen_on=false
+window/vsync/vsync_mode=0
 
 [dotnet]
 

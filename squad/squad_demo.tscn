@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://56x11x112vuw"]
 
 [ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad_2d.gd" id="1_1fi7v"]
+[ext_resource type="Script" uid="uid://burpisg06htcl" path="res://squad/squad_member.gd" id="2_m3py7"]
+
+[sub_resource type="Resource" id="Resource_y8ts8"]
+script = ExtResource("2_m3py7")
+metadata/_custom_type_script = "uid://burpisg06htcl"
 
 [node name="SquadDemo" type="Node2D" unique_id=2071484249]
 
 [node name="Squad2D" type="Node2D" parent="." unique_id=400247296]
 script = ExtResource("1_1fi7v")
+members = Array[ExtResource("2_m3py7")]([SubResource("Resource_y8ts8")])
 metadata/_custom_type_script = "uid://dtvvil6gqipt6"

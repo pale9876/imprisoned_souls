@@ -13,6 +13,8 @@ const NOTIFICATION_TRANSFORM_CHANGED: int = 1503
 		notification(NOTIFICATION_SIZE_CHANGED)
 @export var scope_range: Vector2 = Vector2(200., 100.)
 @export var direction: float = 1.
+@export var group_bt: Resource
+#@export var bt: BehaviorTree
 
 @export_flags_2d_physics var mask: int = 1
 @export_flags_2d_physics var layer: int = 0

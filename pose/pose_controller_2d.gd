@@ -8,8 +8,8 @@ signal pose_changed(pose_name: StringName)
 
 
 @export var agent: Node
-@export var blackboard_plan: BlackboardPlan = BlackboardPlan.new()
-var _blackboard: Blackboard = null
+#@export var blackboard_plan: BlackboardPlan = BlackboardPlan.new()
+#var _blackboard: Blackboard = null
 
 @export var _poses: Dictionary[StringName, Pose2D]
 @export var init_pose: Pose2D = null:
@@ -37,8 +37,8 @@ func _ready() -> void:
 			pose_is_child(init_pose) and change_pose(init_pose)
 			)
 
-	if blackboard_plan:
-		_blackboard = blackboard_plan.create_blackboard(self)
+	#if blackboard_plan:
+		#_blackboard = blackboard_plan.create_blackboard(self)
 
 	pose_changed.connect(_pose_changed)
 
@@ -213,7 +213,7 @@ func pose_is_child(node: Pose2D) -> bool:
 	).has(node)
 
 
-func get_blackboard() -> Blackboard: return _blackboard
+#func get_blackboard() -> Blackboard: return _blackboard
 
 
 func get_current_animation() -> StringName:

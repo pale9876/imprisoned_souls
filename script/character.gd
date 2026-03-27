@@ -4,7 +4,7 @@ extends PhysicsUnit2D
 class_name Character
 
 
-@export var emote_bt_module: BTPlayer
+#@export var emote_bt_module: BTPlayer
 @export var inventory: Inventory
 @export var chara_info: CharacterInformation
 @export var hurtbox: Hurtbox2D
@@ -71,5 +71,5 @@ func get_chara_name() -> StringName:
 	return chara_info.name if chara_info != null else &""
 
 
-func get_emote_state() -> String:
-	return emote_bt_module.state
+#func get_emote_state() -> String:
+	#return emote_bt_module.state

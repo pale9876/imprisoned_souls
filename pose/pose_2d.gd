@@ -82,20 +82,20 @@ func get_controller() -> PoseController2D:
 	return null
 
 
-func get_agent_input_direction() -> Vector2:
-	var _controller: PoseController2D = get_controller()
-	
-	if agent is PhysicsUnit2D:
-		if InputHandler.player == agent:
-			return InputHandler.get_input_dir()
-		else:
-			if _controller != null:
-				var blackboard: Blackboard = _controller.get_blackboard()
-				if blackboard != null:
-					if blackboard.has_var("direction"):
-						return blackboard.get_var("direction", Vector2())
-	
-	return Vector2()
+#func get_agent_input_direction() -> Vector2:
+	#var _controller: PoseController2D = get_controller()
+	#
+	#if agent is PhysicsUnit2D:
+		#if InputHandler.player == agent:
+			#return InputHandler.get_input_dir()
+		#else:
+			#if _controller != null:
+				#var blackboard: Blackboard = _controller.get_blackboard()
+				#if blackboard != null:
+					#if blackboard.has_var("direction"):
+						#return blackboard.get_var("direction", Vector2())
+	#
+	#return Vector2()
 
 
 func get_agent_information() -> UnitInformation:
