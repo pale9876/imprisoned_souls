@@ -25,7 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://6worj7stjxkc" path="res://aseprite/concept/ui/health_progress.png" id="18_43kp2"]
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="18_48k13"]
 [ext_resource type="Texture2D" uid="uid://cegfid37q12r5" path="res://aseprite/concept/ui/health_progress_under.png" id="19_03by7"]
-[ext_resource type="Script" uid="uid://c6vvodxxuqpw2" path="res://unit/emote_bt_module.gd" id="25_4fa2e"]
 
 [sub_resource type="Resource" id="Resource_fj1yc"]
 script = ExtResource("2_4fa2e")
@@ -34,57 +33,6 @@ metadata/_custom_type_script = "uid://cxckpw1sbak1o"
 [sub_resource type="Resource" id="Resource_4fa2e"]
 script = ExtResource("3_48k13")
 metadata/_custom_type_script = "uid://debij5ysrxgsw"
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_mjhpk"]
-
-[sub_resource type="GDScript" id="GDScript_4fa2e"]
-script/source = "extends BTAction
-class_name IdleTick
-
-
-@export_range(1., 20., .01) var time: float = 1.
-var _time: float = 0.
-
-
-func _tick(delta: float) -> Status:
-	if agent is Character:
-		var pose_controller: PoseController2D = agent.pose_controller
-		if pose_controller:
-			if pose_controller.has_pose(&\"Idle\"):
-				if pose_controller.get_current_pose().name == &\"Idle\":
-					if _time > 0.:
-						_time -= delta
-						return RUNNING
-					else:
-						_time = time
-						return SUCCESS
-	
-	_time = time
-	return FAILURE
-"
-
-[sub_resource type="BTAction" id="BTAction_4fa2e"]
-script = SubResource("GDScript_4fa2e")
-time = 5.0
-
-[sub_resource type="BTSequence" id="BTSequence_mjhpk"]
-custom_name = "Idle"
-children = [SubResource("BTAction_4fa2e")]
-
-[sub_resource type="BTSequence" id="BTSequence_4fa2e"]
-
-[sub_resource type="BTSelector" id="BTSelector_fj1yc"]
-children = [SubResource("BTSequence_mjhpk"), SubResource("BTSequence_4fa2e")]
-
-[sub_resource type="BTSequence" id="BTSequence_48k13"]
-custom_name = "MainSeq"
-children = [SubResource("BTSelector_fj1yc")]
-
-[sub_resource type="BehaviorTree" id="BehaviorTree_4fa2e"]
-blackboard_plan = SubResource("BlackboardPlan_mjhpk")
-root_task = SubResource("BTSequence_48k13")
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_48k13"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rwas"]
 size = Vector2(32, 112)
@@ -121,13 +69,6 @@ size = Vector2(96, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4fa2e"]
 size = Vector2(20, 96)
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_tvasn"]
-var/direction/name = &"direction"
-var/direction/type = 5
-var/direction/value = Vector2(0, 0)
-var/direction/hint = 0
-var/direction/hint_string = ""
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fa2e"]
 atlas = ExtResource("11_4fa2e")
@@ -171,10 +112,9 @@ point_count = 2
 offsets = PackedFloat32Array(0.36764705, 1)
 colors = PackedColorArray(1, 0, 0, 1, 0.3137255, 0, 0.3137255, 1)
 
-[node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("emote_bt_module", "inventory", "hurtbox", "pose_controller", "init_collider")]
+[node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("inventory", "hurtbox", "pose_controller", "init_collider")]
 collision_layer = 0
 script = ExtResource("1_kpjcp")
-emote_bt_module = NodePath("EmoteBT")
 inventory = NodePath("Inventory")
 chara_info = SubResource("Resource_fj1yc")
 hurtbox = NodePath("HurtBox")
@@ -186,11 +126,6 @@ init_collider = NodePath("Idle")
 
 [node name="Inventory" type="Node" parent="." unique_id=379199741]
 script = ExtResource("4_l6ohk")
-
-[node name="EmoteBT" type="BTPlayer" parent="." unique_id=953030233]
-behavior_tree = SubResource("BehaviorTree_4fa2e")
-blackboard_plan = SubResource("BlackboardPlan_48k13")
-script = ExtResource("25_4fa2e")
 
 [node name="PlaceHolder" type="Sprite2D" parent="." unique_id=610565242]
 visible = false
@@ -311,7 +246,6 @@ metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 [node name="PoseController2D" type="Node2D" parent="." unique_id=296513422 node_paths=PackedStringArray("agent", "_poses", "init_pose", "monitor_label")]
 script = ExtResource("7_3tkgg")
 agent = NodePath("..")
-blackboard_plan = SubResource("BlackboardPlan_tvasn")
 _poses = {
 &"Aerial": NodePath("Aerial"),
 &"Crouch": NodePath("Crouch"),

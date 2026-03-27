@@ -9,5 +9,8 @@ var bt_player: SmallBehaviorTreePlayer
 func _enter_tree() -> void:
 	if Engine.is_editor_hint(): return
 	
-	
 	bt_player = SmallBehaviorTreePlayer.new()
+
+func _physics_process(delta: float) -> void:
+	if bt_player:
+		bt_player

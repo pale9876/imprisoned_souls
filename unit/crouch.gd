@@ -20,11 +20,12 @@ func _enter(_data: Dictionary = {}) -> void:
 
 
 func _fixed_update(_delta: float) -> void:
-	var input_dir: Vector2 = get_agent_input_direction()
+	#var input_dir: Vector2 = get_agent_input_direction()
 	
-	if input_dir.y <= 0.:
-		change_pose(idle_pose)
-		return
+	#if input_dir.y <= 0.:
+		#change_pose(idle_pose)
+		#return
+	pass
 
 
 func _exit() -> void:

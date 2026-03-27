@@ -20,7 +20,7 @@ func _enter(data: Dictionary = {}) -> void:
 
 func _fixed_update(_delta: float) -> void:
 	var input_dir: Vector2 = Vector2.ZERO
-	input_dir = get_agent_input_direction()
+	#input_dir = get_agent_input_direction()
 
 	if input_dir.x != 0.:
 		change_pose(move_pose)

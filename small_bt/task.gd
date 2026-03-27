@@ -10,5 +10,8 @@ enum Status {
 }
 
 
+@export var name: String
+
+
 func _tick(delta: float) -> Status:
 	return Status.SUCCESS

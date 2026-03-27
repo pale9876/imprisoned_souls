@@ -5,7 +5,7 @@ class_name BehaviorTree
 
 const Status := Task.Status
 
-@export var tree: Array[Sequence]
+@export var sequence: Sequence
 
 
 func _notification(what: int) -> void:
@@ -17,7 +17,7 @@ func _notification(what: int) -> void:
 func _update(delta: float) -> Status:
 	var result: Status = Status.SUCCESS
 	
-	for seq: Sequence in tree:
+	for seq: Task in sequence.task:
 		var _eval: Status = seq._tick(delta)
 		
 		if _eval == Status.FAILED:

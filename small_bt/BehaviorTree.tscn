@@ -1,31 +1,60 @@
 [gd_scene format=3 uid="uid://ds211wvrsmwow"]
 
 [ext_resource type="Script" uid="uid://b27vxt546j4o2" path="res://small_bt/behavior_tree_editor.gd" id="1_gpuad"]
+[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://small_bt/small_behavior_tree.gd" id="2_0gy62"]
+[ext_resource type="Script" uid="uid://cf6j52q1b8ig0" path="res://small_bt/sequence.gd" id="3_g705i"]
+[ext_resource type="Script" uid="uid://bfoug6lpwx1fe" path="res://small_bt/task.gd" id="4_6dul7"]
 
-[node name="BehaviorTreeEditor" type="Control" unique_id=644287296]
-layout_mode = 3
+[sub_resource type="Resource" id="Resource_0gy62"]
+script = ExtResource("4_6dul7")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_g705i"]
+script = ExtResource("4_6dul7")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_6dul7"]
+script = ExtResource("3_g705i")
+task = Array[ExtResource("4_6dul7")]([SubResource("Resource_0gy62"), SubResource("Resource_g705i")])
+metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
+
+[sub_resource type="Resource" id="Resource_vb4o5"]
+script = ExtResource("4_6dul7")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_1f544"]
+script = ExtResource("4_6dul7")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_jg756"]
+script = ExtResource("4_6dul7")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_kmhio"]
+script = ExtResource("3_g705i")
+task = Array[ExtResource("4_6dul7")]([SubResource("Resource_1f544"), SubResource("Resource_jg756")])
+metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
+
+[sub_resource type="Resource" id="Resource_axaah"]
+script = ExtResource("4_6dul7")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_a1ck3"]
+script = ExtResource("3_g705i")
+task = Array[ExtResource("4_6dul7")]([SubResource("Resource_6dul7"), SubResource("Resource_vb4o5"), SubResource("Resource_kmhio"), SubResource("Resource_axaah")])
+metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
+
+[sub_resource type="Resource" id="Resource_5y2qr"]
+script = ExtResource("2_0gy62")
+sequence = SubResource("Resource_a1ck3")
+metadata/_custom_type_script = "uid://ckysd1lbjoisf"
+
+[node name="BehaviorTreeEditor" type="Tree" unique_id=522554481]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1630585442]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="BehaviorTreeEditor" type="Tree" parent="MarginContainer" unique_id=20830174]
-layout_mode = 2
-theme_override_constants/inner_item_margin_bottom = 2
-theme_override_constants/inner_item_margin_left = 2
-theme_override_constants/inner_item_margin_right = 2
-theme_override_constants/inner_item_margin_top = 2
 script = ExtResource("1_gpuad")
+behaviour_tree = SubResource("Resource_5y2qr")
+metadata/_custom_type_script = "uid://b27vxt546j4o2"
