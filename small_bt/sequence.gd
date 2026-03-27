@@ -1,3 +1,4 @@
+@tool
 extends Task
 class_name Sequence
 

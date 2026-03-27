@@ -1,3 +1,4 @@
+@tool
 extends Resource
 class_name SquadMember
 
@@ -7,14 +8,13 @@ const NOTIFICATION_AWAKEND: int = 1501
 const NOTIFICATION_CAUTION_SIGNAL: int = 1502
 const NOTIFICATION_TRANSFORM_CHANGED: int = 1503
 
+
 @export var size: Vector2 = Vector2(10., 10.):
 	set(value):
 		size = value
 		notification(NOTIFICATION_SIZE_CHANGED)
 @export var scope_range: Vector2 = Vector2(200., 100.)
 @export var direction: float = 1.
-@export var group_bt: Resource
-#@export var bt: BehaviorTree
 
 @export_flags_2d_physics var mask: int = 1
 @export_flags_2d_physics var layer: int = 0

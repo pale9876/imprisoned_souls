@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://br7fksvlapvok" path="res://collide_info.gd" id="6_0rd70"]
 [ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad_2d.gd" id="6_dseeu"]
 [ext_resource type="Script" uid="uid://d16i88d7475ot" path="res://hurt_box.gd" id="6_mijng"]
+[ext_resource type="Script" uid="uid://burpisg06htcl" path="res://squad/squad_member.gd" id="9_0rd70"]
 
 [sub_resource type="Resource" id="Resource_bev4p"]
 script = ExtResource("3_kxige")
@@ -22,6 +23,14 @@ script = ExtResource("6_0rd70")
 name = &"Idle"
 size = Vector2(20, 10)
 metadata/_custom_type_script = "uid://br7fksvlapvok"
+
+[sub_resource type="Resource" id="Resource_de5aq"]
+script = ExtResource("9_0rd70")
+metadata/_custom_type_script = "uid://burpisg06htcl"
+
+[sub_resource type="Resource" id="Resource_1al4c"]
+script = ExtResource("9_0rd70")
+metadata/_custom_type_script = "uid://burpisg06htcl"
 
 [node name="Node2D" type="Node2D" unique_id=1400297344]
 
@@ -56,3 +65,4 @@ metadata/_custom_type_script = "uid://d16i88d7475ot"
 
 [node name="Squad2D" type="Node2D" parent="." unique_id=819789039]
 script = ExtResource("6_dseeu")
+members = Array[ExtResource("9_0rd70")]([SubResource("Resource_de5aq"), SubResource("Resource_1al4c")])

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://0ujj5gfl7546"]
+
+[ext_resource type="Script" uid="uid://be7a8f2hch4pu" path="res://small_bt/bt_test.gd" id="1_x82yd"]
+[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://small_bt/small_behavior_tree.gd" id="2_5o2ld"]
+[ext_resource type="Script" uid="uid://cf6j52q1b8ig0" path="res://small_bt/sequence.gd" id="3_fok68"]
+[ext_resource type="Script" uid="uid://bfoug6lpwx1fe" path="res://small_bt/task.gd" id="4_fok68"]
+
+[sub_resource type="Resource" id="Resource_ahhy3"]
+script = ExtResource("4_fok68")
+metadata/_custom_type_script = "uid://bfoug6lpwx1fe"
+
+[sub_resource type="Resource" id="Resource_rtgya"]
+script = ExtResource("3_fok68")
+task = Array[ExtResource("4_fok68")]([SubResource("Resource_ahhy3")])
+metadata/_custom_type_script = "uid://cf6j52q1b8ig0"
+
+[sub_resource type="Resource" id="Resource_gree8"]
+script = ExtResource("2_5o2ld")
+tree = Array[ExtResource("3_fok68")]([SubResource("Resource_rtgya")])
+metadata/_custom_type_script = "uid://ckysd1lbjoisf"
+
+[node name="BtTest" type="Node2D" unique_id=1750222774]
+script = ExtResource("1_x82yd")
+behavior_tree = SubResource("Resource_gree8")
