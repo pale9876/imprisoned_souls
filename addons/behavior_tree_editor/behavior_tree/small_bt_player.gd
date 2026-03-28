@@ -33,6 +33,3 @@ func tree_init(_tree: BehaviorTree) -> void:
 func _update(delta: float) -> void:
 	if tree:
 		tree._update(delta)
-
-func _execute() -> void:
-	pass

@@ -5,7 +5,6 @@ class_name PresentationInspector
 
 const NOTIFICATION_EDIT_OBJECT_CHANGED: int = 1400
 
-
 var edit: Control = null:
 	set(obj):
 		edit = obj
@@ -20,14 +19,8 @@ var undoredo: EditorUndoRedoManager
 @onready var clear_all_scenes_btn: Button = %ClearAllScenes
 
 
-func _ready() -> void:
-	add_scene_btn.button_up.connect(_add_scene)
-	clear_all_scenes_btn.button_up.connect(_clear_all_scenes)
-
-
 func _clear_all_scenes() -> void:
 	if edit is Presentation:
-		
 		edit.clear_scenes()
 
 
@@ -42,7 +35,13 @@ func _add_scene() -> void:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
-			pass
+			undoredo = EditorInterface.get_editor_undo_redo()
+		
+		NOTIFICATION_READY:
+			tab_container.hide()
+			
+			add_scene_btn.button_up.connect(_add_scene)
+			clear_all_scenes_btn.button_up.connect(_clear_all_scenes)
 
 
 		NOTIFICATION_FOCUS_EXIT:

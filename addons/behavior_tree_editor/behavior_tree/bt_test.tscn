@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://0ujj5gfl7546"]
 
-[ext_resource type="Script" uid="uid://be7a8f2hch4pu" path="res://small_bt/bt_test.gd" id="1_x82yd"]
-[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://small_bt/behavior_tree.gd" id="2_5o2ld"]
+[ext_resource type="Script" uid="uid://be7a8f2hch4pu" path="res://addons/behavior_tree_editor/behavior_tree/bt_test.gd" id="1_x82yd"]
+[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://addons/behavior_tree_editor/behavior_tree/behavior_tree.gd" id="2_5o2ld"]
 
 [sub_resource type="Resource" id="Resource_gree8"]
 script = ExtResource("2_5o2ld")

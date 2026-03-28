@@ -24,15 +24,15 @@ func _notification(what: int) -> void:
 		NOTIFICATION_ENTER_TREE:
 			if behaviour_tree:
 				clear()
-				_create_task(behaviour_tree)
+				_create_tree(behaviour_tree)
 
 		NOTIFICATION_TREE_CHANGED:
 			if behaviour_tree:
 				clear()
-				_create_task(behaviour_tree)
+				_create_tree(behaviour_tree)
 
 # Recursive
-func _create_task(_task: Task, rt: TreeItem = null) -> void:
+func _create_tree(_task: Task, rt: TreeItem = null) -> void:
 	if _task is Sequence:
 		var _sequence: Sequence = _task as Sequence
 		for task: Task in _sequence.task:
@@ -40,12 +40,12 @@ func _create_task(_task: Task, rt: TreeItem = null) -> void:
 			sequence_item.set_meta(&"Resource", _sequence)
 			sequence_item.set_custom_bg_color(0, SEQUENCE_COLOR)
 			sequence_item.set_text(0, "Sequence")
-			_create_task(task, sequence_item)
+			_create_tree(task, sequence_item)
 	elif _task is BehaviorTree:
 		var root_item: TreeItem = create_item()
 		root_item.set_text(0, "Behavior Tree")
 		root_item.set_meta(&"Resource", _task)
-		_create_task(_task._root, root_item)
+		_create_tree(_task._root, root_item)
 	elif _task is Task:
 		var task_item: TreeItem = create_item(rt) as TreeItem
 		task_item.set_meta(&"Resource", _task)

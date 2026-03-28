@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://ds211wvrsmwow"]
 
-[ext_resource type="Script" uid="uid://b27vxt546j4o2" path="res://small_bt/behavior_tree_editor.gd" id="1_gpuad"]
-[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://small_bt/behavior_tree.gd" id="2_0gy62"]
-[ext_resource type="Script" uid="uid://cf6j52q1b8ig0" path="res://small_bt/sequence.gd" id="3_g705i"]
-[ext_resource type="Script" uid="uid://bfoug6lpwx1fe" path="res://small_bt/task.gd" id="4_6dul7"]
+[ext_resource type="Script" uid="uid://b27vxt546j4o2" path="res://addons/behavior_tree_editor/behavior_tree/behavior_tree_editor.gd" id="1_gpuad"]
+[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://addons/behavior_tree_editor/behavior_tree/behavior_tree.gd" id="2_0gy62"]
+[ext_resource type="Script" uid="uid://cf6j52q1b8ig0" path="res://addons/behavior_tree_editor/behavior_tree/sequence.gd" id="3_g705i"]
+[ext_resource type="Script" uid="uid://bfoug6lpwx1fe" path="res://addons/behavior_tree_editor/behavior_tree/task.gd" id="4_6dul7"]
 
 [sub_resource type="Resource" id="Resource_0gy62"]
 script = ExtResource("4_6dul7")
