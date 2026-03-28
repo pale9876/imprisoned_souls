@@ -24,19 +24,12 @@ func _notification(what: int) -> void:
 		NOTIFICATION_ENTER_TREE:
 			if behaviour_tree:
 				clear()
-				create_tree(behaviour_tree)
+				_create_task(behaviour_tree)
 
 		NOTIFICATION_TREE_CHANGED:
 			if behaviour_tree:
 				clear()
-				create_tree(behaviour_tree)
-
-
-func create_tree(res: BehaviorTree) -> void:
-	var root_item: TreeItem = create_item()
-	root_item.set_text(0, res.name)
-	_create_task(res._root, root_item)
-
+				_create_task(behaviour_tree)
 
 # Recursive
 func _create_task(_task: Task, rt: TreeItem = null) -> void:
@@ -44,13 +37,19 @@ func _create_task(_task: Task, rt: TreeItem = null) -> void:
 		var _sequence: Sequence = _task as Sequence
 		for task: Task in _sequence.task:
 			var sequence_item: TreeItem = create_item(rt)
+			sequence_item.set_meta(&"Resource", _sequence)
 			sequence_item.set_custom_bg_color(0, SEQUENCE_COLOR)
-			sequence_item.set_text(0, _task.name)
+			sequence_item.set_text(0, "Sequence")
 			_create_task(task, sequence_item)
-	else:
+	elif _task is BehaviorTree:
+		var root_item: TreeItem = create_item()
+		root_item.set_text(0, "Behavior Tree")
+		root_item.set_meta(&"Resource", _task)
+		_create_task(_task._root, root_item)
+	elif _task is Task:
 		var task_item: TreeItem = create_item(rt) as TreeItem
-		#task_item.task = _task
-		task_item.set_text(0, _task.name)
+		task_item.set_meta(&"Resource", _task)
+		task_item.set_text(0, "Task")
 		# TODO: Task BG Color가 필요한가?
 
 
