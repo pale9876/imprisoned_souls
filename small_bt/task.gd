@@ -11,6 +11,11 @@ const NOTIFICATION_TASK_EXIT: int = 52004
 const NOTIFICATION_TICK: int = 52005
 
 
+const SUCCESS: Status = Status.SUCCESS
+const FAILED: Status = Status.FAILED
+const RUNNING: Status = Status.RUNNING
+
+
 enum Status {
 	FRESH = -1,
 	FAILED = 0,
@@ -33,7 +38,7 @@ func _enter(data: Dictionary = {}) -> void:
 
 # OVERRIDE
 func _tick(delta: float) -> Status:
-	return Status.SUCCESS
+	return SUCCESS
 
 
 

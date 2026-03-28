@@ -5,10 +5,10 @@ class_name Sequence
 
 const NOTIFICATION_SEQUENCE_ENTER: int = 53000
 const NOTIFICATION_SEQUENCE_EXIT: int = 53001
+const NOTIFICATION_SEQUENCE_FAILED: int = 53002
 
 
 @export var task: Array[Task]
-
 
 
 func _notification(what: int) -> void:
@@ -18,6 +18,9 @@ func _notification(what: int) -> void:
 		
 		NOTIFICATION_FAILED:
 			pass
+			
+		NOTIFICATION_SEQUENCE_FAILED:
+			print("Sequence Failed")
 
 
 func _tick(delta: float) -> Status:

@@ -2,14 +2,14 @@
 extends Node2D
 
 
-var bt_player: SmallBehaviorTreePlayer
+var bt_player: BehaviorTreePlayer
 @export var behavior_tree: BehaviorTree
 
 
 func _enter_tree() -> void:
 	if Engine.is_editor_hint(): return
 	
-	bt_player = SmallBehaviorTreePlayer.new()
+	bt_player = BehaviorTreePlayer.new()
 	bt_player.tree = behavior_tree
 	bt_player.active = true
 

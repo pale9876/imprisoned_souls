@@ -1,6 +1,6 @@
 @tool
 extends RefCounted
-class_name SmallBehaviorTreePlayer
+class_name BehaviorTreePlayer
 
 
 const NOTIFICATION_AWAKENED: int = 32000
@@ -13,8 +13,8 @@ var tree: BehaviorTree
 var agent: Node = null
 var active: bool = false
 
-var _status: Status
 
+var _status: Status = Status.FRESH
 
 
 func _notification(what: int) -> void:
@@ -26,6 +26,13 @@ func _notification(what: int) -> void:
 			pass
 
 
+func tree_init(_tree: BehaviorTree) -> void:
+	tree = _tree
+
+
 func _update(delta: float) -> void:
 	if tree:
 		tree._update(delta)
+
+func _execute() -> void:
+	pass

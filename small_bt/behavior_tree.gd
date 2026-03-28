@@ -1,16 +1,9 @@
 @tool
-extends Resource
+extends Task
 class_name BehaviorTree
 
 
-const Status := Task.Status
-
-
-@export var name: String
-@export var sequence: Sequence
-
-
-var _status: Status = Status.FRESH
+@export var _root: Sequence = null
 
 
 func _notification(what: int) -> void:
@@ -18,13 +11,15 @@ func _notification(what: int) -> void:
 		pass
 
 
-func _update(delta: float) -> void:
+func _update(delta: float) -> Status:
 	if _status != Status.RUNNING:
-		for task: Task in sequence.task:
-			pass
-		
+		for _task: Task in _root.task:
+			_status = _task._tick(delta)
+			if _status == FAILED:
+				break
+
+	return _status
 
 
-
-func _execute() -> void:
-	pass
+func _get_name() -> String:
+	return "Behavior Tree Name"
