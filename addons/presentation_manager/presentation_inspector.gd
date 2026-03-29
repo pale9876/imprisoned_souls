@@ -54,10 +54,15 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_EDIT_OBJECT_CHANGED:
 			if edit_is_presentation():
+				if !tab_container.visible:
+					tab_container.visible = true
 				tab_container.current_tab = tab_container.get_node("%Pressentation").get_index()
 			elif edit_is_scene():
+				if !tab_container.visible:
+					tab_container.visible = true
 				tab_container.current_tab = tab_container.get_node("%Scene").get_index()
-
+			else:
+				tab_container.hide()
 
 func rename_presentation(value: String) -> bool:
 	if edit:

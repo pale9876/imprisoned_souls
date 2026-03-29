@@ -6,6 +6,7 @@ const PRESENTATION_INSPECTOR_SCENE: PackedScene = preload("uid://vj3mtpe7yn1q")
 
 const NOTIFICATION_PRESENTATION_SELECTED: int = 1200
 const NOTIFICATION_SCENE_SELECTED: int = 1201
+const NOTIFICATION_EDIT_OBJECT_CHANGED: int = 1202
 
 
 var presentation_dock: EditorDock
@@ -39,6 +40,9 @@ func _on_edit_object_changed() -> void:
 
 	elif _edit is PresentationScene:
 		notification(NOTIFICATION_SCENE_SELECTED)
+	
+	else:
+		notification(NOTIFICATION_EDIT_OBJECT_CHANGED)
 
 
 func _notification(what: int) -> void:
@@ -57,6 +61,10 @@ func _notification(what: int) -> void:
 			var _edit: Object = inspector.get_edited_object()
 			
 			presentation_inspector.edit = _edit
+
+		NOTIFICATION_EDIT_OBJECT_CHANGED:
+			presentation_inspector.tab_container.hide()
+
 
 
 func _exit_tree() -> void:

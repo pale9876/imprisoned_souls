@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gugvw165qyh1"
-path="res://.godot/imported/MapConcept.png-e1f34dc34a3e2eb970c2a2a6c71a1374.ctex"
+uid="uid://dv4wfpmshynpx"
+path="res://.godot/imported/Stick_LEFT.png-5ba610dfef17856a478bc23346bcb4f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/asso_project/aseprite/concept/MapConcept.png"
-dest_files=["res://.godot/imported/MapConcept.png-e1f34dc34a3e2eb970c2a2a6c71a1374.ctex"]
+source_file="res://aseprite/icon/Stick_LEFT.png"
+dest_files=["res://.godot/imported/Stick_LEFT.png-5ba610dfef17856a478bc23346bcb4f3.ctex"]
 
 [params]
 
