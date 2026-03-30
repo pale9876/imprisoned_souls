@@ -6,7 +6,7 @@ class_name Hurtbox
 const NOTIFICATION_COLLIDER_CHANGED: int = 24000
 
 
-@export var collider: Array[CollideInfo]
+@export var collider: Array[HurtboxCollideInfo]
 
 
 var _area: RID
@@ -32,10 +32,13 @@ func _notification(what: int) -> void:
 				PhysicsServer2D.free_rid(_area)
 
 
-
-func _create_collider(shape_name: StringName) -> void:
+func create_collider(shape_name: StringName) -> void:
 	var info: CollideInfo = CollideInfo.create(shape_name)
 	collider.push_back(info)
+
+
+func remove_collider(res: Resource) -> void:
+	pass
 
 
 func get_area_rid() -> RID:

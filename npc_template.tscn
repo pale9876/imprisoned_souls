@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://6aa818j2226f"]
 
 [ext_resource type="Script" uid="uid://bavbyksnmat07" path="res://npc.gd" id="1_ln5al"]
-[ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox.gd" id="2_3g7p0"]
+[ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox_2d.gd" id="2_3g7p0"]
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="2_6h37w"]
 [ext_resource type="Script" uid="uid://cuxvpat0q3ao5" path="res://inventory.gd" id="3_w8yn3"]
 [ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="5_l2w3a"]

@@ -77,6 +77,7 @@ func update_texture() -> void:
 		_region.size = texture_size
 
 
+
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:

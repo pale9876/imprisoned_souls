@@ -3,6 +3,8 @@ extends EditorPlugin
 
 
 const PRESENTATION_INSPECTOR_SCENE: PackedScene = preload("uid://vj3mtpe7yn1q")
+const PRESENTATION_EXAMPLE: PackedScene = preload("uid://dmojp4uoydd3f")
+
 
 const NOTIFICATION_PRESENTATION_SELECTED: int = 1200
 const NOTIFICATION_SCENE_SELECTED: int = 1201
@@ -11,6 +13,11 @@ const NOTIFICATION_EDIT_OBJECT_CHANGED: int = 1202
 
 var presentation_dock: EditorDock
 var presentation_inspector: PresentationInspector = null
+var main_screen: MarginContainer = null
+
+
+func _has_main_screen() -> bool:
+	return false
 
 
 func _enter_tree() -> void:

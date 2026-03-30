@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://gugvw165qyh1"
-path="res://.godot/imported/MapConcept.png-724f532e844e4b96cf036688a1749656.ctex"
+path="res://.godot/imported/MapConcept.png-e1f34dc34a3e2eb970c2a2a6c71a1374.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/asso_project/aseprite/Concept/MapConcept.png"
-dest_files=["res://.godot/imported/MapConcept.png-724f532e844e4b96cf036688a1749656.ctex"]
+source_file="res://aseprite/asso_project/aseprite/concept/MapConcept.png"
+dest_files=["res://.godot/imported/MapConcept.png-e1f34dc34a3e2eb970c2a2a6c71a1374.ctex"]
 
 [params]
 

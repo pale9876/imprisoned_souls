@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bl8ms0nmsmbkl" path="res://notification_shape_2d.gd" id="3_kne1u"]
 [ext_resource type="Script" uid="uid://cuxvpat0q3ao5" path="res://inventory.gd" id="4_l6ohk"]
 [ext_resource type="Texture2D" uid="uid://cysooqp63xp0h" path="res://aseprite/concept/redhood/red_hood_placeholder.png" id="6_ekjla"]
-[ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox.gd" id="6_tdg3f"]
+[ext_resource type="Script" uid="uid://c342mx8mdc4sm" path="res://hurtbox_2d.gd" id="6_tdg3f"]
 [ext_resource type="Script" uid="uid://dgpate5wpm75e" path="res://pose/pose_controller_2d.gd" id="7_3tkgg"]
 [ext_resource type="Script" uid="uid://c7f8wtnojavju" path="res://pose/common/idle_pose.gd" id="8_l6ohk"]
 [ext_resource type="Script" uid="uid://ch4rv3vox4xoi" path="res://pose/common/move_pose.gd" id="10_3tkgg"]

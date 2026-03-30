@@ -6,6 +6,7 @@ class_name PathedMultiMesh2D
 @export var texture: Texture
 @export var multimesh: MultiMesh
 
+
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
