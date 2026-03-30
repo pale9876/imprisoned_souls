@@ -26,6 +26,7 @@ var main_scene: Node = null
 func _enter_tree() -> void:
 	os = OS.get_name()
 	print("구동환경: ", os)
+
 	match os:
 		_:
 			pass

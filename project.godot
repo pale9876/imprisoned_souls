@@ -27,13 +27,15 @@ resources_spreadsheet_view/freeze_first_column=true
 config/name="Imprisoned Souls"
 config/description="프레임워크 이름: 구속된 영혼들
 
-설명: 이 프레임 워크는 다음과 같은 목적으로 제작되고 있습니다.
+설명: 이 프레임워크는 다음과 같은 목적으로 제작되고 있습니다.
+- 2D 횡스크롤 액션 제작과 개발 및 사후지원에 최적화된 환경
+- 안정적인 성능과 중하급의 PC 및 다양한 OS에서의 지원
 
 Author: Pale9876 (Github, Korean)
 
 장르: 코스믹 호러
 등급: 자율적, {만 19세 이상, 한국}, {18 +, 일본, 미국}
-태그: 액션, 전략, 실시간 경영, 고어, 포르노"
+태그: 액션, 전략, 실시간 경영, 폭력성, 신체훼손"
 run/main_scene="uid://2cbinw3drmxd"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 run/max_fps=144

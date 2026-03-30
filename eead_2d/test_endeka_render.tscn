@@ -14,21 +14,21 @@ metadata/_custom_type_script = "uid://dkjpc18b0gfxw"
 position = Vector2(200, 104)
 script = ExtResource("1_k7v6x")
 texture = ExtResource("2_vb64g")
-z_value = 14.0
+z_value = 10.0
 metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
 
 [node name="EEAD2D2" type="Node2D" parent="." unique_id=1770473629]
 position = Vector2(256, 152)
 script = ExtResource("1_k7v6x")
 texture = ExtResource("4_olxfk")
-z_value = 1.0
+z_value = 12.0
 metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
 
 [node name="EEAD2D3" type="Node2D" parent="." unique_id=179434879]
 position = Vector2(336, 192)
 script = ExtResource("1_k7v6x")
 texture = ExtResource("2_vb64g")
-z_value = 0.4
+z_value = -10.0
 metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
 
 [node name="EEAD2D4" type="Node2D" parent="." unique_id=1271127037]
