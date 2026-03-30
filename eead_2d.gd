@@ -28,11 +28,20 @@ func _notification(what: int) -> void:
 			eri = EndekaRenderItem.new()
 			eri.texture = texture
 			eri.ci_rid = RenderingServer.canvas_item_create()
+			RenderingServer.canvas_item_set_transform(eri.ci_rid, get_transform())
 			eri.z = z_value
-			eri.xform = get_transform()
+			eri.xform = get_global_transform()
+
+			set_notify_local_transform(true)
+			set_notify_transform(true)
+
+
+		NOTIFICATION_LOCAL_TRANSFORM_CHANGED:
+			_transform_changed()
+
 
 		NOTIFICATION_TRANSFORM_CHANGED:
-			if eri: eri.xform = get_transform()
+			_transform_changed()
 
 
 		NOTIFICATION_EXIT_TREE:
@@ -52,4 +61,15 @@ func _notification(what: int) -> void:
 					var _new_idx: int = _arr.find(eri)
 					
 					if _idx != _new_idx:
-						parent.queue_redraw()
+						parent.objects = _arr
+						parent.reserve_draw()
+
+
+func _transform_changed() -> void:
+	if eri: eri.xform = get_global_transform()
+
+	var parent: Node = get_parent()
+	
+	if parent:
+		if parent is EndekaRenderer:
+			parent.reserve_draw()

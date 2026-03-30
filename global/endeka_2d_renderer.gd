@@ -4,12 +4,13 @@ class_name EndekaRenderer
 
 
 # HACK
-# 매 렌더링 프레임마다 Z값에 따라 EndekaRenderItem을 내림차순으로 정렬하고
+# 하위 EEAD의 Z값 변화에 따라 EndekaRenderItem을 내림차순으로 정렬하고
 # EndekaRenderItem 오브젝트들을 드로우합니다.
-# 성능에 문제가 있는지는 아직 확인되지 않았습니다. (있기는 하겠지)
+# 성능에 문제가 있는지는 아직 확인되지 않았습니다.
 
 
 var objects: Array[EndekaRenderItem] = []
+var _reserve: bool = false
 
 
 func _process(_delta: float) -> void:
@@ -24,17 +25,26 @@ func _notification(what: int) -> void:
 				if node is EEAD2D:
 					add_obj(node.eri)
 
+
 		NOTIFICATION_PROCESS:
-			pass
+			if _reserve:
+				queue_redraw()
+				_reserve = false
+				print("Reserved")
 
 		NOTIFICATION_DRAW:
 			RenderingServer.canvas_item_clear(get_canvas_item())
-
-			if objects.size() > 1:
-				_sort_by_z()
-
+			
+			if !objects.is_empty():
 				for obj: EndekaRenderItem in objects:
 					draw_obj(obj)
+
+
+		NOTIFICATION_CHILD_ORDER_CHANGED:
+			pass
+
+
+func reserve_draw() -> void: _reserve = true
 
 
 func add_obj(res: EndekaRenderItem) -> void:
@@ -55,7 +65,7 @@ func draw_obj(obj: EndekaRenderItem) -> void:
 	if obj.texture:
 		RenderingServer.canvas_item_add_texture_rect(
 			get_canvas_item(),
-			Rect2(obj.xform.origin - (obj.texture.get_size() / 2.), obj.texture.get_size()),
+			Rect2((obj.xform.origin - obj.texture.get_size() / 2.), obj.texture.get_size()),
 			obj.texture
 		)
 
