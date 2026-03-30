@@ -14,17 +14,10 @@
  - TileMapLayer를 사용하지 않고도 구현할 수 있는 유연한 환경 및 지형지물
  - 시스템 환경과 같이 OS와도 상호작용 가능할 것. (특히 시간에 관련된 것)
 
- 이 프레임워크는 서버 API에서 지원하는 여러 저레벨 모듈들을 사용하고 있습니다.</br></br>
+ 이 프레임워크는 서버 API에서 지원하는 여러 저레벨 모듈들을 사용하고 있습니다.<br/><br/>
  
- 서버 API 호출에 대한 정보는 리소스를 다루기 힘들거나 게임엔진이 생소한 초보자에게는 다소 복잡하고, 메모리 누수와 순환 참조같은 미숙한 실수를 일으키기 쉬운 환경입니다.</br></br>
+ 서버 API 호출에 대한 정보는 리소스를 다루기 힘들거나 게임엔진이 생소한 초보자에게는 다소 복잡하고, 메모리 누수와 순환 참조같은 미숙한 실수를 일으키기 쉬운 환경입니다.<br/><br/>
 
-
- 해당 프레임워크는 Z축을 가진 Node2D 객체인 EEAD2D 또는 EndekaRenderItem Sprite2D 객체 대신 다양한 형태의 렌더링 기능을 수행할 수 있습니다.<br/><br/>
-EEAD2D는 EndekaRenderer(엔데카 렌더러)를 통하여 Z축 렌더링이 수행됩니다. 없다면 씬트리에 기반하여 일반적인 렌더링을 수행합니다.<br/><br/>
-EndekaRenderer는 EndekaRenderingItem의 z: float의 값을 기준으로 오름차순 정렬 후, 순차적으로 렌더링을 수행하고 z축이 가장 큰 정보를 마지막으로 렌더링합니다.<br/><br/>
-
----
-
- EEAD2D? EndekaRenderItem? EndekaRenderer?
+ 그러니 반드시 엔진 사용에 대해 숙지한 다음 사용해주시길 바랍니다. 서버 API에 대한 이해가 없으신 분들은 공식문서에 초보자를 위한 [서버 API 튜토리얼](https://docs.godotengine.org/en/stable/tutorials/performance/using_servers.html)이 있으니 참고하여 주시길 바랍니다. <br/><br/>
 
  
