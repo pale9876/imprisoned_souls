@@ -35,6 +35,15 @@ func _notification(what: int) -> void:
 			set_notify_local_transform(true)
 			set_notify_transform(true)
 
+		NOTIFICATION_EXIT_TREE:
+			var parent: Node = get_parent()
+			
+			if parent:
+				if parent is EndekaRenderer:
+					if parent.objects.has(eri):
+						parent.remove_obj(eri)
+			
+			RenderingServer.free_rid(eri.ci_rid)
 
 		NOTIFICATION_LOCAL_TRANSFORM_CHANGED:
 			_transform_changed()
@@ -42,10 +51,6 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_TRANSFORM_CHANGED:
 			_transform_changed()
-
-
-		NOTIFICATION_EXIT_TREE:
-			RenderingServer.free_rid(eri.ci_rid)
 
 
 		NOTIFICATION_Z_INDEX_CHANGED:

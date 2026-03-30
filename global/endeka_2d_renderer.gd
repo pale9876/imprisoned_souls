@@ -19,8 +19,13 @@ func _process(_delta: float) -> void:
 
 func _notification(what: int) -> void:
 	match what:
+		NOTIFICATION_EXIT_TREE:
+			pass
+
+
 		NOTIFICATION_READY:
 			objects = []
+
 			for node: Node in get_children():
 				if node is EEAD2D:
 					add_obj(node.eri)
@@ -30,7 +35,7 @@ func _notification(what: int) -> void:
 			if _reserve:
 				queue_redraw()
 				_reserve = false
-				print("Reserved")
+
 
 		NOTIFICATION_DRAW:
 			RenderingServer.canvas_item_clear(get_canvas_item())
@@ -40,11 +45,8 @@ func _notification(what: int) -> void:
 					draw_obj(obj)
 
 
-		NOTIFICATION_CHILD_ORDER_CHANGED:
-			pass
-
-
-func reserve_draw() -> void: _reserve = true
+func reserve_draw() -> void:
+	_reserve = true
 
 
 func add_obj(res: EndekaRenderItem) -> void:

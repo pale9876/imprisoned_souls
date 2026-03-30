@@ -5,30 +5,26 @@
 [ext_resource type="Texture2D" uid="uid://bcx1k44j24ime" path="res://store/icon.svg" id="2_vb64g"]
 [ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="4_olxfk"]
 [ext_resource type="Texture2D" uid="uid://b8w6updfjy2m5" path="res://aseprite/asso_project/picking_head_icon.png" id="4_tev6n"]
-[ext_resource type="Texture2D" uid="uid://cnb1t3sficff1" path="res://aseprite/concept/icon/world_creator_icon.png" id="6_pv8r5"]
 
 [node name="EndekaRenderer" type="Node2D" unique_id=38148530]
 script = ExtResource("1_tev6n")
 metadata/_custom_type_script = "uid://dkjpc18b0gfxw"
 
 [node name="EEAD2D" type="Node2D" parent="." unique_id=1740719687]
-position = Vector2(300, 0)
+position = Vector2(150, 0)
 script = ExtResource("1_k7v6x")
 texture = ExtResource("2_vb64g")
+z_value = 30.0
 metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
 
 [node name="EEAD2D2" type="Node2D" parent="." unique_id=624792160]
-position = Vector2(150, 0)
+position = Vector2(75, 0)
 script = ExtResource("1_k7v6x")
 texture = ExtResource("4_tev6n")
 metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
 
 [node name="EEAD2D3" type="Node2D" parent="." unique_id=1935632237]
+position = Vector2(35, 0)
 script = ExtResource("1_k7v6x")
 texture = ExtResource("4_olxfk")
-metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
-
-[node name="EEAD2D4" type="Node2D" parent="." unique_id=1453477105]
-script = ExtResource("1_k7v6x")
-texture = ExtResource("6_pv8r5")
 metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
