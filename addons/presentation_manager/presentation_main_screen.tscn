@@ -36,12 +36,15 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("2_dqrx8")
 _slide_tween_curve = SubResource("Curve_dqrx8")
+_progress = 2.0
 
 [node name="ColorRect" type="ColorRect" parent="ScrollContainer/SlideContainer" unique_id=869482081]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1240.0
+offset_right = -1240.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0.51, 0.51, 1)
@@ -51,8 +54,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 620.0
-offset_right = 620.0
+offset_left = -620.0
+offset_right = -619.99927
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.43, 0.5915, 1, 1)
@@ -62,8 +65,18 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1240.0
-offset_right = 1240.0
+offset_right = 0.0008544922
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.9545, 1, 0.61, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="ScrollContainer/SlideContainer" unique_id=1932022420]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 620.0
+offset_right = 619.99634
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.27999997, 1, 0.65199995, 1)
