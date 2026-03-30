@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://cjr78abv7jyim"]
+
+[ext_resource type="Script" uid="uid://bpj81wnbe8ww3" path="res://eead_2d.gd" id="1_k7v6x"]
+[ext_resource type="Script" uid="uid://dkjpc18b0gfxw" path="res://global/endeka_2d_renderer.gd" id="1_tev6n"]
+[ext_resource type="Texture2D" uid="uid://bcx1k44j24ime" path="res://store/icon.svg" id="2_vb64g"]
+[ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="4_olxfk"]
+[ext_resource type="Texture2D" uid="uid://dmt37shy614kp" path="res://aseprite/asso_project/icon/picking_head_icon.png" id="5_tev6n"]
+
+[node name="TestEndekaRender" type="Node2D" unique_id=2017501830]
+script = ExtResource("1_tev6n")
+metadata/_custom_type_script = "uid://dkjpc18b0gfxw"
+
+[node name="EEAD2D" type="Node2D" parent="." unique_id=211891381]
+position = Vector2(200, 104)
+script = ExtResource("1_k7v6x")
+texture = ExtResource("2_vb64g")
+z_value = 14.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D2" type="Node2D" parent="." unique_id=1770473629]
+position = Vector2(256, 152)
+script = ExtResource("1_k7v6x")
+texture = ExtResource("4_olxfk")
+z_value = 1.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D3" type="Node2D" parent="." unique_id=179434879]
+position = Vector2(336, 192)
+script = ExtResource("1_k7v6x")
+texture = ExtResource("2_vb64g")
+z_value = 0.4
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D4" type="Node2D" parent="." unique_id=1271127037]
+position = Vector2(424, 240)
+script = ExtResource("1_k7v6x")
+texture = ExtResource("5_tev6n")
+z_value = 30.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
