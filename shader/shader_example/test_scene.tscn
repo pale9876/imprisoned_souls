@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://2wsfmhaks88s"]
+
+[ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/void_color_rect.gd" id="1_rak1e"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="2_2qg0b"]
+[ext_resource type="Shader" uid="uid://3rob383eby4i" path="res://shader/shader_example/sample.gdshader" id="3_0146d"]
+[ext_resource type="Texture2D" uid="uid://xcwkxwtjmbvw" path="res://shader/shader_example/imgs/color_rect_image.png" id="3_nengt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0146d"]
+shader = ExtResource("3_0146d")
+
+[sub_resource type="Resource" id="Resource_0146d"]
+script = ExtResource("2_2qg0b")
+shader = SubResource("ShaderMaterial_0146d")
+texture = ExtResource("3_nengt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jijxv"]
+shader = ExtResource("3_0146d")
+
+[sub_resource type="Resource" id="Resource_jijxv"]
+script = ExtResource("2_2qg0b")
+shader = SubResource("ShaderMaterial_jijxv")
+position = Vector2(100, 100)
+texture = ExtResource("3_nengt")
+
+[node name="TestScene" type="Node2D" unique_id=352727994]
+
+[node name="VoidColorRect" type="Node2D" parent="." unique_id=364769702]
+script = ExtResource("1_rak1e")
+instance = Array[ExtResource("2_2qg0b")]([SubResource("Resource_0146d"), SubResource("Resource_jijxv")])
+image_save_path = "res://shader/shader_example/imgs/color_rect_image.png"
+_texture = ExtResource("3_nengt")
+metadata/_custom_type_script = "uid://dfku5xh0yuklb"
