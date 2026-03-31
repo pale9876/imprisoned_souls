@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 const PRESENTATION_INSPECTOR_SCENE: PackedScene = preload("uid://vj3mtpe7yn1q")
-const PRESENTATION_EXAMPLE: PackedScene = preload("uid://dmojp4uoydd3f")
+const PRESENTATION_EXAMPLE: PackedScene = preload("uid://c2bnky2khkns0")
 
 
 const NOTIFICATION_PRESENTATION_SELECTED: int = 1200
