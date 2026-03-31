@@ -11,7 +11,7 @@ const NOTIFICATION_SCENE_SELECTED: int = 1201
 const NOTIFICATION_EDIT_OBJECT_CHANGED: int = 1202
 
 
-var presentation_dock: EditorDock
+var presentation_dock: EditorDock = null
 var presentation_inspector: PresentationInspector = null
 var main_screen: MarginContainer = null
 
@@ -44,10 +44,8 @@ func _on_edit_object_changed() -> void:
 
 	if _edit is Presentation:
 		notification(NOTIFICATION_PRESENTATION_SELECTED)
-
 	elif _edit is PresentationScene:
 		notification(NOTIFICATION_SCENE_SELECTED)
-	
 	else:
 		notification(NOTIFICATION_EDIT_OBJECT_CHANGED)
 

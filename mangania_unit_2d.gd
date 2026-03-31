@@ -3,7 +3,6 @@ extends Node2D
 class_name ManganiaUnit2D
 
 
-
 const NOTIFICATION_COLLIDER_CHANGED: int = 2101
 const NOTIFICATION_MASK_CHANGED: int = 2102
 const NOTIFICAITON_LAYER_CHANGED: int = 2013

@@ -3,16 +3,19 @@ extends Node2D
 class_name Squad2D
 
 
+@export var leader: SquadMember
 @export var members: Array[SquadMember]
-
-
 @export var message_log: PackedStringArray
 
+@export var max_count: int = 3
 
+
+# OVERRIDE
 func _process(delta: float) -> void:
 	pass
 
 
+# OVERRIDE
 func _physics_process(delta: float) -> void:
 	pass
 
@@ -36,3 +39,7 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_DRAW:
 			pass
+
+
+func move_squad(to: Vector2) -> void:
+	pass

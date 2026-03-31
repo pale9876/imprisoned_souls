@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bxsd4pdohjlx4"
+path="res://.godot/imported/AZALI - show me the sky. show me how to live.mp3-303f3e3b2cb8d0bc23200e8245d5fb80.mp3str"
+
+[deps]
+
+source_file="res://audio/AZALI - show me the sky. show me how to live.mp3"
+dest_files=["res://.godot/imported/AZALI - show me the sky. show me how to live.mp3-303f3e3b2cb8d0bc23200e8245d5fb80.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

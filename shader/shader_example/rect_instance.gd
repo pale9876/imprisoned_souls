@@ -1,10 +1,16 @@
 @tool
 extends Resource
-class_name RectInstance
+class_name LegionInstance
 
 
-@export var shader: ShaderMaterial
-@export var position: Vector2 = Vector2(0., 0.)
+@export var shader: ShaderMaterial = ShaderMaterial.new()
+@export var position: Vector2 = Vector2(0., 0.):
+	set(value):
+		position = value
+		if ci_rid.is_valid():
+			RenderingServer.canvas_item_set_transform(
+				ci_rid, Transform2D(0., position)
+			)
 @export var size: Vector2i = Vector2i(128, 128)
 @export var texture: Texture2D
 
@@ -12,8 +18,8 @@ class_name RectInstance
 var ci_rid: RID
 
 
-static func create_instance(parent: RID) -> RectInstance:
-	var instance: RectInstance = RectInstance.new()
+static func create_instance(parent: RID) -> LegionInstance:
+	var instance: LegionInstance = LegionInstance.new()
 	instance.init_instance(parent)
 
 	return instance
@@ -22,9 +28,6 @@ static func create_instance(parent: RID) -> RectInstance:
 func init_instance(parent: RID) -> void:
 	ci_rid = RenderingServer.canvas_item_create()
 	RenderingServer.canvas_item_set_parent(ci_rid, parent)
-	
-	shader = ShaderMaterial.new()
-	
 	RenderingServer.canvas_item_set_material(ci_rid, shader.get_rid())
 
 

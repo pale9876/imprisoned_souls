@@ -6,7 +6,7 @@ class_name CollideInfo
 var _index: int = -1
 
 var _shape: RID
-var _owner: ManganiaUnit2D
+var _owner: Object
 
 
 @export var name: StringName = &""
@@ -17,11 +17,11 @@ var _owner: ManganiaUnit2D
 
 func get_shape_rid() -> RID: return _shape
 
-func get_owner() -> ManganiaUnit2D: return _owner
+func get_owner() -> Object: return _owner
 func get_index() -> int: return _index
 
 
-func set_owner(unit: ManganiaUnit2D) -> void:
+func set_owner(unit: Object) -> void:
 	_owner = unit
 
 

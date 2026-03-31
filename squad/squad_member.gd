@@ -13,13 +13,14 @@ const NOTIFICATION_TRANSFORM_CHANGED: int = 1503
 	set(value):
 		size = value
 		notification(NOTIFICATION_SIZE_CHANGED)
+@export var position: Vector2 = Vector2()
 @export var scope_range: Vector2 = Vector2(200., 100.)
 @export var direction: float = 1.
 
 @export_flags_2d_physics var mask: int = 1
 @export_flags_2d_physics var layer: int = 0
-@export var draw_up: bool = true
 
+@export var draw_up: bool = true
 
 var _body: RID
 var _shape: RID
@@ -29,9 +30,6 @@ var _hbox_shape: RID
 
 var _awareness: RID
 var _aw_shape: RID
-
-var _position: Vector2
-
 
 
 func _notification(what: int) -> void:
@@ -48,12 +46,21 @@ func _notification(what: int) -> void:
 			PhysicsServer2D.area_set_transform(_awareness, get_transform())
 
 
-func move() -> void:
+func move(dir: Vector2, toward: Vector2) -> void:
+	pass
+
+
+func create(space: RID, init_pos: Vector2) -> SquadMember:
+	var member: SquadMember = SquadMember.new()
+	create_body(space, init_pos)
+	return member
+
+func remove() -> void:
 	pass
 
 
 func create_body(space: RID, init_pos: Vector2) -> void:
-	_position = init_pos
+	position = init_pos
 	
 	_body = PhysicsServer2D.body_create()
 	_shape = PhysicsServer2D.rectangle_shape_create()
@@ -70,9 +77,6 @@ func create_body(space: RID, init_pos: Vector2) -> void:
 	
 	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
 
-	create_hurtbox(space)
-	create_awareness(space)
-
 
 func create_hurtbox(space: RID) -> void:
 	_hurtbox = PhysicsServer2D.area_create()
@@ -83,7 +87,9 @@ func create_hurtbox(space: RID) -> void:
 	PhysicsServer2D.area_set_monitorable(_hurtbox, true)
 	
 	PhysicsServer2D.area_add_shape(
-		_hurtbox, _hbox_shape, Transform2D(0., Vector2(0., - size.y / 2. if draw_up else 0.))
+		_hurtbox,
+		_hbox_shape,
+		Transform2D(0., Vector2(0., - size.y / 2. if draw_up else 0.))
 	)
 
 	PhysicsServer2D.area_attach_object_instance_id(_hurtbox, get_instance_id())
@@ -101,12 +107,6 @@ func create_awareness(space: RID) -> void:
 	
 	PhysicsServer2D.area_attach_object_instance_id(_awareness, get_instance_id())
 
-
-func move_squad(to) -> void:
-	
-	# TODO: move toward to target
-	
-	notification(NOTIFICATION_TRANSFORM_CHANGED)
 
 
 func draw_hurtbox(canvas_item: RID) -> void:
@@ -126,7 +126,7 @@ func notify_message(message: String, data: Dictionary) -> void:
 
 
 func get_transform() -> Transform2D:
-	return Transform2D(0., _position)
+	return Transform2D(0., position)
 
 
 func get_gravity(delta: float) -> Vector2:
