@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bmw6n5f0b7cq1"]
+
+[node name="MainScreen" type="MarginContainer" unique_id=923576309]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=443532794]
+layout_mode = 2
+split_offsets = PackedInt32Array(128)
+split_offset = 128
+
+[node name="SlideShowScreen" type="Control" parent="HSplitContainer" unique_id=1221116424]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Toolbox" type="Control" parent="HSplitContainer" unique_id=1129358548]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="HSplitContainer/Toolbox" unique_id=1389126883]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/Toolbox/PanelContainer" unique_id=577527771]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/Toolbox/PanelContainer/VBoxContainer" unique_id=1107134297]
+layout_mode = 2
+alignment = 1
+
+[node name="Prev" type="Button" parent="HSplitContainer/Toolbox/PanelContainer/VBoxContainer/HBoxContainer" unique_id=566985291]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Prev"
+
+[node name="Next" type="Button" parent="HSplitContainer/Toolbox/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1209711386]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Next"
