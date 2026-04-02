@@ -46,8 +46,20 @@ func _notification(what: int) -> void:
 			PhysicsServer2D.area_set_transform(_awareness, get_transform())
 
 
-func move(dir: Vector2, toward: Vector2) -> void:
-	pass
+func move(motion: Vector2) -> void:
+	var param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
+	var result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
+	
+	param.from = Transform2D(0., position)
+	param.motion = motion
+	
+	
+	var test: bool = PhysicsServer2D.body_test_motion(_body, param, result)
+	
+	if test:
+		pass
+	else:
+		pass
 
 
 func create(space: RID, init_pos: Vector2) -> SquadMember:

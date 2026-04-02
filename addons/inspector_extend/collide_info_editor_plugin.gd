@@ -53,7 +53,7 @@ class MultiShapeProperty extends EditorProperty:
 
 	func edit_can_handle() -> bool:
 		if edit:
-			return (edit is ManganiaUnit2D) or (edit is Hurtbox)
+			return (edit is ManganiaUnit2D)
 		return false
 
 	func has_info(res: CollideInfo) -> bool:
@@ -183,42 +183,33 @@ class MultiShapeProperty extends EditorProperty:
 				info_container.add_child(shape_rid_label)
 				shape_rid_label.text = str(res._shape)
 				
-				
-				var pos_value_edits: Array[LineEdit] = set_vector_value(info_container, res.position, "Position")
-				var pos_x_edit: LineEdit = pos_value_edits[0]
-				var vec2_value_changed: Callable = func(new_text: String, property: StringName, xy: bool, message: String = "") -> void:
-					if new_text.is_valid_float():
-						res.set(
-							property, Vector2(new_text.to_float(), res.get(property).y) if xy else Vector2(res.get(property).x, new_text.to_float())
-						)
-						
-						print(message)
+				var pos_value_edits: Array[SpinBox] = set_vector_value(info_container, res.position, "Position")
+				var pos_x_edit: SpinBox = pos_value_edits[0]
 
-				pos_x_edit.text_submitted.connect(
-					vec2_value_changed.bind(&"position", true, "collider info position X value changed")
+				pos_x_edit.value_changed.connect(
+					func(value: float) -> void: res.position = Vector2(value, res.position.y)
 				)
 				
-				var pos_y_edit: LineEdit = pos_value_edits[1]
-				pos_y_edit.text_submitted.connect(
-					vec2_value_changed.bind(&"position", false, "collider info position Y value changed")
+				var pos_y_edit: SpinBox = pos_value_edits[1]
+				pos_y_edit.value_changed.connect(
+					func(value: float) -> void: res.position = Vector2(res.position.x, value)
 				)
 				
 				#set_data(hbox, "Size", res.size)
-				var size_value_edits: Array[LineEdit] = set_vector_value(info_container, res.size, "Size")
-				var size_x_edit: LineEdit = size_value_edits[0]
-				size_x_edit.text_submitted.connect(
-					vec2_value_changed.bind(&"size", true, "collider info size X value changed")
+				var size_value_edits: Array[SpinBox] = set_vector_value(info_container, res.size, "Size")
+				var size_x_edit: SpinBox = size_value_edits[0]
+				size_x_edit.value_changed.connect(
+					func(value: float) -> void: res.size = Vector2(value, res.size.y)
 				)
-				var size_y_edit: LineEdit = size_value_edits[1]
-				size_y_edit.text_submitted.connect(
-					vec2_value_changed.bind(&"size", false, "collider info size Y value changed")
+				var size_y_edit: SpinBox = size_value_edits[1]
+				size_y_edit.value_changed.connect(
+					func(value: float) -> void: res.size = Vector2(res.size.x, value)
 				)
 				
 
 				var toggle_changed: Callable = func(toggle: bool, property: StringName, message: String) -> void:
 					res.set(property, toggle)
 					print(message)
-					
 
 				var disabled_checkbox: CheckBox = set_toggle(info_container, "Disabled", res.disabled)
 				disabled_checkbox.toggled.connect(
@@ -251,29 +242,34 @@ class MultiShapeProperty extends EditorProperty:
 		return checkbox
 
 
-	func set_vector_value(at: Control, value: Vector2, label_text: String) -> Array[LineEdit]:
+	func set_vector_value(at: Control, value: Vector2, label_text: String) -> Array[SpinBox]:
 		var vector_hbox: HBoxContainer = HBoxContainer.new()
 		var vector_label: Label = Label.new()
 		vector_label.text = label_text
 		vector_hbox.add_child(vector_label)
 		
-		var vector_x_edit: LineEdit = LineEdit.new()
-		vector_x_edit.placeholder_text = "X"
-		vector_x_edit.text = str(value.x)
-		vector_hbox.add_child(vector_x_edit)
-
-		var vector_y_edit: LineEdit = LineEdit.new()
-		vector_y_edit.placeholder_text = "Y"
-		vector_y_edit.text = str(value.y)
-		vector_hbox.add_child(vector_y_edit)
+		var arr: Array[SpinBox] = []
+		
+		for i: int in range(2):
+			var spin_box: SpinBox = SpinBox.new()
+			
+			spin_box.update_on_text_changed = true
+			spin_box.suffix = "X" if i == 0 else "Y"
+			spin_box.allow_greater = true
+			spin_box.allow_lesser = true
+			spin_box.step = .01
+			spin_box.value = value.x if i == 0 else value.y
+			vector_hbox.add_child(spin_box)
+			
+			arr.push_back(spin_box)
 
 		at.add_child(vector_hbox)
 		
-		return [vector_x_edit, vector_y_edit]
+		return arr
 
 
 	func _add_collider_btn_pressed() -> void:
-		if edit_can_handle():
+		if edit is ManganiaUnit2D:
 			edit.create_collider(&"new_collider")
 			
 			# clear infos

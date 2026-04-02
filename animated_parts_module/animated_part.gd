@@ -19,12 +19,6 @@ var _on_floor: bool = false
 var _collided: bool = false
 
 
-#func _notification(what: int) -> void:
-	#match what:
-		#NOTIFICATION_TRANSFORM_CHANGED:
-			#PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, _get_transform())
-
-
 func create_body(space: RID, tf: Transform2D) -> void:
 	_position = tf.get_origin()
 	
@@ -54,8 +48,7 @@ func move(value: Vector2, exclude: Array[RID] = []) -> void:
 	
 	if !_collided:
 		if test:
-			var destination: Vector2 = _position + (value * result.get_collision_unsafe_fraction())
-			_position = destination
+			_position += (value * result.get_collision_unsafe_fraction())
 			_collided = true
 		else:
 			_position += value

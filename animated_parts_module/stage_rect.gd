@@ -12,6 +12,9 @@ var _body: RID
 var segments: Array[RID]
 
 
+@export_flags_2d_physics var mask: int = 1
+
+
 @export var draw_center: bool = true:
 	set(toggle):
 		draw_center = toggle
@@ -20,11 +23,8 @@ var segments: Array[RID]
 	set(colour):
 		color = colour
 		queue_redraw()
+
 @export var disabled: bool = false: set = set_disabled
-
-
-func _init() -> void:
-	pass
 
 
 # OVERRIDE
@@ -40,8 +40,24 @@ func _physics_process(delta: float) -> void:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
-			if !disabled:
-				init_body()
+			_body = PhysicsServer2D.body_create()
+			segments = get_segments()
+
+			PhysicsServer2D.body_set_space(_body, get_world_2d().space)
+			
+			PhysicsServer2D.body_set_state(
+				_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform()
+			)
+			
+			PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_STATIC)
+			PhysicsServer2D.body_set_collision_mask(_body, mask)
+
+			PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
+			
+			
+			
+			for seg: RID in segments:
+				PhysicsServer2D.body_add_shape(_body, seg)
 
 		NOTIFICATION_TRANSFORM_CHANGED:
 			pass
@@ -64,57 +80,52 @@ func _notification(what: int) -> void:
 
 
 		NOTIFICATION_EXIT_TREE:
+			for i: int in range(segments.size()):
+				PhysicsServer2D.free_rid(segments[i])
+			
 			PhysicsServer2D.free_rid(_body)
+			
+			segments = []
 
 
 		NOTIFICATION_SECTOR_DISABLED:
 			pass
 
 
-func init_body() -> void:
-	_body = PhysicsServer2D.body_create()
-	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
-	
-	PhysicsServer2D.body_set_space(_body, get_world_2d().space)
-	
-	PhysicsServer2D.body_set_state(
-		_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform()
-	)
-	
-	PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_STATIC)
-	
-	PhysicsServer2D.body_set_collision_mask(_body, 1)
-	PhysicsServer2D.body_set_collision_layer(_body, 1)
-		
-	segments = get_segments()
-	
-	for seg: RID in segments:
-		PhysicsServer2D.body_add_shape(_body, seg)
-
-
 func set_disabled(toggle: bool) -> void:
 	disabled = toggle
 	
+	if !_body.is_valid(): return
+	
 	if toggle:
-		if _body:
-			PhysicsServer2D.free_rid(_body)
-			notification(NOTIFICATION_SECTOR_DISABLED)
+		segs_disabled(true)
+		notification(NOTIFICATION_SECTOR_DISABLED)
 	else:
-		init_body()
+		segs_disabled(false)
+		notification(NOTIFICATION_SECTOR_DISABLED)
 		
 	queue_redraw()
+
+
+func segs_disabled(toggle: bool) -> void:
+	if !segments.is_empty():
+		for i: int in range(segments.size()):
+			PhysicsServer2D.body_set_shape_disabled(
+				_body, i, toggle
+		)
 
 
 func set_size(sz: Vector2):
 	size = sz
 	
-	if _body:
-		PhysicsServer2D.body_clear_shapes(_body)
+	if !_body.is_valid(): return
+
+	PhysicsServer2D.body_clear_shapes(_body)
 		
-		segments = get_segments()
-		
-		for rid: RID in segments:
-			PhysicsServer2D.body_add_shape(_body, rid)
+	segments = get_segments()
+
+	for rid: RID in segments:
+		PhysicsServer2D.body_add_shape(_body, rid)
 	
 	queue_redraw()
 
@@ -145,6 +156,7 @@ func get_segments() -> Array[RID]:
 		var point_a: Vector2 = segs[i]
 		var point_b: Vector2 = segs[i + 1]
 		var segment_shape: RID = PhysicsServer2D.segment_shape_create()
+		PhysicsServer2D.SHAPE_SEPARATION_RAY
 		PhysicsServer2D.shape_set_data(segment_shape, Rect2(point_a, point_b))
 		result.push_back(segment_shape)
 

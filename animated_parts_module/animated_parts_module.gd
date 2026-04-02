@@ -50,8 +50,8 @@ func _notification(what: int) -> void:
 		NOTIFICATION_EXIT_TREE:
 			_emitted = false
 			
-			for res: AnimatedPart in parts:
-				if !Engine.is_editor_hint():
+			if !Engine.is_editor_hint():
+				for res: AnimatedPart in parts:
 					PhysicsServer2D.free_rid(res.get_body_rid())
 
 
