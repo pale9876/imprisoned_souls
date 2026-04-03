@@ -40,24 +40,23 @@ func _physics_process(delta: float) -> void:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
-			_body = PhysicsServer2D.body_create()
-			segments = get_segments()
+			if !Engine.is_editor_hint():
+				_body = PhysicsServer2D.body_create()
+				segments = get_segments()
 
-			PhysicsServer2D.body_set_space(_body, get_world_2d().space)
-			
-			PhysicsServer2D.body_set_state(
-				_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform()
-			)
-			
-			PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_STATIC)
-			PhysicsServer2D.body_set_collision_mask(_body, mask)
+				PhysicsServer2D.body_set_space(_body, get_world_2d().space)
+				
+				PhysicsServer2D.body_set_state(
+					_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform()
+				)
+				
+				PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_STATIC)
+				PhysicsServer2D.body_set_collision_mask(_body, mask)
 
-			PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
+				PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
 			
-			
-			
-			for seg: RID in segments:
-				PhysicsServer2D.body_add_shape(_body, seg)
+				for seg: RID in segments:
+					PhysicsServer2D.body_add_shape(_body, seg)
 
 		NOTIFICATION_TRANSFORM_CHANGED:
 			pass
@@ -80,12 +79,13 @@ func _notification(what: int) -> void:
 
 
 		NOTIFICATION_EXIT_TREE:
-			for i: int in range(segments.size()):
-				PhysicsServer2D.free_rid(segments[i])
-			
-			PhysicsServer2D.free_rid(_body)
-			
-			segments = []
+			if !Engine.is_editor_hint():
+				for i: int in range(segments.size()):
+					PhysicsServer2D.free_rid(segments[i])
+				
+				PhysicsServer2D.free_rid(_body)
+				
+				segments = []
 
 
 		NOTIFICATION_SECTOR_DISABLED:
@@ -156,7 +156,6 @@ func get_segments() -> Array[RID]:
 		var point_a: Vector2 = segs[i]
 		var point_b: Vector2 = segs[i + 1]
 		var segment_shape: RID = PhysicsServer2D.segment_shape_create()
-		PhysicsServer2D.SHAPE_SEPARATION_RAY
 		PhysicsServer2D.shape_set_data(segment_shape, Rect2(point_a, point_b))
 		result.push_back(segment_shape)
 

@@ -14,6 +14,7 @@ class_name LegionInstance
 @export var size: Vector2i = Vector2i(128, 128)
 @export var texture: Texture2D
 
+var _area: RID
 
 var ci_rid: RID
 

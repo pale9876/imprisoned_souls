@@ -2,39 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c0vs0bec2o1dl" path="res://mouse_interactable_area_2d.gd" id="1_8qn1a"]
 [ext_resource type="Script" uid="uid://bv8jgicw64qw7" path="res://scene_camera_2d.gd" id="2_sr0vo"]
-[ext_resource type="Script" uid="uid://ci422twdsgjl2" path="res://mangania_unit_2d.gd" id="3_2g3mv"]
-[ext_resource type="Script" uid="uid://br7fksvlapvok" path="res://collide_info.gd" id="4_0qrw6"]
-[ext_resource type="Script" uid="uid://d16i88d7475ot" path="res://hurt_box.gd" id="5_nhv8v"]
-
-[sub_resource type="Resource" id="Resource_0qrw6"]
-script = ExtResource("4_0qrw6")
-name = &"Idle"
-position = Vector2(10, 10)
-size = Vector2(30, 30)
-disabled = false
-metadata/_custom_type_script = "uid://br7fksvlapvok"
-
-[sub_resource type="Resource" id="Resource_nhv8v"]
-script = ExtResource("4_0qrw6")
-name = &"Jump"
-disabled = false
-
-[sub_resource type="Resource" id="Resource_fjpoc"]
-script = ExtResource("4_0qrw6")
-name = &"Test"
-disabled = false
-
-[sub_resource type="Resource" id="Resource_x25wb"]
-script = ExtResource("4_0qrw6")
-name = &"Idle"
-
-[sub_resource type="Resource" id="Resource_x3od3"]
-script = ExtResource("4_0qrw6")
-name = &"new_collider"
-
-[sub_resource type="Resource" id="Resource_vbbok"]
-script = ExtResource("4_0qrw6")
-name = &"new_collider"
 
 [node name="Node2D" type="Node2D" unique_id=926680205]
 
@@ -45,17 +12,3 @@ script = ExtResource("1_8qn1a")
 [node name="SceneCamera2D" type="Camera2D" parent="." unique_id=326800775]
 script = ExtResource("2_sr0vo")
 metadata/_custom_type_script = "uid://bv8jgicw64qw7"
-
-[node name="ManganiaUnit2D" type="Node2D" parent="." unique_id=962794465]
-script = ExtResource("3_2g3mv")
-collider = Array[ExtResource("4_0qrw6")]([SubResource("Resource_0qrw6"), SubResource("Resource_nhv8v"), SubResource("Resource_fjpoc")])
-color = Color(0.646, 0.85, 0.85, 0.43529412)
-
-[node name="Hurtbox" type="Node2D" parent="ManganiaUnit2D" unique_id=455048410]
-script = ExtResource("5_nhv8v")
-metadata/_custom_type_script = "uid://d16i88d7475ot"
-
-[node name="ManganiaUnit2D2" type="Node2D" parent="." unique_id=486639489]
-script = ExtResource("3_2g3mv")
-collider = Array[ExtResource("4_0qrw6")]([SubResource("Resource_x25wb"), SubResource("Resource_x3od3"), SubResource("Resource_vbbok")])
-metadata/_custom_type_script = "uid://ci422twdsgjl2"

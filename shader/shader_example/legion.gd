@@ -9,7 +9,6 @@ class_name Legion
 
 @export var placeholder: Texture
 
-
 @export_tool_button("Create Instance", "Object") var _create: Callable = create_instance
 @export_tool_button("Remove Instance", "Object") var _remove: Callable = _remove_last_instance
 

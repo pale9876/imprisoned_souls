@@ -3,7 +3,7 @@ extends Area2D
 class_name Hitbox2D
 
 
-@export var hitbox_info: HitboxInfo
+@export var hitbox_info: HitboxInformation
 
 
 @export var flip: bool = false:
