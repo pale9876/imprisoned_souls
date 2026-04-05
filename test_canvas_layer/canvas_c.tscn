@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://b4mbiwu1fa72q"]
-
-[ext_resource type="Script" uid="uid://bggl1l4w2gkib" path="res://test_canvas_layer/canvas_c.gd" id="1_bx25h"]
-[ext_resource type="Texture2D" uid="uid://bcx1k44j24ime" path="res://store/icon.svg" id="2_q38vr"]
-
-[node name="CanvasC" type="Node2D" unique_id=1502230204]
-script = ExtResource("1_bx25h")
-texture = ExtResource("2_q38vr")

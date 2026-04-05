@@ -29,81 +29,57 @@ var segments: Array[RID]
 
 # OVERRIDE
 func _enter_tree() -> void:
-	pass
+	if !segments.is_empty():
+		kill()
+	
+	_body = PhysicsServer2D.body_create()
+	
+	segments = get_segments()
 
-
-# OVERRIDE
-func _physics_process(delta: float) -> void:
-	pass
-
-
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_ENTER_TREE:
-			if !Engine.is_editor_hint():
-				_body = PhysicsServer2D.body_create()
-				segments = get_segments()
-
-				PhysicsServer2D.body_set_space(_body, get_world_2d().space)
-				
-				PhysicsServer2D.body_set_state(
-					_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform()
-				)
-				
-				PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_STATIC)
-				PhysicsServer2D.body_set_collision_mask(_body, mask)
-
-				PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
+	PhysicsServer2D.body_set_space(_body, get_world_2d().space)
+	
+	PhysicsServer2D.body_set_state(
+		_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform()
+	)
 			
-				for seg: RID in segments:
-					PhysicsServer2D.body_add_shape(_body, seg)
+	PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_STATIC)
+	PhysicsServer2D.body_set_collision_mask(_body, mask)
 
-		NOTIFICATION_TRANSFORM_CHANGED:
-			pass
-
-
-		NOTIFICATION_VISIBILITY_CHANGED:
-			disabled = !visible
+	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
+	
+	for seg: RID in segments:
+		PhysicsServer2D.body_add_shape(_body, seg)
 
 
-		NOTIFICATION_DRAW:
-			var new_color: Color = color
-			
-			if disabled: new_color.s = 0.
-			
-			draw_rect(get_rect(), new_color)
+func _exit_tree() -> void:
+	kill()
 
 
-		NOTIFICATION_PHYSICS_PROCESS:
-			pass
+func _draw() -> void:
+	draw_rect(
+		Rect2(-size/2. if draw_center else Vector2(), size), color, false, 1.
+	)
 
 
-		NOTIFICATION_EXIT_TREE:
-			if !Engine.is_editor_hint():
-				for i: int in range(segments.size()):
-					PhysicsServer2D.free_rid(segments[i])
-				
-				PhysicsServer2D.free_rid(_body)
-				
-				segments = []
-
-
-		NOTIFICATION_SECTOR_DISABLED:
-			pass
+func kill() -> void:
+	for i: int in range(segments.size()):
+		PhysicsServer2D.free_rid(segments[i])
+	
+	PhysicsServer2D.free_rid(_body)
+	
+	segments = []
 
 
 func set_disabled(toggle: bool) -> void:
 	disabled = toggle
 	
-	if !_body.is_valid(): return
+	if segments.is_empty(): return
 	
 	if toggle:
 		segs_disabled(true)
-		notification(NOTIFICATION_SECTOR_DISABLED)
 	else:
 		segs_disabled(false)
-		notification(NOTIFICATION_SECTOR_DISABLED)
-		
+
 	queue_redraw()
 
 

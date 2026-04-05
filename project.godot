@@ -44,14 +44,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*uid://d1fcpj0k6kkip"
-InputHandler="*uid://e3v8nla7qwf3"
-QuestSystem="*uid://b05aindhdg27l"
-Executioner="*uid://db6qoudfuxmol"
-ImageSelector="*uid://bkb1epbrwsfbn"
-EssaRealTimeControlSystem="*uid://bd1ydcgvjlqn3"
-GameCurrencyManager="*uid://p54o01yyn0u3"
-AudioProduct="*uid://by71ita4wk70r"
 DialogueManager="*uid://c3rodes2l3gxb"
+InputHandler="*uid://e3v8nla7qwf3"
+ImageSelector="*uid://bkb1epbrwsfbn"
 
 [display]
 
@@ -70,7 +65,7 @@ script/templates_search_path="res://template/script"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot-sqlite/plugin.cfg")
+enabled=PackedStringArray("res://addons/BurstParticles2D/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [global]
 

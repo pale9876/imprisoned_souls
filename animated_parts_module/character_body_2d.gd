@@ -10,6 +10,10 @@ const NOTIFICATION_TEXTURE_CHANGED: int = 44000
 		texture = _texture
 		notification(NOTIFICATION_TEXTURE_CHANGED)
 
+@export var size: Vector2
+@export var frame: int = 0
+
+
 @export var stat: UnitStat
 @export var skills: Array[Skill]
 
@@ -29,6 +33,18 @@ func _notification(what: int) -> void:
 				if child is Node2D:
 					child.notification(NOTIFICATION_TRANSFORM_CHANGED)
 
+		NOTIFICATION_DRAW:
+			if texture:
+				RenderingServer.canvas_item_clear(get_canvas_item())
+				
+				RenderingServer.canvas_item_add_texture_rect_region(
+					get_canvas_item(),
+					Rect2(-size/2., size),
+					texture.get_rid(),
+					Rect2(Vector2(float(frame), 0.), size),
+				)
+				#print("Hello")
+
 
 func add_skill(skill: Skill) -> void:
 	pass
@@ -43,12 +59,13 @@ func change_collider(c_name: StringName) -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
+	
 	var input_vector: Vector2 = Input.get_vector("left", "right", "up", "down")
 	
 	if input_vector != Vector2():
-		pass
+		velocity = input_vector * (stat.speed)
 	else:
-		pass
+		velocity = Vector2()
 	
 	
 	move_and_slide()

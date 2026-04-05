@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="BehaviorTree" format=3 uid="uid://d26sjmxrq1uw3"]
-
-[ext_resource type="Script" uid="uid://ckysd1lbjoisf" path="res://addons/behavior_tree_editor/behavior_tree/behavior_tree.gd" id="1_w6qut"]
-[ext_resource type="Script" uid="uid://cf6j52q1b8ig0" path="res://addons/behavior_tree_editor/behavior_tree/sequence.gd" id="3_k07gm"]
-
-[resource]
-script = ExtResource("1_w6qut")
-map = Array[ExtResource("3_k07gm")]([null])
-metadata/_custom_type_script = "uid://ckysd1lbjoisf"

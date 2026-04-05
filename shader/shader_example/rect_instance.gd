@@ -4,50 +4,19 @@ class_name LegionInstance
 
 
 @export var shader: ShaderMaterial = ShaderMaterial.new()
-@export var position: Vector2 = Vector2(0., 0.):
-	set(value):
-		position = value
-		if ci_rid.is_valid():
-			RenderingServer.canvas_item_set_transform(
-				ci_rid, Transform2D(0., position)
-			)
-@export var size: Vector2i = Vector2i(128, 128)
-@export var texture: Texture2D
+@export var position: Vector2 = Vector2(0., 0.)
+@export var size: Vector2 = Vector2(32., 32.)
+@export var frame_size: Vector2 = Vector2(64., 64.)
+@export var offset: float = 0.
+@export var texture: AtlasTexture
 
-var _area: RID
-
-var ci_rid: RID
-
-
-static func create_instance(parent: RID) -> LegionInstance:
-	var instance: LegionInstance = LegionInstance.new()
-	instance.init_instance(parent)
-
-	return instance
-
-
-func init_instance(parent: RID) -> void:
-	ci_rid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(ci_rid, parent)
-	RenderingServer.canvas_item_set_material(ci_rid, shader.get_rid())
-
-
-func update() -> void:
-	RenderingServer.canvas_item_clear(ci_rid)
-
-	RenderingServer.canvas_item_add_texture_rect(
-		ci_rid,
-		Rect2(-(texture.get_size() / 2.), texture.get_size()),
-		texture
-	)
-
-	RenderingServer.canvas_item_set_transform(
-		ci_rid, Transform2D(0., position)
-	)
-
-
-
-func remove_instance() -> void:
-	RenderingServer.canvas_item_clear(ci_rid)
+#[0]: start frame, [1]: end frame, [2] progress, [3] [[frame, callable], [frame, callable]]
+@export var animation: Dictionary[String, Array] = {
 	
-	RenderingServer.free_rid(ci_rid)
+}
+
+@export var stat: UnitStat
+
+var hitbox: RID
+var hurtbox: RID
+var cid: RID

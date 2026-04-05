@@ -53,8 +53,6 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_DRAW:
 			draw_area()
-		
-
 
 		NOTIFICATION_COLLIDER_CHANGED:
 			if !Engine.is_editor_hint():
