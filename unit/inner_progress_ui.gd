@@ -6,9 +6,8 @@ class_name GradientProgress2D
 @export var TRAUMA_SHADER: ShaderMaterial
 
 @export var under_color: Color = Color(0.077, 0.107, 0.16, 1.0)
-@export var progress_gradient: GradientTexture1D
+@export var gradient: GradientTexture1D
 @export var progress_color: Color = Color(0.813, 0.016, 0.016, 1.0)
-@export var trauma_gradient: GradientTexture1D
 @export var trauma_color: Color = Color(0.322, 0.449, 0.67, 1.0)
 @export var over_color: Color = Color.WHITE
 @export var height: float = 8.
@@ -51,14 +50,14 @@ func create() -> void:
 
 	RenderingServer.canvas_item_add_rect(
 		under_cid,
-		Rect2(- Vector2(float(progress_gradient.width), height) / 2., Vector2(float(progress_gradient.width), height)),
+		Rect2(- Vector2(float(gradient.width), height) / 2., Vector2(float(gradient.width), height)),
 		under_color
 	)
 	
 	RenderingServer.canvas_item_add_texture_rect(
 		trauma_progress_cid,
-		Rect2(-Vector2(float(progress_gradient.width), height) / 2., Vector2(float(progress_gradient.width), height)),
-		trauma_gradient.get_rid(),
+		Rect2(-Vector2(float(gradient.width), height) / 2., Vector2(float(gradient.width), height)),
+		gradient.get_rid(),
 	)
 	RenderingServer.canvas_item_set_modulate(trauma_progress_cid, trauma_color)
 	RenderingServer.canvas_item_set_material(trauma_progress_cid, TRAUMA_SHADER.get_rid())
@@ -66,8 +65,8 @@ func create() -> void:
 	
 	RenderingServer.canvas_item_add_texture_rect(
 		progress_cid,
-		Rect2(- Vector2(float(progress_gradient.width), height) / 2., Vector2(float(progress_gradient.width), height)),
-		progress_gradient.get_rid()
+		Rect2(- Vector2(float(gradient.width), height) / 2., Vector2(float(gradient.width), height)),
+		gradient.get_rid()
 	)
 	RenderingServer.canvas_item_set_material(progress_cid, PROGRESS_SHADER.get_rid())
 	RenderingServer.canvas_item_set_modulate(progress_cid, progress_color)
@@ -76,11 +75,11 @@ func create() -> void:
 	RenderingServer.canvas_item_add_polyline(
 		over_cid,
 		PackedVector2Array([
-			Vector2(- Vector2(float(progress_gradient.width), height) / 2.),
-			Vector2((Vector2(float(progress_gradient.width), height) / 2.).x, (- Vector2(float(progress_gradient.width), height) / 2.).y),
-			Vector2(Vector2(float(progress_gradient.width), height) / 2.),
-			Vector2(- (Vector2(float(progress_gradient.width), height) / 2.).x, (Vector2(float(progress_gradient.width), height) / 2.).y),
-			Vector2(- Vector2(float(progress_gradient.width), height) / 2.)
+			Vector2(- Vector2(float(gradient.width), height) / 2.),
+			Vector2((Vector2(float(gradient.width), height) / 2.).x, (- Vector2(float(gradient.width), height) / 2.).y),
+			Vector2(Vector2(float(gradient.width), height) / 2.),
+			Vector2(- (Vector2(float(gradient.width), height) / 2.).x, (Vector2(float(gradient.width), height) / 2.).y),
+			Vector2(- Vector2(float(gradient.width), height) / 2.)
 		]),
 		[over_color],
 		1.

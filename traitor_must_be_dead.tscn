@@ -30,7 +30,7 @@ min_size = 3.0
 max_force = 500.0
 min_force = 100.0
 direction = Vector2(1, 0)
-angle_range = 3.602018791095882e-36
+angle_range = 1.097237670166867e-39
 scale_curve = SubResource("Curve_5kmjk")
 metadata/_custom_type_script = "uid://clrqahio6ctjs"
 
@@ -76,7 +76,6 @@ script = ExtResource("6_5kmjk")
 texture = SubResource("AtlasTexture_sml3y")
 max_force = 1000.0
 min_force = 200.0
-angle_range = 0.0
 friction = 0.101
 bounce = 0.182
 metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
@@ -105,7 +104,7 @@ metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8acap"]
 atlas = ExtResource("8_4rvxd")
-region = Rect2(192, 0, 64, 64)
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="Resource" id="Resource_8acap"]
 script = ExtResource("6_5kmjk")
@@ -140,14 +139,13 @@ shader = ExtResource("15_waig6")
 shader_parameter/progress = 1.0
 
 [sub_resource type="Gradient" id="Gradient_xj7cu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.33, 0.66)
+colors = PackedColorArray(0.12, 0.12, 0.12, 1, 0.36199096, 0.36199096, 0.36199096, 1, 0.71945703, 0.71945703, 0.71945703, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_k7ju8"]
 gradient = SubResource("Gradient_xj7cu")
-
-[sub_resource type="Gradient" id="Gradient_mtpqi"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_vec7s"]
-gradient = SubResource("Gradient_mtpqi")
+width = 64
 
 [sub_resource type="Curve" id="Curve_6hyso"]
 _data = [Vector2(0, 0), 0.0, 5.132192, 0, 0, Vector2(0.4784314, 1), 0.0, 0.0, 0, 0]
@@ -209,23 +207,24 @@ metadata/_custom_type_script = "uid://dtvvil6gqipt6"
 position = Vector2(377, 319)
 zoom = Vector2(0.345, 0.345)
 
-[node name="GradientProgress2D" type="Node2D" parent="." unique_id=1415681145]
-position = Vector2(185, 179)
-skew = 0.63704526
-script = ExtResource("14_6hyso")
-PROGRESS_SHADER = SubResource("ShaderMaterial_waig6")
-TRAUMA_SHADER = SubResource("ShaderMaterial_ym5dx")
-progress_gradient = SubResource("GradientTexture1D_k7ju8")
-trauma_gradient = SubResource("GradientTexture1D_vec7s")
-progress_curve = SubResource("Curve_6hyso")
-trauma_curve = SubResource("Curve_waig6")
-metadata/_custom_type_script = "uid://ca82fhyokguoj"
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1672614402]
 
-[node name="Node2D" type="Node2D" parent="CanvasLayer" unique_id=677821174]
+[node name="CanvasScreenPointer" type="Node2D" parent="CanvasLayer" unique_id=677821174]
 position = Vector2(86, 207)
 script = ExtResource("16_xj7cu")
 
 [node name="Profile" type="Node2D" parent="CanvasLayer" unique_id=503605044]
 script = ExtResource("17_xj7cu")
+outline_color = null
+bg_color = null
+
+[node name="GradientProgress2D" type="Node2D" parent="CanvasLayer" unique_id=1415681145]
+position = Vector2(185, 179)
+skew = 0.63704526
+script = ExtResource("14_6hyso")
+PROGRESS_SHADER = SubResource("ShaderMaterial_waig6")
+TRAUMA_SHADER = SubResource("ShaderMaterial_ym5dx")
+gradient = SubResource("GradientTexture1D_k7ju8")
+progress_curve = SubResource("Curve_6hyso")
+trauma_curve = SubResource("Curve_waig6")
+metadata/_custom_type_script = "uid://ca82fhyokguoj"

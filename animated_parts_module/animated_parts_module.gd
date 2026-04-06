@@ -62,7 +62,7 @@ func emit() -> void:
 		part.global_position = global_position
 		
 		part.velocity = Vector2.from_angle(
-			randf_range(parts[i].direction.angle() - (parts[i].angle_range / 2.), parts[i].direction.angle() + (parts[i].angle_range / 2.))
+			randf_range(parts[i].direction.angle() - deg_to_rad(parts[i].angle_range / 2.), parts[i].direction.angle() + deg_to_rad(parts[i].angle_range / 2.))
 		) * randf_range(parts[i].min_force, parts[i].max_force)
 
 		part.animation = parts[i].animation
@@ -154,7 +154,7 @@ func kill() -> void:
 	if !arr.is_empty():
 		for p: P in arr:
 			PhysicsServer2D.free_rid(p.shape)
-			PhysicsServer2D.free_rid(p.seperate_ray)
+			#PhysicsServer2D.free_rid(p.seperate_ray)
 			PhysicsServer2D.free_rid(p.body)
 			RenderingServer.free_rid(p.cid)
 	
@@ -214,4 +214,3 @@ class P extends RefCounted:
 			texture.region = Rect2(
 				Vector2(float(frame) * texture.get_size().x, 0.), Vector2(texture.get_size())
 			)
-		
