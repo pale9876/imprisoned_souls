@@ -30,7 +30,7 @@ min_size = 3.0
 max_force = 500.0
 min_force = 100.0
 direction = Vector2(1, 0)
-angle_range = 1.097237670166867e-39
+angle_range = 6.283185307179586
 scale_curve = SubResource("Curve_5kmjk")
 metadata/_custom_type_script = "uid://clrqahio6ctjs"
 
@@ -104,7 +104,7 @@ metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8acap"]
 atlas = ExtResource("8_4rvxd")
-region = Rect2(64, 0, 64, 64)
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="Resource" id="Resource_8acap"]
 script = ExtResource("6_5kmjk")
@@ -167,11 +167,13 @@ metadata/_custom_type_script = "uid://obsbb3h5biim"
 script = ExtResource("1_6xg86")
 
 [node name="BloodParticle" type="Node2D" parent="." unique_id=857561924]
+position = Vector2(379, 140)
 script = ExtResource("2_kvo7e")
 information = SubResource("Resource_0qyw8")
 color = Color(0.65, 0, 0, 0.8039216)
 
 [node name="HitParticle" type="Node2D" parent="." unique_id=447933567]
+position = Vector2(248, 170)
 script = ExtResource("4_0qyw8")
 amount = 15
 life_time = 0.45
@@ -188,7 +190,7 @@ angle_range = 90.0
 script = ExtResource("5_8g455")
 
 [node name="AnimatedPartsModule" type="Node2D" parent="." unique_id=550714071]
-position = Vector2(592, 187)
+position = Vector2(315, 179)
 script = ExtResource("5_578wo")
 parts = Array[ExtResource("6_5kmjk")]([SubResource("Resource_jwtc5"), SubResource("Resource_nak2q"), SubResource("Resource_8g455"), SubResource("Resource_8acap")])
 metadata/_custom_type_script = "uid://bygdhmnd3v4k7"
