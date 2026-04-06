@@ -8,12 +8,18 @@ class_name BloodSplatter
 @export var min_size: float = 3.
 
 
-var _arr: Array[P]
+var _arr: Array[P] = []
 
+
+@export_tool_button("Emit", "2D") var _emit: Callable = emit
 
 
 func emit() -> void:
-	pass
+	_arr.resize(amount)
+	
+	for i: int in amount:
+		pass
+
 
 func kill() -> void:
 	pass
@@ -23,7 +29,6 @@ class P extends RefCounted:
 	var cid: RID
 	
 	var stream: Stream
-	pass
 
 
 class Stream extends RefCounted:

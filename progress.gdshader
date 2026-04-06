@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform float progress: hint_range(0.0, 1.0) = .5;
+uniform float progress: hint_range(0.0, 1.0) = 1.;
 
 void fragment() {
 	float p = 1. - step(progress, UV.x);

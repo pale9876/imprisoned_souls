@@ -15,10 +15,6 @@ var segments: Array[RID]
 @export_flags_2d_physics var mask: int = 1
 
 
-@export var draw_center: bool = true:
-	set(toggle):
-		draw_center = toggle
-		queue_redraw()
 @export var color: Color = Color(0.0, 0.741, 0.733, 0.576):
 	set(colour):
 		color = colour
@@ -27,7 +23,10 @@ var segments: Array[RID]
 @export var disabled: bool = false: set = set_disabled
 
 
-func _enter_tree() -> void:
+var init: bool = false
+
+
+func create() -> void:
 	if !segments.is_empty():
 		kill()
 	
@@ -53,12 +52,6 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	if !segments.is_empty():
 		kill()
-
-
-func _draw() -> void:
-	draw_rect(
-		Rect2(-size/2. if draw_center else Vector2(), size), color, false, 1.
-	)
 
 
 func kill() -> void:
@@ -107,13 +100,13 @@ func set_size(sz: Vector2):
 
 
 func get_rect() -> Rect2:
-	return Rect2(- (size / 2.), size) if draw_center else Rect2(Vector2(), size)
+	return Rect2(Vector2(), size)
 
 
 func get_polygon(closed: bool = true) -> PackedVector2Array:
 	var result: PackedVector2Array = []
 	
-	result.push_back(- size / 2. if draw_center else Vector2())
+	result.push_back(Vector2())
 	result.push_back(Vector2(result[0].x, result[0].y + size.y))
 	result.push_back(Vector2(result[0].x + size.x, result[1].y))
 	result.push_back(Vector2(result[0].x + size.x, result[0].y))

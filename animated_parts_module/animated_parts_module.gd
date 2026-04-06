@@ -6,7 +6,6 @@ class_name AnimatedPartsModule
 @export_enum("FLOATING", "GROUNDED") var mode: int = 0
 
 @export var parts: Array[AnimatedPart]
-@export var auto_emit: bool = false
 @export var init_force: float = 600.
 @export var radial_range: float
 @export var snap_length: float = 1.
@@ -35,22 +34,18 @@ func emit() -> void:
 		PhysicsServer2D.body_set_state(part.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(get_global_transform()))
 		PhysicsServer2D.body_set_space(part.body, get_world_2d().space)
 		
-		var shape: RID = PhysicsServer2D.rectangle_shape_create()
-		var ray: RID = PhysicsServer2D.separation_ray_shape_create()
-		
-		part.shape = shape
-		part.seperate_ray = ray
+		part.shape = PhysicsServer2D.rectangle_shape_create()
+		#part.seperate_ray = PhysicsServer2D.separation_ray_shape_create()
 		part.size = parts[i].size / 2.
 		part.bounce = parts[i].bounce
 		part.friction = parts[i].friction
 		part.mask = parts[i].mask
 		
-		
-		PhysicsServer2D.shape_set_data(shape, part.size)
+		PhysicsServer2D.shape_set_data(part.shape, part.size)
 		#PhysicsServer2D.shape_set_data(
 			#ray, {"length" : part.size.y + snap_length, "slide_on_slope" : false}
 		#)
-		PhysicsServer2D.body_add_shape(part.body, shape, Transform2D(), false)
+		PhysicsServer2D.body_add_shape(part.body, part.shape, Transform2D(), false)
 		#PhysicsServer2D.body_add_shape(part.body, ray, Transform2D(0., Vector2(0., - part.size.y / 2.)), false)
 		PhysicsServer2D.body_attach_object_instance_id(part.body, get_instance_id())
 		PhysicsServer2D.body_set_collision_mask(part.body, parts[i].mask)
@@ -173,7 +168,7 @@ class P extends RefCounted:
 	var body: RID
 	var cid: RID
 	var shape: RID
-	var seperate_ray: RID
+	#var seperate_ray: RID
 	
 	var on_wall: bool = false
 	var on_floor: bool = false
