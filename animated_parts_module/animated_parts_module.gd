@@ -3,11 +3,12 @@ extends Node2D
 class_name AnimatedPartsModule
 
 
+@export_enum("FLOATING", "GROUNDED") var mode: int = 0
+
 @export var parts: Array[AnimatedPart]
 @export var auto_emit: bool = false
 @export var init_force: float = 600.
 @export var radial_range: float
-@export var auto_deceleration: bool = true
 @export var snap_length: float = 1.
 
 @export var gravity: float = 970.
@@ -39,16 +40,18 @@ func emit() -> void:
 		
 		part.shape = shape
 		part.seperate_ray = ray
-		part.size = parts[i].size
+		part.size = parts[i].size / 2.
 		part.bounce = parts[i].bounce
 		part.friction = parts[i].friction
+		part.mask = parts[i].mask
 		
-		PhysicsServer2D.shape_set_data(shape, Vector2(parts[i].size))
-		PhysicsServer2D.shape_set_data(
-			ray, {"length" : part.size.y + snap_length, "slide_on_slope" : true}
-		)
+		
+		PhysicsServer2D.shape_set_data(shape, part.size)
+		#PhysicsServer2D.shape_set_data(
+			#ray, {"length" : part.size.y + snap_length, "slide_on_slope" : false}
+		#)
 		PhysicsServer2D.body_add_shape(part.body, shape, Transform2D(), false)
-		PhysicsServer2D.body_add_shape(part.body, ray, Transform2D(0., Vector2(0., 0.)), false)
+		#PhysicsServer2D.body_add_shape(part.body, ray, Transform2D(0., Vector2(0., - part.size.y / 2.)), false)
 		PhysicsServer2D.body_attach_object_instance_id(part.body, get_instance_id())
 		PhysicsServer2D.body_set_collision_mask(part.body, parts[i].mask)
 		
@@ -78,41 +81,35 @@ func _physics_process(delta: float) -> void:
 		
 		for p: P in arr:
 			if !p.finished:
-				if !p.on_floor:
-					p.velocity.y += gravity * delta
-
-				var param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
-				var result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
-
-				param.recovery_as_collision = true
-				param.collide_separation_ray = true
-				param.from = Transform2D(0., p.global_position)
+				if p.mode == 0:
+					p.velocity *= 1. - p.friction
+				elif p.mode == 1:
+					if !p.on_floor:
+						p.velocity.y += gravity * delta
+				
+				var param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+				param.shape_rid = p.shape
 				param.motion = p.velocity * delta
-				param.exclude_bodies = get_body_rids()
-					
-				var test: bool = PhysicsServer2D.body_test_motion(
-					p.body, param, result
-				)
+				param.exclude = get_body_rids()
+				param.collide_with_bodies = true
+				param.collide_with_areas = false
+				param.transform = Transform2D(0., p.global_position)
 
-				if test:
-					#print(result.get_collision_local_shape())
+				var test: PackedFloat32Array = get_world_2d().direct_space_state.cast_motion(param)
+				
+				if test[1] < 1.:
+					var rest_info = get_world_2d().direct_space_state.get_rest_info(param)
+					var normal: Vector2 = rest_info["normal"]
+					var point: Vector2 = rest_info["point"]
+					if absf(Vector2.DOWN.angle_to(p.velocity)) < 45.:
+						p.on_floor = true
+						p.velocity = p.velocity.bounce(normal) * p.bounce
+						p.change_animation("idle")
+					p.global_position += test[0] * param.motion
 					
-					if absf(Vector2.DOWN.angle_to(result.get_travel())) < 45.:
-						if result.get_collision_normal().cross(Vector2.RIGHT):
-							p.on_floor = true
-							p.change_animation("idle")
-							
-							p.global_position = Vector2(
-								result.get_collision_point().x, result.get_collision_point().y - (p.size.y / 2.)
-							)
-						else:
-							p.on_wall = true
-							p.global_position += result.get_collision_unsafe_fraction() * param.motion
-
-					p.velocity = p.velocity.bounce(result.get_collision_normal())
-					#print(p.velocity)
 				else:
-					p.on_wall = true
+					p.on_floor = false
+					p.on_wall = false
 					p.global_position += param.motion
 				
 				if p.velocity.length() < 1.:
@@ -130,19 +127,20 @@ func _physics_process(delta: float) -> void:
 				)
 				
 				if p.animation[p.anim][0] != p.animation[p.anim][1]:
-					if p.progress > 0:
-						p.progress -= 1
+					if !p.anim_stop:
+						if p.progress > 0:
+							p.progress -= 1
 
-					if p.progress == 0:
-						RenderingServer.canvas_item_clear(p.cid)
-						p.frame += 1
-		
-						if p.frame > p.get_end_frame():
-							p.frame = p.animation[p.anim][0]
-		
-						p.progress = p.animation[p.anim][2]
-				
-						p.texture.draw(p.cid, - p.texture.get_size() / 2.)
+						if p.progress == 0:
+							RenderingServer.canvas_item_clear(p.cid)
+							p.frame += 1
+			
+							if p.frame > p.get_end_frame():
+								p.frame = p.animation[p.anim][0]
+			
+							p.progress = p.animation[p.anim][2]
+					
+							p.texture.draw(p.cid, - p.texture.get_size() / 2.)
 
 
 func get_body_rids() -> Array[RID]:
@@ -171,6 +169,7 @@ func kill() -> void:
 class P extends RefCounted:
 	var texture: AtlasTexture
 	
+	var mode: int = 0
 	var body: RID
 	var cid: RID
 	var shape: RID
@@ -182,11 +181,13 @@ class P extends RefCounted:
 	var bounce: float
 	var friction: float
 	var velocity: Vector2 = Vector2()
-	var _collided: bool = false
+	#var _collided: bool = false
+	var mask: int = 1
 	
 	var global_position: Vector2 = Vector2()
 	var position: Vector2 = Vector2()
 	
+	var anim_stop: bool = false
 	var frame: int = 0: set = set_frame
 	var animation: Dictionary[String, Array]
 	var progress: int = 0

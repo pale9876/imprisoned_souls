@@ -3,123 +3,96 @@ extends Node2D
 class_name GradientProgress2D
 
 
-signal value_changed(_value: float)
+@export var PROGRESS_SHADER: ShaderMaterial
+@export var TRAUMA_SHADER: ShaderMaterial
+
+@export var under_color: Color = Color(0.077, 0.107, 0.16, 1.0)
+@export var progress_gradient: GradientTexture1D
+@export var trauma_gradient: GradientTexture1D
+@export var trauma_color: Color = Color(0.322, 0.449, 0.67, 1.0)
+@export var over_color: Color = Color.WHITE
+@export var offset: float = 5.
+@export var height: float = 8.
+
+@export_category("Progress")
+@export_range(0., 1., .001) var value: float = .5
+@export var trauma_value: float = .5
 
 
-@export_group("Texture")
-@export var draw_center: bool = true:
-	set(toggle):
-		draw_center = toggle
-		queue_redraw()
-@export var progress_over: Texture2D
-@export var progress_texture: Texture2D
-@export var trauma_progress_texture: Texture2D
-@export var progress_under: Texture2D
-
-@export_group("Color")
-@export var progress_color: Color = Color.RED:
-	set(color):
-		progress_color = color
-		queue_redraw()
-@export var progress_under_color: Color = Color.BLACK
-@export var trauma_color: Color = Color.DARK_RED
-
-@export_group("Progress")
-@export_range(0., 1., .001) var progress_value: float:
-	set(value):
-		progress_value = value
-		value_changed.emit(value)
-		queue_redraw()
-@export var value_curve: Curve = Curve.new()
-@export_range(0., 5., .001) var value_trace_scale: float = 1.
-var _trauma_value: float = 1.:
-	set(value):
-		_trauma_value = value
-		queue_redraw()
-
-@export_group("Gradient")
-@export var gradient: bool = false:
-	set(toggle):
-		gradient = toggle
-		queue_redraw()
-@export var gradient_value: Gradient
-@export_range(2, 16, 2) var step: int = 4:
-	set(value):
-		step = value
-		if (value & (value - 1)) == 0:
-			queue_redraw()
+var under_cid: RID
+var trauma_progress_cid: RID
+var progress_cid: RID
+var over_cid: RID
 
 
-var _gradient_texture: ImageTexture = null
+var init: bool = false
+@export_tool_button("Create", "2D") var _create: Callable = create
 
 
-@export var blink: bool = false:
-	set(press):
-		_blink()
-	get:
-		return false
+func _enter_tree() -> void:
+	if !Engine.is_editor_hint():
+		create()
 
 
-func set_trauma_value(value: float) -> void:
-	var tween: Tween = create_tween()
-	_trauma_value = value
-
-
-
-func _blink() -> void:
-	pass
-
-
-
-
-func _draw() -> void:
-	if !progress_texture: return
+func create() -> void:
+	if init:
+		kill()
+		init = false
 	
-	var draw_point: Vector2 = Vector2.ZERO
-	var draw_region: Vector2 = progress_texture.get_size()
-	
-	if draw_center:
-		draw_point = - draw_region / 2.
-	
-	draw_texture(progress_under, draw_point) # draw progress under
-	
-	if gradient:
-		_update_gradient_progress_image()
-	
-	#draw_texture_rect( # draw trauma texture
-		#
-	#)
-	
-	draw_texture_rect( # draw progress
-		progress_texture if !gradient or !_gradient_texture else _gradient_texture,
-		Rect2(draw_point, Vector2(draw_region.x * progress_value, draw_region.y)),
-		true,
-		progress_color if !gradient else Color(1., 1., 1., 1.)
+	under_cid = RenderingServer.canvas_item_create()
+	trauma_progress_cid = RenderingServer.canvas_item_create()
+	progress_cid = RenderingServer.canvas_item_create()
+	over_cid = RenderingServer.canvas_item_create()
+
+	RenderingServer.canvas_item_set_parent(under_cid, get_canvas_item())
+	RenderingServer.canvas_item_set_parent(trauma_progress_cid, get_canvas_item())
+	RenderingServer.canvas_item_set_parent(progress_cid, get_canvas_item())
+	RenderingServer.canvas_item_set_parent(over_cid, get_canvas_item())
+
+	RenderingServer.canvas_item_add_rect(
+		under_cid,
+		Rect2(- Vector2(float(progress_gradient.width), height) / 2., Vector2(float(progress_gradient.width), height)),
+		under_color
 	)
 	
-	draw_texture(progress_over, draw_point) # draw progress over
-
-
-func _update_gradient_progress_image() -> void:
-	var progress_texture_size: Vector2i = Vector2i(progress_texture.get_size())
-	var progress_image: Image = progress_texture.get_image()
-	var image: Image = Image.create_empty(progress_texture_size.x, progress_texture_size.y, false, Image.FORMAT_RGBA8)
+	RenderingServer.canvas_item_add_texture_rect(
+		trauma_progress_cid,
+		Rect2(-Vector2(float(progress_gradient.width), height) / 2., Vector2(float(progress_gradient.width), height)),
+		trauma_gradient.get_rid(),
+	)
+	RenderingServer.canvas_item_set_modulate(trauma_progress_cid, trauma_color)
 	
-	for i: int in range(step):
-		var start_pnt: float = float(i) / float(step)
-		var next_dist: float = float(i + 1) / float(step)
-			
-		image.fill_rect(
-			Rect2i(
-				Vector2(start_pnt * progress_texture_size.x, 0.),
-				Vector2(next_dist * progress_texture_size.x, progress_texture_size.y)
-			), gradient_value.sample(next_dist)
-		)
+	RenderingServer.canvas_item_add_texture_rect(
+		progress_cid,
+		Rect2(- Vector2(float(progress_gradient.width), height) / 2., Vector2(float(progress_gradient.width), height)),
+		progress_gradient.get_rid()
+	)
+	RenderingServer.canvas_item_set_material(progress_cid, PROGRESS_SHADER.get_rid())
+	
+	# Draw Over Texture
+	RenderingServer.canvas_item_add_polyline(
+		over_cid,
+		PackedVector2Array([
+			Vector2(- Vector2(float(progress_gradient.width), height) / 2.),
+			Vector2((Vector2(float(progress_gradient.width), height) / 2.).x, (- Vector2(float(progress_gradient.width), height) / 2.).y),
+			Vector2(Vector2(float(progress_gradient.width), height) / 2.),
+			Vector2(- (Vector2(float(progress_gradient.width), height) / 2.).x, (Vector2(float(progress_gradient.width), height) / 2.).y),
+			Vector2(- Vector2(float(progress_gradient.width), height) / 2.)
+		]),
+		[over_color],
+		1.
+	)
+	
+	init = true
 
-	progress_image.blend_rect_mask(image, progress_image, Rect2i(Vector2i.ZERO, progress_texture_size), Vector2i.ZERO)
+
+func kill() -> void:
+	RenderingServer.free_rid(under_cid)
+	RenderingServer.free_rid(progress_cid)
+	RenderingServer.free_rid(over_cid)
+	RenderingServer.free_rid(trauma_progress_cid)
 
 
-	if _gradient_texture:
-		_gradient_texture.update(progress_image)
-	else:
-		_gradient_texture = ImageTexture.create_from_image(progress_image)
+func _exit_tree() -> void:
+	if init:
+		kill()

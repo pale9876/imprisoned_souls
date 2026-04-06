@@ -27,7 +27,6 @@ var segments: Array[RID]
 @export var disabled: bool = false: set = set_disabled
 
 
-# OVERRIDE
 func _enter_tree() -> void:
 	if !segments.is_empty():
 		kill()
@@ -52,7 +51,8 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	kill()
+	if !segments.is_empty():
+		kill()
 
 
 func _draw() -> void:

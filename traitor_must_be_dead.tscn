@@ -4,12 +4,17 @@
 [ext_resource type="Script" uid="uid://bi7jwdriieh17" path="res://blood_particle.gd" id="2_kvo7e"]
 [ext_resource type="Script" uid="uid://clrqahio6ctjs" path="res://blood_particle_information.gd" id="3_ia6nk"]
 [ext_resource type="Script" uid="uid://bdentogchilj7" path="res://hit_particle.gd" id="4_0qyw8"]
+[ext_resource type="Script" uid="uid://ws5m4u0o4m4y" path="res://blood_splatter.gd" id="5_8g455"]
 [ext_resource type="Script" uid="uid://bygdhmnd3v4k7" path="res://animated_parts_module/animated_parts_module.gd" id="5_578wo"]
 [ext_resource type="Script" uid="uid://obsbb3h5biim" path="res://animated_parts_module/stage_rect.gd" id="5_jwtc5"]
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="6_5kmjk"]
 [ext_resource type="Texture2D" uid="uid://dulixo5xcc2xt" path="res://aseprite/body_part/leg-Sheet.png" id="8_4rvxd"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
+[ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="12_6djh5"]
+[ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad_2d.gd" id="13_8acap"]
+[ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://unit/inner_progress_ui.gd" id="14_6hyso"]
+[ext_resource type="Shader" uid="uid://cnty0ecobwyho" path="res://progress.gdshader" id="15_waig6"]
 
 [sub_resource type="Curve" id="Curve_5kmjk"]
 _data = [Vector2(0, 0), 0.0, 4.395648, 0, 0, Vector2(0.6608188, 1), 0.0, 0.0, 0, 0]
@@ -23,7 +28,7 @@ min_size = 3.0
 max_force = 500.0
 min_force = 100.0
 direction = Vector2(1, 0)
-angle_range = 8.13008558477528e-30
+angle_range = 2.3968986224696462e-20
 scale_curve = SubResource("Curve_5kmjk")
 metadata/_custom_type_script = "uid://clrqahio6ctjs"
 
@@ -67,14 +72,51 @@ region = Rect2(0, 0, 64, 64)
 [sub_resource type="Resource" id="Resource_jwtc5"]
 script = ExtResource("6_5kmjk")
 texture = SubResource("AtlasTexture_sml3y")
-max_force = 500.0
+max_force = 1000.0
 min_force = 200.0
 angle_range = 0.0
-friction = 0.505
-bounce = 0.666
+friction = 0.101
+bounce = 0.182
+metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nak2q"]
+atlas = ExtResource("8_4rvxd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="Resource" id="Resource_nak2q"]
+script = ExtResource("6_5kmjk")
+texture = SubResource("AtlasTexture_nak2q")
+max_force = 1000.0
+friction = 0.076
+metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6djh5"]
+atlas = ExtResource("8_4rvxd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="Resource" id="Resource_8g455"]
+script = ExtResource("6_5kmjk")
+texture = SubResource("AtlasTexture_6djh5")
+max_force = 1000.0
+friction = 0.099
+metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8acap"]
+atlas = ExtResource("8_4rvxd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="Resource" id="Resource_8acap"]
+script = ExtResource("6_5kmjk")
+texture = SubResource("AtlasTexture_8acap")
+max_force = 1000.0
+friction = 0.108
 metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nak2q"]
+
+[sub_resource type="Resource" id="Resource_6hyso"]
+script = ExtResource("12_6djh5")
+metadata/_custom_type_script = "uid://cfjndtohxvpbf"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8g455"]
 
@@ -82,16 +124,44 @@ metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 script = ExtResource("10_8g455")
 shader = SubResource("ShaderMaterial_nak2q")
 texture = SubResource("AtlasTexture_8g455")
+stat = SubResource("Resource_6hyso")
 metadata/_custom_type_script = "uid://bh5hl7parw7s5"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_6djh5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ym5dx"]
+shader = ExtResource("15_waig6")
+shader_parameter/progress = 1.0
+
+[sub_resource type="Gradient" id="Gradient_6hyso"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75)
+colors = PackedColorArray(0.23, 0, 0.0038332748, 1, 0.5, 0, 0.008333206, 1, 0.76, 0, 0.012666473, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_waig6"]
+gradient = SubResource("Gradient_6hyso")
+width = 64
+
+[sub_resource type="Gradient" id="Gradient_ym5dx"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75)
+colors = PackedColorArray(0.22, 0.22, 0.22, 1, 0.33, 0.33, 0.33, 1, 0.58, 0.58, 0.58, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xj7cu"]
+gradient = SubResource("Gradient_ym5dx")
+width = 64
 
 [node name="MainScene" type="Node2D" unique_id=2146562988]
 
-[node name="EndekaSort" type="Node2D" parent="." unique_id=1741178341]
-script = ExtResource("1_6xg86")
+[node name="Sector" type="Node2D" parent="." unique_id=1440486214]
+script = ExtResource("5_jwtc5")
+size = Vector2(640, 360)
+draw_center = false
+color = Color(0, 0.74, 0.7276667, 0.23921569)
+metadata/_custom_type_script = "uid://obsbb3h5biim"
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1243682347]
-position = Vector2(377, 319)
-zoom = Vector2(0.345, 0.345)
+[node name="EndekaZSort" type="Node2D" parent="." unique_id=1741178341]
+script = ExtResource("1_6xg86")
 
 [node name="BloodParticle" type="Node2D" parent="." unique_id=857561924]
 script = ExtResource("2_kvo7e")
@@ -108,25 +178,39 @@ explode_texture = SubResource("GradientTexture2D_578wo")
 effect_curve = SubResource("Curve_578wo")
 max_dist = 600.0
 texture = SubResource("GradientTexture2D_5kmjk")
-direction = Vector2(0.70710677, 0.70710677)
+direction = Vector2(0.78430015, -0.6203814)
 angle_range = 90.0
 
 [node name="BloodSplatter" type="Node2D" parent="." unique_id=1405949405]
-
-[node name="Sector" type="Node2D" parent="." unique_id=1440486214]
-script = ExtResource("5_jwtc5")
-size = Vector2(640, 360)
-draw_center = false
-color = Color(0, 0.74, 0.7276667, 0.23921569)
-metadata/_custom_type_script = "uid://obsbb3h5biim"
+script = ExtResource("5_8g455")
 
 [node name="AnimatedPartsModule" type="Node2D" parent="." unique_id=550714071]
-position = Vector2(527, 162)
+position = Vector2(592, 187)
 script = ExtResource("5_578wo")
-parts = Array[ExtResource("6_5kmjk")]([SubResource("Resource_jwtc5")])
+parts = Array[ExtResource("6_5kmjk")]([SubResource("Resource_jwtc5"), SubResource("Resource_nak2q"), SubResource("Resource_8g455"), SubResource("Resource_8acap")])
 metadata/_custom_type_script = "uid://bygdhmnd3v4k7"
 
 [node name="Legion" type="Node2D" parent="." unique_id=1659406924]
 script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
+navigation_polygon = SubResource("NavigationPolygon_6djh5")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
+
+[node name="Squad2D" type="Node2D" parent="." unique_id=2012559958]
+script = ExtResource("13_8acap")
+metadata/_custom_type_script = "uid://dtvvil6gqipt6"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1243682347]
+position = Vector2(377, 319)
+zoom = Vector2(0.345, 0.345)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1672614402]
+
+[node name="GradientProgress2D" type="Node2D" parent="CanvasLayer" unique_id=1415681145]
+position = Vector2(185, 179)
+script = ExtResource("14_6hyso")
+PROGRESS_SHADER = SubResource("ShaderMaterial_ym5dx")
+progress_gradient = SubResource("GradientTexture1D_waig6")
+trauma_gradient = SubResource("GradientTexture1D_xj7cu")
+trauma_color = Color(0.1008, 0.14084001, 0.21, 1)
+metadata/_custom_type_script = "uid://ca82fhyokguoj"
