@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://dx6nf5xy18w4"]
 
-[ext_resource type="Script" uid="uid://cptp1q1byiyvu" path="res://endeka_sorter.gd" id="1_6xg86"]
 [ext_resource type="Script" uid="uid://bi7jwdriieh17" path="res://blood_particle.gd" id="2_kvo7e"]
 [ext_resource type="Script" uid="uid://clrqahio6ctjs" path="res://blood_particle_information.gd" id="3_ia6nk"]
 [ext_resource type="Script" uid="uid://bdentogchilj7" path="res://hit_particle.gd" id="4_0qyw8"]
@@ -30,7 +29,7 @@ min_size = 3.0
 max_force = 500.0
 min_force = 100.0
 direction = Vector2(1, 0)
-angle_range = 6.283185307179586
+angle_range = 0.1096622711232151
 scale_curve = SubResource("Curve_5kmjk")
 metadata/_custom_type_script = "uid://clrqahio6ctjs"
 
@@ -164,7 +163,6 @@ color = Color(0, 0.74, 0.7276667, 0.23921569)
 metadata/_custom_type_script = "uid://obsbb3h5biim"
 
 [node name="EndekaZSort" type="Node2D" parent="." unique_id=1741178341]
-script = ExtResource("1_6xg86")
 
 [node name="BloodParticle" type="Node2D" parent="." unique_id=857561924]
 position = Vector2(379, 140)
@@ -217,8 +215,6 @@ script = ExtResource("16_xj7cu")
 
 [node name="Profile" type="Node2D" parent="CanvasLayer" unique_id=503605044]
 script = ExtResource("17_xj7cu")
-outline_color = null
-bg_color = null
 
 [node name="GradientProgress2D" type="Node2D" parent="CanvasLayer" unique_id=1415681145]
 position = Vector2(185, 179)

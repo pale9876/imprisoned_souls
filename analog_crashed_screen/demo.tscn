@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://daskjqxrhamyg"]
+
+[ext_resource type="Script" uid="uid://bv0bsymaq7kwo" path="res://analog_crashed_screen/color_generate_test_screen.gd" id="1_etygl"]
+[ext_resource type="Script" uid="uid://dkjpc18b0gfxw" path="res://global/endeka_2d_renderer.gd" id="2_woyg8"]
+[ext_resource type="Script" uid="uid://c2udpkboyxp31" path="res://analog_crashed_screen/eead_2d.gd" id="2_yj1r0"]
+[ext_resource type="Script" uid="uid://bpj81wnbe8ww3" path="res://eead_2d.gd" id="3_dnw6d"]
+
+[sub_resource type="Gradient" id="Gradient_etygl"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857143, 0.5714286, 0.71428573, 0.85714287)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1, 0.6784314, 1, 0.18431373, 1, 0.627451, 0.1254902, 0.9411765, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_woyg8"]
+gradient = SubResource("Gradient_etygl")
+
+[node name="Demo" type="Node2D" unique_id=1237395326]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2014279581]
+
+[node name="EndekaRenderer" type="Node2D" parent="CanvasLayer" unique_id=75089847]
+position = Vector2(137, 73)
+script = ExtResource("2_woyg8")
+max_z = 50.0
+metadata/_custom_type_script = "uid://dkjpc18b0gfxw"
+
+[node name="EEAD2D" type="Node2D" parent="CanvasLayer/EndekaRenderer" unique_id=652391122]
+script = ExtResource("2_yj1r0")
+z_value = 50.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D2" type="Node2D" parent="CanvasLayer/EndekaRenderer" unique_id=423520906]
+script = ExtResource("3_dnw6d")
+z_value = 50.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D3" type="Node2D" parent="CanvasLayer/EndekaRenderer" unique_id=449725968]
+script = ExtResource("3_dnw6d")
+z_value = 50.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D4" type="Node2D" parent="CanvasLayer/EndekaRenderer" unique_id=416130592]
+script = ExtResource("3_dnw6d")
+z_value = 50.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="EEAD2D5" type="Node2D" parent="CanvasLayer/EndekaRenderer" unique_id=2044557398]
+script = ExtResource("3_dnw6d")
+z_value = 50.0
+metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=2011244498]
+
+[node name="ColorGenerateTestScreen" type="Node2D" parent="." unique_id=1233710853]
+script = ExtResource("1_etygl")
+gradient = SubResource("GradientTexture1D_woyg8")
+size = Vector2i(256, 170)
+guideline_margin = 45.0
