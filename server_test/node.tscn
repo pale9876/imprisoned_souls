@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c81xliwn11xyv"]
+
+[ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://server_test/multi_camera.gd" id="1_e8r3e"]
+[ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator_2d.gd" id="1_rvfql"]
+[ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_fiyac"]
+
+[node name="Node2D" type="Node2D" unique_id=367740888]
+visibility_layer = 3
+
+[node name="MultiCamera" type="Node2D" parent="." unique_id=1034162703]
+position = Vector2(295, 176)
+script = ExtResource("1_e8r3e")
+
+[node name="ReflectReplicator2D" type="Node2D" parent="." unique_id=3237210]
+light_mask = 0
+position = Vector2(180, 93)
+script = ExtResource("1_rvfql")
+cull_mask = 2
+do_not_test_in_editor = true
+metadata/_custom_type_script = "uid://dkrmmqv8ohapy"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=405363245]
+visibility_layer = 3
+position = Vector2(111, 111)
+texture = ExtResource("2_fiyac")

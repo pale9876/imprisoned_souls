@@ -6,7 +6,10 @@ class_name EEAD2D
 # INFO
 # Z축을 실수값으로 받는 2D 객체입니다.
 
+@export_category("Warning")
+@export var do_not_test_in_editor: bool = false
 
+@export_category("2.5")
 @export var pin: bool = false
 @export var z_value: float:
 	set(value):
