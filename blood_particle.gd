@@ -32,7 +32,7 @@ func emit() -> void:
 		p.weight = randf_range(information.min_size, information.max_size)
 		p.velocity = (
 			Vector2.from_angle(
-					randf_range(information.direction.angle() - information.angle_range / 2., information.direction.angle() + information.angle_range / 2.)
+					randf_range(information.direction.angle() - deg_to_rad(information.angle_range) / 2., information.direction.angle() + deg_to_rad(information.angle_range) / 2.)
 				)
 			) * randf_range(information.min_force, information.max_force)
 		p.curve = maxf(.155, randf_range(p.curve - .1, p.curve + 1.))

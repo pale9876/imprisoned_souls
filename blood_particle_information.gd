@@ -18,8 +18,6 @@ class_name BloodParticleInformation
 @export var angle_range: float = 30.:
 	set(value):
 		angle_range = value
-	get:
-		return deg_to_rad(angle_range)
 
 
 @export var curve: float = .311

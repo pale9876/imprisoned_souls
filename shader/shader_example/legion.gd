@@ -45,7 +45,6 @@ func _enter_tree() -> void:
 		
 		inst.hurtbox = PhysicsServer2D.area_create()
 		
-		
 		inst.agent = NavigationServer2D.agent_create()
 
 		arr[i] = inst

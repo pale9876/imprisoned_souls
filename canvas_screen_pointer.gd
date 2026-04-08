@@ -3,11 +3,13 @@ extends Node2D
 class_name CanvasScreenPointer
 
 
+@export var target: Node2D
+
+
 var cid: RID
 var polygon: PackedVector2Array
 var init: bool = false
 
-var arr: Array[Node2D]
 
 func create() -> void:
 	if init:
@@ -29,12 +31,9 @@ func kill() -> void:
 	init = false
 
 
-func add_target(_target: Node2D) -> void:
-	arr.push_back(_target)
-
 
 func _physics_process(_delta: float) -> void:
-	for target in arr:
+	if target:
 		var target_screen_coord: Vector2 = target.global_position + target.get_canvas_transform().origin
 		
 		if Geometry2D.is_point_in_polygon(target_screen_coord, polygon):
@@ -59,8 +58,3 @@ func _physics_process(_delta: float) -> void:
 func _exit_tree() -> void:
 	if init:
 		kill()
-
-
-class I extends RefCounted:
-	var cid: RID
-	var position: Vector2
