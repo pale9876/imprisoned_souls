@@ -4,14 +4,30 @@
 [ext_resource type="Script" uid="uid://dkjpc18b0gfxw" path="res://global/endeka_2d_renderer.gd" id="2_woyg8"]
 [ext_resource type="Script" uid="uid://c2udpkboyxp31" path="res://analog_crashed_screen/eead_2d.gd" id="2_yj1r0"]
 [ext_resource type="Script" uid="uid://bpj81wnbe8ww3" path="res://eead_2d.gd" id="3_dnw6d"]
+[ext_resource type="Shader" uid="uid://dqhwn62oswdun" path="res://analog_crashed_screen/grain_and_noise.gdshader" id="5_7hwce"]
+[ext_resource type="Shader" uid="uid://cu4vtm6g6s7qc" path="res://analog_crashed_screen/guideline_shader.gdshader" id="6_1e8ob"]
 
-[sub_resource type="Gradient" id="Gradient_etygl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hwce"]
+shader = ExtResource("5_7hwce")
+shader_parameter/noise_intensity = 0.05
+
+[sub_resource type="Gradient" id="Gradient_1e8ob"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857143, 0.5714286, 0.71428573, 0.85714287)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1, 0.6784314, 1, 0.18431373, 1, 0.627451, 0.1254902, 0.9411765, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_woyg8"]
-gradient = SubResource("Gradient_etygl")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nk7xa"]
+gradient = SubResource("Gradient_1e8ob")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1e8ob"]
+shader = ExtResource("5_7hwce")
+shader_parameter/noise_intensity = 0.28800001368
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nk7xa"]
+shader = ExtResource("6_1e8ob")
+shader_parameter/radius = 0.26
+shader_parameter/width = 0.01
+shader_parameter/alpha = 0.75
 
 [node name="Demo" type="Node2D" unique_id=1237395326]
 
@@ -51,7 +67,10 @@ metadata/_custom_type_script = "uid://bpj81wnbe8ww3"
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=2011244498]
 
 [node name="ColorGenerateTestScreen" type="Node2D" parent="." unique_id=1233710853]
+material = SubResource("ShaderMaterial_7hwce")
 script = ExtResource("1_etygl")
-gradient = SubResource("GradientTexture1D_woyg8")
+gradient = SubResource("GradientTexture1D_nk7xa")
 size = Vector2i(256, 170)
 guideline_margin = 45.0
+shader = SubResource("ShaderMaterial_1e8ob")
+guideline_shader = SubResource("ShaderMaterial_nk7xa")
