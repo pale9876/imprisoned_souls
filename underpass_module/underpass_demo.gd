@@ -29,6 +29,7 @@ func create() -> void:
 			
 			a.shape.resize(4)
 			a.door.resize(2)
+			
 			var polygon: PackedVector2Array = PackedVector2Array([
 				Vector2(0., 0.),
 				Vector2(0., a.size.y),
@@ -36,10 +37,12 @@ func create() -> void:
 				Vector2(a.size.x, 0.),
 				Vector2(0., 0.)
 			])
+			
 			# 길이 가로면 1번째, 3번째 세그먼트를 닫아야하고,
 			# 세로면 2번째, 4번째 세그먼트를 닫아야함.
 			# 길이 가로면 항상 2번째 4번째 세그먼트가 항상 활성화되어야 하고
 			# 세로면 1번째 3번째 세그먼트가 항상 활성화되어야함.
+			
 			for j: int in range(4):
 				var segment: RID = PhysicsServer2D.segment_shape_create()
 				PhysicsServer2D.shape_set_data(segment, Rect2(polygon[j], polygon[j + 1]))
@@ -50,10 +53,11 @@ func create() -> void:
 				a.shape[j] = segment
 			
 			if underpass_line[i].type == HORIZONTAL:
-				pass
-
+				PhysicsServer2D.body_set_shape_disabled(a.body, 0, false)
+				PhysicsServer2D.body_set_shape_disabled(a.body, 2, false)
 			elif underpass_line[i].type == VERTICAL:
-				pass
+				PhysicsServer2D.body_set_shape_disabled(a.body, 1, false)
+				PhysicsServer2D.body_set_shape_disabled(a.body, 3, false)
 			
 			arr[i] = a
 

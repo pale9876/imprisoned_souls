@@ -7,9 +7,7 @@ class_name BloodSplatter
 @export var max_size: float = 15.
 @export var min_size: float = 3.
 
-
 var _arr: Array[P] = []
-
 
 @export_tool_button("Emit", "2D") var _emit: Callable = emit
 
@@ -27,7 +25,6 @@ func kill() -> void:
 
 class P extends RefCounted:
 	var cid: RID
-	
 	var stream: Stream
 
 

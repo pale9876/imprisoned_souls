@@ -1,9 +1,18 @@
 @tool
-extends Character
+extends EEAD2D
 class_name Player
 
 
-func _ready() -> void:
-	if Engine.is_editor_hint(): return
-	
-	#InputHandler.player = self
+
+
+
+func _enter_tree() -> void:
+	if !Engine.is_editor_hint(): create()
+
+
+func create() -> void:
+	pass
+
+
+func kill() -> void:
+	pass

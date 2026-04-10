@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3xwqsfprgbn4"]
 
-[ext_resource type="Script" uid="uid://dqgansavg6p5n" path="res://player.gd" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://dqgansavg6p5n" path="res://player_character.gd" id="1_kpjcp"]
 [ext_resource type="Script" uid="uid://cxckpw1sbak1o" path="res://chara/character_information.gd" id="2_4fa2e"]
 [ext_resource type="Resource" uid="uid://4ntuwag3k035" path="res://chara/red_hood/red_hood_info.tres" id="2_lel03"]
 [ext_resource type="Script" uid="uid://debij5ysrxgsw" path="res://script/character_event_handler.gd" id="3_48k13"]
@@ -21,10 +21,7 @@
 [ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://unit/inner_progress_ui.gd" id="16_lel03"]
 [ext_resource type="Script" uid="uid://5bgh3jgqmfuq" path="res://unit/inner_ui_marker.gd" id="16_smflj"]
 [ext_resource type="Script" uid="uid://ty1kbk87uf5i" path="res://unit/hitbox_2d.gd" id="17_mr50o"]
-[ext_resource type="Texture2D" uid="uid://bw53vkkeekuxe" path="res://aseprite/concept/ui/health_progress_over.png" id="17_tvasn"]
-[ext_resource type="Texture2D" uid="uid://6worj7stjxkc" path="res://aseprite/concept/ui/health_progress.png" id="18_43kp2"]
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="18_48k13"]
-[ext_resource type="Texture2D" uid="uid://cegfid37q12r5" path="res://aseprite/concept/ui/health_progress_under.png" id="19_03by7"]
 
 [sub_resource type="Resource" id="Resource_fj1yc"]
 script = ExtResource("2_4fa2e")
@@ -104,20 +101,11 @@ metadata/_custom_type_script = "uid://di7bi4ybepb0a"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj1yc"]
 size = Vector2(82, 64)
 
-[sub_resource type="Curve" id="Curve_tvasn"]
-_data = [Vector2(0, 0), 0.0, 3.2873197, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_ekjla"]
-offsets = PackedFloat32Array(0.36764705, 1)
-colors = PackedColorArray(1, 0, 0, 1, 0.3137255, 0, 0.3137255, 1)
-
-[node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("inventory", "hurtbox", "pose_controller", "init_collider")]
+[node name="Player" type="CharacterBody2D" unique_id=74662124 node_paths=PackedStringArray("inventory", "pose_controller", "init_collider")]
 collision_layer = 0
 script = ExtResource("1_kpjcp")
 inventory = NodePath("Inventory")
 chara_info = SubResource("Resource_fj1yc")
-hurtbox = NodePath("HurtBox")
 ev_handler = SubResource("Resource_4fa2e")
 _information = ExtResource("2_lel03")
 init_mask = 1
@@ -183,11 +171,10 @@ debug_color = Color(0, 0.7607843, 0.57254905, 0.11764706)
 script = ExtResource("3_kne1u")
 metadata/_custom_type_script = "uid://bl8ms0nmsmbkl"
 
-[node name="HurtBox" type="Area2D" parent="." unique_id=973652727 node_paths=PackedStringArray("_root", "init_shape")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=973652727 node_paths=PackedStringArray("init_shape")]
 collision_layer = 0
 monitoring = false
 script = ExtResource("6_tdg3f")
-_root = NodePath("..")
 init_shape = [NodePath("Idle")]
 mask = 1
 
@@ -385,16 +372,8 @@ bold = 1.0
 
 [node name="GradientProgress2D" type="Node2D" parent="InnerUIMark" unique_id=45944978]
 script = ExtResource("16_lel03")
-progress_over = ExtResource("17_tvasn")
-progress_texture = ExtResource("18_43kp2")
-trauma_progress_texture = ExtResource("18_43kp2")
-progress_under = ExtResource("19_03by7")
 progress_color = Color(1, 0, 0.20000029, 1)
 trauma_color = Color(0.27058825, 0, 0, 1)
-progress_value = 1.0
-value_curve = SubResource("Curve_tvasn")
-gradient = true
-gradient_value = SubResource("Gradient_ekjla")
 
 [node name="State" type="Label" parent="InnerUIMark" unique_id=2123176147]
 layout_mode = 1

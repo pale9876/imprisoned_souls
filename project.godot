@@ -48,11 +48,16 @@ DialogueManager="*uid://c3rodes2l3gxb"
 InputHandler="*uid://e3v8nla7qwf3"
 ImageSelector="*uid://bkb1epbrwsfbn"
 
+[debug]
+
+settings/physics_interpolation/enable_warnings=false
+
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/energy_saving/keep_screen_on=false
+window/size/resizable=false
+window/size/borderless=true
 window/vsync/vsync_mode=0
 
 [dotnet]

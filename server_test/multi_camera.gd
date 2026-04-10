@@ -3,72 +3,91 @@ extends Node2D
 class_name MultiCamera
 
 
-var camera: Dictionary[String, Cam] = {}
+@export_category("Do not test in Editor")
+@export_custom(
+	PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_READ_ONLY
+) var do_not_test: bool = true
+
+
+@export var camera: Dictionary[String, Cam]
+@export var current: String = "Idle"
 
 
 @export_tool_button("Draw Camera", "2D") var _draw_cameras: Callable = draw_camera_rect
 
 
-@export var current: String = ""
+var init: bool = false
 
 
-
-func get_transform_to_fit(ct_rect: Rect2, v_rect: Rect2) -> Transform2D:
-	var _scale: Vector2 = v_rect.size / ct_rect.size
-	var translation: Vector2 = ct_rect.position - v_rect.position
+func set_viewport_canvas_transform() -> void:
+	if !camera.has(current): return
 	
-	var min_scale: float = min(_scale.x, _scale.y)
-	_scale = Vector2(min_scale, min_scale)
+	var cam: Cam = camera[current]
+	var vp_xform: Transform2D = Transform2D(
+		0., Vector2.ONE * cam.zoom, 0., (global_position + cam.position) - (get_viewport_rect().size * cam.zoom / 2.)
+	)
 	
-	var scaled_content_rect_size: Vector2 = ct_rect.size * _scale
-	translation += (v_rect.size - scaled_content_rect_size) / 2
-	
-	var tf: Transform2D = Transform2D(0, _scale, 0, translation)
-	
-	return tf
-
-
-func set_camera(rect: Rect2) -> void:
-	rect.position = global_position - rect.size / 2.
-	var cam_transform: Transform2D = get_transform_to_fit(rect, get_viewport_rect())
-	
-	get_viewport().canvas_transform = cam_transform.affine_inverse()
-
-
-func camera_init() -> void:
-	if !camera.is_empty():
-		for cam: String in camera:
-			set_camera(camera[cam].rect)
+	get_viewport().canvas_transform = vp_xform.affine_inverse()
 
 
 func _enter_tree() -> void:
-	pass
+	if Engine.is_editor_hint(): return
+	
+	set_viewport_canvas_transform()
 
 
-func _process(delta: float) -> void:
-	pass
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint(): return
+	
+	if !camera.is_empty():
+		for cam: Cam in camera.values():
+			cam.position = cam.position.move_toward(
+				cam.target.global_position, cam.speed
+			)
 
+	set_viewport_canvas_transform()
+
+
+func _exit_tree() -> void:
+	if init:
+		for cam: String in camera:
+			RenderingServer.free_rid(camera[cam].cid)
 
 
 func draw_camera_rect() -> void:
+	if init:
+		kill()
+		init = false
+	
 	if Engine.is_editor_hint():
 		for cam: String in camera:
-			var cam_rect: Rect2 = camera[cam].rect
-			
-			var polygon: PackedVector2Array = PackedVector2Array([
-				cam_rect.position,
-				Vector2(cam_rect.position.x, cam_rect.position.y + cam_rect.size.y),
-				cam_rect.position + cam_rect.size,
-				Vector2(cam_rect.position.x + cam_rect.size.x, cam_rect.position.y),
-				cam_rect.position
-			])
-			
-			RenderingServer.canvas_item_add_multiline(
-				camera[cam].cid,
-				polygon,
-				[camera[cam].color],
-				1.
+			#var cam_rect: Rect2 = camera[cam].rect
+			camera[cam].cid = RenderingServer.canvas_item_create()
+			RenderingServer.canvas_item_set_parent(camera[cam].cid, get_canvas_item())
+
+			var viewport_size: Vector2 = Vector2(
+				float(ProjectSettings.get("display/window/size/viewport_width")),
+				float(ProjectSettings.get("display/window/size/viewport_height"))
 			)
+			
+			var cam_rect: Rect2 = Rect2(Vector2(), viewport_size * camera[cam].zoom)
+			
+			RenderingServer.canvas_item_add_rect(
+				camera[cam].cid,
+				Rect2(- cam_rect.size / 2., cam_rect.size),
+				camera[cam].color
+			)
+			
+			RenderingServer.canvas_item_set_transform(
+				camera[cam].cid,
+				Transform2D(0., camera[cam].position)
+			)
+			
+			RenderingServer.canvas_item_add_circle(
+				camera[cam].cid, Vector2(), 3., Color.BLUE
+			)
+	
+	init = true
 
 
 func add_cam(camera_name: String, rect: Rect2, target: Node2D = null, color: Color = Color.WHITE) -> void:
@@ -98,10 +117,3 @@ func _clear() -> void:
 func kill() -> void:
 	for cam: String in camera:
 		RenderingServer.free_rid(camera[cam].cid)
-
-
-class Cam extends RefCounted:
-	var cid: RID
-	var rect: Rect2
-	var target: Node2D
-	var color: Color

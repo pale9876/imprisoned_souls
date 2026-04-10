@@ -3,7 +3,6 @@
 # 장점은 셰이더를 쓰는 것보다 단순함..
 # 많은 반사 오프젝트가 필요할 경우에는 해당 오브젝트를 쓰는 것을 피하는 것이 좋음.
 
-
 @tool
 extends EEAD2D
 class_name ReflectReplicator2D
@@ -60,14 +59,14 @@ func create() -> void:
 
 
 func _process(_delta: float) -> void:
-	if !Engine.is_editor_hint():
-		global_position = get_global_mouse_position()
-		pass
 	
 	if init:
 		draw_reflect()
 	
-	queue_redraw()
+	if !Engine.is_editor_hint():
+		global_position = global_position.lerp(
+			global_position + Input.get_vector("left", "right", "up", "down") * _delta * 300., .322
+		)
 
 
 func kill() -> void:
