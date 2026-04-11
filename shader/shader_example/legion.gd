@@ -7,11 +7,14 @@ class_name Legion
 @export var amount: int = 100
 @export var navigation_polygon: NavigationPolygon = NavigationPolygon.new()
 @export var layer: int = 1
-@export var mask: int = 1
+@export var mask: int = 0
+
+@export_category("Spawn Region")
 @export var spawn_path: Vector2 = Vector2(640., 380.)
+@export var margin: float = 50.
+
 @export var color: Color = Color(0.208, 0.37, 0.65, 0.522)
 @export var body_parts: Array[AnimatedPart]
-
 
 var arr: Array[I] = []
 var nav_map: RID
@@ -39,13 +42,10 @@ func create() -> void:
 	if init:
 		kill()
 	
-	if Engine.is_editor_hint():
-		draw_path()
-	else:
-		draw_path()
+	draw_path()
+	arr.resize(amount)
 		
-		arr.resize(amount)
-		
+	if !Engine.is_editor_hint():
 		for i: int in range(amount):
 			arr[i] = spawn_instance()
 
@@ -127,13 +127,11 @@ func kill() -> void:
 func draw_path() -> void:
 	_path = Curve2D.new()
 	
-	
 	_path.add_point(global_position)
 	_path.add_point(global_position + Vector2(0., spawn_path.y))
 	_path.add_point(global_position + spawn_path)
 	_path.add_point(global_position + Vector2(spawn_path.x, 0.))
 	_path.add_point(global_position)
-
 
 	if Engine.is_editor_hint():
 		var polygon: PackedVector2Array = PackedVector2Array()
@@ -152,9 +150,10 @@ func draw_path() -> void:
 
 		path_cid = RenderingServer.canvas_item_create()
 		
+		
 		RenderingServer.canvas_item_set_parent(path_cid, get_canvas_item())
 		RenderingServer.canvas_item_set_transform(
-			path_cid, Transform2D(0., - spawn_path / 2.)
+			path_cid, Transform2D(0., Vector2())
 		)
 		RenderingServer.canvas_item_add_rect(
 			path_cid, Rect2(Vector2(), spawn_path), color

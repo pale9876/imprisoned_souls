@@ -7,8 +7,10 @@
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
+[ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hit_hurt_event_module/hurtbox_collide_info.gd" id="11_ym5dx"]
 [ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="12_6djh5"]
+[ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="12_g3sys"]
 [ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://server_test/Cam.gd" id="12_ym5dx"]
 [ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="13_k7ju8"]
 [ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://server_test/multi_camera.gd" id="13_xj7cu"]
@@ -16,6 +18,11 @@
 [ext_resource type="Shader" uid="uid://cnty0ecobwyho" path="res://progress.gdshader" id="15_waig6"]
 [ext_resource type="Script" uid="uid://byk7fljca5whk" path="res://canvas_screen_pointer.gd" id="16_xj7cu"]
 [ext_resource type="Script" uid="uid://dkp47oinac6tt" path="res://profile.gd" id="17_xj7cu"]
+[ext_resource type="Script" uid="uid://bv0bsymaq7kwo" path="res://analog_crashed_screen/color_generate_test_screen.gd" id="18_k7ju8"]
+[ext_resource type="Texture2D" uid="uid://cr8177oenfga7" path="res://aseprite/color_test_texture.png" id="20_03xc4"]
+[ext_resource type="Texture2D" uid="uid://cnjrcdrh7u6ex" path="res://analog_crashed_screen/color_generate.tres" id="21_c801g"]
+[ext_resource type="Shader" uid="uid://dqhwn62oswdun" path="res://analog_crashed_screen/grain_and_noise.gdshader" id="22_03xc4"]
+[ext_resource type="Script" uid="uid://clywxqfubslv2" path="res://shader_polygon.gd" id="22_4yxht"]
 
 [sub_resource type="Resource" id="Resource_waig6"]
 script = ExtResource("3_8acap")
@@ -64,7 +71,13 @@ metadata/_custom_type_script = "uid://cukf7tedk28ls"
 [sub_resource type="Resource" id="Resource_k7ju8"]
 script = ExtResource("11_ym5dx")
 
+[sub_resource type="Resource" id="Resource_mtpqi"]
+script = ExtResource("11_xj7cu")
+metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ym5dx"]
+atlas = ExtResource("12_g3sys")
+region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="Resource" id="Resource_xj7cu"]
 script = ExtResource("12_ym5dx")
@@ -95,11 +108,44 @@ point_count = 2
 _data = [Vector2(0, 0), 0.0, 3.263818, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="MainScene" type="Node2D" unique_id=2146562988 node_paths=PackedStringArray("player", "legion", "ingame_canvas")]
+[sub_resource type="Curve2D" id="Curve2D_g3sys"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -98, -47, 0, 0, 0, 0, 74, -95, 0, 0, 0, 0, 96, 59, 0, 0, 0, 0, -72, 107)
+}
+point_count = 4
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_03xc4"]
+load_path = "res://.godot/imported/color_test_texture.png-95fadd883951d246b04dbfc18686844f.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_03xc4"]
+shader = ExtResource("22_03xc4")
+shader_parameter/t = SubResource("CompressedTexture2D_03xc4")
+shader_parameter/noise_intensity = 0.4390000208525
+
+[sub_resource type="Curve2D" id="Curve2D_03xc4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 314, 225, 0, 0, 0, 0, 440, 238, 0, 0, 0, 0, 458, 346, 0, 0, 0, 0, 284, 329)
+}
+point_count = 4
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g3sys"]
+load_path = "res://.godot/imported/color_test_texture.png-95fadd883951d246b04dbfc18686844f.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g3sys"]
+shader = ExtResource("22_03xc4")
+shader_parameter/t = SubResource("CompressedTexture2D_g3sys")
+shader_parameter/noise_intensity = 0.2400000114
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n68qf"]
+shader = ExtResource("22_03xc4")
+shader_parameter/noise_intensity = 0.05
+
+[node name="MainScene" type="Node2D" unique_id=2146562988 node_paths=PackedStringArray("player", "legion", "ingame_canvas", "camera")]
 script = ExtResource("1_ym5dx")
 player = NodePath("Ingame/Player")
 legion = NodePath("Ingame/Legion")
 ingame_canvas = NodePath("Ingame")
+camera = NodePath("Ingame/MultiCamera")
 
 [node name="Ingame" type="CanvasLayer" parent="." unique_id=983916863]
 
@@ -117,16 +163,20 @@ multimesh = SubResource("MultiMesh_waig6")
 script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
+mask = 1
+spawn_path = Vector2(640, 360)
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
-[node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
+[node name="Player" type="Node2D" parent="Ingame" unique_id=870520262 node_paths=PackedStringArray("animation_player")]
 position = Vector2(311, 178)
 script = ExtResource("13_k7ju8")
 unit_information = SubResource("Resource_ym5dx")
 hurtbox_information = SubResource("Resource_k7ju8")
+body_parts = Array[ExtResource("11_xj7cu")]([SubResource("Resource_mtpqi")])
 texture = Dictionary[String, AtlasTexture]({
 "idle_down": SubResource("AtlasTexture_ym5dx")
 })
+animation_player = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Ingame/Player" unique_id=1175660377]
 
@@ -146,11 +196,13 @@ script = ExtResource("16_xj7cu")
 [node name="Profile" type="Node2D" parent="UI" unique_id=740729166]
 
 [node name="CharacterIcon" type="Node2D" parent="UI/Profile" unique_id=503605044]
+unique_name_in_owner = true
 position = Vector2(42, 322)
 script = ExtResource("17_xj7cu")
 bg_color = Color(0.06, 0.024000002, 0, 1)
 
-[node name="GradientProgress2D" type="Node2D" parent="UI/Profile" unique_id=1415681145]
+[node name="HpProgress" type="Node2D" parent="UI/Profile" unique_id=1415681145]
+unique_name_in_owner = true
 position = Vector2(107.00003, 316.00003)
 scale = Vector2(1.535, 1.535)
 skew = -0.8115781
@@ -164,6 +216,29 @@ metadata/_custom_type_script = "uid://ca82fhyokguoj"
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=528270557]
 unique_name_in_owner = true
+
+[node name="ShaderPolygon" type="Path2D" parent="Title" unique_id=1217930565]
+show_behind_parent = true
+position = Vector2(110, 266)
+curve = SubResource("Curve2D_g3sys")
+script = ExtResource("22_4yxht")
+inner_texture = ExtResource("20_03xc4")
+shader = SubResource("ShaderMaterial_03xc4")
+
+[node name="ShaderPolygon2" type="Path2D" parent="Title" unique_id=1730561570]
+curve = SubResource("Curve2D_03xc4")
+script = ExtResource("22_4yxht")
+shader = SubResource("ShaderMaterial_g3sys")
+metadata/_custom_type_script = "uid://clywxqfubslv2"
+
+[node name="ColorGenerateTestScreen" type="Node2D" parent="Title" unique_id=467671755]
+visible = false
+position = Vector2(320, 181)
+script = ExtResource("18_k7ju8")
+gradient = ExtResource("21_c801g")
+size = Vector2i(640, 360)
+shader = SubResource("ShaderMaterial_n68qf")
+metadata/_custom_type_script = "uid://bv0bsymaq7kwo"
 
 [node name="MainTitle" type="Control" parent="Title" unique_id=193162761]
 layout_mode = 3

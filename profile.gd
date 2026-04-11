@@ -3,6 +3,7 @@ extends Node2D
 class_name CharacterProfile
 
 
+
 @export var texture: Texture2D
 @export var radius: float = 15.
 @export var margin: float = 3.

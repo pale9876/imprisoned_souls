@@ -3,7 +3,6 @@ extends EEAD2D
 class_name Player
 
 
-
 enum Mode
 {
 	GROUNDED = 0,
@@ -16,6 +15,7 @@ const FLOAT: int = Mode.FLOAT
 
 @export_category("Settings")
 @export var mode: Mode = GROUNDED
+@export var collider: String = "idle"
 
 
 @export_category("Resources")
@@ -26,7 +26,7 @@ const FLOAT: int = Mode.FLOAT
 
 @export_category("Canvas")
 @export var texture: Dictionary[String, AtlasTexture]
-@export var frame_coord: Vector2 = Vector2()
+@export var frame_coord: Vector2i = Vector2i()
 @export var animation_player: AnimationPlayer
 
 
@@ -50,17 +50,43 @@ var cid: RID
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
 		create()
-		
-		var animation: Animation = Animation.new()
-		animation
-		
+
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	var input: Vector2 = Input.get_vector("left", "right", "up", "down")
-	global_position += input * unit_information.speed * delta
-
+	velocity = velocity.move_toward(input * unit_information.speed, unit_information.acceleration * delta)
+	
+	var motion_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
+	var motion_result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
+	motion_param.recovery_as_collision = true
+	motion_param.exclude_objects = [self.get_instance_id()]
+	motion_param.from = get_global_transform()
+	motion_param.motion = velocity * delta
+	
+	if PhysicsServer2D.body_test_motion(_body, motion_param, motion_result):
+		var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+		shape_param.collide_with_areas = false
+		shape_param.collision_mask = mask
+		shape_param.exclude = [_body]
+		shape_param.shape_rid = _shape[collider]
+		shape_param.transform = get_global_transform()
+		shape_param.motion = velocity * delta
+		
+		var cast_result: PackedFloat32Array = get_world_2d().direct_space_state.cast_motion(shape_param)
+		var unsafe: float = cast_result[1]
+		global_position += (velocity * delta * unsafe)
+		var remain: Vector2 = motion_result.get_remainder()
+		
+		var rest_info: Dictionary = get_world_2d().direct_space_state.get_rest_info(shape_param)
+		if rest_info:
+			pass
+			
+	else:
+		global_position += velocity * delta
+	
+	
 
 func _exit_tree() -> void:
 	if init:
@@ -83,12 +109,16 @@ func create() -> void:
 	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 	PhysicsServer2D.body_set_space(_body, get_world_2d().space)
 	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
-	
+	PhysicsServer2D.body_set_collision_mask(_body, mask)
+	PhysicsServer2D.body_set_collision_layer(_body, layer)
+
+
 	if !unit_information.collider.is_empty():
 		for collider_name: String in unit_information.collider:
 			_shape[collider_name] = PhysicsServer2D.rectangle_shape_create()
 			PhysicsServer2D.shape_set_data(_shape[collider_name], unit_information.collider[collider_name] / 2.)
 			PhysicsServer2D.body_add_shape(_body, _shape[collider_name], Transform2D(0., Vector2()), false)
+
 
 	if !Engine.is_editor_hint():
 		_hurtbox = Hurtbox.new()
@@ -98,9 +128,11 @@ func create() -> void:
 		PhysicsServer2D.area_set_area_monitor_callback(_hurtbox.rid, damaged)
 		PhysicsServer2D.area_set_transform(_hurtbox.rid, Transform2D())
 		PhysicsServer2D.area_set_monitorable(_hurtbox.rid, true)
+		PhysicsServer2D.area_attach_object_instance_id(_hurtbox.rid, get_instance_id())
 		
 		_hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
 		PhysicsServer2D.area_add_shape(_hurtbox.rid, _hurtbox.shape, Transform2D(), false)
+		PhysicsServer2D.shape_set_data(_hurtbox.shape, _hurtbox.size / 2.)
 		
 		if !skills.is_empty():
 			for skill_name: String in skills:
@@ -138,6 +170,8 @@ func free_hurtbox() -> void:
 
 
 func unit_entered_awareness_area(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+	if instance_id == get_instance_id(): return
+	
 	if status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
 		pass
 	elif status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_REMOVED:
@@ -145,6 +179,8 @@ func unit_entered_awareness_area(status: PhysicsServer2D.AreaBodyStatus, body_ri
 
 
 func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+	if instance_id == get_instance_id(): return
+	
 	if status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
 		pass
 	elif status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_REMOVED:
@@ -160,7 +196,6 @@ class Body extends RefCounted:
 	var size: Vector2
 	var pos: Vector2 = Vector2()
 	var disabled: bool = false
-	
 
 
 class Hurtbox extends RefCounted:
@@ -191,7 +226,7 @@ class Hitbox extends RefCounted:
 
 # ShapeCast
 class HitRay extends Hitbox:
-	var penetrate: bool = true
+	var penetrate_count: int = 1
 
 
 class S extends RefCounted:

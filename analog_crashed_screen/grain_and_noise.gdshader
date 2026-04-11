@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture;
+uniform sampler2D t;
 uniform float noise_intensity : hint_range(0.0, 1.0) = 0.05; 
 
 float random(vec2 uv) {
@@ -8,10 +8,10 @@ float random(vec2 uv) {
 }
 
 void fragment() {
-    vec2 uv = SCREEN_UV;
-    vec4 color = texture(SCREEN_TEXTURE, uv);
+    //vec2 uv = SCREEN_UV;
+    vec4 color = texture(t, UV);
 
-    float noise = random(uv + TIME) * 2.0 - 1.0;
+    float noise = random(UV + TIME) * 2.0 - 1.0;
 
     color.rgb += noise * noise_intensity;
 

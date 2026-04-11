@@ -41,9 +41,10 @@ func _process(_delta: float) -> void:
 	
 	if !camera.is_empty():
 		for cam: Cam in camera.values():
-			cam.position = cam.position.move_toward(
-				cam.target.global_position, cam.speed
-			)
+			if cam.target != null:
+				cam.position = cam.position.move_toward(
+					cam.target.global_position, cam.speed
+				)
 
 	set_viewport_canvas_transform()
 

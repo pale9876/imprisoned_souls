@@ -5,6 +5,9 @@ class_name UnitInformation
 
 @export var name: String = ""
 @export var icon: Texture2D
+@export var hp: int = 300
+@export var atk: int = 3
+@export var def: int = 3
 @export var speed: float = 200.
 @export var weight: float = 1.
 @export_range(0., 2., 0.01) var dash_scale: float = 1.5
