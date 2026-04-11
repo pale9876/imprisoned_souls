@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass_demo.gd" id="1_xj7cu"]
 [ext_resource type="Script" uid="uid://dt0b8s8e5kooo" path="res://traitor_must_be_dead.gd" id="1_ym5dx"]
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
+[ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
-[ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="10_waig6"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
+[ext_resource type="Script" uid="uid://cotxam656beso" path="res://hit_hurt_event_module/hurtbox_collide_info.gd" id="11_ym5dx"]
 [ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="12_6djh5"]
+[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://server_test/Cam.gd" id="12_ym5dx"]
 [ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="13_k7ju8"]
 [ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://server_test/multi_camera.gd" id="13_xj7cu"]
 [ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://unit/inner_progress_ui.gd" id="14_6hyso"]
@@ -20,6 +22,7 @@ script = ExtResource("3_8acap")
 name = "StartRoom"
 size = Vector2(320, 180)
 modulate = Color(1, 0.62, 0.62, 0.59607846)
+closed = true
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
 [sub_resource type="Gradient" id="Gradient_waig6"]
@@ -54,9 +57,18 @@ metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6djh5"]
 
+[sub_resource type="Resource" id="Resource_ym5dx"]
+script = ExtResource("9_6hyso")
+metadata/_custom_type_script = "uid://cukf7tedk28ls"
+
+[sub_resource type="Resource" id="Resource_k7ju8"]
+script = ExtResource("11_ym5dx")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym5dx"]
+
 [sub_resource type="Resource" id="Resource_xj7cu"]
-script = ExtResource("10_waig6")
-metadata/_custom_type_script = "uid://di7bi4ybepb0a"
+script = ExtResource("12_ym5dx")
+metadata/_custom_type_script = "uid://betj1u6dfr7n"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waig6"]
 shader = ExtResource("15_waig6")
@@ -108,13 +120,21 @@ navigation_polygon = SubResource("NavigationPolygon_6djh5")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
+position = Vector2(311, 178)
 script = ExtResource("13_k7ju8")
-skill = Dictionary[String, ExtResource("10_waig6")]({
-"Lazor": SubResource("Resource_xj7cu")
+unit_information = SubResource("Resource_ym5dx")
+hurtbox_information = SubResource("Resource_k7ju8")
+texture = Dictionary[String, AtlasTexture]({
+"idle_down": SubResource("AtlasTexture_ym5dx")
 })
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Ingame/Player" unique_id=1175660377]
 
 [node name="MultiCamera" type="Node2D" parent="Ingame" unique_id=1836037614]
 script = ExtResource("13_xj7cu")
+camera = Dictionary[String, ExtResource("12_ym5dx")]({
+"Idle": SubResource("Resource_xj7cu")
+})
 metadata/_custom_type_script = "uid://bbvx0b83akfkq"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1672614402]
@@ -123,14 +143,14 @@ metadata/_custom_type_script = "uid://bbvx0b83akfkq"
 position = Vector2(118, 171)
 script = ExtResource("16_xj7cu")
 
-[node name="Node2D" type="Node2D" parent="UI" unique_id=740729166]
+[node name="Profile" type="Node2D" parent="UI" unique_id=740729166]
 
-[node name="Profile" type="Node2D" parent="UI/Node2D" unique_id=503605044]
+[node name="CharacterIcon" type="Node2D" parent="UI/Profile" unique_id=503605044]
 position = Vector2(42, 322)
 script = ExtResource("17_xj7cu")
 bg_color = Color(0.06, 0.024000002, 0, 1)
 
-[node name="GradientProgress2D" type="Node2D" parent="UI/Node2D" unique_id=1415681145]
+[node name="GradientProgress2D" type="Node2D" parent="UI/Profile" unique_id=1415681145]
 position = Vector2(107.00003, 316.00003)
 scale = Vector2(1.535, 1.535)
 skew = -0.8115781

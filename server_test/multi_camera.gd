@@ -90,14 +90,16 @@ func draw_camera_rect() -> void:
 	init = true
 
 
-func add_cam(camera_name: String, rect: Rect2, target: Node2D = null, color: Color = Color.WHITE) -> void:
+func add_cam(camera_name: String, pos: Vector2, zoom: float, target: Node2D = null, color: Color = Color.WHITE) -> void:
 	if camera.has(camera_name): return
 	
 	var cam: Cam = Cam.new()
-	cam.rect = rect
+	
 	cam.cid = RenderingServer.canvas_item_create()
-	cam.target = target
+	cam.position = pos
+	cam.zoom = zoom
 	cam.color = color
+	cam.target = target
 	
 	camera[camera_name] = cam
 

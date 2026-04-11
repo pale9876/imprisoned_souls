@@ -80,7 +80,7 @@ func create() -> void:
 				for j: int in range(4):
 					RenderingServer.canvas_item_add_line(
 						a.cid, polygon[j], polygon[j + 1],
-						Color.WHITE if ((underpass_line[i].type == HORIZONTAL and (j == 1 or j == 3)) or (underpass_line[i].type == VERTICAL and (j == 0 or j == 2))) else Color.RED
+						Color.WHITE if (!underpass_line[i].closed and (underpass_line[i].type == HORIZONTAL and (j == 1 or j == 3)) or (underpass_line[i].type == VERTICAL and (j == 0 or j == 2))) else Color.RED
 					)
 			
 			arr[i] = a

@@ -66,6 +66,10 @@ func create() -> void:
 		[bg_color],
 	)
 	
+	if texture:
+		RenderingServer.canvas_item_add_texture_rect(
+			texture_cid, Rect2(- texture.get_size() / 2., texture.get_size()), texture.get_rid()
+		)
 
 	init = true
 

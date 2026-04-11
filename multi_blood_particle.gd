@@ -4,8 +4,8 @@ class_name MultiBloodParticle
 
 
 @export var texture: Texture2D
-
 @export var multimesh: MultiMesh = MultiMesh.new()
+
 
 var arr: Array[P] = []
 

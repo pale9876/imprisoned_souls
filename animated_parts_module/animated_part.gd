@@ -3,6 +3,7 @@ extends Resource
 class_name AnimatedPart
 
 
+@export var name: String = ""
 @export var texture: AtlasTexture
 @export var frame_size: Vector2 = Vector2(64., 64.)
 @export var frame: int = 0:

@@ -10,6 +10,8 @@ class_name Legion
 @export var mask: int = 1
 @export var spawn_path: Vector2 = Vector2(640., 380.)
 @export var color: Color = Color(0.208, 0.37, 0.65, 0.522)
+@export var body_parts: Array[AnimatedPart]
+
 
 var arr: Array[I] = []
 var nav_map: RID
@@ -73,6 +75,7 @@ func spawn_instance() -> I:
 	PhysicsServer2D.area_set_space(inst.hitbox, get_world_2d().space)
 	
 	inst.hurtbox = PhysicsServer2D.area_create()
+	PhysicsServer2D.area_set_space(inst.hurtbox, get_world_2d().space)
 
 	#inst.agent = NavigationServer2D.agent_create()
 
@@ -83,8 +86,21 @@ func spawn_instance() -> I:
 	return inst
 
 
-func create_hitbox() -> void:
+func create_hitbox(duration: float) -> void:
 	pass
+
+
+func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+	pass
+
+
+func damaged(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+	pass
+
+
+func death() -> void:
+	pass
+
 
 
 func _exit_tree() -> void:
@@ -160,7 +176,6 @@ class I extends RefCounted:
 	var body: RID
 	var shape: RID
 	var agent: RID
-	var hitbox: RID
 	var hurtbox: RID
 	var position: Vector2
 	var size: Vector2
