@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
+[ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="10_waig6"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
 [ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="12_6djh5"]
 [ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="13_k7ju8"]
@@ -16,6 +17,9 @@
 
 [sub_resource type="Resource" id="Resource_waig6"]
 script = ExtResource("3_8acap")
+name = "StartRoom"
+size = Vector2(320, 180)
+modulate = Color(1, 0.62, 0.62, 0.59607846)
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
 [sub_resource type="Gradient" id="Gradient_waig6"]
@@ -50,6 +54,10 @@ metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6djh5"]
 
+[sub_resource type="Resource" id="Resource_xj7cu"]
+script = ExtResource("10_waig6")
+metadata/_custom_type_script = "uid://di7bi4ybepb0a"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waig6"]
 shader = ExtResource("15_waig6")
 shader_parameter/progress = 1.0
@@ -75,8 +83,11 @@ point_count = 2
 _data = [Vector2(0, 0), 0.0, 3.263818, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="MainScene" type="Node2D" unique_id=2146562988]
+[node name="MainScene" type="Node2D" unique_id=2146562988 node_paths=PackedStringArray("player", "legion", "ingame_canvas")]
 script = ExtResource("1_ym5dx")
+player = NodePath("Ingame/Player")
+legion = NodePath("Ingame/Legion")
+ingame_canvas = NodePath("Ingame")
 
 [node name="Ingame" type="CanvasLayer" parent="." unique_id=983916863]
 
@@ -98,24 +109,28 @@ metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
 script = ExtResource("13_k7ju8")
+skill = Dictionary[String, ExtResource("10_waig6")]({
+"Lazor": SubResource("Resource_xj7cu")
+})
 
 [node name="MultiCamera" type="Node2D" parent="Ingame" unique_id=1836037614]
 script = ExtResource("13_xj7cu")
 metadata/_custom_type_script = "uid://bbvx0b83akfkq"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1672614402]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1672614402]
 
-[node name="CanvasScreenPointer" type="Node2D" parent="CanvasLayer" unique_id=677821174]
+[node name="CanvasScreenPointer" type="Node2D" parent="UI" unique_id=677821174]
 position = Vector2(118, 171)
 script = ExtResource("16_xj7cu")
 
-[node name="Node2D" type="Node2D" parent="CanvasLayer" unique_id=740729166]
+[node name="Node2D" type="Node2D" parent="UI" unique_id=740729166]
 
-[node name="Profile" type="Node2D" parent="CanvasLayer/Node2D" unique_id=503605044]
+[node name="Profile" type="Node2D" parent="UI/Node2D" unique_id=503605044]
 position = Vector2(42, 322)
 script = ExtResource("17_xj7cu")
+bg_color = Color(0.06, 0.024000002, 0, 1)
 
-[node name="GradientProgress2D" type="Node2D" parent="CanvasLayer/Node2D" unique_id=1415681145]
+[node name="GradientProgress2D" type="Node2D" parent="UI/Node2D" unique_id=1415681145]
 position = Vector2(107.00003, 316.00003)
 scale = Vector2(1.535, 1.535)
 skew = -0.8115781
@@ -128,6 +143,7 @@ trauma_curve = SubResource("Curve_waig6")
 metadata/_custom_type_script = "uid://ca82fhyokguoj"
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=528270557]
+unique_name_in_owner = true
 
 [node name="MainTitle" type="Control" parent="Title" unique_id=193162761]
 layout_mode = 3
@@ -136,3 +152,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Title/MainTitle" unique_id=125485481]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="Title/MainTitle/CenterContainer" unique_id=714824852]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start Game"

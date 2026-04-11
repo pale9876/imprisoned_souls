@@ -1,6 +1,5 @@
 @tool
 extends Area2D
-class_name Hurtbox2D
 
 
 enum State {

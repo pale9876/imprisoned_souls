@@ -83,6 +83,10 @@ func spawn_instance() -> I:
 	return inst
 
 
+func create_hitbox() -> void:
+	pass
+
+
 func _exit_tree() -> void:
 	if init:
 		kill()
@@ -165,5 +169,9 @@ class I extends RefCounted:
 	var frame: int = 0
 	var state: int = State.WAIT
 
-
 	func get_transform() -> Transform2D: return Transform2D(0., position)
+
+
+
+class Hitbox extends RefCounted:
+	pass

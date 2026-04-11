@@ -21,7 +21,7 @@ var init: bool = false
 
 
 func _enter_tree() -> void:
-	if Engine.is_editor_hint():
+	if !Engine.is_editor_hint():
 		create()
 
 
@@ -46,17 +46,24 @@ func create() -> void:
 	polygon[3] = Vector2.DOWN * radius
 	polygon[4] = Vector2.LEFT * radius
 
-
+	
+	# Set Outline
 	RenderingServer.canvas_item_add_polyline(
-		outline_cid,
-		polygon, [Color.WHITE], 1.
+		outline_cid, polygon, [outline_color], 1.
 	)
-	RenderingServer.canvas_item_add_rect(background_cid, Rect2(- Vector2(radius * 2 + margin, radius * 2 + margin) / 2., Vector2(radius * 2 + margin, radius * 2 + margin)), Color(0.0, 0.0, 0.0, 0.0))
+	# Set Transparent Background
+	RenderingServer.canvas_item_add_rect(
+		background_cid,
+		Rect2(- Vector2(radius * 2 + margin, radius * 2 + margin) / 2., Vector2(radius * 2 + margin, radius * 2 + margin)),
+		Color(0.0, 0.0, 0.0, 0.0)
+	)
+	
+	# Set Background Clip And Polygon
 	RenderingServer.canvas_item_set_clip(background_cid, true)
 	RenderingServer.canvas_item_add_polygon(
 		background_cid,
 		[polygon[0], polygon[1], polygon[2], polygon[3]],
-		[Color(0.53, 0.212, 0.212, 1.0)],
+		[bg_color],
 	)
 	
 

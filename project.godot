@@ -76,6 +76,7 @@ enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
 currency_resource_path="res://"
 draw_hurtbox=true
+debug_mode=true
 
 [input]
 

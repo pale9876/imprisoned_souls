@@ -1,12 +1,11 @@
 @tool
 extends Node2D
-class_name Hurtbox
 
 
 const NOTIFICATION_COLLIDER_CHANGED: int = 24000
 
 
-@export var collider: Array[HurtboxCollideInfo]
+@export var collider: Array[HurtboxInformation]
 
 @export var color: Color = Color(0.73, 0.329, 0.329, 0.255)
 

@@ -9,12 +9,23 @@ class_name UnderpassModule
 var arr: Array[A] = []
 
 
+func _enter_tree() -> void:
+	if !Engine.is_editor_hint():
+		create()
+
+
 func create() -> void:
+	if init:
+		kill()
+	
 	if !underpass_line.is_empty():
 		arr.resize(underpass_line.size())
 		
 		for i: int in range(underpass_line.size()):
 			var a: A = A.new()
+			
+			a.pos = underpass_line[i].pos
+			a.size = underpass_line[i].size
 			
 			a.cid = RenderingServer.canvas_item_create()
 			RenderingServer.canvas_item_set_parent(a.cid, get_canvas_item())
@@ -31,11 +42,11 @@ func create() -> void:
 			a.door.resize(2)
 			
 			var polygon: PackedVector2Array = PackedVector2Array([
-				Vector2(0., 0.),
-				Vector2(0., a.size.y),
-				a.size,
-				Vector2(a.size.x, 0.),
-				Vector2(0., 0.)
+				- a.size / 2.,
+				Vector2(- a.size.x / 2. , a.size.y / 2.),
+				a.size / 2.,
+				Vector2(a.size.x / 2., - a.size.y / 2.),
+				- a.size / 2.
 			])
 			
 			# 길이 가로면 1번째, 3번째 세그먼트를 닫아야하고,
@@ -53,13 +64,28 @@ func create() -> void:
 				a.shape[j] = segment
 			
 			if underpass_line[i].type == HORIZONTAL:
-				PhysicsServer2D.body_set_shape_disabled(a.body, 0, false)
-				PhysicsServer2D.body_set_shape_disabled(a.body, 2, false)
+				PhysicsServer2D.body_set_shape_disabled(a.body, 0, true)
+				PhysicsServer2D.body_set_shape_disabled(a.body, 2, true)
 			elif underpass_line[i].type == VERTICAL:
-				PhysicsServer2D.body_set_shape_disabled(a.body, 1, false)
-				PhysicsServer2D.body_set_shape_disabled(a.body, 3, false)
+				PhysicsServer2D.body_set_shape_disabled(a.body, 1, true)
+				PhysicsServer2D.body_set_shape_disabled(a.body, 3, true)
+			
+			if Engine.is_editor_hint():
+				RenderingServer.canvas_item_set_transform(a.cid, Transform2D(0., a.pos))
+				
+				RenderingServer.canvas_item_add_rect(
+					a.cid, Rect2(- a.size / 2., a.size), Color(0.42, 1.0, 0.913, 0.365)
+				)
+				
+				for j: int in range(4):
+					RenderingServer.canvas_item_add_line(
+						a.cid, polygon[j], polygon[j + 1],
+						Color.WHITE if ((underpass_line[i].type == HORIZONTAL and (j == 1 or j == 3)) or (underpass_line[i].type == VERTICAL and (j == 0 or j == 2))) else Color.RED
+					)
 			
 			arr[i] = a
+
+	init = true
 
 
 func kill() -> void:
@@ -83,6 +109,8 @@ func _draw() -> void:
 
 class A extends RefCounted:
 	var cid: RID
+	var pos: Vector2
+	var size: Vector2
 	var body: RID
 	var shape: Array[RID]
 	var door: Array[RID]
