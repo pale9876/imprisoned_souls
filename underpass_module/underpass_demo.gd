@@ -3,7 +3,9 @@ extends EEAD2D
 class_name UnderpassModule
 
 
+@export var debug_mode: bool = true
 @export var underpass_line: Array[RoomInformation]
+@export_flags_2d_physics var mask: int = 1
 
 
 var arr: Array[A] = []
@@ -32,8 +34,9 @@ func create() -> void:
 			
 			a.body = PhysicsServer2D.body_create()
 			PhysicsServer2D.body_set_mode(a.body, PhysicsServer2D.BODY_MODE_STATIC)
-			PhysicsServer2D.body_set_state(a.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., a.pos))
-			PhysicsServer2D.body_set_space(a.body, get_world_2d())
+			PhysicsServer2D.body_set_state(a.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., global_position + a.pos))
+			PhysicsServer2D.body_set_space(a.body, get_world_2d().space)
+			PhysicsServer2D.body_set_collision_mask(a.body, mask)
 			
 			var area_rect: Rect2 = Rect2(underpass_line[i].pos, underpass_line[i].size)
 			a.rect = area_rect
@@ -43,10 +46,10 @@ func create() -> void:
 			
 			var polygon: PackedVector2Array = PackedVector2Array([
 				- a.size / 2.,
-				Vector2(- a.size.x / 2. , a.size.y / 2.),
+				Vector2(- a.size.x / 2., a.size.y / 2.),
 				a.size / 2.,
 				Vector2(a.size.x / 2., - a.size.y / 2.),
-				- a.size / 2.
+				- a.size / 2.,
 			])
 			
 			# 길이 가로면 1번째, 3번째 세그먼트를 닫아야하고,
@@ -60,17 +63,17 @@ func create() -> void:
 				PhysicsServer2D.body_add_shape(
 					a.body, segment, Transform2D(), false
 				)
-				
 				a.shape[j] = segment
 			
-			if underpass_line[i].type == HORIZONTAL:
-				PhysicsServer2D.body_set_shape_disabled(a.body, 0, true)
-				PhysicsServer2D.body_set_shape_disabled(a.body, 2, true)
-			elif underpass_line[i].type == VERTICAL:
-				PhysicsServer2D.body_set_shape_disabled(a.body, 1, true)
-				PhysicsServer2D.body_set_shape_disabled(a.body, 3, true)
+			if !underpass_line[i].closed:
+				if underpass_line[i].type == HORIZONTAL:
+					PhysicsServer2D.body_set_shape_disabled(a.body, 0, true)
+					PhysicsServer2D.body_set_shape_disabled(a.body, 2, true)
+				elif underpass_line[i].type == VERTICAL:
+					PhysicsServer2D.body_set_shape_disabled(a.body, 1, true)
+					PhysicsServer2D.body_set_shape_disabled(a.body, 3, true)
 			
-			if Engine.is_editor_hint():
+			if Engine.is_editor_hint() or debug_mode:
 				RenderingServer.canvas_item_set_transform(a.cid, Transform2D(0., a.pos))
 				
 				RenderingServer.canvas_item_add_rect(

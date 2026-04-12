@@ -9,15 +9,12 @@ visibility_layer = 3
 
 [node name="ReflectReplicator2D" type="Node2D" parent="." unique_id=367757292]
 visibility_layer = 2
-position = Vector2(24, 96)
 script = ExtResource("1_h0lqs")
-polygon = PackedVector2Array(0, 0, 0, 100, 100, 100, 100, 0)
-reflect_region = Rect2i(-38, 0, 100, 100)
-layer = 2
-cull_mask = 1
+reflect_region = Rect2i(0, -30, 640, 30)
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1486779280]
-position = Vector2(56, 96)
+visibility_layer = 3
+position = Vector2(24, 136)
 texture = ExtResource("2_hmbtr")
 
 [node name="Icon2" type="Sprite2D" parent="." unique_id=2037762214]

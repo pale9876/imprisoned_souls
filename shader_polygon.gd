@@ -3,14 +3,13 @@ extends Path2D
 class_name ShaderPolygon
 
 
-@export var inner_texture: Texture2D
 @export var shader: ShaderMaterial
 @export var texture: Texture2D
 
 
-var inner_texture_cid: RID
 var shader_cid: RID
 var texture_cid: RID
+
 var init: bool = false
 
 
@@ -36,38 +35,28 @@ func create() -> void:
 	for i: int in range(curve.point_count):
 		var point: Vector2 = curve.get_point_position(i)
 		polygon[i] = point
-
-	#inner_texture_cid = RenderingServer.canvas_item_create()
-	#RenderingServer.canvas_item_add_polygon(
-		#inner_texture_cid,
-		#polygon,
-		#[Color.WHITE],
-		#[Vector2(0., 0.), Vector2(1., 0.), Vector2(1., 1.), Vector2(0., 1.)],
-		#inner_texture.get_rid()
-	#)
-	#RenderingServer.canvas_item_set_parent(inner_texture_cid, get_canvas_item())
-
-
-	shader_cid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_add_polygon(shader_cid, polygon, [Color.WHITE], [Vector2(0., 0.), Vector2(1., 0.), Vector2(1., 1.), Vector2(0., 1.)])
-	RenderingServer.canvas_item_set_material(shader_cid, shader.get_rid())
-	RenderingServer.canvas_item_set_parent(shader_cid, get_canvas_item())
+	
+	if shader:
+		shader_cid = RenderingServer.canvas_item_create()
+		RenderingServer.canvas_item_add_polygon(
+			shader_cid, polygon, [Color.WHITE], [Vector2(0., 0.), Vector2(1., 0.), Vector2(1., 1.), Vector2(0., 1.)]
+		)
+		RenderingServer.canvas_item_set_material(shader_cid, shader.get_rid())
+		RenderingServer.canvas_item_set_parent(shader_cid, get_canvas_item())
+	
+	if texture:
+		texture_cid = RenderingServer.canvas_item_create()
+		RenderingServer.canvas_item_add_texture_rect(
+			texture_cid, Rect2(- texture.get_size() / 2., texture.get_size()), texture.get_rid()
+		)
+		RenderingServer.canvas_item_set_parent(texture_cid, get_canvas_item())
 
 	init = true
 
 
 func kill() -> void:
-	#RenderingServer.free_rid(inner_texture)
-	RenderingServer.free_rid(shader_cid)
-
-
-func create_uv() -> PackedVector2Array:
-	var result: PackedVector2Array = PackedVector2Array()
+	if texture:
+		RenderingServer.free_rid(texture_cid)
 	
-	result.resize(curve.point_count)
-	
-	for i: int in range(curve.point_count):
-		var point: Vector2 = curve.get_point_position(i)
-		result[i] = point.normalized()
-	
-	return result
+	if shader_cid.is_valid():
+		RenderingServer.free_rid(shader_cid)

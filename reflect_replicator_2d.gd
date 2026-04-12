@@ -8,7 +8,11 @@ extends EEAD2D
 class_name ReflectReplicator2D
 
 
-@export var reflect_region: Rect2i = Rect2i(Vector2(-100, 0), Vector2(100, 100))
+@export var reflect_region: Rect2i = Rect2i(Vector2(-100, 0), Vector2(100, 100)):
+	set(value):
+		reflect_region = value
+		if Engine.is_editor_hint():
+			queue_redraw()
 
 @export_flags_2d_render var cull_mask: int = 1
 
@@ -23,6 +27,13 @@ func _enter_tree() -> void:
 		create()
 
 
+
+func _process(delta: float) -> void:
+	if !Engine.is_editor_hint():
+		global_position = get_global_mouse_position()
+		draw_reflect()
+
+
 func create() -> void:
 	if Engine.is_editor_hint() and do_not_test_in_editor: return
 	
@@ -32,6 +43,8 @@ func create() -> void:
 	
 	_viewport = RenderingServer.viewport_create()
 	cid = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(cid, get_canvas_item())
+	
 
 	RenderingServer.viewport_set_size(
 		_viewport, reflect_region.size.x, reflect_region.size.y
@@ -47,26 +60,7 @@ func create() -> void:
 	RenderingServer.viewport_set_update_mode(_viewport, RenderingServer.VIEWPORT_UPDATE_WHEN_PARENT_VISIBLE)
 	RenderingServer.viewport_set_clear_mode(_viewport, RenderingServer.VIEWPORT_CLEAR_ALWAYS)
 	
-	#var _texture: RID = RenderingServer.viewport_get_texture(_viewport)
-	#RenderingServer.canvas_item_add_texture_rect(
-		#get_canvas_item(),
-		#Rect2(Vector2(), reflect_region.size),
-		#_texture, false, Color.WHITE
-	#)
-	#_vpt = _texture
-
 	init = true
-
-
-func _process(_delta: float) -> void:
-	
-	if init:
-		draw_reflect()
-	
-	if !Engine.is_editor_hint():
-		global_position = global_position.lerp(
-			global_position + Input.get_vector("left", "right", "up", "down") * _delta * 300., .322
-		)
 
 
 func kill() -> void:
@@ -82,24 +76,35 @@ func _exit_tree() -> void:
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
-		pass
-	
-	draw_circle(Vector2(), 4., Color.RED, true)
+		draw_rect(
+			Rect2((Vector2(reflect_region.position) - (Vector2(reflect_region.size) / 2.)), reflect_region.size),
+			Color(1.0, 0.969, 0.69, 0.498)
+		)
 
 
 func draw_reflect() -> void:
-	#RenderingServer.canvas_item_clear(get_canvas_item())
+	RenderingServer.canvas_item_clear(cid)
 	
-	#RenderingServer.viewport_set_canvas_transform(
-		#_viewport,
-		#get_canvas(),
-		#Transform2D(0., global_position)
-	#)
+	#RenderingServer.viewport_set_global_canvas_transform(
+		#_viewport, Transform2D(
+			#0., global_position).affine_inverse()
+		#)
 
+	RenderingServer.canvas_item_set_transform(cid, Transform2D(0., Vector2(reflect_region.position) - Vector2(reflect_region.size / 2.)))
 	#RenderingServer.viewport_set_canvas_transform(
 		#_viewport, get_world_2d().canvas,
 		#Transform2D(
 			#0., - (global_position + Vector2(reflect_region.position))
 		#)
 	#)
+	
+	var _texture: RID = RenderingServer.viewport_get_texture(_viewport)
+	
+	RenderingServer.canvas_item_add_texture_rect(
+		cid,
+		Rect2(Vector2(), reflect_region.size),
+		_texture, false, Color.WHITE
+	)
+	
+	_vpt = _texture
 	pass
