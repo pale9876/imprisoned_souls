@@ -14,7 +14,7 @@ const GROUNDED: int = Mode.GROUNDED
 const FLOAT: int = Mode.FLOAT
 
 
-signal player_damaged(value: float)
+signal health_changed(value: float)
 
 
 @export_category("Settings")
@@ -57,6 +57,7 @@ var cid: RID
 
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
+		unit_information.hp = unit_information.max_hp
 		create()
 
 
@@ -137,7 +138,6 @@ func create() -> void:
 	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
 	PhysicsServer2D.body_set_collision_mask(_body, mask)
 	PhysicsServer2D.body_set_collision_layer(_body, layer)
-
 
 	if !unit_information.collider.is_empty():
 		for collider_name: String in unit_information.collider:

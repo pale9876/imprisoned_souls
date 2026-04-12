@@ -39,6 +39,10 @@ var target: Node2D
 @export_tool_button("Create", "2D") var _create: Callable = create
 
 
+func _enter_tree() -> void:
+	pass
+
+
 func create() -> void:
 	if !instance or amount == 0: return
 	
@@ -75,6 +79,7 @@ func spawn_instance() -> I:
 	PhysicsServer2D.body_set_collision_mask(inst.body, mask)
 	PhysicsServer2D.body_set_space(inst.body, get_world_2d().space)
 	PhysicsServer2D.body_set_state(inst.body, PhysicsServer2D.BODY_STATE_TRANSFORM, inst.get_transform())
+	PhysicsServer2D.body_attach_object_instance_id(inst.body, inst.get_instance_id())
 	
 	inst.shape = PhysicsServer2D.rectangle_shape_create()
 	PhysicsServer2D.shape_set_data(inst.shape, instance.size / 2.)
@@ -82,11 +87,9 @@ func spawn_instance() -> I:
 		inst.body, inst.shape, Transform2D(), false
 	)
 	
-	inst.hitbox = PhysicsServer2D.area_create()
-	PhysicsServer2D.area_set_space(inst.hitbox, get_world_2d().space)
-	
 	inst.hurtbox = PhysicsServer2D.area_create()
 	PhysicsServer2D.area_set_space(inst.hurtbox, get_world_2d().space)
+	PhysicsServer2D.area_set_transform(inst.hurtbox, Transform2D())
 
 	#inst.agent = NavigationServer2D.agent_create()
 
@@ -102,7 +105,8 @@ func create_hitbox(duration: float) -> void:
 
 
 func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
-	pass
+	if status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
+		pass
 
 
 func damaged(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
@@ -130,7 +134,8 @@ func kill() -> void:
 			for inst in arr:
 				PhysicsServer2D.free_rid(inst.body)
 				PhysicsServer2D.free_rid(inst.shape)
-				NavigationServer2D.free_rid(inst.agent)
+				PhysicsServer2D.free_rid(inst.hurtbox)
+				#NavigationServer2D.free_rid(inst.agent)
 
 		arr = []
 
@@ -181,12 +186,17 @@ class I extends RefCounted:
 		ATTACK = 2,
 	}
 	
+	const POS_CHANGED: int = 11110
+	
 	var cid: RID
 	var body: RID
 	var shape: RID
 	var agent: RID
 	var hurtbox: RID
-	var position: Vector2
+	var position: Vector2:
+		set(value):
+			position = value
+			notification(POS_CHANGED)
 	var size: Vector2
 	var layer: int = 1
 	var mask: int = 1
@@ -194,14 +204,19 @@ class I extends RefCounted:
 	var state: int = State.WAIT
 	var bt: BehaviorTree
 
-
 	func get_transform() -> Transform2D: return Transform2D(0., position)
+
+	func _notification(what: int) -> void:
+		if what == POS_CHANGED:
+			if hurtbox:
+				PhysicsServer2D.area_set_transform(hurtbox, Transform2D(0., position))
+			
 
 
 class Hitbox extends RefCounted:
+	var owner: I
 	var rid: RID
 	var pos: Vector2
 	var shape: Shape2D
-	
 	
 	pass

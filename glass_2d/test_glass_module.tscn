@@ -7,11 +7,6 @@
 [node name="test_glass_module" type="Node2D" unique_id=982921829]
 visibility_layer = 3
 
-[node name="ReflectReplicator2D" type="Node2D" parent="." unique_id=367757292]
-visibility_layer = 2
-script = ExtResource("1_h0lqs")
-reflect_region = Rect2i(0, -30, 640, 30)
-
 [node name="Icon" type="Sprite2D" parent="." unique_id=1486779280]
 visibility_layer = 3
 position = Vector2(24, 136)
@@ -23,3 +18,9 @@ texture = ExtResource("2_yblwx")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1227556385]
 position = Vector2(116, 158)
+
+[node name="ReflectReplicator2D" type="Node2D" parent="Camera2D" unique_id=367757292]
+visibility_layer = 2
+position = Vector2(-116, -158)
+script = ExtResource("1_h0lqs")
+reflect_region = Rect2i(0, -100, 100, 100)

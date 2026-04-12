@@ -5,7 +5,10 @@ class_name UnitInformation
 
 @export var name: String = ""
 @export var icon: Texture2D
-@export var hp: int = 300
+@export_range(0, 10000, 1) var max_hp: int = 300
+var hp: int = 0:
+	set(value):
+		hp = clampi(value, 0, max_hp)
 @export var atk: int = 3
 @export var def: int = 3
 @export var speed: float = 200.

@@ -23,6 +23,7 @@ func _ready() -> void:
 	player.transform = Transform2D(0., Vector2(640., 360.) / 2.)
 	character_icon.texture = player.unit_information.icon
 	
+	player.health_changed.connect(_on_player_health_changed)
 	start_btn.pressed.connect(start)
 
 
@@ -42,3 +43,8 @@ func start() -> void:
 
 func end() -> void:
 	ingame_canvas.process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func _on_player_health_changed(value: float) -> void:
+	var progress: float = float(player.unit_information.hp) / float(player.unit_information.max_hp)
+	hp_progress.change_value(progress)

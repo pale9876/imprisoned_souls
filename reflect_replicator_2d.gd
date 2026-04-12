@@ -60,8 +60,14 @@ func create() -> void:
 	RenderingServer.viewport_set_update_mode(_viewport, RenderingServer.VIEWPORT_UPDATE_WHEN_PARENT_VISIBLE)
 	RenderingServer.viewport_set_clear_mode(_viewport, RenderingServer.VIEWPORT_CLEAR_ALWAYS)
 	
+	_vpt = RenderingServer.viewport_get_texture(_viewport)
+	RenderingServer.canvas_item_add_texture_rect(
+		cid,
+		Rect2(Vector2(reflect_region.position), reflect_region.size),
+		_vpt, false, Color.WHITE
+	)
+	
 	init = true
-
 
 func kill() -> void:
 	RenderingServer.free_rid(_viewport)
@@ -83,28 +89,10 @@ func _draw() -> void:
 
 
 func draw_reflect() -> void:
-	RenderingServer.canvas_item_clear(cid)
-	
-	#RenderingServer.viewport_set_global_canvas_transform(
-		#_viewport, Transform2D(
-			#0., global_position).affine_inverse()
-		#)
-
-	RenderingServer.canvas_item_set_transform(cid, Transform2D(0., Vector2(reflect_region.position) - Vector2(reflect_region.size / 2.)))
-	#RenderingServer.viewport_set_canvas_transform(
-		#_viewport, get_world_2d().canvas,
-		#Transform2D(
-			#0., - (global_position + Vector2(reflect_region.position))
-		#)
-	#)
+	RenderingServer.viewport_set_global_canvas_transform(
+		_viewport, Transform2D(0., global_position).affine_inverse()
+	)
 	
 	var _texture: RID = RenderingServer.viewport_get_texture(_viewport)
 	
-	RenderingServer.canvas_item_add_texture_rect(
-		cid,
-		Rect2(Vector2(), reflect_region.size),
-		_texture, false, Color.WHITE
-	)
-	
-	_vpt = _texture
-	pass
+	RenderingServer.texture_replace(_vpt, _texture)
