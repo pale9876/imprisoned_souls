@@ -310,9 +310,9 @@ script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
 amount = 360
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
+mask = 2
 spawn_path = Vector2(640, 360)
 behavior_tree = SubResource("BehaviorTree_x6fug")
-body_color = null
 target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 

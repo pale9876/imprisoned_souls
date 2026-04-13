@@ -257,6 +257,8 @@ class I extends RefCounted:
 	func move(motion: Vector2 = Vector2()) -> void:
 		position += motion
 		
+		#PhysicsServer2D.body_set_state(body,PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D(0., position))
+		
 		PhysicsServer2D.area_set_transform(awareness.rid, Transform2D(0., position))
 		PhysicsServer2D.area_set_transform(hurtbox.rid, Transform2D(0., position))
 
