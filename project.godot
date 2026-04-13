@@ -39,6 +39,7 @@ Author: Pale9876 (Github, Korean)
 run/main_scene="uid://2cbinw3drmxd"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 run/max_fps=144
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]

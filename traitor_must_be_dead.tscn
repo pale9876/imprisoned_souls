@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
+[ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://animated_parts_module/skill.gd" id="10_pm4g0"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hit_hurt_event_module/hurtbox_collide_info.gd" id="11_ym5dx"]
@@ -55,6 +56,10 @@ mesh = SubResource("QuadMesh_waig6")
 
 [sub_resource type="Resource" id="Resource_6hyso"]
 script = ExtResource("12_6djh5")
+health = 100
+atk = 3
+def = 3
+speed = 100.0
 metadata/_custom_type_script = "uid://cfjndtohxvpbf"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8g455"]
@@ -62,26 +67,33 @@ metadata/_custom_type_script = "uid://cfjndtohxvpbf"
 [sub_resource type="Resource" id="Resource_6djh5"]
 script = ExtResource("10_8g455")
 shader = SubResource("ShaderMaterial_nak2q")
+size = Vector2(15, 15)
 texture = SubResource("AtlasTexture_8g455")
 stat = SubResource("Resource_6hyso")
 metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6djh5"]
 
-[sub_resource type="BTSequence" id="BTSequence_03xc4"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_k2ry2"]
 
-[sub_resource type="BTSequence" id="BTSequence_g3sys"]
+[sub_resource type="BTSequence" id="BTSequence_pm4g0"]
 
-[sub_resource type="BTSelector" id="BTSelector_4yxht"]
-children = [SubResource("BTSequence_03xc4"), SubResource("BTSequence_g3sys")]
+[sub_resource type="BTSelector" id="BTSelector_y0qeb"]
+children = [SubResource("BTSequence_pm4g0")]
 
-[sub_resource type="BehaviorTree" id="BehaviorTree_1ukh0"]
-root_task = SubResource("BTSelector_4yxht")
+[sub_resource type="BehaviorTree" id="BehaviorTree_x6fug"]
+blackboard_plan = SubResource("BlackboardPlan_k2ry2")
+root_task = SubResource("BTSelector_y0qeb")
 
 [sub_resource type="Resource" id="Resource_ym5dx"]
 script = ExtResource("9_6hyso")
-max_hp = null
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
+
+[sub_resource type="Resource" id="Resource_y0qeb"]
+script = ExtResource("10_pm4g0")
+name = "Lazor"
+size = 3.0
+metadata/_custom_type_script = "uid://cnfkyf0kpxdkb"
 
 [sub_resource type="Resource" id="Resource_k7ju8"]
 script = ExtResource("11_ym5dx")
@@ -280,14 +292,12 @@ ingame_canvas = NodePath("Ingame")
 camera = NodePath("Ingame/MultiCamera")
 
 [node name="Ingame" type="CanvasLayer" parent="." unique_id=983916863]
-visible = false
 follow_viewport_enabled = true
 
 [node name="UnderpassModule" type="Node2D" parent="Ingame" unique_id=1082153666]
 position = Vector2(296, 168)
 script = ExtResource("1_xj7cu")
 underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_waig6")])
-mask = null
 metadata/_custom_type_script = "uid://dc7volit4rbgy"
 
 [node name="MultiBloodParticle" type="Node2D" parent="Ingame" unique_id=387503954]
@@ -295,27 +305,29 @@ script = ExtResource("11_waig6")
 texture = SubResource("GradientTexture2D_ym5dx")
 multimesh = SubResource("MultiMesh_waig6")
 
-[node name="Legion" type="Node2D" parent="Ingame" unique_id=1659406924]
+[node name="Legion" type="Node2D" parent="Ingame" unique_id=1659406924 node_paths=PackedStringArray("target")]
 script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
+amount = 360
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
-mask = 1
 spawn_path = Vector2(640, 360)
-behavior_tree = SubResource("BehaviorTree_1ukh0")
+behavior_tree = SubResource("BehaviorTree_x6fug")
+body_color = null
+target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
-[node name="Player" type="Node2D" parent="Ingame" unique_id=870520262 node_paths=PackedStringArray("animation_player")]
+[node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
 position = Vector2(258, 174)
 script = ExtResource("13_k7ju8")
 unit_information = SubResource("Resource_ym5dx")
+skills = Dictionary[String, ExtResource("10_pm4g0")]({
+"Lazor": SubResource("Resource_y0qeb")
+})
 hurtbox_information = SubResource("Resource_k7ju8")
 body_parts = Array[ExtResource("11_xj7cu")]([SubResource("Resource_mtpqi")])
 texture = Dictionary[String, AtlasTexture]({
 "idle_down": SubResource("AtlasTexture_ym5dx")
 })
-animation_player = NodePath("AnimationPlayer")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Ingame/Player" unique_id=1175660377]
 
 [node name="MultiCamera" type="Node2D" parent="Ingame" unique_id=1836037614]
 script = ExtResource("13_xj7cu")

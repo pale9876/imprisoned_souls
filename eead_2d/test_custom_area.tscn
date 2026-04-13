@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cnk305oahpjwn"]
+
+[ext_resource type="Script" uid="uid://cuh5fjaidngc2" path="res://test_area.gd" id="1_w7x4v"]
+[ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="2_8cexa"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="3_72ji1"]
+[ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="4_72ji1"]
+[ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="5_ym7sq"]
+[ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="6_08e51"]
+[ext_resource type="Script" uid="uid://cotxam656beso" path="res://hit_hurt_event_module/hurtbox_collide_info.gd" id="7_hfj3c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wc6bm"]
+
+[sub_resource type="Resource" id="Resource_wc6bm"]
+script = ExtResource("4_72ji1")
+metadata/_custom_type_script = "uid://cfjndtohxvpbf"
+
+[sub_resource type="Resource" id="Resource_rrhc2"]
+script = ExtResource("3_72ji1")
+shader = SubResource("ShaderMaterial_wc6bm")
+size = Vector2(10, 10)
+stat = SubResource("Resource_wc6bm")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ym7sq"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_08e51"]
+
+[sub_resource type="Resource" id="Resource_0r8ml"]
+script = ExtResource("6_08e51")
+
+[sub_resource type="Resource" id="Resource_qnhab"]
+script = ExtResource("7_hfj3c")
+
+[node name="Node2D" type="Node2D" unique_id=1805277720 node_paths=PackedStringArray("target")]
+script = ExtResource("1_w7x4v")
+target = NodePath("Node2D")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1139257530]
+position = Vector2(252, 188)
+
+[node name="Legion" type="Node2D" parent="." unique_id=1594329629]
+script = ExtResource("2_8cexa")
+instance = SubResource("Resource_rrhc2")
+amount = 1
+navigation_polygon = SubResource("NavigationPolygon_ym7sq")
+behavior_tree = SubResource("BehaviorTree_08e51")
+metadata/_custom_type_script = "uid://dfku5xh0yuklb"
+
+[node name="Player" type="Node2D" parent="." unique_id=1817477040]
+script = ExtResource("5_ym7sq")
+unit_information = SubResource("Resource_0r8ml")
+hurtbox_information = SubResource("Resource_qnhab")
+metadata/_custom_type_script = "uid://d12ai6r2s7nql"

@@ -39,6 +39,8 @@ func start() -> void:
 	)
 	
 	camera.current = "Player"
+	
+	legion.create()
 
 
 func end() -> void:

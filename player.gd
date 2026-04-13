@@ -28,10 +28,10 @@ signal health_changed(value: float)
 @export var hurtbox_information: HurtboxInformation = HurtboxInformation.new()
 @export var body_parts: Array[AnimatedPart]
 
+
 @export_category("Canvas")
 @export var texture: Dictionary[String, AtlasTexture]
 @export var frame_coord: Vector2i = Vector2i()
-@export var animation_player: AnimationPlayer
 
 
 @export_category("Collision")
@@ -53,13 +53,12 @@ var s_arr: Array[S]
 
 
 var cid: RID
-
+var debug_cid: RID
 
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
 		unit_information.hp = unit_information.max_hp
 		create()
-
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
@@ -68,7 +67,11 @@ func _physics_process(delta: float) -> void:
 	velocity = velocity.move_toward(input * unit_information.speed, unit_information.acceleration * delta)
 	
 	move(velocity, delta)
-
+	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
+	
+	if !s_arr.is_empty():
+		for s: S in s_arr:
+			PhysicsServer2D.area_set_transform(s.awareness_area.rid, get_global_transform())
 
 func move(motion: Vector2, delta: float) -> void:
 	var motion_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
@@ -112,11 +115,10 @@ func move(motion: Vector2, delta: float) -> void:
 					global_position += remainder * (remainder_motion_result.get_collision_safe_fraction())
 				else:
 					global_position += remainder
-				
-			print("collide")
 		else:
 			global_position += motion * delta
 			_onwall = false
+
 
 func _exit_tree() -> void:
 	if init:
@@ -127,23 +129,28 @@ func create() -> void:
 	if init:
 		kill()
 	
+	debug_cid = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(debug_cid, get_canvas_item())
+	RenderingServer.canvas_item_add_circle(debug_cid, Vector2(), 10., Color.YELLOW)
+	
 	cid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_transform(cid, Transform2D())
 	RenderingServer.canvas_item_set_parent(cid, get_canvas_item())
+	RenderingServer.canvas_item_set_transform(cid, Transform2D())
 	
 	_body = PhysicsServer2D.body_create()
 	PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_KINEMATIC)
-	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 	PhysicsServer2D.body_set_space(_body, get_world_2d().space)
 	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
 	PhysicsServer2D.body_set_collision_mask(_body, mask)
 	PhysicsServer2D.body_set_collision_layer(_body, layer)
+	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 
 	if !unit_information.collider.is_empty():
 		for collider_name: String in unit_information.collider:
 			_shape[collider_name] = PhysicsServer2D.rectangle_shape_create()
 			PhysicsServer2D.shape_set_data(_shape[collider_name], unit_information.collider[collider_name] / 2.)
-			PhysicsServer2D.body_add_shape(_body, _shape[collider_name], Transform2D(0., Vector2()), false)
+			PhysicsServer2D.body_add_shape(_body, _shape[collider_name])
+			
 			RenderingServer.canvas_item_add_rect(
 				cid, Rect2(- unit_information.collider[collider_name] / 2., unit_information.collider[collider_name]),
 				Color.WHITE
@@ -157,31 +164,42 @@ func create() -> void:
 		PhysicsServer2D.area_set_area_monitor_callback(_hurtbox.rid, damaged)
 		PhysicsServer2D.area_set_transform(_hurtbox.rid, Transform2D())
 		PhysicsServer2D.area_set_monitorable(_hurtbox.rid, true)
+		PhysicsServer2D.area_set_collision_mask(_hurtbox.rid, 0)
+		PhysicsServer2D.area_set_collision_layer(_hurtbox.rid, 0)
 		PhysicsServer2D.area_attach_object_instance_id(_hurtbox.rid, get_instance_id())
 		
 		_hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
-		PhysicsServer2D.area_add_shape(_hurtbox.rid, _hurtbox.shape, Transform2D(), false)
+		PhysicsServer2D.area_add_shape(_hurtbox.rid, _hurtbox.shape)
 		PhysicsServer2D.shape_set_data(_hurtbox.shape, _hurtbox.size / 2.)
 		
 		if !skills.is_empty():
 			for skill_name: String in skills:
 				var info: SkillInformation = skills[skill_name]
+				var s: S = S.new()
 				
 				var awareness_area: AwarenessArea = AwarenessArea.new()
 				awareness_area.rid = PhysicsServer2D.area_create()
+				PhysicsServer2D.area_set_space(awareness_area.rid, get_world_2d().space)
+				PhysicsServer2D.area_attach_object_instance_id(awareness_area.rid, awareness_area.get_instance_id())
+				PhysicsServer2D.area_set_monitorable(awareness_area.rid, false)
+				
 				awareness_area.shape = PhysicsServer2D.circle_shape_create()
-				PhysicsServer2D.shape_set_data(awareness_area.shape, info.range)
-				PhysicsServer2D.area_set_monitor_callback(awareness_area.rid, unit_entered_awareness_area)
+				PhysicsServer2D.shape_set_data(awareness_area.shape, info.skill_range)
+				PhysicsServer2D.area_add_shape(awareness_area.rid, awareness_area.shape)
+				PhysicsServer2D.area_set_monitor_callback(awareness_area.rid, unit_entered_awareness_area.bind(awareness_area))
+				PhysicsServer2D.area_set_transform(awareness_area.rid, get_global_transform())
 				
-				var hitbox: Hitbox = Hitbox.new()
-				hitbox.rid = PhysicsServer2D.area_create()
-				hitbox.shape = PhysicsServer2D.rectangle_shape_create()
-				
-				var s: S = S.new()
 				s.awareness_area = awareness_area
-				
 
 	init = true
+
+
+func use_skill() -> void:
+	pass
+
+
+func create_hitbox() -> void:
+	pass
 
 
 func kill() -> void:
@@ -194,6 +212,9 @@ func kill() -> void:
 	if _hurtbox:
 		free_hurtbox()
 
+	if !s_arr.is_empty():
+		free_skill()
+
 
 func free_hurtbox() -> void:
 	PhysicsServer2D.free_rid(_hurtbox.rid)
@@ -202,13 +223,24 @@ func free_hurtbox() -> void:
 	_hurtbox = null
 
 
-func unit_entered_awareness_area(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
+func free_skill() -> void:
+	for s: S in s_arr:
+		PhysicsServer2D.free_rid(s.awareness_area)
+
+
+func unit_entered_awareness_area(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, awareness_area: AwarenessArea) -> void:
 	if instance_id == get_instance_id(): return
 	
 	if status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
-		pass
+		var obj: Object = instance_from_id(instance_id)
+		if obj is Legion.I:
+			awareness_area.entered.push_back(instance_id)
+			print("hello")
+
 	elif status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_REMOVED:
-		pass
+		if awareness_area.entered.has(instance_id):
+			awareness_area.entered.erase(instance_id)
+		
 
 
 func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
@@ -257,14 +289,10 @@ class Hitbox extends RefCounted:
 	var look_target: bool = false
 
 
-# ShapeCast
-class HitRay extends Hitbox:
-	var penetrate_count: int = 1
-
-
 class S extends RefCounted:
+	var ray_type: int = SkillInformation.RAYTYPE_CAST
+	var attack_type: int = SkillInformation.ATK_EXPLOSION
 	var awareness_area: AwarenessArea
-	var hitbox: Hitbox
 	var cooldown: float:
 		set(value):
 			cooldown = maxf(value, 0.)

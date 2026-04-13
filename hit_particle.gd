@@ -27,6 +27,9 @@ class_name HitParticle
 	set(value):
 		angle_range = value
 
+@export_category("Center Explosion")
+@export var center_scale: Vector2 = Vector2.ONE
+@export var center_rotation: float = 30.
 
 var center: C
 var spark: Array[S]
@@ -43,16 +46,17 @@ func emit() -> void:
 		kill()
 	
 	# Explode
-	center = C.new()
-	center.rid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(center.rid, get_canvas_item())
-	RenderingServer.canvas_item_set_transform(
-		center.rid, Transform2D(0., Vector2(), 0., Vector2())
-	)
-	RenderingServer.canvas_item_add_texture_rect(
-		center.rid, Rect2(- explode_texture.get_size() / 2., explode_texture.get_size()), explode_texture
-	)
-	RenderingServer.canvas_item_set_parent(center.rid, get_canvas_item())
+	if explode_texture:
+		center = C.new()
+		center.rid = RenderingServer.canvas_item_create()
+		RenderingServer.canvas_item_set_parent(center.rid, get_canvas_item())
+		RenderingServer.canvas_item_set_transform(
+			center.rid, Transform2D(0., Vector2(), 0., Vector2())
+		)
+		RenderingServer.canvas_item_add_texture_rect(
+			center.rid, Rect2(- explode_texture.get_size() / 2., explode_texture.get_size()), explode_texture
+		)
+		RenderingServer.canvas_item_set_parent(center.rid, get_canvas_item())
 	
 	# Spark
 	spark.resize(amount)
@@ -83,11 +87,13 @@ func emit() -> void:
 
 
 func kill() -> void:
+	if explode_texture:
+		RenderingServer.free_rid(center.rid)
+	
 	if !spark.is_empty():
 		for s: S in spark:
 			RenderingServer.free_rid(s.rid)
 	
-	RenderingServer.free_rid(center.rid)
 
 	spark = []
 	center = null
@@ -101,11 +107,11 @@ func _process(delta: float) -> void:
 	
 	var result: bool = false
 	
-	if center:
+	if explode_texture:
 		center.progress = clampf(center.progress + delta, 0., life_time)
 		RenderingServer.canvas_item_set_transform(
 			center.rid, Transform2D(
-				0., Vector2.ONE * explosion_curve.sample_baked(center.progress / life_time), 0., Vector2()
+				center_rotation, center_scale * explosion_curve.sample_baked(center.progress / life_time), 0., Vector2()
 			)
 		)
 		

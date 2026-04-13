@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://daskjqxrhamyg"]
+
+[ext_resource type="Script" uid="uid://bdentogchilj7" path="res://hit_particle.gd" id="1_ql140"]
+
+[sub_resource type="Curve" id="Curve_woyg8"]
+_data = [Vector2(0, 0), 0.0, 3.0257978, 0, 0, Vector2(1, 1), 4.9715703e-07, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_7hwce"]
+_data = [Vector2(0, 0), 0.0, 10.980719, 0, 0, Vector2(0.20163488, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.4165993, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_etygl"]
+offsets = PackedFloat32Array(0.35135135, 1)
+colors = PackedColorArray(0, 1, 0.6431373, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_woyg8"]
+gradient = SubResource("Gradient_etygl")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.4957265, 0.5)
+
+[node name="Demo" type="Node2D" unique_id=1237395326]
+
+[node name="HitParticle" type="Node2D" parent="." unique_id=1676712176]
+script = ExtResource("1_ql140")
+amount = 15
+life_time = 0.25
+particle_life_time = 0.3
+explosion_curve = SubResource("Curve_woyg8")
+effect_curve = SubResource("Curve_7hwce")
+texture = SubResource("GradientTexture2D_woyg8")
+angle_range = 360.0
+center_scale = Vector2(0.75, 0.25)
+center_rotation = 15.0
+metadata/_custom_type_script = "uid://bdentogchilj7"
