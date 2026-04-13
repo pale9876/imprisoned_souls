@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="HurtboxCollideInfo" format=3 uid="uid://ci5jkrfolu43c"]
-
-[ext_resource type="Script" uid="uid://cotxam656beso" path="res://hit_hurt_event_module/hurtbox_collide_info.gd" id="1_4j4wi"]
-
-[resource]
-script = ExtResource("1_4j4wi")
-metadata/_custom_type_script = "uid://cotxam656beso"

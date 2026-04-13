@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://animated_parts_module/skill.gd" id="10_pm4g0"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
-[ext_resource type="Script" uid="uid://cotxam656beso" path="res://hit_hurt_event_module/hurtbox_collide_info.gd" id="11_ym5dx"]
+[ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="11_ym5dx"]
 [ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="12_6djh5"]
 [ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="12_g3sys"]
 [ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://server_test/Cam.gd" id="12_ym5dx"]

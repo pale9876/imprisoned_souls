@@ -1,6 +1,6 @@
 @tool
 extends Resource
-class_name CollideInfo
+class_name CollideInformation
 
 
 @export var name: StringName = &""

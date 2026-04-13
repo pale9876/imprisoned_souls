@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bhfn1mwn6pof0"]
 
 [ext_resource type="Script" uid="uid://cu3fn7jpphedi" path="res://ui/title.gd" id="1_8lx1x"]
-[ext_resource type="Script" uid="uid://c3vmpde58py3t" path="res://tween_label.gd" id="1_y7k74"]
-[ext_resource type="Curve" uid="uid://buishkhyck2fd" path="res://tween_animated_label/fade_in_curve.tres" id="2_kpexm"]
-[ext_resource type="Curve" uid="uid://gf87g3ubwpn6" path="res://tween_animated_label/fade_out_curve.tres" id="3_3xoar"]
+[ext_resource type="Script" uid="uid://c3vmpde58py3t" path="res://tween_label/tween_label.gd" id="1_y7k74"]
+[ext_resource type="Curve" uid="uid://buishkhyck2fd" path="res://tween_label/fade_in_curve.tres" id="2_kpexm"]
+[ext_resource type="Curve" uid="uid://gf87g3ubwpn6" path="res://tween_label/fade_out_curve.tres" id="3_3xoar"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_06r0y"]
 

@@ -1,5 +1,5 @@
 @tool
-extends CollideInfo
+extends CollideInformation
 class_name HitboxInformation
 
 enum Type {
