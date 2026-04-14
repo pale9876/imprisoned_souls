@@ -28,3 +28,4 @@ const ATK_IMMID: int = ATKType.IMMID
 @export var cooldown: float = 1.
 @export var size: float
 @export var position: Vector2
+@export var hitbox_information: HitboxInformation

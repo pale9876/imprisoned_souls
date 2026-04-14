@@ -3,15 +3,16 @@
 [ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass_demo.gd" id="1_xj7cu"]
 [ext_resource type="Script" uid="uid://dt0b8s8e5kooo" path="res://traitor_must_be_dead.gd" id="1_ym5dx"]
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
+[ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="6_y0qeb"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose.gd" id="9_x6fug"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
 [ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://animated_parts_module/skill.gd" id="10_pm4g0"]
+[ext_resource type="Script" uid="uid://drl2kykjmd5mp" path="res://awareness_information/awareness_information.gd" id="10_x6fug"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="11_ym5dx"]
-[ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="12_6djh5"]
 [ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="12_g3sys"]
 [ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://server_test/Cam.gd" id="12_ym5dx"]
 [ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="13_k7ju8"]
@@ -58,15 +59,13 @@ mesh = SubResource("QuadMesh_waig6")
 [sub_resource type="BehaviorTree" id="BehaviorTree_ab2tb"]
 blackboard_plan = SubResource("BlackboardPlan_y0qeb")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nak2q"]
+[sub_resource type="Resource" id="Resource_x6fug"]
+script = ExtResource("6_y0qeb")
+range = 5.0
+type = 1
+metadata/_custom_type_script = "uid://di7bi4ybepb0a"
 
-[sub_resource type="Resource" id="Resource_6hyso"]
-script = ExtResource("12_6djh5")
-health = 100
-atk = 3
-def = 3
-speed = 100.0
-metadata/_custom_type_script = "uid://cfjndtohxvpbf"
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nak2q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8g455"]
 
@@ -78,11 +77,11 @@ metadata/_custom_type_script = "uid://cukf7tedk28ls"
 [sub_resource type="Resource" id="Resource_6djh5"]
 script = ExtResource("10_8g455")
 shader = SubResource("ShaderMaterial_nak2q")
-size = Vector2(15, 15)
+size = Vector2(16, 16)
 texture = SubResource("AtlasTexture_8g455")
+hitbox_information = SubResource("Resource_x6fug")
 behavior_tree = SubResource("BehaviorTree_ab2tb")
 unit_information = SubResource("Resource_ab2tb")
-stat = SubResource("Resource_6hyso")
 metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6djh5"]
@@ -98,10 +97,14 @@ children = [SubResource("BTSequence_pm4g0")]
 blackboard_plan = SubResource("BlackboardPlan_k2ry2")
 root_task = SubResource("BTSelector_y0qeb")
 
+[sub_resource type="Resource" id="Resource_hmxpe"]
+script = ExtResource("10_x6fug")
+position = null
+metadata/_custom_type_script = "uid://drl2kykjmd5mp"
+
 [sub_resource type="Resource" id="Resource_ym5dx"]
 script = ExtResource("9_6hyso")
 init_hp = 300
-pose = null
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
 
 [sub_resource type="Resource" id="Resource_y0qeb"]
@@ -330,6 +333,7 @@ amount = 1
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
 spawn_path = Vector2(640, 360)
 behavior_tree = SubResource("BehaviorTree_x6fug")
+awareness_information = SubResource("Resource_hmxpe")
 target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 

@@ -17,5 +17,3 @@ class_name LegionInstance
 @export var animation: Dictionary[String, Array] = {
 	
 }
-
-@export var stat: UnitStat

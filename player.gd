@@ -50,7 +50,7 @@ var _onfloor: bool = false
 var _onceil: bool = false
 
 var _hurtbox: Hurtbox
-var s_arr: Array[S]
+var skill_arr: Array[Skill]
 
 var cid: RID
 var debug_cid: RID
@@ -63,6 +63,25 @@ var last_direciton: Vector2 = Vector2()
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
 		create()
+
+
+func use_skill(skill: Skill) -> SkillResult:
+	var result: SkillResult = SkillResult.new()
+	var target: Legion.Instance = instance_from_id(skill.awareness_area.entered.pick_random()) as Legion.Instance
+	var target_position: Vector2 = target.position
+	var param: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(
+		global_position, target_position, mask, [body.rid]
+	)
+	
+	var ray_result: Dictionary = get_world_2d().direct_space_state.intersect_ray(param)
+	
+	if !ray_result.is_empty():
+		if result["collider"] == target:
+			result.hit = true
+		
+		
+	
+	return result
 
 
 func _physics_process(delta: float) -> void:
@@ -86,9 +105,15 @@ func _physics_process(delta: float) -> void:
 	
 	PhysicsServer2D.body_set_state(body.rid, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 	
-	if !s_arr.is_empty():
-		for s: S in s_arr:
-			PhysicsServer2D.area_set_transform(s.awareness_area.rid, get_global_transform())
+	if !skill_arr.is_empty():
+		for skill: Skill in skill_arr:
+			if !skill.enable():
+				skill.cooldown -= delta
+			else:
+				if skill.awareness_area.is_enemy():
+					var result: SkillResult = use_skill(skill)
+			
+			PhysicsServer2D.area_set_transform(skill.awareness_area.rid, get_global_transform())
 
 
 func dashing(motion: Vector2, delta: float) -> void:
@@ -239,7 +264,7 @@ func create() -> void:
 		if !skills.is_empty():
 			for skill_name: String in skills:
 				var info: SkillInformation = skills[skill_name]
-				var s: S = S.new()
+				var s: Skill = Skill.new()
 				
 				var awareness_area: AwarenessArea = AwarenessArea.new()
 				awareness_area.rid = PhysicsServer2D.area_create()
@@ -284,7 +309,7 @@ func kill() -> void:
 	if _hurtbox:
 		free_hurtbox()
 
-	if !s_arr.is_empty():
+	if !skill_arr.is_empty():
 		free_skill()
 
 
@@ -296,7 +321,7 @@ func free_hurtbox() -> void:
 
 
 func free_skill() -> void:
-	for s: S in s_arr:
+	for s: Skill in skill_arr:
 		PhysicsServer2D.free_rid(s.awareness_area)
 
 
@@ -358,9 +383,10 @@ class Hurtbox extends RefCounted:
 
 
 class Hitbox extends RefCounted:
+	var cid: RID
 	var rid: RID
 	var shape: RID
-	var pos: Vector2
+	var range: float
 	var size: Vector2
 	var duration: float:
 		set(value):
@@ -369,20 +395,18 @@ class Hitbox extends RefCounted:
 	var look_target: bool = false
 
 
-class S extends RefCounted:
+class Skill extends RefCounted:
 	var ray_type: int = SkillInformation.RAYTYPE_CAST
 	var attack_type: int = SkillInformation.ATK_EXPLOSION
 	var awareness_area: AwarenessArea
 	var cooltime: float
-	var _cooldown: float:
+	var cooldown: float:
 		set(value):
-			_cooldown = maxf(value, 0.)
+			cooldown = maxf(value, 0.)
+	var hitbox: Hitbox
 
 	func enable() -> bool:
-		return _cooldown == 0.
-
-	func use() -> void:
-		_cooldown = cooltime
+		return cooldown == 0.
 
 
 class AwarenessArea extends RefCounted:
@@ -419,3 +443,9 @@ class Dash extends RefCounted:
 		_cooldown = cooltime
 		self.duration = duration
 		active = true
+
+
+class SkillResult:
+	var target: int
+	var point: Vector2
+	var hit: bool = false
