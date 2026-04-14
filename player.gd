@@ -20,7 +20,7 @@ signal health_changed(value: float)
 @export_category("Settings")
 @export var mode: Mode = GROUNDED
 @export var collider: String = "idle"
-
+@export var init_pose: String = "idle"
 
 @export_category("Resources")
 @export var unit_information: UnitInformation = UnitInformation.new()
@@ -44,15 +44,14 @@ var face: Vector2 = Vector2.RIGHT
 var _body: RID
 var _shape: Dictionary[String, RID]
 var velocity: Vector2 = Vector2()
-
+var pose: Pose
 
 var _onwall: bool = false
 var _onfloor: bool = false
-
+var _onceil: bool = false
 
 var _hurtbox: Hurtbox
 var s_arr: Array[S]
-
 
 var cid: RID
 var debug_cid: RID
@@ -75,8 +74,8 @@ func _physics_process(delta: float) -> void:
 		if velocity != Vector2():
 			velocity = velocity.move_toward(Vector2(), stat.frict * delta)
 	
-	
 	move(velocity, delta)
+	
 	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 	
 	if !s_arr.is_empty():
@@ -221,8 +220,18 @@ func use_skill() -> void:
 	pass
 
 
-func create_hitbox() -> void:
-	pass
+func create_hitbox(duration: float, timer_scale: float) -> void:
+	var hitbox: Hitbox = Hitbox.new()
+	hitbox.rid = PhysicsServer2D.area_create()
+	PhysicsServer2D.area_set_space(hitbox.rid, get_world_2d().space)
+	
+	hitbox.duration = duration
+	var timer: SceneTreeTimer = get_tree().create_timer(
+		hitbox.duration
+	)
+	
+	var hitbox_shape: RID = PhysicsServer2D.rectangle_shape_create()
+	PhysicsServer2D.area_add_shape(hitbox, hitbox_shape, Transform2D(), false)
 
 
 func kill() -> void:
@@ -337,3 +346,12 @@ class Stat extends RefCounted:
 	var atk_speed: float = 1.
 	var accel: float
 	var frict: float
+
+
+class Dash extends RefCounted:
+	var cooltime: float = 1.
+	var _cooldown: float = 0.:
+		set(value): _cooldown = maxf(value, 0.)
+	
+	func enable() -> bool:
+		return _cooldown == 0.

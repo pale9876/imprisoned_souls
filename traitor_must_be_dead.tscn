@@ -322,6 +322,7 @@ metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 position = Vector2(258, 174)
 script = ExtResource("13_k7ju8")
 mode = 1
+init_pose = null
 unit_information = SubResource("Resource_ym5dx")
 skills = Dictionary[String, ExtResource("10_pm4g0")]({
 "Lazor": SubResource("Resource_y0qeb")
