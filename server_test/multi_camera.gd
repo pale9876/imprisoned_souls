@@ -25,7 +25,7 @@ func set_viewport_canvas_transform() -> void:
 	var cam: Cam = camera[current]
 	var vp_xform: Transform2D = Transform2D(
 		0., Vector2.ONE * cam.zoom,
-		0., (global_position + cam.position) - (get_viewport_rect().size * cam.zoom / 2.)
+		0., ((global_position + cam.position) - (get_viewport_rect().size * cam.zoom / 2.)).floor()
 	)
 	
 	get_viewport().canvas_transform = vp_xform.affine_inverse()
@@ -35,14 +35,16 @@ func _enter_tree() -> void:
 	if Engine.is_editor_hint(): return
 
 
-func _physics_process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	if !camera.is_empty():
 		for cam: Cam in camera.values():
 			if cam.target != null:
-				var new_pos: Vector2 = cam.position.move_toward(cam.target.global_position, 5.)
-				cam.position = cam.position.lerp(new_pos, .322)
+				var new_pos: Vector2 = cam.position.move_toward(
+					cam.target.global_position, maxf(0., cam.position.distance_to(cam.target.global_position) - 10.) * delta * cam.speed
+				).round()
+				cam.position = cam.position.lerp(new_pos, .255)
 
 	set_viewport_canvas_transform()
 

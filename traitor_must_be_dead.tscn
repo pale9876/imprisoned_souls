@@ -32,8 +32,8 @@
 [sub_resource type="Resource" id="Resource_waig6"]
 script = ExtResource("3_8acap")
 name = "StartRoom"
-size = Vector2(320, 180)
-modulate = Color(1, 0.62, 0.62, 0.59607846)
+size = Vector2(1280, 720)
+modulate = Color(1, 0.61960787, 0.61960787, 0.4392157)
 closed = true
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
@@ -108,6 +108,9 @@ region = Rect2(0, 0, 64, 32)
 
 [sub_resource type="Resource" id="Resource_xj7cu"]
 script = ExtResource("12_ym5dx")
+position = Vector2(320, 180)
+color = Color(0, 0, 0.54901963, 0.4392157)
+speed = 600.0
 metadata/_custom_type_script = "uid://betj1u6dfr7n"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waig6"]
@@ -308,9 +311,8 @@ multimesh = SubResource("MultiMesh_waig6")
 [node name="Legion" type="Node2D" parent="Ingame" unique_id=1659406924 node_paths=PackedStringArray("target")]
 script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
-amount = 360
+amount = 1
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
-mask = 2
 spawn_path = Vector2(640, 360)
 behavior_tree = SubResource("BehaviorTree_x6fug")
 target = NodePath("../Player")
@@ -319,6 +321,7 @@ metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
 position = Vector2(258, 174)
 script = ExtResource("13_k7ju8")
+mode = 1
 unit_information = SubResource("Resource_ym5dx")
 skills = Dictionary[String, ExtResource("10_pm4g0")]({
 "Lazor": SubResource("Resource_y0qeb")

@@ -17,6 +17,7 @@ class_name Legion
 
 
 @export_category("Body")
+@export var has_body: bool = false
 @export var color: Color = Color(0.208, 0.37, 0.65, 0.522)
 @export var body_parts: Array[AnimatedPart]
 
@@ -44,7 +45,8 @@ var path_cid: RID
 @export_tool_button("Create", "2D") var _create: Callable = create
 
 
-var debug_cid: RID
+#var debug_cid: RID
+
 
 func create() -> void:
 	if !instance or amount <= 0: return
@@ -94,16 +96,17 @@ func spawn_instance() -> I:
 	)
 	
 	# Set Instance Body
-	inst.body = PhysicsServer2D.body_create()
-	PhysicsServer2D.body_set_mode(inst.body, PhysicsServer2D.BODY_MODE_KINEMATIC)
-	PhysicsServer2D.body_set_collision_layer(inst.body, layer)
-	PhysicsServer2D.body_set_collision_mask(inst.body, mask)
-	PhysicsServer2D.body_set_space(inst.body, get_world_2d().space)
-	PhysicsServer2D.body_attach_object_instance_id(inst.body, inst.get_instance_id())
-	inst.shape = PhysicsServer2D.rectangle_shape_create()
-	PhysicsServer2D.shape_set_data(inst.shape, instance.size / 2.)
-	PhysicsServer2D.body_add_shape(inst.body, inst.shape)
-	PhysicsServer2D.body_set_state(inst.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., inst.position))
+	if has_body:
+		inst.body = PhysicsServer2D.body_create()
+		PhysicsServer2D.body_set_mode(inst.body, PhysicsServer2D.BODY_MODE_KINEMATIC)
+		PhysicsServer2D.body_set_collision_layer(inst.body, layer)
+		PhysicsServer2D.body_set_collision_mask(inst.body, mask)
+		PhysicsServer2D.body_set_space(inst.body, get_world_2d().space)
+		PhysicsServer2D.body_attach_object_instance_id(inst.body, inst.get_instance_id())
+		inst.shape = PhysicsServer2D.rectangle_shape_create()
+		PhysicsServer2D.shape_set_data(inst.shape, instance.size / 2.)
+		PhysicsServer2D.body_add_shape(inst.body, inst.shape)
+		PhysicsServer2D.body_set_state(inst.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., inst.position))
 	
 	inst.hurtbox = Hurtbox.new()
 	inst.hurtbox.rid = PhysicsServer2D.area_create()
@@ -129,6 +132,7 @@ func spawn_instance() -> I:
 	)
 	RenderingServer.canvas_item_set_parent(inst.awareness.cid, get_canvas_item())
 	
+	# Init Position Transform
 	RenderingServer.canvas_item_set_transform(inst.cid, Transform2D(0., inst.position))
 	PhysicsServer2D.area_set_transform(inst.awareness.rid, Transform2D(0., inst.position))
 	RenderingServer.canvas_item_set_transform(inst.awareness.cid, Transform2D(0., inst.position))
@@ -178,8 +182,9 @@ func kill() -> void:
 	else:
 		if !arr.is_empty():
 			for inst in arr:
-				PhysicsServer2D.free_rid(inst.body)
-				PhysicsServer2D.free_rid(inst.shape)
+				if has_body:
+					PhysicsServer2D.free_rid(inst.body)
+					PhysicsServer2D.free_rid(inst.shape)
 				PhysicsServer2D.free_rid(inst.hurtbox.rid)
 				PhysicsServer2D.free_rid(inst.awareness.rid)
 				#NavigationServer2D.free_rid(inst.agent)
@@ -187,7 +192,6 @@ func kill() -> void:
 				RenderingServer.free_rid(inst.cid)
 				RenderingServer.free_rid(inst.awareness.cid)
 				RenderingServer.free_rid(inst.hurtbox.cid)
-
 
 		arr = []
 

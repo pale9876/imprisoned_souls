@@ -45,8 +45,10 @@ var _body: RID
 var _shape: Dictionary[String, RID]
 var velocity: Vector2 = Vector2()
 
+
 var _onwall: bool = false
 var _onfloor: bool = false
+
 
 var _hurtbox: Hurtbox
 var s_arr: Array[S]
@@ -55,16 +57,24 @@ var s_arr: Array[S]
 var cid: RID
 var debug_cid: RID
 
+var stat: Stat
+
+
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
-		unit_information.hp = unit_information.max_hp
 		create()
+
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
 	var input: Vector2 = Input.get_vector("left", "right", "up", "down")
-	velocity = velocity.move_toward(input * unit_information.speed, unit_information.acceleration * delta)
+	if input != Vector2():
+		velocity = velocity.move_toward(input * stat.speed, stat.accel * delta)
+	else:
+		if velocity != Vector2():
+			velocity = velocity.move_toward(Vector2(), stat.frict * delta)
+	
 	
 	move(velocity, delta)
 	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
@@ -74,6 +84,8 @@ func _physics_process(delta: float) -> void:
 			PhysicsServer2D.area_set_transform(s.awareness_area.rid, get_global_transform())
 
 func move(motion: Vector2, delta: float) -> void:
+	if motion == Vector2.ZERO: return
+	
 	var motion_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
 	var motion_result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
 	
@@ -96,7 +108,6 @@ func move(motion: Vector2, delta: float) -> void:
 			
 			if motion_result.get_collision_safe_fraction() > .1:
 				global_position += (motion * motion_result.get_collision_safe_fraction() * delta)
-			_onwall = true
 			
 			var remainder: Vector2 = motion_result.get_remainder()
 			
@@ -115,6 +126,11 @@ func move(motion: Vector2, delta: float) -> void:
 					global_position += remainder * (remainder_motion_result.get_collision_safe_fraction())
 				else:
 					global_position += remainder
+			
+			if mode == FLOAT:
+				_onwall = true
+			elif mode == GROUNDED:
+				pass
 		else:
 			global_position += motion * delta
 			_onwall = false
@@ -129,10 +145,6 @@ func create() -> void:
 	if init:
 		kill()
 	
-	debug_cid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(debug_cid, get_canvas_item())
-	RenderingServer.canvas_item_add_circle(debug_cid, Vector2(), 10., Color.YELLOW)
-	
 	cid = RenderingServer.canvas_item_create()
 	RenderingServer.canvas_item_set_parent(cid, get_canvas_item())
 	RenderingServer.canvas_item_set_transform(cid, Transform2D())
@@ -144,6 +156,7 @@ func create() -> void:
 	PhysicsServer2D.body_set_collision_mask(_body, mask)
 	PhysicsServer2D.body_set_collision_layer(_body, layer)
 	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
+
 
 	if !unit_information.collider.is_empty():
 		for collider_name: String in unit_information.collider:
@@ -157,6 +170,16 @@ func create() -> void:
 			)
 
 	if !Engine.is_editor_hint():
+		# Init Information to Stat
+		stat = Stat.new()
+		stat.hp = unit_information.init_hp
+		stat.max_hp = unit_information.max_hp
+		stat.atk_speed = unit_information.atk_speed
+		stat.speed = unit_information.speed
+		stat.frict = unit_information.friction
+		stat.accel = unit_information.acceleration
+		
+		# Create Hurtbox
 		_hurtbox = Hurtbox.new()
 		_hurtbox.rid = PhysicsServer2D.area_create()
 		
@@ -305,3 +328,12 @@ class AwarenessArea extends RefCounted:
 	
 	func is_enemy() -> bool:
 		return !entered.is_empty()
+
+
+class Stat extends RefCounted:
+	var hp: int
+	var max_hp: int
+	var speed: float
+	var atk_speed: float = 1.
+	var accel: float
+	var frict: float
