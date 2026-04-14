@@ -25,12 +25,13 @@ class_name Legion
 @export_category("Behavior Tree")
 @export var behavior_tree: BehaviorTree = BehaviorTree.new()
 
-
 @export_category("DEBUG")
 @export var body_color: Color = Color(0.89, 0.0, 0.0, 0.537)
 
 
-var arr: Array[I] = []
+var stat: Stat
+
+var arr: Array[Instance] = []
 var hitbox: Array[Hitbox] = []
 
 var nav_map: RID
@@ -42,10 +43,8 @@ var path_cid: RID
 
 @export var target: Node2D
 
+
 @export_tool_button("Create", "2D") var _create: Callable = create
-
-
-#var debug_cid: RID
 
 
 func create() -> void:
@@ -65,22 +64,24 @@ func create() -> void:
 	
 	if !Engine.is_editor_hint():
 		arr.resize(amount)
-
+		
 		for i: int in range(amount):
 			arr[i] = spawn_instance()
-
+		
 		init = true
 
 
 func _physics_process(delta: float) -> void:
-	for i: I in arr:
+	for i: Instance in arr:
 		if i != null:
-			var direction: Vector2 = i.position.direction_to(target.global_position)
-			i.move((direction * instance.stat.speed) * delta)
-			
+			if behavior_tree:
+				var direction: Vector2 = i.position.direction_to(target.global_position)
+				i.last_direction = direction
+				i.bt.get_root_task().execute(delta)
 
-func spawn_instance() -> I:
-	var inst: I = I.new()
+
+func spawn_instance() -> Instance:
+	var inst: Instance = Instance.new()
 	var spawn_point: Vector2 = _path.sample_baked(_path.get_baked_length() * randf())
 	
 	# Set Instance Information
@@ -138,18 +139,47 @@ func spawn_instance() -> I:
 	RenderingServer.canvas_item_set_transform(inst.awareness.cid, Transform2D(0., inst.position))
 	PhysicsServer2D.area_set_transform(inst.hurtbox.rid, Transform2D(0., inst.position))
 
+	# Init Stat
+	stat = Stat.new()
+	stat.hp = instance.unit_information.init_hp
+	stat.atk = instance.unit_information.atk
+	stat.def = instance.unit_information.def
+
+
+	inst.bt = BehaviorTree.new()
+	var sequence: MobSequence = MobSequence.new()
+	
+	var task_is_in_range: IsInRange = IsInRange.new()
+	task_is_in_range.instance = inst
+	
+	var task_attack: Attack = Attack.new()
+	task_attack.instance = inst
+	task_attack.range = instance.hitbox_information.range
+	task_attack.duration = 1.
+	task_attack.create_hitbox = create_hitbox
+	
+	
+	inst.bt.set_root_task(sequence)
+	sequence.add_child(task_is_in_range)
+	sequence.add_child(task_attack)
+
 	return inst
 
 
 func create_hitbox(duration: float) -> void:
+	var _hitbox: Hitbox = Hitbox.new()
+
+
+func kill_hitbox() -> void:
 	pass
 
 
-func target_awareness_area_entered(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, inst: I) -> void:
+
+func target_awareness_area_entered(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, inst: Instance) -> void:
 	if instance_id != target.get_instance_id(): return
 	
 	if status == 0: # Entered
-		pass
+		inst.awareness.has_target = true
 	elif status == 1: # Exited
 		pass
 
@@ -234,14 +264,7 @@ func create_path() -> void:
 		)
 
 
-class I extends RefCounted:
-	enum State
-	{
-		WAIT = 0,
-		MOVE = 1,
-		ATTACK = 2,
-	}
-	
+class Instance extends RefCounted:
 	var cid: RID
 	var body: RID
 	var shape: RID
@@ -253,10 +276,20 @@ class I extends RefCounted:
 	var layer: int = 1
 	var mask: int = 1
 	var frame: int = 0
-	var state: int = State.WAIT
-	var hp: int
 	var bt: BehaviorTree
-
+	var stat: Stat
+	var last_direction: Vector2
+	var hitbox: Hitbox
+	
+	func create_hitbox(info: HitboxInformation) -> void:
+		hitbox = Hitbox.new()
+		hitbox.rid = PhysicsServer2D.area_create()
+		hitbox.damage
+	
+	
+	func kill_hitbox() -> void:
+		pass
+	
 
 	func move(motion: Vector2 = Vector2()) -> void:
 		position += motion
@@ -270,16 +303,27 @@ class I extends RefCounted:
 		RenderingServer.canvas_item_set_transform(awareness.cid, Transform2D(0., position))
 
 
+class Stat extends RefCounted:
+	var hp: int:
+		set(value): hp = maxi(value, 0)
+	var speed: float:
+		set(value): speed = maxf(0., value)
+	var atk: int = 3:
+		set(value): atk = maxi(value, 0)
+	var def: int = 3
+
+
 class Hitbox extends RefCounted:
-	var owner: I
+	var owner: Instance
 	var cid: RID
 	var rid: RID
 	var pos: Vector2
 	var shape: Shape2D
+	var damage: int
 
 
 class Hurtbox extends RefCounted:
-	var owner: I
+	var owner: Instance
 	var cid: RID
 	var rid: RID
 	var pos: Vector2
@@ -288,10 +332,29 @@ class Hurtbox extends RefCounted:
 
 
 class Awareness extends RefCounted:
-	var owner: I
+	var owner: Instance
 	var cid: RID
 	var rid: RID
 	var pos: Vector2
 	var radius: float
 	var shape: RID
 	var has_target: bool = false
+
+
+class MobSequence extends BTSequence:
+	var instance: Instance
+
+
+class IsInRange extends BTTask:
+	var instance: Instance
+	
+	func _tick(delta: float) -> Status:
+		if !instance.awareness.has_target:
+			instance.move(instance.last_direction * instance.stat.speed * delta)
+			return RUNNING
+		
+		return SUCCESS
+
+
+class Attack extends BTTask:
+	var instance: Instance

@@ -19,3 +19,4 @@ class_name UnitInformation
 @export var acceleration: float = 3350.
 @export var friction: float = 2250.
 @export var collider: Dictionary[String, Vector2] = {"idle" : Vector2(10., 10.)}
+@export var pose: Dictionary[String, Pose]

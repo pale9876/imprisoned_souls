@@ -9,7 +9,9 @@ class_name LegionInstance
 @export var frame_size: Vector2 = Vector2(64., 64.)
 @export var offset: float = 0.
 @export var texture: AtlasTexture
-@export var hitbox_info: HitboxInformation
+@export var hitbox_information: HitboxInformation
+@export var behavior_tree: BehaviorTree
+@export var unit_information: UnitInformation
 
 #[0]: start frame, [1]: end frame, [2] progress, [3] [[frame, callable], [frame, callable]]
 @export var animation: Dictionary[String, Array] = {
@@ -17,7 +19,3 @@ class_name LegionInstance
 }
 
 @export var stat: UnitStat
-
-var hitbox: RID
-var hurtbox: RID
-var cid: RID

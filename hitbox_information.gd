@@ -8,5 +8,6 @@ enum Type {
 	LONG_RANGE,
 }
 
+@export var range: float = 10.
 @export var damage: int = 30
 @export var type: Type = Type.NONE

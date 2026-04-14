@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
+[ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose.gd" id="9_x6fug"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
 [ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://animated_parts_module/skill.gd" id="10_pm4g0"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
@@ -52,6 +53,11 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="MultiMesh" id="MultiMesh_waig6"]
 mesh = SubResource("QuadMesh_waig6")
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_y0qeb"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_ab2tb"]
+blackboard_plan = SubResource("BlackboardPlan_y0qeb")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nak2q"]
 
 [sub_resource type="Resource" id="Resource_6hyso"]
@@ -64,11 +70,18 @@ metadata/_custom_type_script = "uid://cfjndtohxvpbf"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8g455"]
 
+[sub_resource type="Resource" id="Resource_ab2tb"]
+script = ExtResource("9_6hyso")
+init_hp = 300
+metadata/_custom_type_script = "uid://cukf7tedk28ls"
+
 [sub_resource type="Resource" id="Resource_6djh5"]
 script = ExtResource("10_8g455")
 shader = SubResource("ShaderMaterial_nak2q")
 size = Vector2(15, 15)
 texture = SubResource("AtlasTexture_8g455")
+behavior_tree = SubResource("BehaviorTree_ab2tb")
+unit_information = SubResource("Resource_ab2tb")
 stat = SubResource("Resource_6hyso")
 metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
@@ -87,6 +100,8 @@ root_task = SubResource("BTSelector_y0qeb")
 
 [sub_resource type="Resource" id="Resource_ym5dx"]
 script = ExtResource("9_6hyso")
+init_hp = 300
+pose = null
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
 
 [sub_resource type="Resource" id="Resource_y0qeb"]
@@ -322,7 +337,6 @@ metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 position = Vector2(258, 174)
 script = ExtResource("13_k7ju8")
 mode = 1
-init_pose = null
 unit_information = SubResource("Resource_ym5dx")
 skills = Dictionary[String, ExtResource("10_pm4g0")]({
 "Lazor": SubResource("Resource_y0qeb")

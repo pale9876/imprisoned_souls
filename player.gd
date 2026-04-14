@@ -10,8 +10,8 @@ enum Mode
 }
 
 
-const GROUNDED: int = Mode.GROUNDED
-const FLOAT: int = Mode.FLOAT
+const GROUNDED: Mode = Mode.GROUNDED
+const FLOAT: Mode = Mode.FLOAT
 
 
 signal health_changed(value: float)
@@ -19,7 +19,7 @@ signal health_changed(value: float)
 
 @export_category("Settings")
 @export var mode: Mode = GROUNDED
-@export var collider: String = "idle"
+@export var init_collider: String = "idle"
 @export var init_pose: String = "idle"
 
 @export_category("Resources")
@@ -41,8 +41,7 @@ signal health_changed(value: float)
 
 var sep_ray: RID
 var face: Vector2 = Vector2.RIGHT
-var _body: RID
-var _shape: Dictionary[String, RID]
+var body: Body
 var velocity: Vector2 = Vector2()
 var pose: Pose
 
@@ -57,6 +56,8 @@ var cid: RID
 var debug_cid: RID
 
 var stat: Stat
+var dash: Dash
+var last_direciton: Vector2 = Vector2()
 
 
 func _enter_tree() -> void:
@@ -70,17 +71,45 @@ func _physics_process(delta: float) -> void:
 	var input: Vector2 = Input.get_vector("left", "right", "up", "down")
 	if input != Vector2():
 		velocity = velocity.move_toward(input * stat.speed, stat.accel * delta)
+		last_direciton = velocity.normalized()
 	else:
 		if velocity != Vector2():
 			velocity = velocity.move_toward(Vector2(), stat.frict * delta)
 	
-	move(velocity, delta)
+	if Input.is_action_just_pressed("dash"):
+		dash.use(.75)
 	
-	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
+	if !dash.active:
+		move(velocity, delta)
+	elif dash.active:
+		dashing(last_direciton * stat.speed * 2.5, delta)
+	
+	PhysicsServer2D.body_set_state(body.rid, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 	
 	if !s_arr.is_empty():
 		for s: S in s_arr:
 			PhysicsServer2D.area_set_transform(s.awareness_area.rid, get_global_transform())
+
+
+func dashing(motion: Vector2, delta: float) -> void:
+	dash.duration -= delta
+	
+	var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	
+	shape_param.motion = motion
+	shape_param.shape_rid = body.shape
+	
+	var rest_info: Dictionary = get_world_2d().direct_space_state.get_rest_info(shape_param)
+	var normal: Vector2 = rest_info["normal"]
+	
+
+
+func change_collider(collider_name: String) -> void:
+	PhysicsServer2D.body_clear_shapes(body.rid)
+	
+	body.shape = body.collider[collider_name]
+	PhysicsServer2D.body_add_shape(body.rid, body.shape, Transform2D(0., body.collider[collider_name].pos))
+
 
 func move(motion: Vector2, delta: float) -> void:
 	if motion == Vector2.ZERO: return
@@ -94,25 +123,28 @@ func move(motion: Vector2, delta: float) -> void:
 	motion_param.motion = motion * delta
 	
 	if motion != Vector2.ZERO:
-		if PhysicsServer2D.body_test_motion(_body, motion_param, motion_result):
+		if PhysicsServer2D.body_test_motion(body.rid, motion_param, motion_result):
 			var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 			
 			shape_param.collide_with_areas = false
 			shape_param.collision_mask = mask
-			shape_param.exclude = [_body]
-			shape_param.shape_rid = _shape[collider]
+			shape_param.exclude = [body.rid]
+			shape_param.shape_rid = body.shape
 			shape_param.transform = get_global_transform()
 			shape_param.motion = motion * delta
 			shape_param.margin = 1.
+			
+			var old_global_position: Vector2 = global_position
 			
 			if motion_result.get_collision_safe_fraction() > .1:
 				global_position += (motion * motion_result.get_collision_safe_fraction() * delta)
 			
 			var remainder: Vector2 = motion_result.get_remainder()
+			var rest_info: Dictionary = get_world_2d().direct_space_state.get_rest_info(shape_param)
+			var normal: Vector2 = rest_info["normal"]
+			var point: Vector2 = rest_info["point"]
 			
 			if remainder != Vector2():
-				var rest_info: Dictionary = get_world_2d().direct_space_state.get_rest_info(shape_param)
-				var normal: Vector2 = rest_info["normal"]
 				remainder = remainder.slide(normal)
 
 				var remainder_motion_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
@@ -121,7 +153,7 @@ func move(motion: Vector2, delta: float) -> void:
 				remainder_motion_param.recovery_as_collision = true
 				var remainder_motion_result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
 				
-				if PhysicsServer2D.body_test_motion(_body, remainder_motion_param, remainder_motion_result):
+				if PhysicsServer2D.body_test_motion(body.rid, remainder_motion_param, remainder_motion_result):
 					global_position += remainder * (remainder_motion_result.get_collision_safe_fraction())
 				else:
 					global_position += remainder
@@ -129,10 +161,12 @@ func move(motion: Vector2, delta: float) -> void:
 			if mode == FLOAT:
 				_onwall = true
 			elif mode == GROUNDED:
-				pass
+				if absf(old_global_position.direction_to(point).angle() - Vector2.UP.angle()) < deg_to_rad(45.):
+					_onceil = true
 		else:
 			global_position += motion * delta
 			_onwall = false
+			_onceil = true
 
 
 func _exit_tree() -> void:
@@ -148,25 +182,33 @@ func create() -> void:
 	RenderingServer.canvas_item_set_parent(cid, get_canvas_item())
 	RenderingServer.canvas_item_set_transform(cid, Transform2D())
 	
-	_body = PhysicsServer2D.body_create()
+	body = Body.new()
+	
+	var _body: RID = PhysicsServer2D.body_create()
 	PhysicsServer2D.body_set_mode(_body, PhysicsServer2D.BODY_MODE_KINEMATIC)
 	PhysicsServer2D.body_set_space(_body, get_world_2d().space)
 	PhysicsServer2D.body_attach_object_instance_id(_body, get_instance_id())
 	PhysicsServer2D.body_set_collision_mask(_body, mask)
 	PhysicsServer2D.body_set_collision_layer(_body, layer)
 	PhysicsServer2D.body_set_state(_body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
-
-
+	body.rid = _body
+	
 	if !unit_information.collider.is_empty():
 		for collider_name: String in unit_information.collider:
-			_shape[collider_name] = PhysicsServer2D.rectangle_shape_create()
-			PhysicsServer2D.shape_set_data(_shape[collider_name], unit_information.collider[collider_name] / 2.)
-			PhysicsServer2D.body_add_shape(_body, _shape[collider_name])
+			var collider: Collider = Collider.new()
+			collider.rid = PhysicsServer2D.rectangle_shape_create()
+			PhysicsServer2D.shape_set_data(collider.rid, unit_information.collider[collider_name] / 2.)
+			
+			body.collider[collider_name] = collider
 			
 			RenderingServer.canvas_item_add_rect(
-				cid, Rect2(- unit_information.collider[collider_name] / 2., unit_information.collider[collider_name]),
+				cid, Rect2(- unit_information.collider[collider_name] / 2.,
+				unit_information.collider[collider_name]),
 				Color.WHITE
 			)
+
+	body.shape = body.collider[init_collider].rid
+	PhysicsServer2D.body_add_shape(body.rid, body.shape)
 
 	if !Engine.is_editor_hint():
 		# Init Information to Stat
@@ -212,12 +254,11 @@ func create() -> void:
 				PhysicsServer2D.area_set_transform(awareness_area.rid, get_global_transform())
 				
 				s.awareness_area = awareness_area
-
+	
+	dash = Dash.new()
+	
+	
 	init = true
-
-
-func use_skill() -> void:
-	pass
 
 
 func create_hitbox(duration: float, timer_scale: float) -> void:
@@ -226,20 +267,19 @@ func create_hitbox(duration: float, timer_scale: float) -> void:
 	PhysicsServer2D.area_set_space(hitbox.rid, get_world_2d().space)
 	
 	hitbox.duration = duration
-	var timer: SceneTreeTimer = get_tree().create_timer(
-		hitbox.duration
-	)
 	
 	var hitbox_shape: RID = PhysicsServer2D.rectangle_shape_create()
 	PhysicsServer2D.area_add_shape(hitbox, hitbox_shape, Transform2D(), false)
 
 
 func kill() -> void:
-	PhysicsServer2D.free_rid(_body)
+	if body:
+		for index: int in range(PhysicsServer2D.body_get_shape_count(body.rid)):
+			PhysicsServer2D.free_rid(PhysicsServer2D.body_get_shape(body.rid, index))
+		PhysicsServer2D.free_rid(body.rid)
 	
-	if !_shape.is_empty():
-		for shape_name: String in _shape:
-			PhysicsServer2D.free_rid(_shape[shape_name])
+		for collider_name: String in body.collider:
+			PhysicsServer2D.free_rid(body.collider[collider_name].rid)
 
 	if _hurtbox:
 		free_hurtbox()
@@ -265,7 +305,7 @@ func unit_entered_awareness_area(status: PhysicsServer2D.AreaBodyStatus, body_ri
 	
 	if status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
 		var obj: Object = instance_from_id(instance_id)
-		if obj is Legion.I:
+		if obj is Legion.Instance:
 			awareness_area.entered.push_back(instance_id)
 			print("hello")
 
@@ -290,9 +330,17 @@ func damaged(value: int) -> void:
 
 class Body extends RefCounted:
 	var rid: RID
+	var collider: Dictionary[String, Collider]
+	var shape: RID
 	var size: Vector2
 	var pos: Vector2 = Vector2()
 	var disabled: bool = false
+
+
+class Collider extends RefCounted:
+	var pos: Vector2
+	var size: Vector2
+	var rid: RID
 
 
 class Hurtbox extends RefCounted:
@@ -325,9 +373,16 @@ class S extends RefCounted:
 	var ray_type: int = SkillInformation.RAYTYPE_CAST
 	var attack_type: int = SkillInformation.ATK_EXPLOSION
 	var awareness_area: AwarenessArea
-	var cooldown: float:
+	var cooltime: float
+	var _cooldown: float:
 		set(value):
-			cooldown = maxf(value, 0.)
+			_cooldown = maxf(value, 0.)
+
+	func enable() -> bool:
+		return _cooldown == 0.
+
+	func use() -> void:
+		_cooldown = cooltime
 
 
 class AwarenessArea extends RefCounted:
@@ -349,9 +404,18 @@ class Stat extends RefCounted:
 
 
 class Dash extends RefCounted:
+	var active: bool = false
+	var duration: float = .75:
+		set(value):
+			duration = maxf(0., value)
 	var cooltime: float = 1.
 	var _cooldown: float = 0.:
 		set(value): _cooldown = maxf(value, 0.)
 	
 	func enable() -> bool:
-		return _cooldown == 0.
+		return _cooldown == 0. and !active
+
+	func use(duration: float) -> void:
+		_cooldown = cooltime
+		self.duration = duration
+		active = true
