@@ -34,10 +34,10 @@ const TYPE_ADULT: Type = Type.ADULT
 
 @export_category("Face")
 @export var face: Texture2D
-@export var face_color: Color
+@export var face_color: Color = Color.WHITE
 
 @export var eye: Texture2D
-@export var eye_color: Color
+@export var eye_color: Color = Color.WHITE
 
 @export_category("Body")
 @export var top: Texture2D
