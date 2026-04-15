@@ -68,7 +68,7 @@ func _notification(what: int) -> void:
 				PhysicsServer2D.free_rid(_area)
 
 
-func remove_collider(res: CollideInfo) -> void:
+func remove_collider(res: CollideInformation) -> void:
 	if collider.has(res):
 		collider.erase(res)
 	

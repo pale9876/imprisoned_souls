@@ -1,14 +1,25 @@
 [gd_scene format=3 uid="uid://bwrn4w7gjrq2y"]
 
 [ext_resource type="Script" uid="uid://c0vs0bec2o1dl" path="res://mouse_interactable_area_2d.gd" id="1_8qn1a"]
-[ext_resource type="Script" uid="uid://bv8jgicw64qw7" path="res://scene_camera_2d.gd" id="2_sr0vo"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="2_sr0vo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2g3mv"]
+
+[sub_resource type="Resource" id="Resource_0qrw6"]
+script = ExtResource("2_sr0vo")
+shader = SubResource("ShaderMaterial_2g3mv")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nhv8v"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_fjpoc"]
 
 [node name="Node2D" type="Node2D" unique_id=926680205]
 
-[node name="MouseInteractableArea2D" type="Node2D" parent="." unique_id=433992381]
+[node name="InteractableLegion" type="Node2D" parent="." unique_id=433992381]
 visible = false
 script = ExtResource("1_8qn1a")
-
-[node name="SceneCamera2D" type="Camera2D" parent="." unique_id=326800775]
-script = ExtResource("2_sr0vo")
-metadata/_custom_type_script = "uid://bv8jgicw64qw7"
+instance = SubResource("Resource_0qrw6")
+amount = 10
+navigation_polygon = SubResource("NavigationPolygon_nhv8v")
+color = Color(0, 0.627, 0.639, 0.376)
+behavior_tree = SubResource("BehaviorTree_fjpoc")

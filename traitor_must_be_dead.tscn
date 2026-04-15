@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose.gd" id="9_x6fug"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
+[ext_resource type="Script" uid="uid://chpo875sjp28p" path="res://path_scope/path_scope.gd" id="10_ab2tb"]
 [ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://animated_parts_module/skill.gd" id="10_pm4g0"]
 [ext_resource type="Script" uid="uid://drl2kykjmd5mp" path="res://awareness_information/awareness_information.gd" id="10_x6fug"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://multi_blood_particle.gd" id="11_waig6"]
@@ -85,6 +86,14 @@ unit_information = SubResource("Resource_ab2tb")
 metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6djh5"]
+
+[sub_resource type="Resource" id="Resource_4ggh8"]
+script = ExtResource("10_ab2tb")
+path_type = 1
+to = Vector2(1280, 760)
+margin = 10.0
+color = Color(0, 0.4745098, 0.4627451, 0.12156863)
+metadata/_custom_type_script = "uid://chpo875sjp28p"
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_k2ry2"]
 
@@ -315,7 +324,7 @@ camera = NodePath("Ingame/MultiCamera")
 follow_viewport_enabled = true
 
 [node name="UnderpassModule" type="Node2D" parent="Ingame" unique_id=1082153666]
-position = Vector2(296, 168)
+position = Vector2(640, 360)
 script = ExtResource("1_xj7cu")
 underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_waig6")])
 metadata/_custom_type_script = "uid://dc7volit4rbgy"
@@ -328,9 +337,10 @@ multimesh = SubResource("MultiMesh_waig6")
 [node name="Legion" type="Node2D" parent="Ingame" unique_id=1659406924 node_paths=PackedStringArray("target")]
 script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
-amount = 1
+amount = 30
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
-spawn_path = Vector2(640, 360)
+path_scope = SubResource("Resource_4ggh8")
+color = Color(0.20784314, 0.36862746, 0.6509804, 0.25490198)
 behavior_tree = SubResource("BehaviorTree_x6fug")
 awareness_information = SubResource("Resource_hmxpe")
 target = NodePath("../Player")
