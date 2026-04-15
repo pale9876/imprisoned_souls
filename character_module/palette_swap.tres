@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://befd3ldwkg6u4"]
+
+[ext_resource type="Shader" uid="uid://baoutevnvlg5x" path="res://character_module/palette_swap.gdshader" id="1_6al1h"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_6al1h")
+shader_parameter/target_color = Color(1, 1, 1, 1)
+shader_parameter/replace_color = Color(1, 1, 1, 1)
+shader_parameter/tolerance = 0.1

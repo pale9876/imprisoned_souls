@@ -1,6 +1,8 @@
 @tool
 extends EEAD2D
 
+
+
 @export var character_module: CharacterModule
 var character: Character
 
@@ -22,6 +24,7 @@ func create_sprite(texture: Texture2D, draw_index: int, color: Color = Color.WHI
 		texture.get_rid()
 	)
 	RenderingServer.canvas_item_set_draw_index(sprite.cid, draw_index)
+	RenderingServer.canvas_item_set_use_parent_material(sprite.cid, true)
 
 	if shader:
 		sprite.shader = shader
