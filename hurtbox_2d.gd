@@ -35,14 +35,14 @@ func _notification(what: int) -> void:
 			monitoring = false
 			monitorable = true
 		
-		NOTIFICATION_ENTER_TREE:
-			var _parent: Node = get_parent()
-			if _parent != null:
-				if _parent is Character:
-					_parent.hurtbox = self
-					_root = _parent
-					if !Engine.is_editor_hint():
-						pass
+		#NOTIFICATION_ENTER_TREE:
+			#var _parent: Node = get_parent()
+			#if _parent != null:
+				#if _parent is Character:
+					#_parent.hurtbox = self
+					#_root = _parent
+					#if !Engine.is_editor_hint():
+						#pass
 
 		NOTIFICATION_READY:
 			if !init_shape.is_empty():
@@ -58,12 +58,12 @@ func _notification(what: int) -> void:
 					node.visible = true
 				node.visible = visible
 
-		NOTIFICATION_EXIT_TREE:
-			if get_root():
-				if _root:
-					if _root is Character:
-						_root.hurtbox = null
-					_root = null
+		#NOTIFICATION_EXIT_TREE:
+			#if get_root():
+				#if _root:
+					#if _root is Character:
+						#_root.hurtbox = null
+					#_root = null
 
 		NOTIFICATION_CHILD_ORDER_CHANGED:
 			pass

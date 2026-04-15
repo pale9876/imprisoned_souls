@@ -4,19 +4,32 @@ class_name TraitorMustBeDead
 
 @export var player: Player
 @export var legion: Legion
-@export var ingame_canvas: CanvasLayer
 @export var camera: MultiCamera
 
-@onready var start_btn: Button = %Start
+
+@onready var ingame_canvas: CanvasLayer = $Ingame
 @onready var title: CanvasLayer = %Title
+@onready var ui: CanvasLayer = $UI
+
+# Player UI
 @onready var character_icon: CharacterProfile = %CharacterIcon
 @onready var hp_progress: GradientProgress2D = %HpProgress
-@onready var ui: CanvasLayer = $UI
+
+# Title
+@onready var start_btn: Button = %Start
+
+# Select Class
+@onready var select_class: Control = %SelectClass
+@onready var class_predator: TextureButton = %ClassPredator
+@onready var class_executioner: TextureButton = %ClassExecutioner
+
+
 
 func _ready() -> void:
 	title.show()
 	ingame_canvas.hide()
 	ui.hide()
+	select_class.hide()
 	
 	ingame_canvas.process_mode = Node.PROCESS_MODE_DISABLED
 	legion.target = player
@@ -24,7 +37,11 @@ func _ready() -> void:
 	character_icon.texture = player.unit_information.icon
 	
 	player.health_changed.connect(_on_player_health_changed)
-	start_btn.pressed.connect(start)
+	start_btn.pressed.connect(select_class_mode)
+
+
+func select_class_mode() -> void:
+	pass
 
 
 func start() -> void:

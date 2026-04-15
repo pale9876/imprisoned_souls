@@ -126,6 +126,7 @@ func spawn_instance(index: int) -> Instance:
 
 	# Init Awareness Area
 	inst.awareness = Awareness.new()
+	inst.awareness.cid = RenderingServer.canvas_item_create()
 	inst.awareness.rid = PhysicsServer2D.area_create()
 	inst.awareness.radius = awareness_information.radius
 	inst.awareness.position = awareness_information.position
@@ -310,8 +311,29 @@ class Instance extends RefCounted:
 		hitbox.result = null
 
 
-	func move(motion: Vector2 = Vector2()) -> void:
-		position += motion
+	func move(motion: Vector2 = Vector2(), space: RID = RID()) -> MotionResult:
+		var motion_result: MotionResult
+		
+		var direct_space: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(space)
+		var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+		shape_param.collide_with_areas = true
+		shape_param.collide_with_bodies = false
+		shape_param.shape_rid = shape
+		shape_param.motion = motion
+		
+		var rest_info: Dictionary = direct_space.get_rest_info(shape_param)
+		var cast_motion: PackedFloat32Array = direct_space.cast_motion(shape_param)
+		
+		var safe_distance: float = cast_motion[0]
+		var unsafe_distance: float = cast_motion[1]
+		
+		if !rest_info.is_empty():
+			motion_result = MotionResult.new()
+			motion_result.collider = instance_from_id(rest_info["collider_id"] as int)
+			motion_result.normal = rest_info["normal"] as Vector2
+			motion_result.point = rest_info["point"] as Vector2
+		else:
+			position += motion
 		
 		PhysicsServer2D.area_set_transform(awareness.rid, Transform2D(0., position))
 		PhysicsServer2D.area_set_transform(hurtbox.rid, Transform2D(0., position))
@@ -319,6 +341,8 @@ class Instance extends RefCounted:
 		RenderingServer.canvas_item_set_transform(cid, Transform2D(0., position))
 		RenderingServer.canvas_item_set_transform(awareness.cid, Transform2D(0., position))
 		RenderingServer.canvas_item_set_transform(hitbox.cid, Transform2D(0., position))
+
+		return motion_result
 
 
 	func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
@@ -381,7 +405,9 @@ class IsInRange extends BTAction:
 	
 	func _tick(delta: float) -> Status:
 		if !instance.awareness.has_target:
-			instance.move(instance.last_direction * instance.stat.speed * delta)
+			instance.move(
+				instance.last_direction * instance.stat.speed * delta, instance.space
+			)
 			return RUNNING
 		
 		return SUCCESS
@@ -416,4 +442,12 @@ class Scope:
 	var rect: Rect2
 	var path: Curve2D
 	var cid: RID
-	
+
+
+class MotionResult:
+	var collider: Object
+	var normal: Vector2
+	var remainder: Vector2
+	var safe_proportion: float
+	var unsafe_proportion: float
+	var point: Vector2

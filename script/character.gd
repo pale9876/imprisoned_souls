@@ -1,7 +1,7 @@
 @tool
 @abstract
 extends PhysicsUnit2D
-class_name Character
+#class_name Character
 #
 #
 ##@export var emote_bt_module: BTPlayer

@@ -11,11 +11,11 @@ extends Pose2D
 @export var hurt_shape_init: String = "Idle"
 
 
-func _enter(data: Dictionary = {}) -> void:
-	if agent is Character:
-		agent.hurtbox.change_shape("Idle")
-		agent.change_collider("Idle")
-	pass
+#func _enter(data: Dictionary = {}) -> void:
+	#if agent is Character:
+		#agent.hurtbox.change_shape("Idle")
+		#agent.change_collider("Idle")
+	#pass
 
 
 func _fixed_update(_delta: float) -> void:

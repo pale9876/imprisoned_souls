@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://inbqpxt4ubud" path="res://aseprite/bottom_monitor.png" id="22_g3sys"]
 [ext_resource type="Texture2D" uid="uid://cr8177oenfga7" path="res://aseprite/color_test_texture.png" id="23_1ukh0"]
 [ext_resource type="Texture2D" uid="uid://cgx3d7vur25kf" path="res://aseprite/right_monitor.png" id="23_4yxht"]
+[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="32_hmxpe"]
 
 [sub_resource type="Resource" id="Resource_waig6"]
 script = ExtResource("3_8acap")
@@ -313,11 +314,10 @@ glow_enabled = true
 glow_intensity = 0.96
 glow_bloom = 0.14
 
-[node name="MainScene" type="Node2D" unique_id=2146562988 node_paths=PackedStringArray("player", "legion", "ingame_canvas", "camera")]
+[node name="MainScene" type="Node2D" unique_id=2146562988 node_paths=PackedStringArray("player", "legion", "camera")]
 script = ExtResource("1_ym5dx")
 player = NodePath("Ingame/Player")
 legion = NodePath("Ingame/Legion")
-ingame_canvas = NodePath("Ingame")
 camera = NodePath("Ingame/MultiCamera")
 
 [node name="Ingame" type="CanvasLayer" parent="." unique_id=983916863]
@@ -840,6 +840,69 @@ grow_vertical = 2
 unique_name_in_owner = true
 layout_mode = 2
 text = "Start Game"
+
+[node name="SelectClass" type="Control" parent="Title" unique_id=649562773]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Title/SelectClass" unique_id=571792934]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Title/SelectClass/CenterContainer" unique_id=673258184]
+custom_minimum_size = Vector2(320, 160)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Title/SelectClass/CenterContainer/PanelContainer" unique_id=1809237130]
+layout_mode = 2
+
+[node name="NinePatchMarginContainer" type="MarginContainer" parent="Title/SelectClass/CenterContainer/PanelContainer/HBoxContainer" unique_id=2004346489]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("32_hmxpe")
+_margin_left = 10
+_margin_top = 10
+_margin_right = 10
+_margin_bottom = 10
+metadata/_custom_type_script = "uid://b0w7ljww2qduf"
+
+[node name="ClassPredator" type="TextureButton" parent="Title/SelectClass/CenterContainer/PanelContainer/HBoxContainer/NinePatchMarginContainer" unique_id=1063425655]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+
+[node name="NinePatchMarginContainer2" type="MarginContainer" parent="Title/SelectClass/CenterContainer/PanelContainer/HBoxContainer" unique_id=1653739215]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("32_hmxpe")
+_margin_left = 10
+_margin_top = 10
+_margin_right = 10
+_margin_bottom = 10
+metadata/_custom_type_script = "uid://b0w7ljww2qduf"
+
+[node name="ClassExecutioner" type="TextureButton" parent="Title/SelectClass/CenterContainer/PanelContainer/HBoxContainer/NinePatchMarginContainer2" unique_id=1452640294]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1678461789]
 environment = SubResource("Environment_1ukh0")

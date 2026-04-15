@@ -76,10 +76,10 @@ func _editor_pose_visibility_changed() -> void:
 
 func _notification(what: int) -> void:
 	match what:
-		NOTIFICATION_PARENTED:
-			var parent: Node = get_parent()
-			if parent is Character:
-				agent = parent
+		#NOTIFICATION_PARENTED:
+			#var parent: Node = get_parent()
+			#if parent is Character:
+				#agent = parent
 
 		NOTIFICATION_CHILD_ORDER_CHANGED:
 			_updated()
