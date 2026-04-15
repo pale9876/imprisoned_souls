@@ -99,7 +99,6 @@ root_task = SubResource("BTSelector_y0qeb")
 
 [sub_resource type="Resource" id="Resource_hmxpe"]
 script = ExtResource("10_x6fug")
-position = null
 metadata/_custom_type_script = "uid://drl2kykjmd5mp"
 
 [sub_resource type="Resource" id="Resource_ym5dx"]

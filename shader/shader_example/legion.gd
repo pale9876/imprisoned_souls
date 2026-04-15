@@ -148,6 +148,8 @@ func spawn_instance() -> Instance:
 	inst.hitbox.size = instance.hitbox_information.size
 	inst.hitbox.range = instance.hitbox_information.range
 	inst.hitbox.damage = instance.hitbox_information.damage
+	inst.hitbox.cid = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(inst.hitbox.cid, get_canvas_item())
 
 	inst.bt = BehaviorTree.new()
 	var sequence: BTSequence = BTSequence.new()
@@ -175,8 +177,12 @@ func target_awareness_area_entered(status: PhysicsServer2D.AreaBodyStatus, body_
 		inst.awareness.has_target = false
 
 
-func damaged(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
-	pass
+func damaged(inst: Instance, value: int) -> void:
+	inst.stat.hp -= value
+	print("instance damaged => ", value)
+	
+	if inst.stat.hp <= 0:
+		pass
 
 
 func death() -> void:
@@ -273,34 +279,48 @@ class Instance extends RefCounted:
 		hitbox.rid = PhysicsServer2D.area_create()
 		PhysicsServer2D.area_set_space(hitbox.rid, space)
 		PhysicsServer2D.area_set_transform(hitbox.rid, Transform2D(0., position + (direction * hitbox.range)))
+		PhysicsServer2D.area_set_area_monitor_callback(hitbox.rid, hit)
+		PhysicsServer2D.area_set_collision_mask(hitbox.rid, 1)
 		
 		hitbox.shape = PhysicsServer2D.rectangle_shape_create()
 		PhysicsServer2D.shape_set_data(hitbox.shape, hitbox.size / 2.)
 		PhysicsServer2D.area_add_shape(hitbox.rid, hitbox.shape)
 		
-		hitbox.cid = RenderingServer.canvas_item_create()
 		
+		PhysicsServer2D.area_attach_object_instance_id(hitbox.rid, get_instance_id())
+		RenderingServer.canvas_item_set_transform(hitbox.cid, Transform2D(0., position + (direction * hitbox.range)))
+		RenderingServer.canvas_item_add_rect(
+			hitbox.cid, Rect2(- hitbox.size / 2., hitbox.size), Color.RED
+		)
+
 
 	func kill_hitbox() -> void:
 		PhysicsServer2D.free_rid(hitbox.rid)
 		PhysicsServer2D.free_rid(hitbox.shape)
-	
+		
+		RenderingServer.canvas_item_clear(hitbox.cid)
+		hitbox.result = null
+
 
 	func move(motion: Vector2 = Vector2()) -> void:
 		position += motion
 		
-		#PhysicsServer2D.body_set_state(body,PhysicsServer2D.BODY_STATE_TRANSFORM,Transform2D(0., position))
-		
 		PhysicsServer2D.area_set_transform(awareness.rid, Transform2D(0., position))
 		PhysicsServer2D.area_set_transform(hurtbox.rid, Transform2D(0., position))
-
+		
 		RenderingServer.canvas_item_set_transform(cid, Transform2D(0., position))
 		RenderingServer.canvas_item_set_transform(awareness.cid, Transform2D(0., position))
+		RenderingServer.canvas_item_set_transform(hitbox.cid, Transform2D(0., position))
 
 
 	func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int) -> void:
 		if status == PhysicsServer2D.AreaBodyStatus.AREA_BODY_ADDED:
-			print("HI")
+			var obj: Object = instance_from_id(instance_id)
+			if obj is Player and !hitbox.result:
+				obj.damaged(hitbox.damage)
+				hitbox.result = HitResult.new()
+				hitbox.result.hit = true
+		
 
 
 class Stat extends RefCounted:
@@ -321,7 +341,13 @@ class Hitbox extends RefCounted:
 	var size: Vector2
 	var shape: RID
 	var damage: int
+	var result: HitResult
 
+
+class HitResult extends RefCounted:
+	var hit: bool = false
+	var to: int = -1
+	
 
 class Hurtbox extends RefCounted:
 	var owner: Instance
@@ -359,7 +385,6 @@ class Attack extends BTAction:
 		set(value):
 			duration = maxf(value, 0.)
 
-
 	func _enter() -> void:
 		duration = 1.25
 		instance.create_hitbox(instance.last_direction)
@@ -372,3 +397,7 @@ class Attack extends BTAction:
 			return RUNNING
 		
 		return SUCCESS
+
+
+	func _exit() -> void:
+		instance.kill_hitbox()

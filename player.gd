@@ -78,8 +78,6 @@ func use_skill(skill: Skill) -> SkillResult:
 	if !ray_result.is_empty():
 		if result["collider"] == target:
 			result.hit = true
-		
-		
 	
 	return result
 
@@ -96,12 +94,14 @@ func _physics_process(delta: float) -> void:
 			velocity = velocity.move_toward(Vector2(), stat.frict * delta)
 	
 	if Input.is_action_just_pressed("dash"):
-		dash.use(.75)
+		dash.use(.35)
 	
 	if !dash.active:
 		move(velocity, delta)
 	elif dash.active:
-		dashing(last_direciton * stat.speed * 2.5, delta)
+		dashing(last_direciton * stat.speed * 3.5 * delta, delta)
+		if dash.duration <= 0.:
+			dash.active = false
 	
 	PhysicsServer2D.body_set_state(body.rid, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
 	
@@ -114,19 +114,42 @@ func _physics_process(delta: float) -> void:
 					var result: SkillResult = use_skill(skill)
 			
 			PhysicsServer2D.area_set_transform(skill.awareness_area.rid, get_global_transform())
-
+	
+	PhysicsServer2D.area_set_transform(_hurtbox.rid, get_global_transform())
+	
 
 func dashing(motion: Vector2, delta: float) -> void:
 	dash.duration -= delta
 	
-	var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	var motion_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
+	var motion_result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
+	motion_param.from = get_global_transform()
+	motion_param.motion = motion
 	
-	shape_param.motion = motion
-	shape_param.shape_rid = body.shape
+	if !PhysicsServer2D.body_test_motion(body.rid, motion_param, motion_result):
+		global_position += motion
+	else:
+		var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+		shape_param.transform = get_global_transform()
+		shape_param.motion = motion
+		shape_param.shape_rid = body.shape
+		shape_param.exclude = [body.rid]
 	
-	var rest_info: Dictionary = get_world_2d().direct_space_state.get_rest_info(shape_param)
-	var normal: Vector2 = rest_info["normal"]
-	
+		var rest_info: Dictionary = get_world_2d().direct_space_state.get_rest_info(shape_param)
+		var normal: Vector2 = rest_info["normal"]
+		var remainder: Vector2 = motion_result.get_remainder()
+		
+		global_position += motion * (motion_result.get_collision_safe_fraction() - .01)
+		
+		var remainder_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
+		var remainder_result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
+		remainder_param.from = get_global_transform()
+		remainder_param.motion = remainder.slide(normal)
+		
+		if !PhysicsServer2D.body_test_motion(body.rid, remainder_param, remainder_result):
+			global_position += remainder.slide(normal)
+		else:
+			global_position += remainder.slide(normal) * (remainder_result.get_collision_safe_fraction() - .01)
 
 
 func change_collider(collider_name: String) -> void:
@@ -253,8 +276,8 @@ func create() -> void:
 		PhysicsServer2D.area_set_area_monitor_callback(_hurtbox.rid, damaged)
 		PhysicsServer2D.area_set_transform(_hurtbox.rid, Transform2D())
 		PhysicsServer2D.area_set_monitorable(_hurtbox.rid, true)
-		PhysicsServer2D.area_set_collision_mask(_hurtbox.rid, 0)
-		PhysicsServer2D.area_set_collision_layer(_hurtbox.rid, 0)
+		PhysicsServer2D.area_set_collision_mask(_hurtbox.rid, 1)
+		PhysicsServer2D.area_set_collision_layer(_hurtbox.rid, 1)
 		PhysicsServer2D.area_attach_object_instance_id(_hurtbox.rid, get_instance_id())
 		
 		_hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
@@ -350,7 +373,7 @@ func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int
 
 
 func damaged(value: int) -> void:
-	pass
+	print("Player damaged => ", value)
 
 
 class Body extends RefCounted:
