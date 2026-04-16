@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b8kljadoh0588"]
 
 [ext_resource type="Script" uid="uid://dejkqrr6tweci" path="res://character_module/character_module_demo.gd" id="1_e8ykt"]
-[ext_resource type="Material" uid="uid://befd3ldwkg6u4" path="res://character_module/palette_swap.tres" id="1_wq5mg"]
 [ext_resource type="Script" uid="uid://b8aoqif2j64qt" path="res://character_module/character_module.gd" id="2_e40hb"]
 [ext_resource type="Texture2D" uid="uid://gia40bsah7qk" path="res://aseprite/character_module_example/back_hair.png" id="2_trhjk"]
 [ext_resource type="Texture2D" uid="uid://ds1vm1up4lpf" path="res://aseprite/character_module_example/eye.png" id="3_wq5mg"]
@@ -21,7 +20,7 @@ eye = ExtResource("3_wq5mg")
 metadata/_custom_type_script = "uid://b8aoqif2j64qt"
 
 [node name="CharacterModuleDemo" type="Node2D" unique_id=991299713]
-material = ExtResource("1_wq5mg")
+position = Vector2(34, 42)
 scale = Vector2(-1, 1)
 script = ExtResource("1_e8ykt")
 character_module = SubResource("Resource_ynpyh")

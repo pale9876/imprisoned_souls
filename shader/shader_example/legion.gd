@@ -464,10 +464,3 @@ class Scope:
 	var rect: Rect2
 	var path: Curve2D
 	var cid: RID
-
-
-class DamagePopupText:
-	var cid: RID
-	var value: int
-	var duration: float = .3
-	var curve: Curve
