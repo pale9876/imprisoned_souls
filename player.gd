@@ -20,13 +20,14 @@ signal health_changed(value: float)
 @export_category("Settings")
 @export var mode: Mode = GROUNDED
 @export var init_collider: String = "idle"
-@export var init_pose: String = "idle"
+
 
 @export_category("Resources")
 @export var unit_information: UnitInformation = UnitInformation.new()
 @export var skills: Dictionary[String, SkillInformation]
 @export var hurtbox_information: HurtboxInformation = HurtboxInformation.new()
 @export var body_parts: Array[AnimatedPart]
+@export var pose_information: PoseInformation
 
 
 @export_category("Canvas")
@@ -40,10 +41,9 @@ signal health_changed(value: float)
 
 
 var sep_ray: RID
-var face: Vector2 = Vector2.RIGHT
 var body: Body
 var velocity: Vector2 = Vector2()
-var pose: Pose
+
 
 var _onwall: bool = false
 var _onfloor: bool = false
@@ -53,11 +53,11 @@ var _hurtbox: Hurtbox
 var skill_arr: Array[Skill]
 
 var cid: RID
-var debug_cid: RID
 
 var stat: Stat
-var dash: Dash
+#var dash: Dash
 var last_direciton: Vector2 = Vector2()
+var pose_module: PoseModule
 
 
 func _enter_tree() -> void:
@@ -93,18 +93,21 @@ func _physics_process(delta: float) -> void:
 		if velocity != Vector2():
 			velocity = velocity.move_toward(Vector2(), stat.frict * delta)
 	
-	if Input.is_action_just_pressed("dash"):
-		dash.use(.35)
-	
-	if !dash.active:
-		move(velocity, delta)
-	elif dash.active:
-		dashing(last_direciton * stat.speed * 3.5 * delta, delta)
-		if dash.duration <= 0.:
-			dash.active = false
+	#if Input.is_action_just_pressed("dash"):
+		#dash.use(.35)
+	#
+	#if !dash.active:
+		#move(velocity, delta)
+	#elif dash.active:
+		#dashing(last_direciton * stat.speed * 3.5 * delta, delta)
+		#if dash.duration <= 0.:
+			#dash.active = false
 	
 	PhysicsServer2D.body_set_state(body.rid, PhysicsServer2D.BODY_STATE_TRANSFORM, get_global_transform())
-	
+
+	if pose_module:
+		pose_module.tick(delta)
+
 	if !skill_arr.is_empty():
 		for skill: Skill in skill_arr:
 			if !skill.enable():
@@ -115,12 +118,13 @@ func _physics_process(delta: float) -> void:
 			
 			PhysicsServer2D.area_set_transform(skill.awareness_area.rid, get_global_transform())
 	
+
+	
 	PhysicsServer2D.area_set_transform(_hurtbox.rid, get_global_transform())
 	
 
 func dashing(motion: Vector2, delta: float) -> void:
-	dash.duration -= delta
-	
+	#dash.duration -= delta
 	var motion_param: PhysicsTestMotionParameters2D = PhysicsTestMotionParameters2D.new()
 	var motion_result: PhysicsTestMotionResult2D = PhysicsTestMotionResult2D.new()
 	motion_param.from = get_global_transform()
@@ -303,8 +307,7 @@ func create() -> void:
 				
 				s.awareness_area = awareness_area
 	
-	dash = Dash.new()
-	
+	#dash = Dash.new()
 	
 	init = true
 
@@ -450,22 +453,22 @@ class Stat extends RefCounted:
 	var frict: float
 
 
-class Dash extends RefCounted:
-	var active: bool = false
-	var duration: float = .75:
-		set(value):
-			duration = maxf(0., value)
-	var cooltime: float = 1.
-	var _cooldown: float = 0.:
-		set(value): _cooldown = maxf(value, 0.)
-	
-	func enable() -> bool:
-		return _cooldown == 0. and !active
-
-	func use(duration: float) -> void:
-		_cooldown = cooltime
-		self.duration = duration
-		active = true
+#class Dash extends RefCounted:
+	#var active: bool = false
+	#var duration: float = .75:
+		#set(value):
+			#duration = maxf(0., value)
+	#var cooltime: float = 1.
+	#var _cooldown: float = 0.:
+		#set(value): _cooldown = maxf(value, 0.)
+	#
+	#func enable() -> bool:
+		#return _cooldown == 0. and !active
+#
+	#func use(duration: float) -> void:
+		#_cooldown = cooltime
+		#self.duration = duration
+		#active = true
 
 
 class SkillResult:

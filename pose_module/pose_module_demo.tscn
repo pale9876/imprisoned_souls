@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bs7wnsdv2j7wy"]
+
+[ext_resource type="Script" uid="uid://bfrf0mlak2n5v" path="res://pose_module/pose_module_demo.gd" id="1_retal"]
+[ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose_module/pose.gd" id="2_2v146"]
+[ext_resource type="Script" uid="uid://dur5im1s2u8ti" path="res://pose_module/pose/test_idle.gd" id="3_picyu"]
+[ext_resource type="Script" uid="uid://chmyv3i5lg6po" path="res://pose_module/pose_information.gd" id="3_uug1f"]
+[ext_resource type="Script" uid="uid://b4cosjknxv4ih" path="res://pose_module/pose/test_finish.gd" id="4_picyu"]
+
+[sub_resource type="Resource" id="Resource_6x40e"]
+script = ExtResource("3_picyu")
+metadata/_custom_type_script = "uid://dur5im1s2u8ti"
+
+[sub_resource type="Resource" id="Resource_jibw3"]
+script = ExtResource("4_picyu")
+metadata/_custom_type_script = "uid://b4cosjknxv4ih"
+
+[sub_resource type="Resource" id="Resource_picyu"]
+script = ExtResource("3_uug1f")
+data = Dictionary[String, ExtResource("2_2v146")]({
+"test_finish": SubResource("Resource_jibw3"),
+"test_idle": SubResource("Resource_6x40e")
+})
+init_pose = "test_idle"
+metadata/_custom_type_script = "uid://chmyv3i5lg6po"
+
+[node name="PoseModuleDemo" type="Node2D" unique_id=1858470948]
+script = ExtResource("1_retal")
+pose_information = SubResource("Resource_picyu")

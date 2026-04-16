@@ -140,7 +140,6 @@ func spawn_instance(index: int) -> Instance:
 	PhysicsServer2D.area_set_transform(inst.awareness.rid, Transform2D(0., inst.position + inst.awareness.position))
 	RenderingServer.canvas_item_set_transform(inst.awareness.cid, Transform2D(0., inst.position + inst.awareness.position))
 
-	
 	inst.awareness.cid = RenderingServer.canvas_item_create()
 	RenderingServer.canvas_item_add_circle(
 		inst.awareness.cid, Vector2(),
@@ -189,6 +188,7 @@ func damaged(inst: Instance, value: int) -> void:
 	
 	if inst.stat.hp <= 0:
 		pass
+
 
 
 func death() -> void:
@@ -261,6 +261,23 @@ func create_path() -> void:
 		)
 		RenderingServer.canvas_item_add_multiline(
 			scope.cid, polygon, [Color.WHITE], 1.
+		)
+
+	elif scope.type == PathScope.PATH_TYPE_LINE:
+		scope.path.add_point(scope.rect.position)
+		scope.path.add_point(scope.rect.size)
+		
+		RenderingServer.canvas_item_add_line(
+			scope.cid, scope.rect.position, scope.rect.size, Color(0.0, 1.0, 1.0, 1.0), 3.
+		)
+
+	elif scope.type == PathScope.PATH_TYPE_CIRCLE:
+		var radius: float = scope.rect.position.distance_to(scope.rect.size)
+		for i: int in range(64):
+			scope.path.add_point(scope.rect.position + Vector2.from_angle((TAU / 64.) * float(i)) * radius)
+		
+		RenderingServer.canvas_item_add_circle(
+			scope.cid, scope.rect.position, radius, Color(0.0, 1.0, 1.0, 1.0)
 		)
 
 
@@ -451,3 +468,7 @@ class MotionResult:
 	var safe_proportion: float
 	var unsafe_proportion: float
 	var point: Vector2
+
+
+class DamagePopupText:
+	var duration

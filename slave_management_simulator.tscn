@@ -16,7 +16,6 @@ shader = SubResource("ShaderMaterial_2g3mv")
 [node name="Node2D" type="Node2D" unique_id=926680205]
 
 [node name="InteractableLegion" type="Node2D" parent="." unique_id=433992381]
-visible = false
 script = ExtResource("1_8qn1a")
 instance = SubResource("Resource_0qrw6")
 amount = 10

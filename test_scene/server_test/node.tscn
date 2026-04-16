@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c81xliwn11xyv"]
 
-[ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://server_test/multi_camera.gd" id="1_e8r3e"]
+[ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://multi_camera/multi_camera.gd" id="1_e8r3e"]
 [ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator_2d.gd" id="1_rvfql"]
-[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://server_test/Cam.gd" id="2_e8r3e"]
+[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="2_e8r3e"]
 [ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_fiyac"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="5_cmbsr"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="6_464kc"]
@@ -20,6 +20,8 @@ shader = SubResource("ShaderMaterial_iabqt")
 metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_464kc"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_bdq6h"]
 
 [node name="Node2D" type="Node2D" unique_id=367740888]
 visibility_layer = 3
@@ -48,4 +50,5 @@ texture = ExtResource("2_fiyac")
 script = ExtResource("5_cmbsr")
 instance = SubResource("Resource_fcfhf")
 navigation_polygon = SubResource("NavigationPolygon_464kc")
+behavior_tree = SubResource("BehaviorTree_bdq6h")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"

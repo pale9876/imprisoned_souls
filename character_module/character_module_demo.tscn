@@ -17,9 +17,7 @@ right_side_hair = ExtResource("7_36iv7")
 left_side_hair = ExtResource("6_tmitx")
 back_hair = ExtResource("2_trhjk")
 face = ExtResource("4_uiuam")
-face_color = Color(0, 0, 0, 1)
 eye = ExtResource("3_wq5mg")
-eye_color = Color(0, 0, 0, 1)
 metadata/_custom_type_script = "uid://b8aoqif2j64qt"
 
 [node name="CharacterModuleDemo" type="Node2D" unique_id=991299713]

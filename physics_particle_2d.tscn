@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://ck2uv6rrtrn0x"]
-
-[ext_resource type="Script" uid="uid://dcx7busw6glke" path="res://physics_particle_2d.gd" id="1_mjrkq"]
-
-[node name="PhysicsParticle2D" type="MultiMeshInstance2D" unique_id=2146432360]
-script = ExtResource("1_mjrkq")
-hsplit = null
-vsplit = null

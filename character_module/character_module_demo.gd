@@ -2,7 +2,6 @@
 extends EEAD2D
 
 
-
 @export var character_module: CharacterModule
 var character: Character
 
@@ -21,7 +20,7 @@ func create_sprite(texture: Texture2D, draw_index: int, color: Color = Color.WHI
 	RenderingServer.canvas_item_add_texture_rect(
 		sprite.cid,
 		Rect2(- texture.get_size() / 2., texture.get_size()),
-		texture.get_rid()
+		texture.get_rid(), false, color
 	)
 	RenderingServer.canvas_item_set_draw_index(sprite.cid, draw_index)
 	RenderingServer.canvas_item_set_use_parent_material(sprite.cid, true)

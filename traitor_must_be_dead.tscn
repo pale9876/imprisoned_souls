@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="6_y0qeb"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="9_nak2q"]
-[ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose.gd" id="9_x6fug"]
+[ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose_module/pose.gd" id="9_x6fug"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="10_8g455"]
 [ext_resource type="Script" uid="uid://chpo875sjp28p" path="res://path_scope/path_scope.gd" id="10_ab2tb"]
 [ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://animated_parts_module/skill.gd" id="10_pm4g0"]
@@ -15,11 +15,12 @@
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="11_ym5dx"]
 [ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="12_g3sys"]
-[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://server_test/Cam.gd" id="12_ym5dx"]
+[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="12_ym5dx"]
 [ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="13_k7ju8"]
-[ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://server_test/multi_camera.gd" id="13_xj7cu"]
+[ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://multi_camera/multi_camera.gd" id="13_xj7cu"]
 [ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://unit/inner_progress_ui.gd" id="14_6hyso"]
 [ext_resource type="Shader" uid="uid://cnty0ecobwyho" path="res://progress.gdshader" id="15_waig6"]
+[ext_resource type="Script" uid="uid://chmyv3i5lg6po" path="res://pose_module/pose_information.gd" id="16_4ggh8"]
 [ext_resource type="Script" uid="uid://byk7fljca5whk" path="res://canvas_screen_pointer.gd" id="16_xj7cu"]
 [ext_resource type="Script" uid="uid://dkp47oinac6tt" path="res://profile.gd" id="17_xj7cu"]
 [ext_resource type="Script" uid="uid://bv0bsymaq7kwo" path="res://analog_crashed_screen/color_generate_test_screen.gd" id="18_k7ju8"]
@@ -128,6 +129,11 @@ script = ExtResource("11_ym5dx")
 [sub_resource type="Resource" id="Resource_mtpqi"]
 script = ExtResource("11_xj7cu")
 metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
+
+[sub_resource type="Resource" id="Resource_jsaji"]
+script = ExtResource("16_4ggh8")
+init_pose = "idle"
+metadata/_custom_type_script = "uid://chmyv3i5lg6po"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ym5dx"]
 atlas = ExtResource("12_g3sys")
@@ -356,6 +362,7 @@ skills = Dictionary[String, ExtResource("10_pm4g0")]({
 })
 hurtbox_information = SubResource("Resource_k7ju8")
 body_parts = Array[ExtResource("11_xj7cu")]([SubResource("Resource_mtpqi")])
+pose_information = SubResource("Resource_jsaji")
 texture = Dictionary[String, AtlasTexture]({
 "idle_down": SubResource("AtlasTexture_ym5dx")
 })
@@ -365,7 +372,6 @@ script = ExtResource("13_xj7cu")
 camera = Dictionary[String, ExtResource("12_ym5dx")]({
 "Idle": SubResource("Resource_xj7cu")
 })
-metadata/_custom_type_script = "uid://bbvx0b83akfkq"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1672614402]
 
