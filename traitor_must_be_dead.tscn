@@ -16,17 +16,18 @@
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="11_ym5dx"]
 [ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="12_g3sys"]
 [ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="12_ym5dx"]
-[ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="13_k7ju8"]
+[ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://unit/player.gd" id="13_k7ju8"]
 [ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://multi_camera/multi_camera.gd" id="13_xj7cu"]
-[ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://unit/inner_progress_ui.gd" id="14_6hyso"]
+[ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://ui/gradient_progress.gd" id="14_6hyso"]
 [ext_resource type="Script" uid="uid://dn5ye7nafhkbh" path="res://skill_module/skill.gd" id="14_gg7eo"]
 [ext_resource type="Shader" uid="uid://cnty0ecobwyho" path="res://progress.gdshader" id="15_waig6"]
 [ext_resource type="Script" uid="uid://chmyv3i5lg6po" path="res://pose_module/pose_information.gd" id="16_4ggh8"]
 [ext_resource type="Script" uid="uid://byk7fljca5whk" path="res://canvas_screen_pointer.gd" id="16_xj7cu"]
-[ext_resource type="Script" uid="uid://dhjxygaewnshj" path="res://pose_module/pose/idle.gd" id="17_67q55"]
+[ext_resource type="Script" uid="uid://dhjxygaewnshj" path="res://pose_module/pose/idle_pose.gd" id="17_67q55"]
 [ext_resource type="Script" uid="uid://dkp47oinac6tt" path="res://profile.gd" id="17_xj7cu"]
 [ext_resource type="Script" uid="uid://bficp4xgs2cmc" path="res://pose_module/pose/dash_pose.gd" id="18_hkiqx"]
 [ext_resource type="Script" uid="uid://bv0bsymaq7kwo" path="res://analog_crashed_screen/color_generate_test_screen.gd" id="18_k7ju8"]
+[ext_resource type="Script" uid="uid://wbmkbtyq2w6v" path="res://pose_module/pose/move_pose.gd" id="19_hkiqx"]
 [ext_resource type="Texture2D" uid="uid://cnfw58k7xu8su" path="res://aseprite/background_monitor.png" id="19_pm4g0"]
 [ext_resource type="Texture2D" uid="uid://dxtb357p123dv" path="res://aseprite/title_monitor.png" id="21_03xc4"]
 [ext_resource type="Texture2D" uid="uid://cnjrcdrh7u6ex" path="res://analog_crashed_screen/color_generate.tres" id="21_c801g"]
@@ -36,6 +37,8 @@
 [ext_resource type="Texture2D" uid="uid://cr8177oenfga7" path="res://aseprite/color_test_texture.png" id="23_1ukh0"]
 [ext_resource type="Texture2D" uid="uid://cgx3d7vur25kf" path="res://aseprite/right_monitor.png" id="23_4yxht"]
 [ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="32_hmxpe"]
+[ext_resource type="Texture2D" uid="uid://ws8142ui8vu6" path="res://aseprite/ui/class_executioner.png" id="38_my6s6"]
+[ext_resource type="Texture2D" uid="uid://b844k6fcl5dfx" path="res://aseprite/ui/class_puppeteer.png" id="39_weayq"]
 
 [sub_resource type="Resource" id="Resource_waig6"]
 script = ExtResource("3_8acap")
@@ -94,21 +97,12 @@ metadata/_custom_type_script = "uid://bh5hl7parw7s5"
 [sub_resource type="Resource" id="Resource_4ggh8"]
 script = ExtResource("10_ab2tb")
 path_type = 1
-to = Vector2(1280, 760)
+to = Vector2(1280, 720)
 margin = 10.0
 color = Color(0, 0.4745098, 0.4627451, 0.12156863)
 metadata/_custom_type_script = "uid://chpo875sjp28p"
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_k2ry2"]
-
-[sub_resource type="BTSequence" id="BTSequence_pm4g0"]
-
-[sub_resource type="BTSelector" id="BTSelector_y0qeb"]
-children = [SubResource("BTSequence_pm4g0")]
-
-[sub_resource type="BehaviorTree" id="BehaviorTree_x6fug"]
-blackboard_plan = SubResource("BlackboardPlan_k2ry2")
-root_task = SubResource("BTSelector_y0qeb")
+[sub_resource type="BehaviorTree" id="BehaviorTree_my6s6"]
 
 [sub_resource type="Resource" id="Resource_hmxpe"]
 script = ExtResource("10_x6fug")
@@ -117,6 +111,7 @@ metadata/_custom_type_script = "uid://drl2kykjmd5mp"
 [sub_resource type="Resource" id="Resource_ym5dx"]
 script = ExtResource("9_6hyso")
 init_hp = 300
+speed = 300.0
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
 
 [sub_resource type="Resource" id="Resource_63v35"]
@@ -130,10 +125,6 @@ script = ExtResource("11_ym5dx")
 script = ExtResource("11_xj7cu")
 metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
 
-[sub_resource type="Resource" id="Resource_my6s6"]
-script = ExtResource("17_67q55")
-metadata/_custom_type_script = "uid://dhjxygaewnshj"
-
 [sub_resource type="Curve" id="Curve_weayq"]
 _data = [Vector2(0, 1), 0.0, 0.14090493, 0, 0, Vector2(0.5862069, 0.17977536), -4.518349, 0.0, 0, 0, Vector2(1, 0.18), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -143,11 +134,20 @@ script = ExtResource("18_hkiqx")
 motion_curve = SubResource("Curve_weayq")
 metadata/_custom_type_script = "uid://bficp4xgs2cmc"
 
+[sub_resource type="Resource" id="Resource_my6s6"]
+script = ExtResource("17_67q55")
+metadata/_custom_type_script = "uid://dhjxygaewnshj"
+
+[sub_resource type="Resource" id="Resource_weayq"]
+script = ExtResource("19_hkiqx")
+metadata/_custom_type_script = "uid://wbmkbtyq2w6v"
+
 [sub_resource type="Resource" id="Resource_jsaji"]
 script = ExtResource("16_4ggh8")
 data = Dictionary[String, ExtResource("9_x6fug")]({
 "dash": SubResource("Resource_juhcf"),
-"idle": SubResource("Resource_my6s6")
+"idle": SubResource("Resource_my6s6"),
+"move": SubResource("Resource_weayq")
 })
 init_pose = "idle"
 metadata/_custom_type_script = "uid://chmyv3i5lg6po"
@@ -364,7 +364,7 @@ amount = 30
 navigation_polygon = SubResource("NavigationPolygon_6djh5")
 path_scope = SubResource("Resource_4ggh8")
 color = Color(0.20784314, 0.36862746, 0.6509804, 0.25490198)
-behavior_tree = SubResource("BehaviorTree_x6fug")
+behavior_tree = SubResource("BehaviorTree_my6s6")
 awareness_information = SubResource("Resource_hmxpe")
 target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
@@ -904,7 +904,7 @@ metadata/_custom_type_script = "uid://b0w7ljww2qduf"
 [node name="ClassPredator" type="TextureButton" parent="Title/SelectClass/CenterContainer/PanelContainer/HBoxContainer/NinePatchMarginContainer" unique_id=1063425655]
 unique_name_in_owner = true
 layout_mode = 2
-toggle_mode = true
+texture_normal = ExtResource("38_my6s6")
 
 [node name="NinePatchMarginContainer2" type="MarginContainer" parent="Title/SelectClass/CenterContainer/PanelContainer/HBoxContainer" unique_id=1653739215]
 layout_mode = 2
@@ -924,6 +924,7 @@ metadata/_custom_type_script = "uid://b0w7ljww2qduf"
 unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
+texture_normal = ExtResource("39_weayq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1678461789]
 environment = SubResource("Environment_1ukh0")

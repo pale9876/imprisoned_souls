@@ -13,12 +13,13 @@ class_name TraitorMustBeDead
 
 # Player UI
 @onready var character_icon: CharacterProfile = %CharacterIcon
-@onready var hp_progress: GradientProgress2D = %HpProgress
+@onready var hp_progress: GradientProgress = %HpProgress
 
 # Title
 @onready var start_btn: Button = %Start
 
 # Select Class
+@onready var main_title: Control = $Title/MainTitle
 @onready var select_class: Control = %SelectClass
 @onready var class_predator: TextureButton = %ClassPredator
 @onready var class_executioner: TextureButton = %ClassExecutioner
@@ -41,7 +42,20 @@ func _ready() -> void:
 
 
 func select_class_mode() -> void:
-	pass
+	main_title.hide()
+	select_class.show()
+
+	class_predator.pressed.connect(select_class_predator)
+	class_executioner.pressed.connect(select_class_executioner)
+
+
+func select_class_predator() -> void:
+	start()
+
+
+func select_class_executioner() -> void:
+	start()
+
 
 
 func start() -> void:

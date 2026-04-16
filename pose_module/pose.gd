@@ -40,3 +40,7 @@ func tick(_delta: float) -> void:
 # OVERRIDE
 func exit(_data: Dictionary[String, Variant] = {}) -> void:
 	pass
+
+
+func kill() -> void:
+	pass

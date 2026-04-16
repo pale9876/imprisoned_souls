@@ -49,3 +49,9 @@ func update(delta: float) -> void:
 
 func tick(delta: float) -> void:
 	current.tick(delta)
+
+
+func kill() -> void:
+	for pose: Pose in cache.values():
+		pose.kill()
+	

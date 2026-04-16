@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="2_8cexa"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="3_72ji1"]
 [ext_resource type="Script" uid="uid://cfjndtohxvpbf" path="res://animated_parts_module/unit_stat.gd" id="4_72ji1"]
-[ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://player.gd" id="5_ym7sq"]
+[ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://unit/player.gd" id="5_ym7sq"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="6_08e51"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="7_hfj3c"]
 

@@ -67,12 +67,19 @@ func create() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	for i: Instance in arr:
-		if i != null:
+	for instance: Instance in arr:
+		if instance != null:
 			if behavior_tree:
-				var direction: Vector2 = i.position.direction_to(target.global_position)
-				i.last_direction = direction
-				var execute: BT.Status = i.bt.get_root_task().execute(delta)
+				var direction: Vector2 = instance.position.direction_to(target.global_position)
+				instance.last_direction = direction
+				var execute: BT.Status = instance.bt.get_root_task().execute(delta)
+		
+		PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., position))
+		PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., position))
+		
+		RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., position))
+		RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., position))
+		RenderingServer.canvas_item_set_transform(instance.hitbox.cid, Transform2D(0., position))
 
 
 func spawn_instance(index: int) -> Instance:
@@ -84,7 +91,6 @@ func spawn_instance(index: int) -> Instance:
 	
 	# Init Stat
 	inst.stat = Stat.new()
-	
 	inst.stat.hp = instance.unit_information.init_hp
 	inst.stat.atk = instance.unit_information.atk
 	inst.stat.def = instance.unit_information.def
@@ -100,6 +106,9 @@ func spawn_instance(index: int) -> Instance:
 	RenderingServer.canvas_item_set_z_as_relative_to_parent(inst.cid, false)
 	RenderingServer.canvas_item_set_z_index(inst.cid, 0)
 	
+	inst.shape = PhysicsServer2D.rectangle_shape_create()
+	PhysicsServer2D.shape_set_data(inst.shape, instance.size / 2.)
+	
 	# Set Instance Body
 	if has_body:
 		inst.body = PhysicsServer2D.body_create()
@@ -108,8 +117,6 @@ func spawn_instance(index: int) -> Instance:
 		PhysicsServer2D.body_set_collision_mask(inst.body, mask)
 		PhysicsServer2D.body_set_space(inst.body, get_world_2d().space)
 		PhysicsServer2D.body_attach_object_instance_id(inst.body, inst.get_instance_id())
-		inst.shape = PhysicsServer2D.rectangle_shape_create()
-		PhysicsServer2D.shape_set_data(inst.shape, instance.size / 2.)
 		PhysicsServer2D.body_add_shape(inst.body, inst.shape)
 		PhysicsServer2D.body_set_state(inst.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., inst.position))
 	
@@ -157,7 +164,10 @@ func spawn_instance(index: int) -> Instance:
 
 
 	# Init Behavior
-	inst.bt = BehaviorTree.new()
+	if behavior_tree:
+		inst.bt = behavior_tree.clone()
+	else:
+		inst.bt = BehaviorTree.new()
 	var sequence: BTSequence = BTSequence.new()
 	
 	var task_is_in_range: IsInRange = IsInRange.new()
@@ -252,33 +262,35 @@ func create_path() -> void:
 			index += 1
 		
 		# [0 1 0 1] [2 3 1 2] [4 5 2 3] [6 7 3 0]
-		
-		RenderingServer.canvas_item_set_transform(
-			scope.cid, Transform2D(0., Vector2())
-		)
-		RenderingServer.canvas_item_add_rect(
-			scope.cid, scope.rect, path_scope.color
-		)
-		RenderingServer.canvas_item_add_multiline(
-			scope.cid, polygon, [Color.WHITE], 1.
-		)
+		if Engine.is_editor_hint():
+			RenderingServer.canvas_item_set_transform(
+				scope.cid, Transform2D(0., Vector2())
+			)
+			RenderingServer.canvas_item_add_rect(
+				scope.cid, scope.rect, path_scope.color
+			)
+			RenderingServer.canvas_item_add_multiline(
+				scope.cid, polygon, [Color.WHITE], 1.
+			)
 
 	elif scope.type == PathScope.PATH_TYPE_LINE:
 		scope.path.add_point(scope.rect.position)
 		scope.path.add_point(scope.rect.size)
 		
-		RenderingServer.canvas_item_add_line(
-			scope.cid, scope.rect.position, scope.rect.size, Color(0.0, 1.0, 1.0, 1.0), 3.
-		)
+		if Engine.is_editor_hint():
+			RenderingServer.canvas_item_add_line(
+				scope.cid, scope.rect.position, scope.rect.size, Color(0.0, 1.0, 1.0, 1.0), 3.
+			)
 
 	elif scope.type == PathScope.PATH_TYPE_CIRCLE:
 		var radius: float = scope.rect.position.distance_to(scope.rect.size)
 		for i: int in range(64):
 			scope.path.add_point(scope.rect.position + Vector2.from_angle((TAU / 64.) * float(i)) * radius)
 		
-		RenderingServer.canvas_item_add_circle(
-			scope.cid, scope.rect.position, radius, Color(0.0, 1.0, 1.0, 1.0)
-		)
+		if Engine.is_editor_hint():
+			RenderingServer.canvas_item_add_circle(
+				scope.cid, scope.rect.position, radius, Color(0.0, 1.0, 1.0, 1.0)
+			)
 
 
 class Instance extends RefCounted:
@@ -352,13 +364,6 @@ class Instance extends RefCounted:
 		else:
 			position += motion
 		
-		PhysicsServer2D.area_set_transform(awareness.rid, Transform2D(0., position))
-		PhysicsServer2D.area_set_transform(hurtbox.rid, Transform2D(0., position))
-		
-		RenderingServer.canvas_item_set_transform(cid, Transform2D(0., position))
-		RenderingServer.canvas_item_set_transform(awareness.cid, Transform2D(0., position))
-		RenderingServer.canvas_item_set_transform(hitbox.cid, Transform2D(0., position))
-
 		return motion_result
 
 
@@ -422,7 +427,7 @@ class IsInRange extends BTAction:
 	
 	func _tick(delta: float) -> Status:
 		if !instance.awareness.has_target:
-			instance.move(
+			var motion_result: MotionResult = instance.move(
 				instance.last_direction * instance.stat.speed * delta, instance.space
 			)
 			return RUNNING
@@ -461,14 +466,8 @@ class Scope:
 	var cid: RID
 
 
-class MotionResult:
-	var collider: Object
-	var normal: Vector2
-	var remainder: Vector2
-	var safe_proportion: float
-	var unsafe_proportion: float
-	var point: Vector2
-
-
 class DamagePopupText:
-	var duration
+	var cid: RID
+	var value: int
+	var duration: float = .3
+	var curve: Curve

@@ -1,6 +1,6 @@
 @tool
 extends Node2D
-class_name GradientProgress2D
+class_name GradientProgress
 
 @export var PROGRESS_SHADER: ShaderMaterial
 @export var TRAUMA_SHADER: ShaderMaterial

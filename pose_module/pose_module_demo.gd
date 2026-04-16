@@ -9,7 +9,7 @@ var pose_module: PoseModule
 
 func _enter_tree() -> void:
 	pose_module = PoseModule.new()
-	pose_module.init_data(pose_information.data, pose_information.init_pose, {"duration": 5.})
+	pose_module.init_data(pose_information, self, {"duration": 5.})
 
 
 func _process(delta: float) -> void:
