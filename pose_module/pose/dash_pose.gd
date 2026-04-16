@@ -1,10 +1,10 @@
 @tool
 extends Pose
-class_name Dash
+class_name DashPose
 
 
 @export var motion: Vector2 = Vector2()
-@export var motion_curve: Curve2D = Curve2D.new()
+@export var motion_curve: Curve = Curve.new()
 @export var duration: float = .75
 
 

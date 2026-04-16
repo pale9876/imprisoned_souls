@@ -18,8 +18,8 @@ func change_pose(pose_name: String) -> bool:
 	return true
 
 
-func condition() -> bool:
-	return true
+func can_enter(_condition: bool = true) -> bool:
+	return true and _condition
 
 
 # OVERRIDE

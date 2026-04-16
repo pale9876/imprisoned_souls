@@ -2,11 +2,13 @@
 extends CollideInformation
 class_name HitboxInformation
 
+
 enum Type {
 	NONE = 0,
 	SHORT_RANGE,
 	LONG_RANGE,
 }
+
 
 @export var range: float = 10.
 @export var damage: int = 30

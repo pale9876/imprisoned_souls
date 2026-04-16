@@ -24,10 +24,10 @@ signal health_changed(value: float)
 
 @export_category("Resources")
 @export var unit_information: UnitInformation = UnitInformation.new()
-@export var skills: Dictionary[String, SkillInformation]
+@export var skill_information: SkillInformation = SkillInformation.new()
 @export var hurtbox_information: HurtboxInformation = HurtboxInformation.new()
 @export var body_parts: Array[AnimatedPart]
-@export var pose_information: PoseInformation
+@export var pose_information: PoseInformation = PoseInformation.new()
 
 
 @export_category("Canvas")
@@ -50,14 +50,16 @@ var _onfloor: bool = false
 var _onceil: bool = false
 
 var _hurtbox: Hurtbox
-var skill_arr: Array[Skill]
+#var skill_arr: Array[Skill]
 
 var cid: RID
 
 var stat: Stat
 #var dash: Dash
 var last_direciton: Vector2 = Vector2()
+
 var pose_module: PoseModule
+var skill_module: SkillModule
 
 
 func _enter_tree() -> void:
@@ -65,21 +67,21 @@ func _enter_tree() -> void:
 		create()
 
 
-func use_skill(skill: Skill) -> SkillResult:
-	var result: SkillResult = SkillResult.new()
-	var target: Legion.Instance = instance_from_id(skill.awareness_area.entered.pick_random()) as Legion.Instance
-	var target_position: Vector2 = target.position
-	var param: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(
-		global_position, target_position, mask, [body.rid]
-	)
-	
-	var ray_result: Dictionary = get_world_2d().direct_space_state.intersect_ray(param)
-	
-	if !ray_result.is_empty():
-		if result["collider"] == target:
-			result.hit = true
-	
-	return result
+#func use_skill(skill: Skill) -> SkillResult:
+	#var result: SkillResult = SkillResult.new()
+	#var target: Legion.Instance = instance_from_id(skill.awareness_area.entered.pick_random()) as Legion.Instance
+	#var target_position: Vector2 = target.position
+	#var param: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(
+		#global_position, target_position, mask, [body.rid]
+	#)
+	#
+	#var ray_result: Dictionary = get_world_2d().direct_space_state.intersect_ray(param)
+	#
+	#if !ray_result.is_empty():
+		#if result["collider"] == target:
+			#result.hit = true
+	#
+	#return result
 
 
 func _physics_process(delta: float) -> void:
@@ -108,20 +110,17 @@ func _physics_process(delta: float) -> void:
 	if pose_module:
 		pose_module.tick(delta)
 
-	if !skill_arr.is_empty():
-		for skill: Skill in skill_arr:
-			if !skill.enable():
-				skill.cooldown -= delta
-			else:
-				if skill.awareness_area.is_enemy():
-					var result: SkillResult = use_skill(skill)
+	#if !skill_arr.is_empty():
+		#for skill: Skill in skill_arr:
+			#if !skill.enable():
+				#skill.cooldown -= delta
+			#else:
+				#if skill.awareness_area.is_enemy():
+					#var result: SkillResult = use_skill(skill)
 			
-			PhysicsServer2D.area_set_transform(skill.awareness_area.rid, get_global_transform())
-	
-
-	
+	#PhysicsServer2D.area_set_transform(skill.awareness_area.rid, get_global_transform())
 	PhysicsServer2D.area_set_transform(_hurtbox.rid, get_global_transform())
-	
+
 
 func dashing(motion: Vector2, delta: float) -> void:
 	#dash.duration -= delta
@@ -288,26 +287,32 @@ func create() -> void:
 		PhysicsServer2D.area_add_shape(_hurtbox.rid, _hurtbox.shape)
 		PhysicsServer2D.shape_set_data(_hurtbox.shape, _hurtbox.size / 2.)
 		
-		if !skills.is_empty():
-			for skill_name: String in skills:
-				var info: SkillInformation = skills[skill_name]
-				var s: Skill = Skill.new()
-				
-				var awareness_area: AwarenessArea = AwarenessArea.new()
-				awareness_area.rid = PhysicsServer2D.area_create()
-				PhysicsServer2D.area_set_space(awareness_area.rid, get_world_2d().space)
-				PhysicsServer2D.area_attach_object_instance_id(awareness_area.rid, awareness_area.get_instance_id())
-				PhysicsServer2D.area_set_monitorable(awareness_area.rid, false)
-				
-				awareness_area.shape = PhysicsServer2D.circle_shape_create()
-				PhysicsServer2D.shape_set_data(awareness_area.shape, info.skill_range)
-				PhysicsServer2D.area_add_shape(awareness_area.rid, awareness_area.shape)
-				PhysicsServer2D.area_set_monitor_callback(awareness_area.rid, unit_entered_awareness_area.bind(awareness_area))
-				PhysicsServer2D.area_set_transform(awareness_area.rid, get_global_transform())
-				
-				s.awareness_area = awareness_area
+		#if !skills.is_empty():
+			#for skill_name: String in skills:
+				#var info: SkillInformation = skills[skill_name]
+				#var s: Skill = Skill.new()
+				#
+				#var awareness_area: AwarenessArea = AwarenessArea.new()
+				#awareness_area.rid = PhysicsServer2D.area_create()
+				#PhysicsServer2D.area_set_space(awareness_area.rid, get_world_2d().space)
+				#PhysicsServer2D.area_attach_object_instance_id(awareness_area.rid, awareness_area.get_instance_id())
+				#PhysicsServer2D.area_set_monitorable(awareness_area.rid, false)
+				#
+				#awareness_area.shape = PhysicsServer2D.circle_shape_create()
+				#PhysicsServer2D.shape_set_data(awareness_area.shape, info.skill_range)
+				#PhysicsServer2D.area_add_shape(awareness_area.rid, awareness_area.shape)
+				#PhysicsServer2D.area_set_monitor_callback(awareness_area.rid, unit_entered_awareness_area.bind(awareness_area))
+				#PhysicsServer2D.area_set_transform(awareness_area.rid, get_global_transform())
+				#
+				#s.awareness_area = awareness_area
 	
 	#dash = Dash.new()
+	
+	skill_module = SkillModule.new()
+	skill_module.init(skill_information, self)
+	
+	pose_module = PoseModule.new()
+	pose_module.init_data(pose_information)
 	
 	init = true
 
@@ -335,8 +340,8 @@ func kill() -> void:
 	if _hurtbox:
 		free_hurtbox()
 
-	if !skill_arr.is_empty():
-		free_skill()
+	#if !skill_arr.is_empty():
+		#free_skill()
 
 
 func free_hurtbox() -> void:
@@ -345,10 +350,10 @@ func free_hurtbox() -> void:
 
 	_hurtbox = null
 
-
-func free_skill() -> void:
-	for s: Skill in skill_arr:
-		PhysicsServer2D.free_rid(s.awareness_area)
+#
+#func free_skill() -> void:
+	#for s: Skill in skill_arr:
+		#PhysicsServer2D.free_rid(s.awareness_area)
 
 
 func unit_entered_awareness_area(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, awareness_area: AwarenessArea) -> void:
@@ -421,18 +426,18 @@ class Hitbox extends RefCounted:
 	var look_target: bool = false
 
 
-class Skill extends RefCounted:
-	var ray_type: int = SkillInformation.RAYTYPE_CAST
-	var attack_type: int = SkillInformation.ATK_EXPLOSION
-	var awareness_area: AwarenessArea
-	var cooltime: float
-	var cooldown: float:
-		set(value):
-			cooldown = maxf(value, 0.)
-	var hitbox: Hitbox
-
-	func enable() -> bool:
-		return cooldown == 0.
+#class Skill extends RefCounted:
+	#var ray_type: int = SkillInformation.RAYTYPE_CAST
+	#var attack_type: int = SkillInformation.ATK_EXPLOSION
+	#var awareness_area: AwarenessArea
+	#var cooltime: float
+	#var cooldown: float:
+		#set(value):
+			#cooldown = maxf(value, 0.)
+	#var hitbox: Hitbox
+#
+	#func enable() -> bool:
+		#return cooldown == 0.
 
 
 class AwarenessArea extends RefCounted:
@@ -469,9 +474,3 @@ class Stat extends RefCounted:
 		#_cooldown = cooltime
 		#self.duration = duration
 		#active = true
-
-
-class SkillResult:
-	var target: int
-	var point: Vector2
-	var hit: bool = false

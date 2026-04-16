@@ -3,7 +3,7 @@ extends RefCounted
 class_name PoseModule
 
 
-var owner: Node
+var owner: int
 var cache: Dictionary[String, Pose]
 var current: Pose
 
@@ -12,13 +12,14 @@ func has_pose(pose_name: String) -> bool:
 	return cache.has(pose_name)
 
 
-func init_data(data: Dictionary[String, Pose], init: String, enter_data: Dictionary[String, Variant] = {}) -> void:
-	cache = data
+func init_data(info: PoseInformation, _owner: Node = null, enter_data: Dictionary[String, Variant] = {}) -> void:
+	cache = info.data
+	if _owner: owner = _owner.get_instance_id()
 
-	for pose: Pose in data.values():
+	for pose: Pose in info.data.values():
 		pose.init(self)
 	
-	current = cache[init]
+	current = cache[info.init_pose]
 	current.enter(enter_data)
 
 
@@ -30,8 +31,8 @@ func add_pose(pose_name: String, pose: Pose) -> bool:
 	return true
 
 
-func change_pose(pose_name: String, enter_data: Dictionary[String, Variant] = {}, exit_data: Dictionary[String, Variant] = {}) -> void:
-	if cache.has(pose_name) and cache[pose_name].can_enter():
+func change_pose(pose_name: String, _condition: bool = true, enter_data: Dictionary[String, Variant] = {}, exit_data: Dictionary[String, Variant] = {}) -> void:
+	if cache.has(pose_name) and cache[pose_name].can_enter(_condition):
 		current.exit(exit_data)
 		current = cache[pose_name]
 		current.enter(enter_data)
