@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dubufq3q25thq"]
+
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://test_scene/server_test/endeka.gd" id="1_6n3c2"]
+[ext_resource type="Script" uid="uid://d3ctvhdggm848" path="res://test_scene/server_test/test_eead_script.gd" id="2_7pbbh"]
+
+[node name="Endeka" type="CanvasLayer" unique_id=1443679806]
+script = ExtResource("1_6n3c2")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
+
+[node name="EEAD" type="Node" parent="." unique_id=1720756910]
+script = ExtResource("2_7pbbh")
+color = Color(0.7, 0.32900003, 0.32900003, 1)
+z_value = 100.0
+position = Vector2(5, 5)
+metadata/_custom_type_script = "uid://dv8iprcieglbg"
+
+[node name="EEAD2" type="Node" parent="." unique_id=2021505887]
+script = ExtResource("2_7pbbh")
+color = Color(0.32900003, 0.50213337, 0.7, 1)
+z_value = 30.0
+position = Vector2(0, -5)
+metadata/_custom_type_script = "uid://dv8iprcieglbg"
+
+[node name="EEAD3" type="Node" parent="." unique_id=605870185]
+script = ExtResource("2_7pbbh")
+color = Color(0.7, 0.32900003, 0.5330499, 1)
+z_value = 20.0
+metadata/_custom_type_script = "uid://dv8iprcieglbg"
+
+[node name="EEAD4" type="Node" parent="." unique_id=1114731974]
+script = ExtResource("2_7pbbh")
+color = Color(0.4712167, 0.7, 0.32900003, 1)
+z_value = 15.0
+position = Vector2(2.5, 3)
+metadata/_custom_type_script = "uid://dv8iprcieglbg"

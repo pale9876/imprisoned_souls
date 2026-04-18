@@ -1,5 +1,5 @@
 @tool
-extends EEAD2D
+extends EEAD
 class_name UnderpassModule
 
 
@@ -16,9 +16,12 @@ func _enter_tree() -> void:
 		create()
 
 
+
 func create() -> void:
 	if init:
 		kill()
+	
+	RenderingServer.canvas_item_set_parent(get_canvas_item(), get_canvas())
 	
 	if !underpass_line.is_empty():
 		arr.resize(underpass_line.size())
@@ -34,8 +37,8 @@ func create() -> void:
 			
 			a.body = PhysicsServer2D.body_create()
 			PhysicsServer2D.body_set_mode(a.body, PhysicsServer2D.BODY_MODE_STATIC)
-			PhysicsServer2D.body_set_state(a.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., global_position + a.pos))
-			PhysicsServer2D.body_set_space(a.body, get_world_2d().space)
+			PhysicsServer2D.body_set_state(a.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., a.pos))
+			PhysicsServer2D.body_set_space(a.body, get_viewport().world_2d.space)
 			PhysicsServer2D.body_set_collision_mask(a.body, mask)
 			
 			var area_rect: Rect2 = Rect2(underpass_line[i].pos, underpass_line[i].size)
@@ -75,7 +78,6 @@ func create() -> void:
 			
 			if Engine.is_editor_hint() or debug_mode:
 				RenderingServer.canvas_item_set_transform(a.cid, Transform2D(0., a.pos))
-				
 				RenderingServer.canvas_item_add_rect(
 					a.cid, Rect2(- a.size / 2., a.size), Color(0.42, 1.0, 0.913, 0.365)
 				)

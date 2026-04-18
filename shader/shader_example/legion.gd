@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+extends EEAD
 class_name Legion
 
 
@@ -35,14 +35,12 @@ var nav_map: RID
 var region: RID
 var scope: Scope
 
-var init: bool = false
-
 @export var target: Node2D
-
-@export_tool_button("Create", "2D") var _create: Callable = create
 
 
 func create() -> void:
+	RenderingServer.canvas_item_set_parent(get_canvas_item(), get_canvas())
+	
 	if !instance or amount <= 0: return
 
 	#nav_map = NavigationServer2D.map_create()
@@ -85,7 +83,7 @@ func _physics_process(delta: float) -> void:
 func spawn_instance(index: int) -> Instance:
 	var inst: Instance = Instance.new()
 	
-	inst.space = get_world_2d().space
+	inst.space = get_viewport().world_2d.space
 	var spawn_point: Vector2 = scope.path.sample_baked(scope.path.get_baked_length() * randf())
 	inst.position = spawn_point + (spawn_point.direction_to(scope.rect.size / 2.) * path_scope.margin)
 	
@@ -115,7 +113,7 @@ func spawn_instance(index: int) -> Instance:
 		PhysicsServer2D.body_set_mode(inst.body, PhysicsServer2D.BODY_MODE_KINEMATIC)
 		PhysicsServer2D.body_set_collision_layer(inst.body, layer)
 		PhysicsServer2D.body_set_collision_mask(inst.body, mask)
-		PhysicsServer2D.body_set_space(inst.body, get_world_2d().space)
+		PhysicsServer2D.body_set_space(inst.body, get_viewport().world_2d.space)
 		PhysicsServer2D.body_attach_object_instance_id(inst.body, inst.get_instance_id())
 		PhysicsServer2D.body_add_shape(inst.body, inst.shape)
 		PhysicsServer2D.body_set_state(inst.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., inst.position))
@@ -123,7 +121,7 @@ func spawn_instance(index: int) -> Instance:
 	# Init Hurtbox
 	inst.hurtbox = Hurtbox.new()
 	inst.hurtbox.rid = PhysicsServer2D.area_create()
-	PhysicsServer2D.area_set_space(inst.hurtbox.rid, get_world_2d().space)
+	PhysicsServer2D.area_set_space(inst.hurtbox.rid, get_viewport().world_2d.space)
 	inst.hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
 	PhysicsServer2D.shape_set_data(inst.hurtbox.shape, inst.hurtbox.size)
 	PhysicsServer2D.area_attach_object_instance_id(inst.hurtbox.rid, inst.get_instance_id())
@@ -138,7 +136,7 @@ func spawn_instance(index: int) -> Instance:
 	inst.awareness.radius = awareness_information.radius
 	inst.awareness.position = awareness_information.position
 	PhysicsServer2D.area_set_transform(inst.awareness.rid, Transform2D(0., inst.position))
-	PhysicsServer2D.area_set_space(inst.awareness.rid, get_world_2d().space)
+	PhysicsServer2D.area_set_space(inst.awareness.rid, get_viewport().world_2d.space)
 	PhysicsServer2D.area_attach_object_instance_id(inst.awareness.rid, inst.get_instance_id())
 	PhysicsServer2D.area_set_monitor_callback(inst.awareness.rid, target_awareness_area_entered.bind(inst))
 	inst.awareness.shape = PhysicsServer2D.circle_shape_create()

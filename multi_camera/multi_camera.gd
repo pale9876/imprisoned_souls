@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+extends EEAD
 class_name MultiCamera
 
 
@@ -10,13 +10,10 @@ class_name MultiCamera
 
 
 @export var camera: Dictionary[String, Cam]
-@export var current: String = "Idle"
+@export var current: String = "idle"
 
 
 @export_tool_button("Draw Camera", "2D") var _draw_cameras: Callable = draw_camera_rect
-
-
-var init: bool = false
 
 
 func set_viewport_canvas_transform() -> void:
@@ -25,7 +22,7 @@ func set_viewport_canvas_transform() -> void:
 	var cam: Cam = camera[current]
 	var vp_xform: Transform2D = Transform2D(
 		0., Vector2.ONE * cam.zoom,
-		0., ((global_position + cam.position) - (get_viewport_rect().size * cam.zoom / 2.)).floor()
+		0., (cam.position - (get_viewport().get_visible_rect().size * cam.zoom / 2.)).floor()
 	)
 	
 	get_viewport().canvas_transform = vp_xform.affine_inverse()

@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 class_name DamagePopup
 
@@ -6,7 +7,9 @@ var cid: RID
 var text_shape: RID
 var value: int
 var duration: float = .3
-var curve: Curve
+var scale_curve: Curve
+var parabola: Curve
+var size: Vector2 = Vector2.ONE
 
 
 func popup() -> void:

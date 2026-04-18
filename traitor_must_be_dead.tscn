@@ -15,7 +15,6 @@
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="11_ym5dx"]
 [ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="12_g3sys"]
-[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="12_ym5dx"]
 [ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://unit/player.gd" id="13_k7ju8"]
 [ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://multi_camera/multi_camera.gd" id="13_xj7cu"]
 [ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://ui/gradient_progress.gd" id="14_6hyso"]
@@ -40,11 +39,9 @@
 [ext_resource type="Texture2D" uid="uid://ws8142ui8vu6" path="res://aseprite/ui/class_executioner.png" id="38_my6s6"]
 [ext_resource type="Texture2D" uid="uid://b844k6fcl5dfx" path="res://aseprite/ui/class_puppeteer.png" id="39_weayq"]
 
-[sub_resource type="Resource" id="Resource_waig6"]
+[sub_resource type="Resource" id="Resource_v0yr8"]
 script = ExtResource("3_8acap")
-name = "StartRoom"
 size = Vector2(1280, 720)
-modulate = Color(1, 0.61960787, 0.61960787, 0.4392157)
 closed = true
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
@@ -155,13 +152,6 @@ metadata/_custom_type_script = "uid://chmyv3i5lg6po"
 [sub_resource type="AtlasTexture" id="AtlasTexture_ym5dx"]
 atlas = ExtResource("12_g3sys")
 region = Rect2(0, 0, 64, 32)
-
-[sub_resource type="Resource" id="Resource_xj7cu"]
-script = ExtResource("12_ym5dx")
-position = Vector2(320, 180)
-color = Color(0, 0, 0.54901963, 0.4392157)
-speed = 600.0
-metadata/_custom_type_script = "uid://betj1u6dfr7n"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waig6"]
 shader = ExtResource("15_waig6")
@@ -346,10 +336,9 @@ camera = NodePath("Ingame/MultiCamera")
 [node name="Ingame" type="CanvasLayer" parent="." unique_id=983916863]
 follow_viewport_enabled = true
 
-[node name="UnderpassModule" type="Node2D" parent="Ingame" unique_id=1082153666]
-position = Vector2(640, 360)
+[node name="UnderpassModule" type="Node" parent="Ingame" unique_id=1840338606]
 script = ExtResource("1_xj7cu")
-underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_waig6")])
+underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8")])
 metadata/_custom_type_script = "uid://dc7volit4rbgy"
 
 [node name="MultiBloodParticle" type="Node2D" parent="Ingame" unique_id=387503954]
@@ -358,6 +347,8 @@ texture = SubResource("GradientTexture2D_ym5dx")
 multimesh = SubResource("MultiMesh_waig6")
 
 [node name="Legion" type="Node2D" parent="Ingame" unique_id=1659406924 node_paths=PackedStringArray("target")]
+visible = null
+position = null
 script = ExtResource("9_nak2q")
 instance = SubResource("Resource_6djh5")
 amount = 30
@@ -367,6 +358,11 @@ color = Color(0.20784314, 0.36862746, 0.6509804, 0.25490198)
 behavior_tree = SubResource("BehaviorTree_my6s6")
 awareness_information = SubResource("Resource_hmxpe")
 target = NodePath("../Player")
+do_not_test_in_editor = null
+pin = null
+z_value = null
+position = null
+visible = null
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
@@ -382,11 +378,9 @@ texture = Dictionary[String, AtlasTexture]({
 "idle_down": SubResource("AtlasTexture_ym5dx")
 })
 
-[node name="MultiCamera" type="Node2D" parent="Ingame" unique_id=1836037614]
+[node name="MultiCamera" type="Node" parent="Ingame" unique_id=1567520709]
 script = ExtResource("13_xj7cu")
-camera = Dictionary[String, ExtResource("12_ym5dx")]({
-"Idle": SubResource("Resource_xj7cu")
-})
+metadata/_custom_type_script = "uid://bbvx0b83akfkq"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1672614402]
 
@@ -417,6 +411,7 @@ metadata/_custom_type_script = "uid://ca82fhyokguoj"
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=528270557]
 unique_name_in_owner = true
+visible = false
 
 [node name="BackgroundMonitor" type="Node2D" parent="Title" unique_id=2109883242]
 modulate = Color(0.55, 0.55, 0.55, 1)
