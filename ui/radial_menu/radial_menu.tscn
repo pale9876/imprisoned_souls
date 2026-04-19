@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://dv4r0urbv5qqn"]
-
-[ext_resource type="Script" uid="uid://cpak8ijiw63wr" path="res://radial_menu.gd" id="1_pkr1m"]
-
-[node name="RadialMenu" type="Control" unique_id=722923453]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_pkr1m")

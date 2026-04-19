@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bwrn4w7gjrq2y"]
 
-[ext_resource type="Script" uid="uid://c0vs0bec2o1dl" path="res://mouse_interactable_area_2d.gd" id="1_8qn1a"]
-[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="2_sr0vo"]
+[ext_resource type="Script" uid="uid://c0vs0bec2o1dl" path="res://interactable_legion/interactable_legion.gd" id="1_8qn1a"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://legion/legion_instance.gd" id="2_sr0vo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2g3mv"]
 

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://s6yyh45upc82"]
 
-[ext_resource type="Script" uid="uid://de81ff1ldxyju" path="res://slide_texture_rect.gd" id="1_b6p6w"]
+[ext_resource type="Script" uid="uid://de81ff1ldxyju" path="res://slide_texture_rect/slide_texture_rect.gd" id="1_b6p6w"]
 [ext_resource type="Texture2D" uid="uid://d4bktd58troel" path="res://aseprite/reference/Saya.(Saya.no.Uta).full.159658.jpg" id="2_v1vot"]
 [ext_resource type="Texture2D" uid="uid://bjammpo5iljw6" path="res://aseprite/reference/Saya.(Saya.no.Uta).full.352179.jpg" id="3_xr3jk"]
 [ext_resource type="Texture2D" uid="uid://cukmei53aovwu" path="res://aseprite/reference/Tsukuba.You.1024.315167.webp" id="4_krc4s"]

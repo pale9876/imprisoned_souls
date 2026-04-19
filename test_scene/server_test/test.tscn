@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator/reflect_replicator.gd" id="1_rvfql"]
 [ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="2_e8r3e"]
 [ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_fiyac"]
-[ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="5_cmbsr"]
-[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://shader/shader_example/rect_instance.gd" id="6_464kc"]
+[ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://legion/legion.gd" id="5_cmbsr"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://legion/legion_instance.gd" id="6_464kc"]
 
 [sub_resource type="Resource" id="Resource_cmbsr"]
 script = ExtResource("2_e8r3e")

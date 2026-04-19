@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dubufq3q25thq"]
 
-[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://test_scene/server_test/endeka.gd" id="1_6n3c2"]
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="1_6n3c2"]
 [ext_resource type="Script" uid="uid://d3ctvhdggm848" path="res://test_scene/server_test/test_eead_script.gd" id="2_7pbbh"]
 
 [node name="Endeka" type="CanvasLayer" unique_id=1443679806]

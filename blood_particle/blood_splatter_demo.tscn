@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3c4lnk8cw8fy"]
 
-[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://test_scene/server_test/endeka.gd" id="1_kwpx6"]
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="1_kwpx6"]
 [ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://blood_particle/multi_blood_particle.gd" id="1_p3gpb"]
 [ext_resource type="Script" uid="uid://b5vtdgljdq56k" path="res://blood_particle/eead_hexahedron.gd" id="3_kwpx6"]
 [ext_resource type="Script" uid="uid://ccb60t84b0coj" path="res://blood_particle/eead_crystal.gd" id="4_ucevt"]
