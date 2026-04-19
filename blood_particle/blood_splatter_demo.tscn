@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://c3c4lnk8cw8fy"]
+
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://test_scene/server_test/endeka.gd" id="1_kwpx6"]
+[ext_resource type="Script" uid="uid://2xtym36a6p3x" path="res://blood_particle/multi_blood_particle.gd" id="1_p3gpb"]
+
+[sub_resource type="Gradient" id="Gradient_p3gpb"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.68115944)
+colors = PackedColorArray(1, 0.089999974, 0.089999974, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kwpx6"]
+gradient = SubResource("Gradient_p3gpb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_hvw5l"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_p3gpb"]
+mesh = SubResource("QuadMesh_hvw5l")
+
+[sub_resource type="Curve" id="Curve_hvw5l"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=307896430]
+script = ExtResource("1_kwpx6")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
+
+[node name="MultiBloodParticle" type="Node" parent="." unique_id=1433955316]
+script = ExtResource("1_p3gpb")
+texture = SubResource("GradientTexture2D_kwpx6")
+multimesh = SubResource("MultiMesh_p3gpb")
+amount = 100
+max_size = 32.0
+min_size = 64.0
+scale_curve = SubResource("Curve_hvw5l")
+metadata/_custom_type_script = "uid://2xtym36a6p3x"

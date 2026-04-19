@@ -56,6 +56,7 @@ func _notification(what: int) -> void:
 			RenderingServer.canvas_item_set_parent(
 				get_canvas_item(), get_canvas()
 			)
+
 	elif what == NOTIFICATION_EXIT_TREE:
 		RenderingServer.canvas_item_set_parent(get_canvas_item(), RID())
 
