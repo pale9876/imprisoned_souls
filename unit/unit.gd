@@ -178,7 +178,8 @@ func hit(status: PhysicsServer2D.AreaBodyStatus, area_rid: RID, instance_id: int
 
 
 func damaged(value: int) -> void:
-	print("Player damaged => ", value)
+	#print("Player damaged => ", value)
+	pass
 
 
 class Body extends RefCounted:

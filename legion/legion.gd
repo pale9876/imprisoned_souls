@@ -73,6 +73,7 @@ func _physics_process(delta: float) -> void:
 		
 		PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., instance.position))
 		PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., instance.position))
+		#PhysicsServer2D.area_set_transform(instance.hitbox.rid, Transform2D(0., instance.position))
 		
 		RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., instance.position))
 		RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., instance.position))
@@ -121,8 +122,8 @@ func spawn_instance(_index: int) -> Instance:
 	instance.hurtbox = Hurtbox.new()
 	instance.hurtbox.rid = PhysicsServer2D.area_create()
 	PhysicsServer2D.area_set_space(instance.hurtbox.rid, get_viewport().world_2d.space)
-	instance.hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
-	PhysicsServer2D.shape_set_data(instance.hurtbox.shape, instance.hurtbox.size)
+	instance.hurtbox.shape = PhysicsServer2D.circle_shape_create()
+	PhysicsServer2D.shape_set_data(instance.hurtbox.shape, instance.hurtbox.size.x)
 	PhysicsServer2D.area_set_monitorable(instance.hurtbox.rid, true)
 	PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., instance.position))
 	PhysicsServer2D.area_attach_object_instance_id(instance.hurtbox.rid, instance.get_instance_id())
@@ -189,7 +190,7 @@ func target_awareness_area_entered(status: PhysicsServer2D.AreaBodyStatus, body_
 
 func damaged(instance: Instance, value: int) -> void:
 	instance.stat.hp -= value
-	print("legion_information damaged => ", value)
+	print("instance damaged => ", value)
 	
 	if instance.stat.hp <= 0:
 		pass
@@ -236,7 +237,7 @@ func kill() -> void:
 
 func create_path() -> void:
 	scope = Scope.new()
-	print("Created Scope")
+	#print("Created Scope")
 	
 	scope.type = path_scope.path_type
 	scope.rect = Rect2(path_scope.from, path_scope.to)
@@ -345,10 +346,11 @@ class Instance extends RefCounted:
 		var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 		
 		shape_param.collide_with_areas = true
-		shape_param.collide_with_bodies = false
+		#shape_param.collide_with_bodies = false
 		shape_param.shape_rid = shape
 		shape_param.transform = Transform2D(0., from)
 		shape_param.motion = motion
+		shape_param.margin = 3.
 		
 		var rest_info: Dictionary = direct_space.get_rest_info(shape_param)
 		var cast_motion: PackedFloat32Array = direct_space.cast_motion(shape_param)
@@ -364,6 +366,25 @@ class Instance extends RefCounted:
 			motion_result.unsafe_proportion = unsafe_proportion
 			motion_result.normal = rest_info["normal"] as Vector2
 			motion_result.point = rest_info["point"] as Vector2
+			
+			if !test:
+				if motion_result.collider is Instance:
+					if safe_proportion > .01:
+						position += motion * (safe_proportion)
+					
+					var remainder_shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+					remainder_shape_param.shape_rid = shape
+					remainder_shape_param.transform = Transform2D(0., position)
+					remainder_shape_param.motion = motion_result.remainder * Vector2.from_angle(snappedf(motion_result.normal.angle(), PI / 6.))
+					remainder_shape_param.collide_with_areas = true
+					remainder_shape_param.collide_with_bodies = false
+					
+					var remainder_proportion: PackedFloat32Array = direct_space.cast_motion(remainder_shape_param)
+					
+					if remainder_proportion[0] > .01:
+						position += remainder_shape_param.motion * (remainder_proportion[0])
+				else:
+					position += motion * safe_proportion
 		else:
 			if !test:
 				position += motion
@@ -378,6 +399,7 @@ class Instance extends RefCounted:
 				obj.damaged(hitbox.damage)
 				hitbox.result = HitResult.new()
 				hitbox.result.hit = true
+
 
 class Stat extends RefCounted:
 	var hp: int:
