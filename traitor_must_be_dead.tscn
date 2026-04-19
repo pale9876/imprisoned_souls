@@ -2,13 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass_demo.gd" id="1_xj7cu"]
 [ext_resource type="Script" uid="uid://dt0b8s8e5kooo" path="res://traitor_must_be_dead.gd" id="1_ym5dx"]
-[ext_resource type="Script" uid="uid://dv8iprcieglbg" path="res://endeka_module/eead.gd" id="2_67q55"]
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="2_my6s6"]
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://legion/legion_information.gd" id="6_67q55"]
+[ext_resource type="Script" uid="uid://drl2kykjmd5mp" path="res://awareness_information/awareness_information.gd" id="6_my6s6"]
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="6_y0qeb"]
+[ext_resource type="Script" uid="uid://chpo875sjp28p" path="res://path_scope/path_scope.gd" id="7_hkiqx"]
+[ext_resource type="Script" uid="uid://b8aoqif2j64qt" path="res://character_module/character_module.gd" id="8_hkiqx"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://legion/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose_module/pose.gd" id="9_x6fug"]
-[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://legion/legion_instance.gd" id="10_8g455"]
 [ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://skill_module/skill_information.gd" id="10_pm4g0"]
 [ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="11_xj7cu"]
 [ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="11_ym5dx"]
@@ -33,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://inbqpxt4ubud" path="res://aseprite/bottom_monitor.png" id="22_g3sys"]
 [ext_resource type="Texture2D" uid="uid://cr8177oenfga7" path="res://aseprite/color_test_texture.png" id="23_1ukh0"]
 [ext_resource type="Texture2D" uid="uid://cgx3d7vur25kf" path="res://aseprite/right_monitor.png" id="23_4yxht"]
+[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="24_weayq"]
 [ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container/nine_rect_margin_container.gd" id="32_hmxpe"]
 [ext_resource type="Texture2D" uid="uid://ws8142ui8vu6" path="res://aseprite/ui/class_executioner.png" id="38_my6s6"]
 [ext_resource type="Texture2D" uid="uid://b844k6fcl5dfx" path="res://aseprite/ui/class_puppeteer.png" id="39_weayq"]
@@ -43,29 +47,110 @@ size = Vector2(1280, 720)
 closed = true
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
-[sub_resource type="Resource" id="Resource_67q55"]
+[sub_resource type="Resource" id="Resource_l7pm2"]
+script = ExtResource("6_my6s6")
+metadata/_custom_type_script = "uid://drl2kykjmd5mp"
+
+[sub_resource type="Resource" id="Resource_vec88"]
 script = ExtResource("6_y0qeb")
 metadata/_custom_type_script = "uid://di7bi4ybepb0a"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hkiqx"]
+[sub_resource type="Resource" id="Resource_0mlyx"]
+script = ExtResource("11_ym5dx")
+metadata/_custom_type_script = "uid://cotxam656beso"
 
-[sub_resource type="Resource" id="Resource_qy11e"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7pm2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mlyx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oq44s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bol0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fapbl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2occr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7oyc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwicx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjxvu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbqpv"]
+
+[sub_resource type="Resource" id="Resource_r20sr"]
+script = ExtResource("8_hkiqx")
+front_hair = SubResource("AtlasTexture_x7oyc")
+right_side_hair = SubResource("AtlasTexture_gjxvu")
+left_side_hair = SubResource("AtlasTexture_kwicx")
+back_hair = SubResource("AtlasTexture_0mlyx")
+face = SubResource("AtlasTexture_fapbl")
+eye = SubResource("AtlasTexture_4bol0")
+top = SubResource("AtlasTexture_bbqpv")
+bottom = SubResource("AtlasTexture_oq44s")
+front_accessory = SubResource("AtlasTexture_2occr")
+back_accessory = SubResource("AtlasTexture_l7pm2")
+
+[sub_resource type="Resource" id="Resource_xybxg"]
 script = ExtResource("9_6hyso")
+character_module = SubResource("Resource_r20sr")
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
 
-[sub_resource type="Resource" id="Resource_fi42c"]
-script = ExtResource("10_8g455")
-shader = SubResource("ShaderMaterial_hkiqx")
-size = Vector2(16, 16)
-hitbox_information = SubResource("Resource_67q55")
-unit_information = SubResource("Resource_qy11e")
+[sub_resource type="Resource" id="Resource_qy11e"]
+script = ExtResource("6_67q55")
+unit_information = SubResource("Resource_xybxg")
+hurtbox_information = SubResource("Resource_0mlyx")
+awareness_information = SubResource("Resource_l7pm2")
+hitbox_information = SubResource("Resource_vec88")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vec88"]
 
+[sub_resource type="Resource" id="Resource_fi42c"]
+script = ExtResource("7_hkiqx")
+path_type = 1
+to = Vector2(1280, 720)
+margin = 30.0
+metadata/_custom_type_script = "uid://chpo875sjp28p"
+
 [sub_resource type="BehaviorTree" id="BehaviorTree_l7pm2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36fc4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng2cp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj1ev"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6h04"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5x8tg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1t5h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqtsm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5hsx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egumc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cehq"]
+
+[sub_resource type="Resource" id="Resource_4bol0"]
+script = ExtResource("8_hkiqx")
+front_hair = SubResource("AtlasTexture_pqtsm")
+right_side_hair = SubResource("AtlasTexture_egumc")
+left_side_hair = SubResource("AtlasTexture_s5hsx")
+back_hair = SubResource("AtlasTexture_ng2cp")
+face = SubResource("AtlasTexture_5x8tg")
+eye = SubResource("AtlasTexture_i6h04")
+top = SubResource("AtlasTexture_7cehq")
+bottom = SubResource("AtlasTexture_hj1ev")
+front_accessory = SubResource("AtlasTexture_m1t5h")
+back_accessory = SubResource("AtlasTexture_36fc4")
 
 [sub_resource type="Resource" id="Resource_ym5dx"]
 script = ExtResource("9_6hyso")
+character_module = SubResource("Resource_4bol0")
 init_hp = 300
 speed = 300.0
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
@@ -111,6 +196,10 @@ metadata/_custom_type_script = "uid://chmyv3i5lg6po"
 [sub_resource type="AtlasTexture" id="AtlasTexture_ym5dx"]
 atlas = ExtResource("12_g3sys")
 region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="Resource" id="Resource_oq44s"]
+script = ExtResource("24_weayq")
+metadata/_custom_type_script = "uid://betj1u6dfr7n"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waig6"]
 shader = ExtResource("15_waig6")
@@ -292,24 +381,27 @@ player = NodePath("Ingame/Player")
 legion = NodePath("Ingame/Legion")
 camera = NodePath("Ingame/MultiCamera")
 
-[node name="Ingame" type="Node" parent="." unique_id=395167663]
-script = ExtResource("2_67q55")
-metadata/_custom_type_script = "uid://dv8iprcieglbg"
+[node name="Ingame" type="CanvasLayer" parent="." unique_id=1908545887]
+follow_viewport_enabled = true
+script = ExtResource("2_my6s6")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
 
 [node name="UnderpassModule" type="Node" parent="Ingame" unique_id=1840338606]
 script = ExtResource("1_xj7cu")
 underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8")])
 metadata/_custom_type_script = "uid://dc7volit4rbgy"
 
-[node name="Legion" type="Node" parent="Ingame" unique_id=51133145]
+[node name="Legion" type="Node" parent="Ingame" unique_id=51133145 node_paths=PackedStringArray("target")]
 script = ExtResource("9_nak2q")
-instance = SubResource("Resource_fi42c")
+legion_information = SubResource("Resource_qy11e")
 navigation_polygon = SubResource("NavigationPolygon_vec88")
+path_scope = SubResource("Resource_fi42c")
 behavior_tree = SubResource("BehaviorTree_l7pm2")
+target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
-position = Vector2(258, 174)
+position = Vector2(127, 82)
 script = ExtResource("13_k7ju8")
 mode = 1
 unit_information = SubResource("Resource_ym5dx")
@@ -323,6 +415,9 @@ texture = Dictionary[String, AtlasTexture]({
 
 [node name="MultiCamera" type="Node" parent="Ingame" unique_id=1567520709]
 script = ExtResource("13_xj7cu")
+camera = Dictionary[String, ExtResource("24_weayq")]({
+"idle": SubResource("Resource_oq44s")
+})
 metadata/_custom_type_script = "uid://bbvx0b83akfkq"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1672614402]

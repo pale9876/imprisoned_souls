@@ -23,7 +23,7 @@ class_name EEAD
 	set(value):
 		position = value
 		RenderingServer.canvas_item_set_transform(get_canvas_item(), Transform2D(0., position))
-		if get_parent() is Endeka:
+		if get_parent() is Endeka or get_parent() is CanvasLayer:
 			if get_parent().ysorting:
 				get_parent().notification(Endeka.NOTIFICATION_EEAD_Z_VALUE_CHANGED)
 

@@ -57,7 +57,6 @@ func _process(delta: float) -> void:
 func sort() -> Array:
 	var arr: Array = get_eead()
 	
-	
 	if ysorting:
 		arr.sort_custom(
 			func(a: EEAD, b: EEAD) -> bool:

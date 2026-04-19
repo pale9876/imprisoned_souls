@@ -48,11 +48,11 @@ func create() -> void:
 			a.door.resize(2)
 			
 			var polygon: PackedVector2Array = PackedVector2Array([
-				- a.size / 2.,
-				Vector2(- a.size.x / 2., a.size.y / 2.),
-				a.size / 2.,
-				Vector2(a.size.x / 2., - a.size.y / 2.),
-				- a.size / 2.,
+				a.pos,
+				Vector2(a.pos.x, a.pos.y + a.size.y),
+				a.pos + a.size,
+				Vector2(a.pos.x + a.size.x, a.pos.y),
+				a.pos,
 			])
 			
 			# 길이 가로면 1번째, 3번째 세그먼트를 닫아야하고,
@@ -79,7 +79,7 @@ func create() -> void:
 			if Engine.is_editor_hint() or debug_mode:
 				RenderingServer.canvas_item_set_transform(a.cid, Transform2D(0., a.pos))
 				RenderingServer.canvas_item_add_rect(
-					a.cid, Rect2(- a.size / 2., a.size), Color(0.42, 1.0, 0.913, 0.365)
+					a.cid, area_rect, Color(0.42, 1.0, 0.913, 0.365)
 				)
 				
 				for j: int in range(4):

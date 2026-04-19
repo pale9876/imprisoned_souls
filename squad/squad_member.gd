@@ -1,12 +1,34 @@
 @tool
-extends Resource
+extends RefCounted
 class_name SquadMember
 
 
-@export var size: Vector2 = Vector2(10., 10.)
-@export var position: Vector2 = Vector2()
-@export var scope_range: Vector2 = Vector2(200., 100.)
-@export var direction: float = 1.
+var position: Vector2
+var z: float
+var cid: RID
 
-@export_flags_2d_physics var mask: int = 1
-@export_flags_2d_physics var layer: int = 0
+var body: RID
+var shape: RID
+var space: RID
+var behavior_tree: BehaviorTree
+
+var hurtbox: RID
+var hurtbox_shape: RID
+
+var awareness: RID
+var awareness_shape: RID
+
+
+func moved(has_body: bool = false) -> void:
+	if has_body:
+		PhysicsServer2D.body_set_state(body, PhysicsServer2D.BODY_STATE_TRANSFORM, get_transform())
+
+	PhysicsServer2D.area_set_transform(hurtbox, get_transform())
+	PhysicsServer2D.area_set_transform(awareness, get_transform())
+
+
+	
+
+
+func get_transform() -> Transform2D:
+	return Transform2D(0., position)

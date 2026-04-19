@@ -57,7 +57,6 @@ func select_class_executioner() -> void:
 	start()
 
 
-
 func start() -> void:
 	ingame_canvas.process_mode = Node.PROCESS_MODE_INHERIT
 	

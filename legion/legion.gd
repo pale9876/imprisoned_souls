@@ -4,7 +4,7 @@ class_name Legion
 
 
 @export_category("Instance")
-@export var instance: LegionInstance = LegionInstance.new()
+@export var legion_information: LegionInformation = LegionInformation.new()
 @export var amount: int = 100
 @export var navigation_polygon: NavigationPolygon = NavigationPolygon.new()
 @export_flags_2d_physics var layer: int = 1
@@ -23,7 +23,7 @@ class_name Legion
 
 @export_category("Behavior Tree")
 @export var behavior_tree: BehaviorTree = BehaviorTree.new()
-@export var awareness_information: AwarenessInformation
+
 
 @export_category("DEBUG")
 @export var body_color: Color = Color(0.89, 0.0, 0.0, 0.537)
@@ -39,9 +39,7 @@ var scope: Scope
 
 
 func create() -> void:
-	RenderingServer.canvas_item_set_parent(get_canvas_item(), get_canvas())
-	
-	if !instance or amount <= 0: return
+	if !legion_information or amount <= 0: return
 
 	#nav_map = NavigationServer2D.map_create()
 	#NavigationServer2D.map_set_active(nav_map, true)
@@ -50,6 +48,7 @@ func create() -> void:
 	#NavigationServer2D.region_set_transform(region, Transform2D())
 	#NavigationServer2D.region_set_map(region, nav_map)
 	#NavigationServer2D.region_set_navigation_polygon(region, navigation_polygon)
+	
 	if init:
 		kill()
 	
@@ -60,8 +59,8 @@ func create() -> void:
 		
 		for i: int in range(amount):
 			arr[i] = spawn_instance(i) # i번째 인스턴스 생성
-		
-		init = true
+
+	init = true
 
 
 func _physics_process(delta: float) -> void:
@@ -72,129 +71,127 @@ func _physics_process(delta: float) -> void:
 				instance.last_direction = direction
 				var execute: BT.Status = instance.bt.get_root_task().execute(delta)
 		
-		PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., position))
-		PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., position))
+		PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., instance.position))
+		PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., instance.position))
 		
-		RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., position))
-		RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., position))
-		RenderingServer.canvas_item_set_transform(instance.hitbox.cid, Transform2D(0., position))
+		RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., instance.position))
+		RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., instance.position))
+		RenderingServer.canvas_item_set_transform(instance.hitbox.cid, Transform2D(0., instance.position))
 
 
-func spawn_instance(index: int) -> Instance:
-	var inst: Instance = Instance.new()
+func spawn_instance(_index: int) -> Instance:
+	var instance: Instance = Instance.new()
 	
-	inst.space = get_viewport().world_2d.space
+	instance.space = get_viewport().world_2d.space
 	var spawn_point: Vector2 = scope.path.sample_baked(scope.path.get_baked_length() * randf())
-	inst.position = spawn_point + (spawn_point.direction_to(scope.rect.size / 2.) * path_scope.margin)
+	instance.position = spawn_point + (spawn_point.direction_to(scope.rect.size / 2.) * path_scope.margin)
+	#print(instance.position)
 	
 	# Init Stat
-	inst.stat = Stat.new()
-	inst.stat.hp = instance.unit_information.init_hp
-	inst.stat.atk = instance.unit_information.atk
-	inst.stat.def = instance.unit_information.def
-	inst.stat.speed = instance.unit_information.speed
+	instance.stat = Stat.new()
+	instance.stat.hp = legion_information.unit_information.init_hp
+	instance.stat.atk = legion_information.unit_information.atk
+	instance.stat.def = legion_information.unit_information.def
+	instance.stat.speed = legion_information.unit_information.speed
 	
 	# (DEBUG) Set Instance Body Color Rect
-	inst.cid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(inst.cid, get_canvas_item())
+	instance.cid = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(instance.cid, get_canvas_item())
 	RenderingServer.canvas_item_add_rect(
-		inst.cid, Rect2(-inst.size / 2., inst.size), body_color
+		instance.cid, Rect2(-instance.size / 2., instance.size), body_color
 	)
-	RenderingServer.canvas_item_set_transform(inst.cid, Transform2D(0., inst.position))
-	RenderingServer.canvas_item_set_z_as_relative_to_parent(inst.cid, false)
-	RenderingServer.canvas_item_set_z_index(inst.cid, 0)
+	RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., instance.position))
 	
-	inst.shape = PhysicsServer2D.rectangle_shape_create()
-	PhysicsServer2D.shape_set_data(inst.shape, instance.size / 2.)
-	
+	instance.shape = PhysicsServer2D.rectangle_shape_create()
+	PhysicsServer2D.shape_set_data(instance.shape, legion_information.unit_information.collider["idle"] / 2.)
+		
 	# Set Instance Body
 	if has_body:
-		inst.body = PhysicsServer2D.body_create()
-		PhysicsServer2D.body_set_mode(inst.body, PhysicsServer2D.BODY_MODE_KINEMATIC)
-		PhysicsServer2D.body_set_collision_layer(inst.body, layer)
-		PhysicsServer2D.body_set_collision_mask(inst.body, mask)
-		PhysicsServer2D.body_set_space(inst.body, get_viewport().world_2d.space)
-		PhysicsServer2D.body_attach_object_instance_id(inst.body, inst.get_instance_id())
-		PhysicsServer2D.body_add_shape(inst.body, inst.shape)
-		PhysicsServer2D.body_set_state(inst.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., inst.position))
+		instance.body = PhysicsServer2D.body_create()
+		PhysicsServer2D.body_set_mode(instance.body, PhysicsServer2D.BODY_MODE_KINEMATIC)
+		PhysicsServer2D.body_set_collision_layer(instance.body, layer)
+		PhysicsServer2D.body_set_collision_mask(instance.body, mask)
+		PhysicsServer2D.body_set_space(instance.body, get_viewport().world_2d.space)
+		PhysicsServer2D.body_attach_object_instance_id(instance.body, instance.get_instance_id())
+		
+		PhysicsServer2D.body_add_shape(instance.body, instance.shape)
+		PhysicsServer2D.body_set_state(instance.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., instance.position))
 	
 	# Init Hurtbox
-	inst.hurtbox = Hurtbox.new()
-	inst.hurtbox.rid = PhysicsServer2D.area_create()
-	PhysicsServer2D.area_set_space(inst.hurtbox.rid, get_viewport().world_2d.space)
-	inst.hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
-	PhysicsServer2D.shape_set_data(inst.hurtbox.shape, inst.hurtbox.size)
-	PhysicsServer2D.area_attach_object_instance_id(inst.hurtbox.rid, inst.get_instance_id())
-	PhysicsServer2D.area_set_monitorable(inst.hurtbox.rid, true)
-	PhysicsServer2D.area_set_transform(inst.hurtbox.rid, Transform2D(0., inst.position))
-
+	instance.hurtbox = Hurtbox.new()
+	instance.hurtbox.rid = PhysicsServer2D.area_create()
+	PhysicsServer2D.area_set_space(instance.hurtbox.rid, get_viewport().world_2d.space)
+	instance.hurtbox.shape = PhysicsServer2D.rectangle_shape_create()
+	PhysicsServer2D.shape_set_data(instance.hurtbox.shape, instance.hurtbox.size)
+	PhysicsServer2D.area_set_monitorable(instance.hurtbox.rid, true)
+	PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., instance.position))
+	PhysicsServer2D.area_attach_object_instance_id(instance.hurtbox.rid, instance.get_instance_id())
 
 	# Init Awareness Area
-	inst.awareness = Awareness.new()
-	inst.awareness.cid = RenderingServer.canvas_item_create()
-	inst.awareness.rid = PhysicsServer2D.area_create()
-	inst.awareness.radius = awareness_information.radius
-	inst.awareness.position = awareness_information.position
-	PhysicsServer2D.area_set_transform(inst.awareness.rid, Transform2D(0., inst.position))
-	PhysicsServer2D.area_set_space(inst.awareness.rid, get_viewport().world_2d.space)
-	PhysicsServer2D.area_attach_object_instance_id(inst.awareness.rid, inst.get_instance_id())
-	PhysicsServer2D.area_set_monitor_callback(inst.awareness.rid, target_awareness_area_entered.bind(inst))
-	inst.awareness.shape = PhysicsServer2D.circle_shape_create()
-	PhysicsServer2D.shape_set_data(inst.awareness.shape, inst.awareness.radius)
-	PhysicsServer2D.area_add_shape(inst.awareness.rid, inst.awareness.shape)
-	PhysicsServer2D.area_set_transform(inst.awareness.rid, Transform2D(0., inst.position + inst.awareness.position))
-	RenderingServer.canvas_item_set_transform(inst.awareness.cid, Transform2D(0., inst.position + inst.awareness.position))
+	instance.awareness = Awareness.new()
+	instance.awareness.cid = RenderingServer.canvas_item_create()
+	instance.awareness.rid = PhysicsServer2D.area_create()
+	instance.awareness.radius = legion_information.awareness_information.radius
+	instance.awareness.position = legion_information.awareness_information.position
+	PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., instance.position))
+	PhysicsServer2D.area_set_space(instance.awareness.rid, get_viewport().world_2d.space)
+	PhysicsServer2D.area_attach_object_instance_id(instance.awareness.rid, instance.get_instance_id())
+	PhysicsServer2D.area_set_monitor_callback(instance.awareness.rid, target_awareness_area_entered.bind(instance))
+	instance.awareness.shape = PhysicsServer2D.circle_shape_create()
+	PhysicsServer2D.shape_set_data(instance.awareness.shape, instance.awareness.radius)
+	PhysicsServer2D.area_add_shape(instance.awareness.rid, instance.awareness.shape)
+	PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., instance.position + instance.awareness.position))
+	RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., instance.position + instance.awareness.position))
 
-	inst.awareness.cid = RenderingServer.canvas_item_create()
+	instance.awareness.cid = RenderingServer.canvas_item_create()
 	RenderingServer.canvas_item_add_circle(
-		inst.awareness.cid, Vector2(),
-		inst.awareness.radius, Color(0.839, 1.0, 0.976, 0.404)
+		instance.awareness.cid, Vector2(),
+		instance.awareness.radius, Color(0.839, 1.0, 0.976, 0.404)
 	)
-	RenderingServer.canvas_item_set_parent(inst.awareness.cid, get_canvas_item())
+	RenderingServer.canvas_item_set_parent(instance.awareness.cid, get_canvas_item())
 
 	# Init hitbox
-	inst.hitbox = Hitbox.new()
-	inst.hitbox.size = instance.hitbox_information.size
-	inst.hitbox.range = instance.hitbox_information.range
-	inst.hitbox.damage = instance.hitbox_information.damage
-	inst.hitbox.cid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(inst.hitbox.cid, get_canvas_item())
-
+	instance.hitbox = Hitbox.new()
+	instance.hitbox.size = legion_information.hitbox_information.size
+	instance.hitbox.range = legion_information.hitbox_information.range
+	instance.hitbox.damage = legion_information.hitbox_information.damage
+	instance.hitbox.cid = RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(instance.hitbox.cid, get_canvas_item())
 
 	# Init Behavior
 	if behavior_tree:
-		inst.bt = behavior_tree.clone()
+		instance.bt = behavior_tree.clone()
 	else:
-		inst.bt = BehaviorTree.new()
+		instance.bt = BehaviorTree.new()
 	var sequence: BTSequence = BTSequence.new()
 	
 	var task_is_in_range: IsInRange = IsInRange.new()
-	task_is_in_range.instance = inst
+	task_is_in_range.instance = instance
 	
 	var task_attack: Attack = Attack.new()
-	task_attack.instance = inst
+	task_attack.instance = instance
 	
-	inst.bt.set_root_task(sequence)
+	instance.bt.set_root_task(sequence)
 	sequence.add_child(task_is_in_range)
 	sequence.add_child(task_attack)
 
-	return inst
+	return instance
 
 
-func target_awareness_area_entered(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, inst: Instance) -> void:
+func target_awareness_area_entered(status: PhysicsServer2D.AreaBodyStatus, body_rid: RID, instance_id: int, area_shape_idx: int, self_shape_idx: int, instance: Instance) -> void:
 	if instance_id != target.get_instance_id(): return
 	
 	if status == 0: # Entered
-		inst.awareness.has_target = true
+		instance.awareness.has_target = true
 	elif status == 1: # Exited
-		inst.awareness.has_target = false
+		instance.awareness.has_target = false
 
 
-func damaged(inst: Instance, value: int) -> void:
-	inst.stat.hp -= value
-	print("instance damaged => ", value)
+func damaged(instance: Instance, value: int) -> void:
+	instance.stat.hp -= value
+	print("legion_information damaged => ", value)
 	
-	if inst.stat.hp <= 0:
+	if instance.stat.hp <= 0:
 		pass
 
 
@@ -214,28 +211,32 @@ func kill() -> void:
 	#NavigationServer2D.free_rid(region)
 	if scope:
 		RenderingServer.free_rid(scope.cid)
+		scope = null
 
 	if Engine.is_editor_hint():
 		pass
 	else:
 		if !arr.is_empty():
-			for inst in arr:
+			for instance in arr:
 				if has_body:
-					PhysicsServer2D.free_rid(inst.body)
-					PhysicsServer2D.free_rid(inst.shape)
-				PhysicsServer2D.free_rid(inst.hurtbox.rid)
-				PhysicsServer2D.free_rid(inst.awareness.rid)
-				#NavigationServer2D.free_rid(inst.agent)
+					PhysicsServer2D.free_rid(instance.body)
+					PhysicsServer2D.free_rid(instance.shape)
+				PhysicsServer2D.free_rid(instance.hurtbox.rid)
+				PhysicsServer2D.free_rid(instance.awareness.rid)
+				#NavigationServer2D.free_rid(instance.agent)
 				
-				RenderingServer.free_rid(inst.cid)
-				RenderingServer.free_rid(inst.awareness.cid)
-				RenderingServer.free_rid(inst.hurtbox.cid)
+				RenderingServer.free_rid(instance.cid)
+				RenderingServer.free_rid(instance.awareness.cid)
+				RenderingServer.free_rid(instance.hurtbox.cid)
 
 		arr = []
+
+	RenderingServer.canvas_item_clear(get_canvas_item())
 
 
 func create_path() -> void:
 	scope = Scope.new()
+	print("Created Scope")
 	
 	scope.type = path_scope.path_type
 	scope.rect = Rect2(path_scope.from, path_scope.to)
@@ -308,7 +309,6 @@ class Instance extends RefCounted:
 	var stat: Stat
 	var last_direction: Vector2
 	var hitbox: Hitbox
-	var z_relative: bool = false
 	var z_value: float = 0.
 	
 	
@@ -338,29 +338,35 @@ class Instance extends RefCounted:
 		hitbox.result = null
 
 
-	func move(motion: Vector2 = Vector2(), space: RID = RID()) -> MotionResult:
+	func move(from: Vector2, motion: Vector2 = Vector2(), space: RID = RID(), test: bool = false) -> MotionResult:
 		var motion_result: MotionResult
 		
 		var direct_space: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(space)
 		var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+		
 		shape_param.collide_with_areas = true
 		shape_param.collide_with_bodies = false
 		shape_param.shape_rid = shape
+		shape_param.transform = Transform2D(0., from)
 		shape_param.motion = motion
 		
 		var rest_info: Dictionary = direct_space.get_rest_info(shape_param)
 		var cast_motion: PackedFloat32Array = direct_space.cast_motion(shape_param)
 		
-		var safe_distance: float = cast_motion[0]
-		var unsafe_distance: float = cast_motion[1]
+		var safe_proportion: float = cast_motion[0]
+		var unsafe_proportion: float = cast_motion[1]
 		
 		if !rest_info.is_empty():
 			motion_result = MotionResult.new()
 			motion_result.collider = instance_from_id(rest_info["collider_id"] as int)
+			motion_result.remainder = shape_param.motion
+			motion_result.safe_proportion = safe_proportion
+			motion_result.unsafe_proportion = unsafe_proportion
 			motion_result.normal = rest_info["normal"] as Vector2
 			motion_result.point = rest_info["point"] as Vector2
 		else:
-			position += motion
+			if !test:
+				position += motion
 		
 		return motion_result
 
@@ -372,8 +378,6 @@ class Instance extends RefCounted:
 				obj.damaged(hitbox.damage)
 				hitbox.result = HitResult.new()
 				hitbox.result.hit = true
-		
-
 
 class Stat extends RefCounted:
 	var hp: int:
@@ -426,7 +430,9 @@ class IsInRange extends BTAction:
 	func _tick(delta: float) -> Status:
 		if !instance.awareness.has_target:
 			var motion_result: MotionResult = instance.move(
-				instance.last_direction * instance.stat.speed * delta, instance.space
+				instance.position,
+				instance.last_direction * instance.stat.speed * delta,
+				instance.space
 			)
 			return RUNNING
 		

@@ -16,6 +16,7 @@ class_name MultiCamera
 @export_tool_button("Draw Camera", "2D") var _draw_cameras: Callable = draw_camera_rect
 
 
+
 func set_viewport_canvas_transform() -> void:
 	if !camera.has(current): return
 	
@@ -30,7 +31,6 @@ func set_viewport_canvas_transform() -> void:
 
 func _enter_tree() -> void:
 	if Engine.is_editor_hint(): return
-
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return

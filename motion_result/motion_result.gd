@@ -2,6 +2,7 @@
 extends RefCounted
 class_name MotionResult
 
+
 var collider: Object
 var normal: Vector2
 var remainder: Vector2
