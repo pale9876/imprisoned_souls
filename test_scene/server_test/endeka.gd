@@ -60,8 +60,13 @@ func sort() -> Array:
 	
 	if ysorting:
 		arr.sort_custom(
+			func(a: EEAD, b: EEAD) -> bool:
+				return a.z_value < b.z_value
+		)
+		
+		arr.sort_custom(
 			func(a:EEAD, b: EEAD) -> bool:
-				return a.z_value < b.z_value and a.position.y > b.position.y
+				return (a.z_value == b.z_value) and a.position.y < b.position.y
 		)
 	else:
 		arr.sort_custom(

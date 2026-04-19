@@ -41,12 +41,14 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 Global="*uid://d1fcpj0k6kkip"
 DialogueManager="*uid://c3rodes2l3gxb"
-InputHandler="*uid://e3v8nla7qwf3"
-ImageSelector="*uid://bkb1epbrwsfbn"
 
 [debug]
 

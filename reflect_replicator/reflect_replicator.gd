@@ -5,7 +5,7 @@
 
 @tool
 extends EEAD2D
-class_name ReflectReplicator2D
+class_name ReflectReplicator
 
 
 @export var reflect_region: Rect2i = Rect2i(Vector2(-100, 0), Vector2(100, 100)):
@@ -25,7 +25,6 @@ var cid: RID
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
 		create()
-
 
 
 func _process(delta: float) -> void:

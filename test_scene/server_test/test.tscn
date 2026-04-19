@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c81xliwn11xyv"]
 
 [ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://multi_camera/multi_camera.gd" id="1_e8r3e"]
-[ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator_2d.gd" id="1_rvfql"]
+[ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator/reflect_replicator.gd" id="1_rvfql"]
 [ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="2_e8r3e"]
 [ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_fiyac"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://shader/shader_example/legion.gd" id="5_cmbsr"]

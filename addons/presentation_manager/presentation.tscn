@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmojp4uoydd3f"]
 
 [ext_resource type="Script" uid="uid://ffkmintqoksd" path="res://addons/presentation_manager/presentation.gd" id="1_5buq6"]
-[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="1_rjcjf"]
+[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container/nine_rect_margin_container.gd" id="1_rjcjf"]
 [ext_resource type="Script" uid="uid://c4qg1fwkbc384" path="res://addons/presentation_manager/presentation_scene.gd" id="2_w5moa"]
 [ext_resource type="Script" uid="uid://b2nm3h1lrix2k" path="res://addons/presentation_manager/presentation_title_label.gd" id="4_03nak"]
 

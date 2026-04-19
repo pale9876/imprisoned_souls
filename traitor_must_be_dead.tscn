@@ -29,11 +29,11 @@
 [ext_resource type="Texture2D" uid="uid://dxtb357p123dv" path="res://aseprite/title_monitor.png" id="21_03xc4"]
 [ext_resource type="Texture2D" uid="uid://cnjrcdrh7u6ex" path="res://analog_crashed_screen/color_generate.tres" id="21_c801g"]
 [ext_resource type="Shader" uid="uid://dqhwn62oswdun" path="res://analog_crashed_screen/grain_and_noise.gdshader" id="22_03xc4"]
-[ext_resource type="Script" uid="uid://clywxqfubslv2" path="res://shader_polygon.gd" id="22_4yxht"]
+[ext_resource type="Script" uid="uid://clywxqfubslv2" path="res://shader_polygon/shader_polygon.gd" id="22_4yxht"]
 [ext_resource type="Texture2D" uid="uid://inbqpxt4ubud" path="res://aseprite/bottom_monitor.png" id="22_g3sys"]
 [ext_resource type="Texture2D" uid="uid://cr8177oenfga7" path="res://aseprite/color_test_texture.png" id="23_1ukh0"]
 [ext_resource type="Texture2D" uid="uid://cgx3d7vur25kf" path="res://aseprite/right_monitor.png" id="23_4yxht"]
-[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container.gd" id="32_hmxpe"]
+[ext_resource type="Script" uid="uid://b0w7ljww2qduf" path="res://nine_rect_margin_container/nine_rect_margin_container.gd" id="32_hmxpe"]
 [ext_resource type="Texture2D" uid="uid://ws8142ui8vu6" path="res://aseprite/ui/class_executioner.png" id="38_my6s6"]
 [ext_resource type="Texture2D" uid="uid://b844k6fcl5dfx" path="res://aseprite/ui/class_puppeteer.png" id="39_weayq"]
 

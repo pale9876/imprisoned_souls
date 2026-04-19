@@ -5,7 +5,10 @@ class_name EEADCrystal
 
 @export_category("Transform")
 @export var size: Vector2 = Vector2(10., 10.)
-@export var height: float = 50.
+@export var height: float = 50.:
+	set(value):
+		height = value
+		create()
 
 @export_category("Colors")
 @export var color: Color = Color(0.735, 0.651, 0.88, 1.0)

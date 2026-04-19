@@ -37,9 +37,9 @@ metadata/_custom_type_script = "uid://2xtym36a6p3x"
 [node name="EEADHexaheadron" type="Node" parent="." unique_id=1953690372]
 script = ExtResource("3_kwpx6")
 size = Vector2(15, 15)
-height = 25.825
-z_value = 1.0
-position = Vector2(11.24, 28.665)
+height = 19.795
+z_value = 13.0
+position = Vector2(11.24, -5.195)
 metadata/_custom_type_script = "uid://b5vtdgljdq56k"
 
 [node name="EEADHexaheadron2" type="Node" parent="." unique_id=1622662497]
@@ -47,12 +47,14 @@ script = ExtResource("3_kwpx6")
 color = Color(0.92200005, 0.61, 1, 0.5372549)
 outline_color = Color(1, 0.24000001, 0.24000001, 1)
 height = 10.0
-z_value = 2.0
-position = Vector2(0, 24.295)
+z_value = 13.0
+position = Vector2(0, -15.655)
 metadata/_custom_type_script = "uid://b5vtdgljdq56k"
 
 [node name="EEADCrystal" type="Node" parent="." unique_id=326140563]
 script = ExtResource("4_ucevt")
+height = 12.05
 color = Color(0.73509336, 0.6512, 0.88, 0.40392157)
-position = Vector2(42.5, 12.44)
+z_value = 13.0
+position = Vector2(5.24, -5.515)
 metadata/_custom_type_script = "uid://dv8iprcieglbg"

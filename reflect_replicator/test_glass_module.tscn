@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://d0t85vijjq6ge"]
 
-[ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator_2d.gd" id="1_h0lqs"]
-[ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="2_hmbtr"]
-[ext_resource type="Texture2D" uid="uid://bcx1k44j24ime" path="res://store/icon.svg" id="2_yblwx"]
+[ext_resource type="Texture2D" uid="uid://dt1i3ubeu4335" path="res://icon.svg" id="1_sorju"]
+[ext_resource type="Texture2D" uid="uid://bcx1k44j24ime" path="res://store/icon.svg" id="2_hsjmw"]
+[ext_resource type="Script" uid="uid://dkrmmqv8ohapy" path="res://reflect_replicator/reflect_replicator.gd" id="3_3cvqk"]
 
 [node name="test_glass_module" type="Node2D" unique_id=982921829]
 visibility_layer = 3
@@ -10,17 +10,17 @@ visibility_layer = 3
 [node name="Icon" type="Sprite2D" parent="." unique_id=1486779280]
 visibility_layer = 3
 position = Vector2(24, 136)
-texture = ExtResource("2_hmbtr")
+texture = ExtResource("1_sorju")
 
 [node name="Icon2" type="Sprite2D" parent="." unique_id=2037762214]
 position = Vector2(296, 120)
-texture = ExtResource("2_yblwx")
+texture = ExtResource("2_hsjmw")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1227556385]
 position = Vector2(116, 158)
 
-[node name="ReflectReplicator2D" type="Node2D" parent="Camera2D" unique_id=367757292]
+[node name="ReflectReplicator" type="Node2D" parent="Camera2D" unique_id=367757292]
 visibility_layer = 2
 position = Vector2(-116, -158)
-script = ExtResource("1_h0lqs")
+script = ExtResource("3_3cvqk")
 reflect_region = Rect2i(0, -100, 100, 100)
