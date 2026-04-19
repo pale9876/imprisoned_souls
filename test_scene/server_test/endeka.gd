@@ -11,10 +11,10 @@ const NOTIFICATION_EEAD_Z_VALUE_CHANGED: int = 1402
 const NOTIFICATION_MINMAX_CHANGED: int = 1403
 
 
+@export_category("Z Layer Range")
 @export var min_z: float = 0.:
 	set(value):
 		if max_z > min_z:
-			max_z = value
 			min_z = value
 		else:
 			min_z = value
@@ -25,6 +25,7 @@ const NOTIFICATION_MINMAX_CHANGED: int = 1403
 			max_z = value
 		notification(NOTIFICATION_MINMAX_CHANGED)
 
+@export_category("Sort Option")
 @export var ysorting: bool = true
 
 
@@ -56,9 +57,17 @@ func _process(delta: float) -> void:
 func sort() -> Array:
 	var arr: Array = get_eead()
 	
-	arr.sort_custom(
-		func(a: EEAD, b: EEAD) -> bool: return a.z_value < b.z_value
-	)
+	
+	if ysorting:
+		arr.sort_custom(
+			func(a:EEAD, b: EEAD) -> bool:
+				return a.z_value < b.z_value and a.position.y > b.position.y
+		)
+	else:
+		arr.sort_custom(
+			func(a: EEAD, b: EEAD) -> bool:
+				return a.z_value < b.z_value
+		)
 
 	var idx: int = 0
 

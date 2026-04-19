@@ -2,7 +2,6 @@
 extends Node
 class_name EEAD
 
-
 # INFO
 # Z축을 실수값으로 받는 2D 객체입니다.
 
@@ -20,7 +19,16 @@ class_name EEAD
 				parent.notification(Endeka.NOTIFICATION_EEAD_Z_VALUE_CHANGED)
 			else:
 				z_value = value
-@export var position: Vector2 = Vector2()
+@export var position: Vector2 = Vector2():
+	set(value):
+		position = value
+		RenderingServer.canvas_item_set_transform(get_canvas_item(), Transform2D(0., position))
+		if get_parent() is Endeka:
+			if get_parent().ysorting:
+				get_parent().notification(Endeka.NOTIFICATION_EEAD_Z_VALUE_CHANGED)
+
+
+
 @export var visible: bool = true:
 	set(toggle):
 		visible = toggle

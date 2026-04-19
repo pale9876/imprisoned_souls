@@ -9,7 +9,7 @@ var character: Character
 @export_tool_button("Flip", "2D") var _flip: Callable = flip
 
 
-func create_sprite(texture: Texture2D, draw_index: int, color: Color = Color.WHITE, shader: ShaderMaterial = null) -> SP:
+func create_sprite(texture: AtlasTexture, draw_index: int, color: Color = Color.WHITE, shader: ShaderMaterial = null) -> SP:
 	var sprite: SP = SP.new()
 	
 	sprite.cid = RenderingServer.canvas_item_create()
@@ -17,11 +17,10 @@ func create_sprite(texture: Texture2D, draw_index: int, color: Color = Color.WHI
 	sprite.texture = texture
 
 	RenderingServer.canvas_item_set_parent(sprite.cid, get_canvas_item())
-	RenderingServer.canvas_item_add_texture_rect(
-		sprite.cid,
-		Rect2(- texture.get_size() / 2., texture.get_size()),
-		texture.get_rid(), false, color
-	)
+	
+	if texture:
+		texture.draw(sprite.cid, - texture.get_size() / 2.)
+	
 	RenderingServer.canvas_item_set_draw_index(sprite.cid, draw_index)
 	RenderingServer.canvas_item_set_use_parent_material(sprite.cid, true)
 
@@ -144,7 +143,7 @@ class Character extends RefCounted:
 
 class SP extends RefCounted:
 	var draw_index: int = - 1
-	var texture: Texture2D
+	var texture: AtlasTexture
 	var cid: RID
 	var color: Color = Color.WHITE
 	var frame: int = 0

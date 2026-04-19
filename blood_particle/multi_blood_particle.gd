@@ -4,8 +4,6 @@ class_name MultiBloodParticle
 
 
 @export var texture: GradientTexture2D
-@export var multimesh: MultiMesh = MultiMesh.new()
-
 
 @export_category("Blood Stream Particle Information")
 @export var has_stream: bool = false
@@ -63,8 +61,7 @@ func emit(pos: Vector2) -> void:
 	
 	p.multimesh = MultiMesh.new()
 	p.multimesh.mesh = QuadMesh.new()
-	var _size: float = randf_range(min_size, max_size)
-	(p.multimesh.mesh as QuadMesh).size = Vector2(_size, _size)
+	(p.multimesh.mesh as QuadMesh).size = texture.get_size()
 	p.multimesh.use_colors = true
 	
 	p.multimesh.instance_count = amount
@@ -74,13 +71,14 @@ func emit(pos: Vector2) -> void:
 	
 	for i: int in range(amount):
 		var instance: Instance = Instance.new()
+		instance.cid = p.cid
 		instance.index = i
 		instance.motion = Vector2.from_angle(
 			randf_range(direction.angle() - deg_to_rad(angle_range), direction.angle() + deg_to_rad(angle_range))
 		) * randf_range(min_force, max_force)
 		instance.position = instance.motion
 		
-		p.multimesh.set_instance_transform_2d(instance.index, Transform2D(0., Vector2.ONE, 0., instance.position))
+		p.multimesh.set_instance_transform_2d(instance.index, Transform2D(0., Vector2.ONE * randf_range(min_size, max_size), 0., instance.position))
 		p.multimesh.set_instance_color(instance.index, Color.WHITE)
 		
 		p.instances[i] = instance
@@ -109,18 +107,23 @@ class Particle extends RefCounted:
 	var init_pos: Vector2
 	var multimesh: MultiMesh
 	var instances: Array[Instance] = []
-	var info: BloodParticleInformation
 	var finished: bool = false
 
 
 class Instance extends RefCounted:
-	var stream: bool
+	var cid: RID
 	var index: int
 	var motion: Vector2
 	var position: Vector2
 	var motion_curve: Vector2
 	var scale_curve: Vector2
+	var stream: BloodStream
+
+	func create_stream(pos: Vector2, mass: float) -> void:
+		stream = BloodStream.new()
+		
 
 
 class BloodStream extends RefCounted:
-	pass
+	var pos: Vector2
+	var mass: float

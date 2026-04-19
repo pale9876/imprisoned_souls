@@ -3,24 +3,43 @@
 [ext_resource type="Script" uid="uid://dejkqrr6tweci" path="res://character_module/character_module_demo.gd" id="1_e8ykt"]
 [ext_resource type="Script" uid="uid://b8aoqif2j64qt" path="res://character_module/character_module.gd" id="2_e40hb"]
 [ext_resource type="Texture2D" uid="uid://gia40bsah7qk" path="res://aseprite/character_module_example/back_hair.png" id="2_trhjk"]
-[ext_resource type="Texture2D" uid="uid://ds1vm1up4lpf" path="res://aseprite/character_module_example/eye.png" id="3_wq5mg"]
-[ext_resource type="Texture2D" uid="uid://cbgayo77yoq7" path="res://aseprite/character_module_example/face.png" id="4_uiuam"]
-[ext_resource type="Texture2D" uid="uid://bqah2d3miuj1i" path="res://aseprite/character_module_example/front_hair.png" id="5_wq57p"]
-[ext_resource type="Texture2D" uid="uid://dpl2qd8uyyrn6" path="res://aseprite/character_module_example/left_side_hair.png" id="6_tmitx"]
-[ext_resource type="Texture2D" uid="uid://dycxcnpmgh8mm" path="res://aseprite/character_module_example/right_side_hair.png" id="7_36iv7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynpyh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ms1c3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0p6h6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3jpg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ug650"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trhjk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wq5mg"]
+atlas = ExtResource("2_trhjk")
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uiuam"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wq57p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmitx"]
 
 [sub_resource type="Resource" id="Resource_ynpyh"]
 script = ExtResource("2_e40hb")
-front_hair = ExtResource("5_wq57p")
-right_side_hair = ExtResource("7_36iv7")
-left_side_hair = ExtResource("6_tmitx")
-back_hair = ExtResource("2_trhjk")
-face = ExtResource("4_uiuam")
-eye = ExtResource("3_wq5mg")
+front_hair = SubResource("AtlasTexture_wq5mg")
+right_side_hair = SubResource("AtlasTexture_wq57p")
+left_side_hair = SubResource("AtlasTexture_uiuam")
+back_hair = SubResource("AtlasTexture_ms1c3")
+face = SubResource("AtlasTexture_ug650")
+eye = SubResource("AtlasTexture_f3jpg")
+top = SubResource("AtlasTexture_tmitx")
+bottom = SubResource("AtlasTexture_0p6h6")
+front_accessory = SubResource("AtlasTexture_trhjk")
+back_accessory = SubResource("AtlasTexture_ynpyh")
 metadata/_custom_type_script = "uid://b8aoqif2j64qt"
 
 [node name="CharacterModuleDemo" type="Node2D" unique_id=991299713]
-position = Vector2(34, 42)
-scale = Vector2(-1, 1)
 script = ExtResource("1_e8ykt")
 character_module = SubResource("Resource_ynpyh")
