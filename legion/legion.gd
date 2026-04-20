@@ -26,12 +26,13 @@ class_name Legion
 
 @export_category("DEBUG")
 @export var body_color: Color = Color(0.89, 0.0, 0.0, 0.537)
+@export var navigation_region: NavigationRegion2D
 
 
 var arr: Array[Instance] = []
 
 var nav_map: RID
-var region: RID
+var nav_region: RID
 var scope: Scope
 
 
@@ -47,32 +48,29 @@ func create() -> void:
 	create_path()
 	
 	if legion_information.use_nav:
+		nav_map = get_viewport().world_2d.navigation_map
 		
-		nav_map = NavigationServer2D.map_create()
-		NavigationServer2D.map_set_active(nav_map, true)
-		NavigationServer2D.map_set_cell_size(nav_map, 1.)
-		
-		region = NavigationServer2D.region_create()
-		NavigationServer2D.region_set_transform(region, Transform2D())
-		NavigationServer2D.region_set_map(region, nav_map)
+		nav_region = NavigationServer2D.region_create()
+		NavigationServer2D.region_set_transform(nav_region, Transform2D())
+		NavigationServer2D.region_set_map(nav_region, nav_map)
 		
 		navigation_polygon = NavigationPolygon.new()
 		navigation_polygon.baking_rect = scope.rect
 		navigation_polygon.set_vertices(
 			PackedVector2Array([
 				scope.rect.position,
-				Vector2(scope.rect.position.x, scope.rect.position.y + scope.rect.size.y)
+				Vector2(scope.rect.position.x, scope.rect.position.y + scope.rect.size.y),
+				scope.rect.position + scope.rect.size,
+				Vector2(scope.rect.position.x + scope.rect.size.x, scope.rect.position.y),
 			])
 		)
-		NavigationServer2D.region_set_navigation_polygon(region, navigation_polygon)
-
-		
-		var nav_mesh_source_geometry_data_2d: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
-
-		NavigationServer2D.bake_from_source_geometry_data_async(
-			navigation_polygon, nav_mesh_source_geometry_data_2d,
-			func() -> void: print(nav_mesh_source_geometry_data_2d)
-		)
+		NavigationServer2D.region_set_enabled(nav_region, true)
+		NavigationServer2D.region_set_navigation_polygon(nav_region, navigation_polygon)
+		#var nav_mesh_source_geometry_data_2d: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
+		#NavigationServer2D.bake_from_source_geometry_data_async(
+			#navigation_polygon, nav_mesh_source_geometry_data_2d,
+			#func() -> void: print(nav_mesh_source_geometry_data_2d)
+		#)
 
 	if !Engine.is_editor_hint():
 		arr.resize(amount)
@@ -107,14 +105,14 @@ func spawn_instance(_index: int) -> Instance:
 	var spawn_point: Vector2 = scope.path.sample_baked(scope.path.get_baked_length() * randf())
 	instance.position = spawn_point + (spawn_point.direction_to(scope.rect.size / 2.) * path_scope.margin)
 	instance.map = nav_map
+	instance.target = target.get_instance_id()
 	
 	# Init Agent
 	instance.agent = NavigationServer2D.agent_create()
-	NavigationServer2D.agent_get_avoidance_enabled(instance.agent)
-	NavigationServer2D.agent_set_avoidance_layers(instance.agent, 1)
+	#NavigationServer2D.agent_get_avoidance_enabled(instance.agent)
+	#NavigationServer2D.agent_set_avoidance_layers(instance.agent, 1)
 	NavigationServer2D.agent_set_map(instance.agent, instance.map)
 	NavigationServer2D.agent_set_radius(instance.agent, 2.)
-
 	NavigationServer2D.agent_set_position(instance.agent, instance.position)
 	
 	# Init Stat
@@ -263,8 +261,8 @@ func kill() -> void:
 		arr = []
 	
 	if legion_information.use_nav:
-		NavigationServer2D.free_rid(nav_map)
-		NavigationServer2D.free_rid(region)
+		#NavigationServer2D.free_rid(nav_map)
+		NavigationServer2D.free_rid(nav_region)
 
 	RenderingServer.canvas_item_clear(get_canvas_item())
 
@@ -349,6 +347,7 @@ class Instance extends RefCounted:
 	var last_direction: Vector2
 	var hitbox: Hitbox
 	var z_value: float = 0.
+	var target: int
 	
 	
 	func create_hitbox(direction: Vector2) -> void:
@@ -377,16 +376,16 @@ class Instance extends RefCounted:
 		hitbox.result = null
 
 
-	func move(from: Vector2, motion: Vector2 = Vector2(), space: RID = RID(), test: bool = false) -> MotionResult:
+	func move(from: Vector2, to: Vector2, space: RID = RID(), test: bool = false) -> MotionResult:
 		var motion_result: MotionResult
 		
 		#var direct_space: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(space)
 		#var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 		
-		NavigationServer2D.agent_set_velocity(agent, motion)
+		NavigationServer2D.agent_set_velocity(agent, to)
 		
 		var path: PackedVector2Array = NavigationServer2D.map_get_path(
-			map, from, from + motion, true
+			map, from, to, true
 		)
 		
 		print(path)
@@ -485,7 +484,7 @@ class IsInRange extends BTAction:
 		if !instance.awareness.has_target:
 			var motion_result: MotionResult = instance.move(
 				instance.position,
-				instance.last_direction * instance.stat.speed * delta,
+				(instance_from_id(instance.target) as Node2D).global_position,
 				instance.space
 			)
 			return RUNNING
