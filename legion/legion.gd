@@ -48,12 +48,10 @@ func create() -> void:
 	create_path()
 	
 	if legion_information.use_nav:
-		nav_map = get_viewport().world_2d.navigation_map
+		nav_map = get_viewport().find_world_2d().navigation_map
+		print(nav_map)
 		
 		nav_region = NavigationServer2D.region_create()
-		NavigationServer2D.region_set_transform(nav_region, Transform2D())
-		NavigationServer2D.region_set_map(nav_region, nav_map)
-		
 		navigation_polygon = NavigationPolygon.new()
 		navigation_polygon.baking_rect = scope.rect
 		navigation_polygon.set_vertices(
@@ -65,12 +63,14 @@ func create() -> void:
 			])
 		)
 		NavigationServer2D.region_set_enabled(nav_region, true)
+		var nav_mesh_source_geometry_data_2d: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
+		NavigationServer2D.bake_from_source_geometry_data(
+			navigation_polygon, nav_mesh_source_geometry_data_2d,
+			func() -> void: print(nav_mesh_source_geometry_data_2d)
+		)
 		NavigationServer2D.region_set_navigation_polygon(nav_region, navigation_polygon)
-		#var nav_mesh_source_geometry_data_2d: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
-		#NavigationServer2D.bake_from_source_geometry_data_async(
-			#navigation_polygon, nav_mesh_source_geometry_data_2d,
-			#func() -> void: print(nav_mesh_source_geometry_data_2d)
-		#)
+		NavigationServer2D.region_set_navigation_layers(nav_region, 1)
+		NavigationServer2D.region_set_map(nav_region, get_viewport().find_world_2d().navigation_map)
 
 	if !Engine.is_editor_hint():
 		arr.resize(amount)

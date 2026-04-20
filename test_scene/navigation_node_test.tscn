@@ -2,32 +2,5 @@
 
 [ext_resource type="Script" uid="uid://7qryufyx3alv" path="res://test_scene/navigation_node_test.gd" id="1_hgsn0"]
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_7q5vm"]
-vertices = PackedVector2Array(258.54688, 189.72656, 50.359375, 220.5, 43.429688, 96.61719, 222.78906, 50.1875, 471.46875, 216.0625, 335.2578, 96.25781, 490.35156, 69.17969)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(313, 90, 479, 236, 502, 57), PackedVector2Array(33, 89, 41, 232, 271, 198, 230, 38)])
-baking_rect = Rect2(0, 0, 640, 360)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgsn0"]
-
-[node name="Node2D" type="Node2D" unique_id=524154330]
+[node name="Node2D" type="Node2D" unique_id=1892761474]
 script = ExtResource("1_hgsn0")
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1248599073]
-navigation_polygon = SubResource("NavigationPolygon_7q5vm")
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=1832661327]
-position = Vector2(97, 151)
-vertices = PackedVector2Array(53, -39, 13, -41, 13, 5, 60, 7)
-affect_navigation_mesh = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=131521106]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1515926269]
-position = Vector2(130, 127)
-shape = SubResource("RectangleShape2D_hgsn0")
-
-[node name="Marker2D" type="Marker2D" parent="." unique_id=133150390]
-position = Vector2(81, 129)
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=766726058]

@@ -1,12 +1,38 @@
 extends Node2D
 
-@onready var marker_2d: Marker2D = $Marker2D
 
+var navigation_mesh: NavigationPolygon
+var region_rid: RID
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	var nav_map: RID = get_world_2d().navigation_map
-	var path: PackedVector2Array = NavigationServer2D.map_get_path(
-		nav_map, marker_2d.global_position, get_global_mouse_position(), true
+func _ready() -> void:
+	navigation_mesh = NavigationPolygon.new()
+	region_rid = NavigationServer2D.region_create()
+
+	# Enable the region and set it to the default navigation map.
+	NavigationServer2D.region_set_enabled(region_rid, true)
+	NavigationServer2D.region_set_map(region_rid, get_viewport().find_world_2d().navigation_map)
+
+	# Add vertices for a convex polygon.
+	navigation_mesh.vertices = PackedVector2Array([
+		Vector2(0.0, 0.0),
+		Vector2(100.0, 0.0),
+		Vector2(100.0, 100.0),
+		Vector2(0.0, 100.0),
+	])
+
+	# Add indices for the polygon.
+	navigation_mesh.add_polygon(
+		PackedInt32Array([0, 1, 2, 3])
 	)
-	print(path)
+
+	NavigationServer2D.region_set_navigation_polygon(region_rid, navigation_mesh)
+
+func _physics_process(delta: float) -> void:
+	print(
+		NavigationServer2D.map_get_path(
+			get_viewport().find_world_2d().navigation_map,
+			Vector2(10., 10.),
+			Vector2(90., 90.),
+			true
+		)
+	)

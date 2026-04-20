@@ -410,9 +410,7 @@ target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Ingame" unique_id=1994597134]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_juhcf")
-enabled = false
 
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
 position = Vector2(127, 82)
