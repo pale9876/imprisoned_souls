@@ -6,14 +6,13 @@ class_name Legion
 @export_category("Instance")
 @export var legion_information: LegionInformation = LegionInformation.new()
 @export var amount: int = 100
-@export var navigation_polygon: NavigationPolygon = NavigationPolygon.new()
 @export_flags_2d_physics var layer: int = 1
 @export_flags_2d_physics var mask: int = 0
 
 
 @export_category("Path")
-@export var path_scope: PathScope
-
+@export var path_scope: PathScope = PathScope.new()
+@export var navigation_polygon: NavigationPolygon = NavigationPolygon.new()
 
 @export_category("Body")
 @export var has_body: bool = false
@@ -35,24 +34,30 @@ var nav_map: RID
 var region: RID
 var scope: Scope
 
+
 @export var target: Node2D
 
 
 func create() -> void:
 	if !legion_information or amount <= 0: return
-
-	#nav_map = NavigationServer2D.map_create()
-	#NavigationServer2D.map_set_active(nav_map, true)
-	#
-	#region = NavigationServer2D.region_create()
-	#NavigationServer2D.region_set_transform(region, Transform2D())
-	#NavigationServer2D.region_set_map(region, nav_map)
-	#NavigationServer2D.region_set_navigation_polygon(region, navigation_polygon)
 	
 	if init:
 		kill()
 	
 	create_path()
+	
+	if legion_information.use_nav:
+		navigation_polygon = NavigationPolygon.new()
+		navigation_polygon.baking_rect = scope.rect
+		
+		nav_map = NavigationServer2D.map_create()
+		NavigationServer2D.map_set_active(nav_map, true)
+		NavigationServer2D.map_set_cell_size(nav_map, 1.)
+
+		region = NavigationServer2D.region_create()
+		NavigationServer2D.region_set_transform(region, Transform2D())
+		NavigationServer2D.region_set_map(region, nav_map)
+		NavigationServer2D.region_set_navigation_polygon(region, navigation_polygon)
 	
 	if !Engine.is_editor_hint():
 		arr.resize(amount)
@@ -86,7 +91,14 @@ func spawn_instance(_index: int) -> Instance:
 	instance.space = get_viewport().world_2d.space
 	var spawn_point: Vector2 = scope.path.sample_baked(scope.path.get_baked_length() * randf())
 	instance.position = spawn_point + (spawn_point.direction_to(scope.rect.size / 2.) * path_scope.margin)
-	#print(instance.position)
+	instance.map = nav_map
+	
+	# Init Agent
+	instance.agent = NavigationServer2D.agent_create()
+	NavigationServer2D.agent_get_avoidance_enabled(instance.agent)
+	NavigationServer2D.agent_set_avoidance_layers(instance.agent, 1)
+	NavigationServer2D.agent_set_map(instance.agent, instance.map)
+	NavigationServer2D.agent_set_position(instance.agent, instance.position)
 	
 	# Init Stat
 	instance.stat = Stat.new()
@@ -208,8 +220,6 @@ func _exit_tree() -> void:
 
 
 func kill() -> void:
-	#NavigationServer2D.free_rid(nav_map)
-	#NavigationServer2D.free_rid(region)
 	if scope:
 		RenderingServer.free_rid(scope.cid)
 		scope = null
@@ -219,6 +229,9 @@ func kill() -> void:
 	else:
 		if !arr.is_empty():
 			for instance in arr:
+				if legion_information.use_nav:
+					NavigationServer2D.free_rid(instance.agent)
+
 				if has_body:
 					PhysicsServer2D.free_rid(instance.body)
 					PhysicsServer2D.free_rid(instance.shape)
@@ -231,6 +244,10 @@ func kill() -> void:
 				RenderingServer.free_rid(instance.hurtbox.cid)
 
 		arr = []
+	
+	if legion_information.use_nav:
+		NavigationServer2D.free_rid(nav_map)
+		NavigationServer2D.free_rid(region)
 
 	RenderingServer.canvas_item_clear(get_canvas_item())
 
@@ -298,7 +315,10 @@ class Instance extends RefCounted:
 	var body: RID
 	var shape: RID
 	var space: RID
+	
+	var map: RID
 	var agent: RID
+	
 	var hurtbox: Hurtbox
 	var awareness: Awareness
 	var position: Vector2
@@ -342,52 +362,46 @@ class Instance extends RefCounted:
 	func move(from: Vector2, motion: Vector2 = Vector2(), space: RID = RID(), test: bool = false) -> MotionResult:
 		var motion_result: MotionResult
 		
-		var direct_space: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(space)
-		var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+		#var direct_space: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(space)
+		#var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 		
-		shape_param.collide_with_areas = true
+		NavigationServer2D.agent_set_velocity(agent, motion)
+		
+		var path: PackedVector2Array = NavigationServer2D.map_get_path(
+			map, from, from + motion, true
+		)
+		
+		print(path)
+
+		#shape_param.collide_with_areas = true
 		#shape_param.collide_with_bodies = false
-		shape_param.shape_rid = shape
-		shape_param.transform = Transform2D(0., from)
-		shape_param.motion = motion
-		shape_param.margin = 3.
-		
-		var rest_info: Dictionary = direct_space.get_rest_info(shape_param)
-		var cast_motion: PackedFloat32Array = direct_space.cast_motion(shape_param)
-		
-		var safe_proportion: float = cast_motion[0]
-		var unsafe_proportion: float = cast_motion[1]
-		
-		if !rest_info.is_empty():
-			motion_result = MotionResult.new()
-			motion_result.collider = instance_from_id(rest_info["collider_id"] as int)
-			motion_result.remainder = shape_param.motion
-			motion_result.safe_proportion = safe_proportion
-			motion_result.unsafe_proportion = unsafe_proportion
-			motion_result.normal = rest_info["normal"] as Vector2
-			motion_result.point = rest_info["point"] as Vector2
-			
-			if !test:
-				if motion_result.collider is Instance:
-					if safe_proportion > .01:
-						position += motion * (safe_proportion)
-					
-					var remainder_shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
-					remainder_shape_param.shape_rid = shape
-					remainder_shape_param.transform = Transform2D(0., position)
-					remainder_shape_param.motion = motion_result.remainder * Vector2.from_angle(snappedf(motion_result.normal.angle(), PI / 6.))
-					remainder_shape_param.collide_with_areas = true
-					remainder_shape_param.collide_with_bodies = false
-					
-					var remainder_proportion: PackedFloat32Array = direct_space.cast_motion(remainder_shape_param)
-					
-					if remainder_proportion[0] > .01:
-						position += remainder_shape_param.motion * (remainder_proportion[0])
-				else:
-					position += motion * safe_proportion
-		else:
-			if !test:
-				position += motion
+		#shape_param.shape_rid = shape
+		#shape_param.transform = Transform2D(0., from)
+		#shape_param.motion = motion
+		#
+		#var rest_info: Dictionary = direct_space.get_rest_info(shape_param)
+		#var cast_motion: PackedFloat32Array = direct_space.cast_motion(shape_param)
+		#
+		#var safe_proportion: float = cast_motion[0]
+		#var unsafe_proportion: float = cast_motion[1]
+		#
+		#if !rest_info.is_empty():
+			#motion_result = MotionResult.new()
+			#motion_result.collider = instance_from_id(rest_info["collider_id"] as int)
+			#motion_result.remainder = shape_param.motion
+			#motion_result.safe_proportion = safe_proportion
+			#motion_result.unsafe_proportion = unsafe_proportion
+			#motion_result.normal = rest_info["normal"] as Vector2
+			#motion_result.point = rest_info["point"] as Vector2
+			#
+			#if !test:
+				#if motion_result.collider is Instance:
+					#position += motion * (safe_proportion)
+				#else:
+					#position += motion
+		#else:
+			#if !test:
+				#position += motion
 		
 		return motion_result
 
@@ -425,7 +439,7 @@ class Hitbox extends RefCounted:
 class HitResult extends RefCounted:
 	var hit: bool = false
 	var to: int = -1
-	
+
 
 class Hurtbox extends RefCounted:
 	var owner: Instance

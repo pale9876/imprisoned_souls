@@ -17,9 +17,9 @@ var _time: float = .0
 @export_custom(PROPERTY_HINT_ARRAY_TYPE, "", PROPERTY_USAGE_DEFAULT)
 var _texture: Array[Texture2D]
 
-@warning_ignore("unused_private_class_variable")
-@export_tool_button("Add texture", "Texture2D")
-var _add_texture_btn: Callable = _editor_add_texture
+#@warning_ignore("unused_private_class_variable")
+#@export_tool_button("Add texture", "Texture2D")
+#var _add_texture_btn: Callable = _editor_add_texture
 
 @warning_ignore("unused_private_class_variable")
 @export_tool_button("Clear Textures", "Node")
@@ -137,14 +137,14 @@ func _clear() -> void:
 	notification(NOTIFICATION_TEXTURE_CLEARED)
 	notify_property_list_changed()
 
-
-func _editor_add_texture() -> void:
-	var img: Array[Texture2D] = await ImageSelector.editor_get_image()
-	
-	if !img.is_empty():
-		for tex: Texture2D in img:
-			_texture.push_back(tex)
-		
-		notification(NOTIFICATION_TEXTURE_ADDED)
-		notify_property_list_changed()
-		queue_redraw()
+#
+#func _editor_add_texture() -> void:
+	#var img: Array[Texture2D] = await ImageSelector.editor_get_image()
+	#
+	#if !img.is_empty():
+		#for tex: Texture2D in img:
+			#_texture.push_back(tex)
+		#
+		#notification(NOTIFICATION_TEXTURE_ADDED)
+		#notify_property_list_changed()
+		#queue_redraw()
