@@ -47,18 +47,33 @@ func create() -> void:
 	create_path()
 	
 	if legion_information.use_nav:
-		navigation_polygon = NavigationPolygon.new()
-		navigation_polygon.baking_rect = scope.rect
 		
 		nav_map = NavigationServer2D.map_create()
 		NavigationServer2D.map_set_active(nav_map, true)
 		NavigationServer2D.map_set_cell_size(nav_map, 1.)
-
+		
 		region = NavigationServer2D.region_create()
 		NavigationServer2D.region_set_transform(region, Transform2D())
 		NavigationServer2D.region_set_map(region, nav_map)
+		
+		navigation_polygon = NavigationPolygon.new()
+		navigation_polygon.baking_rect = scope.rect
+		navigation_polygon.set_vertices(
+			PackedVector2Array([
+				scope.rect.position,
+				Vector2(scope.rect.position.x, scope.rect.position.y + scope.rect.size.y)
+			])
+		)
 		NavigationServer2D.region_set_navigation_polygon(region, navigation_polygon)
-	
+
+		
+		var nav_mesh_source_geometry_data_2d: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
+
+		NavigationServer2D.bake_from_source_geometry_data_async(
+			navigation_polygon, nav_mesh_source_geometry_data_2d,
+			func() -> void: print(nav_mesh_source_geometry_data_2d)
+		)
+
 	if !Engine.is_editor_hint():
 		arr.resize(amount)
 		
@@ -98,6 +113,8 @@ func spawn_instance(_index: int) -> Instance:
 	NavigationServer2D.agent_get_avoidance_enabled(instance.agent)
 	NavigationServer2D.agent_set_avoidance_layers(instance.agent, 1)
 	NavigationServer2D.agent_set_map(instance.agent, instance.map)
+	NavigationServer2D.agent_set_radius(instance.agent, 2.)
+
 	NavigationServer2D.agent_set_position(instance.agent, instance.position)
 	
 	# Init Stat
@@ -318,6 +335,7 @@ class Instance extends RefCounted:
 	
 	var map: RID
 	var agent: RID
+	var obstacle: RID
 	
 	var hurtbox: Hurtbox
 	var awareness: Awareness
