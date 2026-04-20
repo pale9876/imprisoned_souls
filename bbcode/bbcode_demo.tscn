@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://citbmhubhin40"]
+
+[ext_resource type="Script" uid="uid://cfo05gkl03qn7" path="res://bbcode/rich_text_matrix_effect.gd" id="1_vjelc"]
+[ext_resource type="Script" uid="uid://cxaxmtdbuhx6s" path="res://bbcode/rich_text_ghost.gd" id="2_a78m7"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_a78m7"]
+script = ExtResource("1_vjelc")
+metadata/_custom_type_script = "uid://cfo05gkl03qn7"
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_8t4fc"]
+script = ExtResource("2_a78m7")
+metadata/_custom_type_script = "uid://cxaxmtdbuhx6s"
+
+[node name="BBcodeDemo" type="Control" unique_id=714028028]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1344395888]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[ghost]This is a custom [matrix]effect[/matrix][/ghost]"
+custom_effects = [SubResource("RichTextEffect_a78m7"), SubResource("RichTextEffect_8t4fc")]

@@ -33,7 +33,7 @@ config/description="프레임워크 이름: 구속된 영혼들
 
 Author: Pale9876 (Github, Korean)
 
-장르: 코스믹 호러
+장르: 코스믹 호러, 피카레스크
 등급: 자율적, {만 19세 이상, 한국}, {18 +, 일본, 미국}
 태그: 액션, 전략, 실시간 경영, 폭력성, 신체훼손"
 run/main_scene="uid://dx6nf5xy18w4"

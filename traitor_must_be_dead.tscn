@@ -213,8 +213,8 @@ shader_parameter/progress = 1.0
 
 [sub_resource type="Gradient" id="Gradient_xj7cu"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.33, 0.66)
-colors = PackedColorArray(0.12, 0.12, 0.12, 1, 0.36199096, 0.36199096, 0.36199096, 1, 0.71945703, 0.71945703, 0.71945703, 1)
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75)
+colors = PackedColorArray(0.12, 0.12, 0.12, 1, 0.36199096, 0.36199096, 0.36199096, 1, 0.71945703, 0.71945703, 0.71945703, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_k7ju8"]
 gradient = SubResource("Gradient_xj7cu")
