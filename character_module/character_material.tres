@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dtas04acpf2mh"]
+
+[ext_resource type="Shader" uid="uid://y1man8kgkr73" path="res://character_module/outline.gdshader" id="1_xr6mc"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_xr6mc")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/thickness = 0.5
