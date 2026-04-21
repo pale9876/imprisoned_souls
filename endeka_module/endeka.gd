@@ -31,9 +31,19 @@ const NOTIFICATION_MINMAX_CHANGED: int = 1403
 
 @export_tool_button("Sort", "2D") var _sort: Callable = sort
 @export_tool_button("Draw EEADs", "2D") var _draw_eeads: Callable = draw_eeads
-
+@export_tool_button("Create","2D") var _create: Callable = create
 
 var reserve: bool = false
+var init: bool = false
+
+
+# OVERRIDE
+func create() -> void:
+	init = true
+
+# OVERRIDE
+func kill() -> void:
+	pass
 
 
 func _notification(what: int) -> void:

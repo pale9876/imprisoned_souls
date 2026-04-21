@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://fwrqwp5ooy1l"]
+
+[ext_resource type="Script" uid="uid://b6hy0lbn5dka0" path="res://lsystem/lsystem_demo.gd" id="1_c2f7v"]
+[ext_resource type="Script" uid="uid://cyxg7ejhv371a" path="res://lsystem/fract_information.gd" id="2_a2ic3"]
+
+[sub_resource type="Resource" id="Resource_a2ic3"]
+script = ExtResource("2_a2ic3")
+axiom = "F"
+rules = Dictionary[String, String]({
+"F": "FF+[+F-F-F]-[-F+F+F]"
+})
+init_pos = Vector2(500, 0)
+length = 5.5
+turn_angle = 22.5
+metadata/_custom_type_script = "uid://cyxg7ejhv371a"
+
+[node name="LsystemDemo" type="CanvasLayer" unique_id=210905126]
+script = ExtResource("1_c2f7v")
+fract_information = SubResource("Resource_a2ic3")
