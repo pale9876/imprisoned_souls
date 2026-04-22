@@ -41,18 +41,26 @@ func create() -> void:
 			PhysicsServer2D.body_set_space(a.body, get_viewport().world_2d.space)
 			PhysicsServer2D.body_set_collision_mask(a.body, mask)
 			
-			var area_rect: Rect2 = Rect2(underpass_line[i].pos, underpass_line[i].size)
+			var area_rect: Rect2 = Rect2(Vector2(), underpass_line[i].size)
 			a.rect = area_rect
 			
 			a.shape.resize(4)
 			a.door.resize(2)
 			
-			var polygon: PackedVector2Array = PackedVector2Array([
+			var segment_poly: PackedVector2Array = PackedVector2Array([
 				a.pos,
 				Vector2(a.pos.x, a.pos.y + a.size.y),
 				a.pos + a.size,
 				Vector2(a.pos.x + a.size.x, a.pos.y),
 				a.pos,
+			])
+			
+			var render_poly: PackedVector2Array = PackedVector2Array([
+				Vector2(),
+				Vector2(0., a.size.y),
+				Vector2(a.size),
+				Vector2(a.size.x, 0.),
+				Vector2(),
 			])
 			
 			# 길이 가로면 1번째, 3번째 세그먼트를 닫아야하고,
@@ -62,7 +70,7 @@ func create() -> void:
 			
 			for j: int in range(4):
 				var segment: RID = PhysicsServer2D.segment_shape_create()
-				PhysicsServer2D.shape_set_data(segment, Rect2(polygon[j], polygon[j + 1]))
+				PhysicsServer2D.shape_set_data(segment, Rect2(segment_poly[j], segment_poly[j + 1]))
 				PhysicsServer2D.body_add_shape(
 					a.body, segment, Transform2D(), false
 				)
@@ -84,8 +92,12 @@ func create() -> void:
 				
 				for j: int in range(4):
 					RenderingServer.canvas_item_add_line(
-						a.cid, polygon[j], polygon[j + 1],
-						Color.WHITE if (!underpass_line[i].closed and (underpass_line[i].type == HORIZONTAL and (j == 1 or j == 3)) or (underpass_line[i].type == VERTICAL and (j == 0 or j == 2))) else Color.RED
+						a.cid, render_poly[j], render_poly[j + 1],
+						Color.WHITE if (
+							!underpass_line[i].closed and (underpass_line[i].type == HORIZONTAL and (j == 1 or j == 3)
+						) or (
+							underpass_line[i].type == VERTICAL and (j == 0 or j == 2))
+						) else Color.RED
 					)
 			
 			arr[i] = a

@@ -44,7 +44,13 @@
 [sub_resource type="Resource" id="Resource_v0yr8"]
 script = ExtResource("3_8acap")
 size = Vector2(1280, 720)
-closed = true
+metadata/_custom_type_script = "uid://bblcw0t5qxk36"
+
+[sub_resource type="Resource" id="Resource_36fc4"]
+script = ExtResource("3_8acap")
+type = 1
+pos = Vector2(1280, 720)
+size = Vector2(1280, 720)
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
 [sub_resource type="Resource" id="Resource_l7pm2"]
@@ -391,7 +397,7 @@ metadata/_custom_type_script = "uid://d1ld2v885ur2n"
 
 [node name="UnderpassModule" type="Node" parent="Ingame" unique_id=1840338606]
 script = ExtResource("1_xj7cu")
-underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8")])
+underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8"), SubResource("Resource_36fc4")])
 metadata/_custom_type_script = "uid://dc7volit4rbgy"
 
 [node name="Legion" type="Node" parent="Ingame" unique_id=51133145 node_paths=PackedStringArray("target")]
@@ -408,6 +414,7 @@ metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 position = Vector2(127, 82)
 script = ExtResource("13_k7ju8")
 mode = 1
+is_player = null
 unit_information = SubResource("Resource_ym5dx")
 skill_information = SubResource("Resource_63v35")
 hurtbox_information = SubResource("Resource_k7ju8")
