@@ -414,7 +414,6 @@ metadata/_custom_type_script = "uid://dfku5xh0yuklb"
 position = Vector2(127, 82)
 script = ExtResource("13_k7ju8")
 mode = 1
-is_player = null
 unit_information = SubResource("Resource_ym5dx")
 skill_information = SubResource("Resource_63v35")
 hurtbox_information = SubResource("Resource_k7ju8")

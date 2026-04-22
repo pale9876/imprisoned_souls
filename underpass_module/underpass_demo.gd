@@ -37,14 +37,14 @@ func create() -> void:
 			
 			a.body = PhysicsServer2D.body_create()
 			PhysicsServer2D.body_set_mode(a.body, PhysicsServer2D.BODY_MODE_STATIC)
-			PhysicsServer2D.body_set_state(a.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., a.pos))
+			PhysicsServer2D.body_set_state(a.body, PhysicsServer2D.BODY_STATE_TRANSFORM, Transform2D(0., Vector2()))
 			PhysicsServer2D.body_set_space(a.body, get_viewport().world_2d.space)
 			PhysicsServer2D.body_set_collision_mask(a.body, mask)
 			
 			var area_rect: Rect2 = Rect2(Vector2(), underpass_line[i].size)
 			a.rect = area_rect
 			
-			a.shape.resize(4)
+			a.segments.resize(4)
 			a.door.resize(2)
 			
 			var segment_poly: PackedVector2Array = PackedVector2Array([
@@ -67,22 +67,18 @@ func create() -> void:
 			# 세로면 2번째, 4번째 세그먼트를 닫아야함.
 			# 길이 가로면 항상 2번째 4번째 세그먼트가 항상 활성화되어야 하고
 			# 세로면 1번째 3번째 세그먼트가 항상 활성화되어야함.
+			print(segment_poly)
+			a.type = underpass_line[i].type
+			a.closed = underpass_line[i].closed
 			
 			for j: int in range(4):
 				var segment: RID = PhysicsServer2D.segment_shape_create()
 				PhysicsServer2D.shape_set_data(segment, Rect2(segment_poly[j], segment_poly[j + 1]))
 				PhysicsServer2D.body_add_shape(
-					a.body, segment, Transform2D(), false
+					a.body, segment, Transform2D(), !get_segment_state(a, j)
 				)
-				a.shape[j] = segment
-			
-			if !underpass_line[i].closed:
-				if underpass_line[i].type == HORIZONTAL:
-					PhysicsServer2D.body_set_shape_disabled(a.body, 0, true)
-					PhysicsServer2D.body_set_shape_disabled(a.body, 2, true)
-				elif underpass_line[i].type == VERTICAL:
-					PhysicsServer2D.body_set_shape_disabled(a.body, 1, true)
-					PhysicsServer2D.body_set_shape_disabled(a.body, 3, true)
+				print(!get_segment_state(a, j))
+				a.segments[j] = segment
 			
 			if Engine.is_editor_hint() or debug_mode:
 				RenderingServer.canvas_item_set_transform(a.cid, Transform2D(0., a.pos))
@@ -93,11 +89,7 @@ func create() -> void:
 				for j: int in range(4):
 					RenderingServer.canvas_item_add_line(
 						a.cid, render_poly[j], render_poly[j + 1],
-						Color.WHITE if (
-							!underpass_line[i].closed and (underpass_line[i].type == HORIZONTAL and (j == 1 or j == 3)
-						) or (
-							underpass_line[i].type == VERTICAL and (j == 0 or j == 2))
-						) else Color.RED
+						Color.WHITE if get_segment_state(a, j) else Color.RED
 					)
 			
 			arr[i] = a
@@ -110,8 +102,16 @@ func kill() -> void:
 		for a: A in arr:
 			RenderingServer.free_rid(a.cid)
 			PhysicsServer2D.free_rid(a.body)
-			for s in a.shape:
+			for s: RID in a.segments:
 				PhysicsServer2D.free_rid(s)
+
+
+func get_segment_state(a: A, i: int) -> bool:
+	return (
+		!a.closed and (
+			(a.type == HORIZONTAL and (i == 1 or i == 3)) or (a.type == VERTICAL and (i == 0 or i == 2))
+		)
+	)
 
 
 func area_disabled() -> void:
@@ -126,12 +126,13 @@ func _draw() -> void:
 
 class A extends RefCounted:
 	var cid: RID
+	var type: int
 	var pos: Vector2
 	var size: Vector2
 	var body: RID
-	var shape: Array[RID]
+	var segments: Array[RID]
 	var door: Array[RID]
 	var texture: Texture2D
 	var rect: Rect2
-	var shutdowned: bool = false
+	var closed: bool = false
 	var disabled: bool = false

@@ -383,7 +383,7 @@ class Instance extends RefCounted:
 			map, from, to, true
 		)
 		
-		print(path)
+		#print(path)
 
 		#shape_param.collide_with_areas = true
 		#shape_param.collide_with_bodies = false
