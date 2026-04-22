@@ -2,46 +2,11 @@
 
 [ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="1_1fi7v"]
 [ext_resource type="Script" uid="uid://dtvvil6gqipt6" path="res://squad/squad.gd" id="2_0ssqu"]
-[ext_resource type="Script" uid="uid://b8aoqif2j64qt" path="res://character_module/character_module.gd" id="3_c6nlg"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="4_jdvek"]
 [ext_resource type="Script" uid="uid://chpo875sjp28p" path="res://path_scope/path_scope.gd" id="5_c6nlg"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_msb6l"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m71s5"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7hrf2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1mr8x"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pc0nq"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aelei"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6uqxf"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ryap"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_obaiy"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yrnng"]
-
-[sub_resource type="Resource" id="Resource_t6b83"]
-script = ExtResource("3_c6nlg")
-front_hair = SubResource("AtlasTexture_6uqxf")
-right_side_hair = SubResource("AtlasTexture_obaiy")
-left_side_hair = SubResource("AtlasTexture_5ryap")
-back_hair = SubResource("AtlasTexture_m71s5")
-face = SubResource("AtlasTexture_pc0nq")
-eye = SubResource("AtlasTexture_1mr8x")
-top = SubResource("AtlasTexture_yrnng")
-bottom = SubResource("AtlasTexture_7hrf2")
-front_accessory = SubResource("AtlasTexture_aelei")
-back_accessory = SubResource("AtlasTexture_msb6l")
-
 [sub_resource type="Resource" id="Resource_lgtxh"]
 script = ExtResource("4_jdvek")
-character_module = SubResource("Resource_t6b83")
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
 
 [sub_resource type="Resource" id="Resource_jdvek"]
@@ -57,9 +22,6 @@ metadata/_custom_type_script = "uid://d1ld2v885ur2n"
 
 [node name="Squad" type="Node" parent="." unique_id=838012620]
 script = ExtResource("2_0ssqu")
-has_body = null
 unit_information = SubResource("Resource_lgtxh")
 path_scope = SubResource("Resource_jdvek")
-pre_init = null
-xsorting = null
 metadata/_custom_type_script = "uid://dtvvil6gqipt6"
