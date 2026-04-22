@@ -118,11 +118,6 @@ baking_rect = Rect2(0, 0, 1280, 720)
 
 [sub_resource type="BehaviorTree" id="BehaviorTree_l7pm2"]
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_juhcf"]
-vertices = PackedVector2Array(1270, 710, 10, 710, 10, 10, 1270, 10)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)])
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_36fc4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ng2cp"]
@@ -408,9 +403,6 @@ navigation_polygon = SubResource("NavigationPolygon_weayq")
 behavior_tree = SubResource("BehaviorTree_l7pm2")
 target = NodePath("../Player")
 metadata/_custom_type_script = "uid://dfku5xh0yuklb"
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Ingame" unique_id=1994597134]
-navigation_polygon = SubResource("NavigationPolygon_juhcf")
 
 [node name="Player" type="Node2D" parent="Ingame" unique_id=870520262]
 position = Vector2(127, 82)

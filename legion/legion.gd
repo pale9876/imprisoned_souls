@@ -49,11 +49,10 @@ func create() -> void:
 	
 	if legion_information.use_nav:
 		nav_map = get_viewport().find_world_2d().navigation_map
-		print(nav_map)
 		
 		nav_region = NavigationServer2D.region_create()
 		navigation_polygon = NavigationPolygon.new()
-		navigation_polygon.baking_rect = scope.rect
+		#navigation_polygon.baking_rect = scope.rect
 		navigation_polygon.set_vertices(
 			PackedVector2Array([
 				scope.rect.position,
@@ -62,12 +61,8 @@ func create() -> void:
 				Vector2(scope.rect.position.x + scope.rect.size.x, scope.rect.position.y),
 			])
 		)
+		navigation_polygon.add_polygon(PackedInt32Array([0, 1, 2, 3]))
 		NavigationServer2D.region_set_enabled(nav_region, true)
-		var nav_mesh_source_geometry_data_2d: NavigationMeshSourceGeometryData2D = NavigationMeshSourceGeometryData2D.new()
-		NavigationServer2D.bake_from_source_geometry_data(
-			navigation_polygon, nav_mesh_source_geometry_data_2d,
-			func() -> void: print(nav_mesh_source_geometry_data_2d)
-		)
 		NavigationServer2D.region_set_navigation_polygon(nav_region, navigation_polygon)
 		NavigationServer2D.region_set_navigation_layers(nav_region, 1)
 		NavigationServer2D.region_set_map(nav_region, get_viewport().find_world_2d().navigation_map)

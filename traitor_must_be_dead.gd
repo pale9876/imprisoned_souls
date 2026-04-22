@@ -64,10 +64,10 @@ func start() -> void:
 	ingame_canvas.show()
 	ui.show()
 	
+	# Set Player Camera
 	camera.add_cam(
 		"player", player.global_position, 1.75, player, Color(0.398, 0.428, 0.48, 0.271)
 	)
-	
 	camera.current = "player"
 	
 	legion.create()
