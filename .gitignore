@@ -5,3 +5,4 @@
 /addons/limboai/bin
 addons/godot-sqlite/bin/~libgdsqlite.windows.template_debug.x86_64.dll
 addons/limboai/bin/~liblimboai.windows.editor.x86_64.dll
+rust_script/ibproject/target
