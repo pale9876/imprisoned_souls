@@ -23,6 +23,7 @@ impl BouncingBall
     fn create(_radius: f32) -> Self
     {
         type BodyMode = physics_server_2d::BodyMode;
+        type BodyState = physics_server_2d::BodyState;
 
         let mut ps = PhysicsServer2D::singleton();
         let mut rs = RenderingServer::singleton();
@@ -32,9 +33,10 @@ impl BouncingBall
         let _shape: Rid = ps.circle_shape_create();
         ps.shape_set_data(_shape, &_radius.to_variant());
         ps.body_add_shape_ex(_body, _shape)
-            .transform(Transform2D::from_angle_scale_skew_origin(0., Vector2::ONE, 0., Vector2::ONE))
+            .transform(Transform2D::IDENTITY)
             .disabled(false)
             .done();
+        ps.body_set_state(_body, BodyState::TRANSFORM, &Transform2D::from_angle_origin(0., Vector2::ZERO).to_variant());
 
         let _canvas_item = rs.canvas_item_create();
         rs.canvas_item_add_circle(_canvas_item, Vector2::ZERO, _radius, Color::WHITE);

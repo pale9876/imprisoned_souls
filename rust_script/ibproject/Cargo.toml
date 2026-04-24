@@ -8,4 +8,5 @@ crate-type = ["cdylib"]  # Compile this crate to a dynamic C library.
 
 [dependencies]
 godot = "0.5.1"
+oauth2 = "5.0.0"
 tossicat = "0.8.0"
