@@ -1,6 +1,12 @@
 use godot::prelude::*;
 
-struct MyExtension;
+
+struct IBProject;
+
+mod test;
+
 
 #[gdextension]
-unsafe impl ExtensionLibrary for MyExtension {}
+unsafe impl ExtensionLibrary for IBProject {
+
+}

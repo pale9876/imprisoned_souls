@@ -105,6 +105,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
+name = "ibproject"
+version = "0.1.0"
+dependencies = [
+ "godot",
+ "tossicat",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.185"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -179,11 +187,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 
 [[package]]
-name = "rust_project"
-version = "0.1.0"
-dependencies = [
- "godot",
-]
+name = "tossicat"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e1b950edc75a246d0c27c4313258e1a68fc2e762ad3dba9dc81bbda3d14cdb45"
 
 [[package]]
 name = "unicode-ident"
