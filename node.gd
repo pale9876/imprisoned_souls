@@ -1,13 +1,18 @@
 extends Node
 
 
+@onready var label: Label = $Label
+
+
 func _enter_tree() -> void:
 	#print(Hangul.transform("구글", "으로부터"))
 	#print(Hangul.transform("437", "는"))
 	#print(Hangul.split_phonemes("가양"))
 	#print(Hangul.modify_sentence("{가영, 는} {철수, 을} 먹었다."))
 	#print(Hangul.join_phonemes(["ㅇ", "ㅏ", "ㄴ"]))
-	lets_animate()
+	
+	TypingMachine.create("안녕하세요")
+	pass
 
 
 func lets_animate() -> void:
@@ -30,18 +35,31 @@ func lets_animate() -> void:
 				print(result + Hangul.join_phonemes(step))
 
 
-class HangulTypingMachine extends RefCounted:
+class TypingMachine extends RefCounted:
 	var sentence: String
-	var splited: String
+	var splited: PackedStringArray
 	var result: String
-	var index: int
+	var index: int = -1
+	
+	
+	static func create(_sentence: String) -> TypingMachine:
+		var machine: TypingMachine = TypingMachine.new()
+		
+		machine.sentence = _sentence
+		machine.splited = _sentence.split("")
+		machine.result = ""
+		
+		
+		
+		return machine
+	
 	
 	
 	
 	
 	func clear() -> void:
 		sentence = ""
-		splited = ""
+		splited = []
 		result = ""
-	
+		index = -1
 	

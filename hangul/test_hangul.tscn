@@ -4,3 +4,8 @@
 
 [node name="HangulTest" type="Node" unique_id=1942951085]
 script = ExtResource("1_juyar")
+
+[node name="Label" type="Label" parent="." unique_id=1166386249]
+offset_right = 386.0
+offset_bottom = 40.0
+text = "안녕하세요"

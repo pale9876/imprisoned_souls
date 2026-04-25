@@ -11,12 +11,14 @@ pub struct BouncingBall
     speed: f32,
 }
 
+
 impl Default for BouncingBall
 {
     fn default() -> Self {
         Self::create(10.)
     }
 }
+
 
 impl BouncingBall
 {
@@ -30,6 +32,7 @@ impl BouncingBall
         
         let _body: Rid = ps.body_create();
         ps.body_set_mode(_body, BodyMode::KINEMATIC);
+
         let _shape: Rid = ps.circle_shape_create();
         ps.shape_set_data(_shape, &_radius.to_variant());
         ps.body_add_shape_ex(_body, _shape)
@@ -58,6 +61,14 @@ impl BouncingBall
         ps.free_rid(self.body);
         ps.free_rid(self.shape);
         rs.free_rid(self.cid);
+        
+    }
+
+
+    fn moved(&mut self)
+    {
+        let ps = PhysicsServer2D::singleton();
+        
     }
 
 }
@@ -91,28 +102,12 @@ pub struct TestBox
 #[godot_api]
 impl ICanvasLayer for TestBox
 {
-    // fn init(base: Base<CanvasLayer>) -> Self
-    // {
-    //     Self {
-    //         cid: Rid::Invalid,
-    //         body: Rid::Invalid,
-    //         shape: Rid::Invalid,
-    //         balls: Vec::new(),
-    //         segments: Vec::new(),
-    //         init: false,
-    //         _create: PhantomVar::
-
-    //         base: base
-    //     }
-    // }
-
     fn physics_process(&mut self, delta: f32)
     {
         if !Engine::singleton().is_editor_hint()
         {
             
         }
-
     }
 }
 
@@ -166,7 +161,7 @@ impl TestBox
 
     fn kill(&mut self)
     {
-
+        self.balls.clear();
     }
 
     fn get_space(&mut self) -> Rid {self.to_gd().get_viewport().unwrap().get_world_2d().unwrap().get_space()}
