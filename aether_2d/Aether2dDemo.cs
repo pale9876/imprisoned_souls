@@ -49,8 +49,8 @@ public partial class Aether2dDemo : CanvasLayer
     {
         base._EnterTree();
 
-
 		
+
     }
 
 	public void Create()
