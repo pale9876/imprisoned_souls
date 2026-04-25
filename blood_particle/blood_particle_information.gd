@@ -19,9 +19,11 @@ class_name BloodParticleInformation
 	get:
 		return direction.normalized() if !direction.is_normalized() else direction
 
+
 @export var angle_range: float = 30.:
 	set(value):
 		angle_range = value
+
 
 @export_category("Tween / Curve")
 @export var curve: float = .311

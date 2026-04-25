@@ -21,3 +21,4 @@ rust_script/ibproject/target
 addons/ibproject/debug/~ibpr_0.pdb
 addons/ibproject/debug/~ibproject.dll
 /addons/tarantella/godot-cpp
+addons/tarantella/bin/~tarantella.windows.template_debug.x86_64.dll
