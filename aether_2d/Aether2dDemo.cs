@@ -1,20 +1,21 @@
+using System;
 using Godot;
 using nkast.Aether.Physics2D.Dynamics;
+using nkast.Aether.Physics2D.Dynamics.Contacts;
 
 using NkastVec2 = nkast.Aether.Physics2D.Common.Vector2;
-
-
 
 [Tool]
 public partial class Aether2dDemo : CanvasLayer
 {
-	private struct Ball
+	public struct Ball
 	{
 		public Rid cid;
 		public Body body;
 		public Fixture shape;
 		public Vector2 position = Vector2.Zero;
 		public Vector2 motion;
+		// public bool collide_on_stop = true;
 
 		public Ball(Body _body, Vector2 init_pos, Vector2 init_motion)
 		{
@@ -23,13 +24,28 @@ public partial class Aether2dDemo : CanvasLayer
 			position = init_pos;
 			body = _body;
 			shape = _body.CreateCircle(10.0f, 1f);
+			shape.Friction = .0f;
+			shape.Restitution = .0f;
 			motion = init_motion;
 			
-			body.LinearVelocity = to_aether_vec2(motion);
+			set_motion(motion);
 
 			RenderingServer.CanvasItemAddCircle(cid, new Vector2(), 10.0f, Colors.White);
 			RenderingServer.CanvasItemSetTransform(cid, get_transform());
 
+			body.OnCollision += on_collided;
+		}
+
+		private bool on_collided(Fixture sender, Fixture other, Contact contact)
+		{
+			var normal = new Vector2(contact.Manifold.LocalNormal.X, contact.Manifold.LocalNormal.Y);
+			
+			set_motion(motion.Bounce(normal));
+
+			// GD.Print(body.AngularVelocity);
+			// GD.Print(body.AngularDamping);
+			// GD.Print(body.LinearVelocity);
+			return true;
 		}
 
 		public void set_motion(Vector2 value)
@@ -57,7 +73,7 @@ public partial class Aether2dDemo : CanvasLayer
 		public Body body;
 		public Fixture[] edges;
 
-		public Box(Body _body, Rect2 rect)
+		public Box(Body _body, Rect2 rect, Color _color)
 		{
 			cid = RenderingServer.CanvasItemCreate();
 			body = _body;
@@ -77,10 +93,12 @@ public partial class Aether2dDemo : CanvasLayer
 				var to = to_aether_vec2(rect_polygon[i + 1]);
 
 				edges[i] = body.CreateEdge(from, to);
+
 			}
 
-			RenderingServer.CanvasItemAddRect(cid, rect, Colors.Aqua);
+			RenderingServer.CanvasItemAddRect(cid, rect, _color);
 		}
+
 	}
 
 
@@ -92,10 +110,12 @@ public partial class Aether2dDemo : CanvasLayer
 	private World _world;
 
 	private Fixture[] body_edges = new Fixture[4];
-	private Vector2 box_size = new Vector2(100.0f, 100.0f);
+	private Vector2 box_size = new Vector2(640.0f, 360.0f);
 	private Box box;
+	[Export] public Color box_color;
 	
 	[Export] private int amount = 1;
+	[Export] private float init_force = 1000.0f;
 	private float radius = 10.0f;
 	private Ball[] balls;
 
@@ -133,7 +153,6 @@ public partial class Aether2dDemo : CanvasLayer
 		if (init)
 		{
 			kill();
-			GD.Print("Killed");
 		}
 
 		canvas_item = RenderingServer.CanvasItemCreate();
@@ -150,13 +169,15 @@ public partial class Aether2dDemo : CanvasLayer
 		{
 			// Create World
 			_world = new World();
+			_world.Gravity = NkastVec2.Zero;
 
 			// Create Box
-			Rect2 box_rect = new Rect2(- box_size / 2.0f, box_size);
+			Rect2 box_rect = new Rect2(new Vector2(), box_size);
 
 			box = new Box (
 				_world.CreateBody(ZERO, .0f, BodyType.Static),
-				box_rect
+				box_rect,
+				box_color
 			);
 			// GD.Print(box.cid);
 
@@ -172,17 +193,18 @@ public partial class Aether2dDemo : CanvasLayer
 				var randy = rand.RandfRange(box_rect.Position.Y, box_rect.Position.Y + box_rect.Size.Y);
 				Vector2 spawn_position = new Vector2(randx, randy);
 				Vector2 rand_dir = Vector2.FromAngle(rand.RandfRange(.0f, float.Tau));
-				float init_force = 300.0f;
 
 				Vector2 motion = init_force * rand_dir;
+				// GD.Print(motion);
 
 				var ball = new Ball(
-					_world.CreateBody(to_aether_vec2(spawn_position), .0f, BodyType.Kinematic),
+					_world.CreateBody(to_aether_vec2(spawn_position), .0f, BodyType.Dynamic),
 					spawn_position, motion
 				);
 				// GD.Print(ball.cid);
 
 				RenderingServer.CanvasItemSetParent(ball.cid, canvas_item);
+
 				balls[j] = ball;
 			}
 		}
@@ -208,14 +230,16 @@ public partial class Aether2dDemo : CanvasLayer
 		}
 		else if (Engine.IsEditorHint())
 		{
-			
+			RenderingServer.FreeRid(debug_canvas);
 		}
 	}
 
-	private float test_move(Fixture fixture, NkastVec2 point, NkastVec2 normal, float fraction)
-	{
-		return -1.0f;
-	}
+
+	// private float test_move(Fixture fixture, NkastVec2 point, NkastVec2 normal, float fraction)
+	// {
+	// 	return -1.0f;
+	// }
+
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -223,12 +247,12 @@ public partial class Aether2dDemo : CanvasLayer
 		{
 			_world.Step((float)delta);
 			
-			foreach (var ball in balls)
+			foreach (ref var ball in balls.AsSpan())
 			{
-				var tf = ball.body.GetTransform().p;
-				GD.Print(tf);
+				NkastVec2 pos = ball.body.GetTransform().p;
+				ball.tf_updated(pos);
 			}
-		}		
+		}
 	}
 
 }

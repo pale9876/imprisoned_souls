@@ -3,4 +3,12 @@
 [ext_resource type="Script" uid="uid://btqpknqmj6e4" path="res://aether_2d/Aether2dDemo.cs" id="1_h1h8u"]
 
 [node name="AetherPhysicsDemo" type="CanvasLayer" unique_id=303097524]
+follow_viewport_enabled = true
 script = ExtResource("1_h1h8u")
+box_color = Color(0.6174, 0.95582664, 0.98, 0.36862746)
+amount = 30
+init_force = 100000.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=187581737]
+position = Vector2(295, 185)
+zoom = Vector2(0.74, 0.74)

@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://b6xmtj8wjrviy"]
-
-[ext_resource type="Script" uid="uid://dt0rp0kopd0x0" path="res://aether_2d/test_cs.cs" id="1_lddor"]
-
-[node name="Node2D" type="Node2D" unique_id=734043215]
-script = ExtResource("1_lddor")
