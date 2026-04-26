@@ -1,9 +1,9 @@
-using System;
 using Godot;
-using nkast.Aether.Physics2D.Collision;
 using nkast.Aether.Physics2D.Dynamics;
 
 using NkastVec2 = nkast.Aether.Physics2D.Common.Vector2;
+
+
 
 [Tool]
 public partial class Aether2dDemo : CanvasLayer
@@ -19,22 +19,37 @@ public partial class Aether2dDemo : CanvasLayer
 		public Ball(Body _body, Vector2 init_pos, Vector2 init_motion)
 		{
 			cid = RenderingServer.CanvasItemCreate();
+
 			position = init_pos;
 			body = _body;
 			shape = _body.CreateCircle(10.0f, 1f);
 			motion = init_motion;
 			
+			body.LinearVelocity = to_aether_vec2(motion);
+
 			RenderingServer.CanvasItemAddCircle(cid, new Vector2(), 10.0f, Colors.White);
 			RenderingServer.CanvasItemSetTransform(cid, get_transform());
 
+		}
+
+		public void set_motion(Vector2 value)
+		{
+			motion = value;
+			body.LinearVelocity = to_aether_vec2(value);
 		}
 
 		public Transform2D get_transform()
 		{
 			return new Transform2D(0.0f, position);
 		}
-	}
 
+		public void tf_updated(NkastVec2 value)
+		{
+			position = new Vector2(value.X, value.Y);
+			RenderingServer.CanvasItemSetTransform(cid, get_transform());
+		}
+
+	}
 
 	private struct Box
 	{
@@ -45,7 +60,6 @@ public partial class Aether2dDemo : CanvasLayer
 		public Box(Body _body, Rect2 rect)
 		{
 			cid = RenderingServer.CanvasItemCreate();
-
 			body = _body;
 			
 			edges = new Fixture[4];
@@ -71,19 +85,17 @@ public partial class Aether2dDemo : CanvasLayer
 
 
 	// CanvasItem
-	private Rid _cid;
-	private Rid debug_canvas;
+	private Rid canvas_item = new Rid();
+	private Rid debug_canvas = new Rid();
 
 	// Aether2D World
 	private World _world;
-
 
 	private Fixture[] body_edges = new Fixture[4];
 	private Vector2 box_size = new Vector2(100.0f, 100.0f);
 	private Box box;
 	
-
-	private int amount = 100;
+	[Export] private int amount = 1;
 	private float radius = 10.0f;
 	private Ball[] balls;
 
@@ -121,15 +133,18 @@ public partial class Aether2dDemo : CanvasLayer
 		if (init)
 		{
 			kill();
+			GD.Print("Killed");
 		}
 
-		_cid = RenderingServer.CanvasItemCreate();
-		RenderingServer.CanvasItemSetParent(GetCanvas(), _cid);
+		canvas_item = RenderingServer.CanvasItemCreate();
+		// GD.Print(canvas_item);
+		// GD.Print(GetCanvas());
+
+		RenderingServer.CanvasItemSetParent(canvas_item, GetCanvas());
 
 		if (Engine.IsEditorHint())
 		{
 			debug_canvas = RenderingServer.CanvasItemCreate();
-			
 		}
 		else if (!Engine.IsEditorHint())
 		{
@@ -143,7 +158,9 @@ public partial class Aether2dDemo : CanvasLayer
 				_world.CreateBody(ZERO, .0f, BodyType.Static),
 				box_rect
 			);
-			RenderingServer.CanvasItemSetParent(box.cid, _cid);
+			// GD.Print(box.cid);
+
+			RenderingServer.CanvasItemSetParent(box.cid, canvas_item);
 
 
 			// Create Balls
@@ -163,8 +180,9 @@ public partial class Aether2dDemo : CanvasLayer
 					_world.CreateBody(to_aether_vec2(spawn_position), .0f, BodyType.Kinematic),
 					spawn_position, motion
 				);
+				// GD.Print(ball.cid);
 
-				RenderingServer.CanvasItemSetParent(ball.cid, _cid);
+				RenderingServer.CanvasItemSetParent(ball.cid, canvas_item);
 				balls[j] = ball;
 			}
 		}
@@ -175,6 +193,7 @@ public partial class Aether2dDemo : CanvasLayer
 
 	public void kill()
 	{
+		RenderingServer.FreeRid(canvas_item);
 
 		if (!Engine.IsEditorHint())
 		{
@@ -187,6 +206,10 @@ public partial class Aether2dDemo : CanvasLayer
 				RenderingServer.FreeRid(ball.cid);
 			}
 		}
+		else if (Engine.IsEditorHint())
+		{
+			
+		}
 	}
 
 	private float test_move(Fixture fixture, NkastVec2 point, NkastVec2 normal, float fraction)
@@ -198,11 +221,13 @@ public partial class Aether2dDemo : CanvasLayer
 	{
 		if (!Engine.IsEditorHint())
 		{
+			_world.Step((float)delta);
+			
 			foreach (var ball in balls)
 			{
-				ball.body.LinearVelocity = to_aether_vec2(ball.motion);
+				var tf = ball.body.GetTransform().p;
+				GD.Print(tf);
 			}
-			_world.Step((float)delta);
 		}		
 	}
 

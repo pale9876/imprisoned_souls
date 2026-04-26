@@ -54,6 +54,10 @@ DialogueManager="*uid://c3rodes2l3gxb"
 
 settings/physics_interpolation/enable_warnings=false
 
+[dialogue_manager]
+
+runtime/advanced/uses_dotnet=true
+
 [display]
 
 window/size/viewport_width=640
