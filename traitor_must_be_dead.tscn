@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://drl2kykjmd5mp" path="res://awareness_information/awareness_information.gd" id="6_my6s6"]
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="6_y0qeb"]
 [ext_resource type="Script" uid="uid://chpo875sjp28p" path="res://path_scope/path_scope.gd" id="7_hkiqx"]
-[ext_resource type="Script" uid="uid://b8aoqif2j64qt" path="res://character_module/character_module.gd" id="8_hkiqx"]
 [ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_6hyso"]
 [ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://legion/legion.gd" id="9_nak2q"]
 [ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose_module/pose.gd" id="9_x6fug"]
@@ -70,42 +69,8 @@ metadata/_custom_type_script = "uid://di7bi4ybepb0a"
 script = ExtResource("11_ym5dx")
 metadata/_custom_type_script = "uid://cotxam656beso"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_l7pm2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0mlyx"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oq44s"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4bol0"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fapbl"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2occr"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x7oyc"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kwicx"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gjxvu"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bbqpv"]
-
-[sub_resource type="Resource" id="Resource_r20sr"]
-script = ExtResource("8_hkiqx")
-front_hair = SubResource("AtlasTexture_x7oyc")
-right_side_hair = SubResource("AtlasTexture_gjxvu")
-left_side_hair = SubResource("AtlasTexture_kwicx")
-back_hair = SubResource("AtlasTexture_0mlyx")
-face = SubResource("AtlasTexture_fapbl")
-eye = SubResource("AtlasTexture_4bol0")
-top = SubResource("AtlasTexture_bbqpv")
-bottom = SubResource("AtlasTexture_oq44s")
-front_accessory = SubResource("AtlasTexture_2occr")
-back_accessory = SubResource("AtlasTexture_l7pm2")
-
 [sub_resource type="Resource" id="Resource_xybxg"]
 script = ExtResource("9_6hyso")
-character_module = SubResource("Resource_r20sr")
 metadata/_custom_type_script = "uid://cukf7tedk28ls"
 
 [sub_resource type="Resource" id="Resource_qy11e"]
@@ -128,42 +93,8 @@ baking_rect = Rect2(0, 0, 1280, 720)
 
 [sub_resource type="BehaviorTree" id="BehaviorTree_l7pm2"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_36fc4"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ng2cp"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hj1ev"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i6h04"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5x8tg"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m1t5h"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pqtsm"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s5hsx"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_egumc"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7cehq"]
-
-[sub_resource type="Resource" id="Resource_4bol0"]
-script = ExtResource("8_hkiqx")
-front_hair = SubResource("AtlasTexture_pqtsm")
-right_side_hair = SubResource("AtlasTexture_egumc")
-left_side_hair = SubResource("AtlasTexture_s5hsx")
-back_hair = SubResource("AtlasTexture_ng2cp")
-face = SubResource("AtlasTexture_5x8tg")
-eye = SubResource("AtlasTexture_i6h04")
-top = SubResource("AtlasTexture_7cehq")
-bottom = SubResource("AtlasTexture_hj1ev")
-front_accessory = SubResource("AtlasTexture_m1t5h")
-back_accessory = SubResource("AtlasTexture_36fc4")
-
 [sub_resource type="Resource" id="Resource_ym5dx"]
 script = ExtResource("9_6hyso")
-character_module = SubResource("Resource_4bol0")
 init_hp = 300
 speed = 300.0
 metadata/_custom_type_script = "uid://cukf7tedk28ls"

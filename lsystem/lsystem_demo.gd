@@ -72,7 +72,7 @@ func create() -> void:
 					lsystem.position = _stack["position"]
 					lsystem.direction = _stack["direction"]
 					lsystem.stack.pop_back()
-	
+
 	RenderingServer.canvas_item_add_multiline(
 		lsystem.cid, lsystem.lines, [fract_information.line_color]
 	)

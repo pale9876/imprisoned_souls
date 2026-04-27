@@ -5,7 +5,7 @@ class_name UnitInformation
 @export_category("Profile")
 @export var name: String = ""
 @export var icon: Texture2D
-@export var character_module: CharacterModule = CharacterModule.new()
+#@export var character_module: CharacterModule = CharacterModule.new()
 
 @export_category("Stat")
 @export_range(0, 10000, 1) var max_hp: int = 300

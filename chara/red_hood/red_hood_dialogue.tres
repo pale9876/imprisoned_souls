@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CharacterBattleDialogue" format=3 uid="uid://b3poa6jxyfp66"]
 
-[ext_resource type="Script" uid="uid://dyr6sxxsybcl6" path="res://chara/character_battle_dialogue.gd" id="1_l2w2d"]
+[ext_resource type="Script" uid="uid://dyr6sxxsybcl6" path="res://character_module/character_battle_dialogue.gd" id="1_l2w2d"]
 
 [resource]
 script = ExtResource("1_l2w2d")

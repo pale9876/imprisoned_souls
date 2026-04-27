@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bjutk5r5e0spr"]
+
+[ext_resource type="Script" uid="uid://di007myl3fcu1" path="res://node.gd" id="1_juyar"]
+
+[node name="HangulTest" type="Node" unique_id=1942951085]
+script = ExtResource("1_juyar")
+
+[node name="Label" type="Label" parent="." unique_id=1166386249]
+offset_right = 386.0
+offset_bottom = 40.0
+text = "안녕하세요"
