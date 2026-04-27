@@ -3,6 +3,9 @@ use godot::{
     prelude::*,
 };
 
+use endeka::EndekaEEAD;
+
+
 #[derive(GodotClass)]
 #[class(base=CanvasLayer, init, tool)]
 pub struct REndeka {
@@ -18,7 +21,7 @@ pub struct REndeka {
     base: Base<CanvasLayer>,
 }
 
-pub struct REEAD {}
+
 
 #[godot_api]
 impl REndeka {
@@ -26,3 +29,10 @@ impl REndeka {
         // self.cid = !();
     }
 }
+
+#[derive(EndekaEEAD)]
+struct REEAD
+{
+
+}
+
