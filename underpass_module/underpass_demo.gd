@@ -1,6 +1,6 @@
 @tool
 extends EEAD
-class_name UnderpassModule
+class_name UnderpassRegion
 
 
 @export var debug_mode: bool = true
@@ -10,6 +10,7 @@ class_name UnderpassModule
 
 
 var arr: Array[A] = []
+var region: RID = RID()
 
 
 func _enter_tree() -> void:

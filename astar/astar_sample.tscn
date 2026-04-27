@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cxd7gpqiwiw7k"]
+
+[ext_resource type="Script" uid="uid://cf4moa1laeip0" path="res://astar/astar_demo.gd" id="1_kfnll"]
+
+[node name="Node" type="CanvasLayer" unique_id=333904845]
+script = ExtResource("1_kfnll")
