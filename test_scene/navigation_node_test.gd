@@ -1,3 +1,3 @@
 extends Node2D
 
-@export var astargrid: AStarGrid2D
+var astargrid: AStarGrid2D
