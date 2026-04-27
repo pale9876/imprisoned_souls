@@ -4,6 +4,7 @@ class_name UnderpassModule
 
 
 @export var debug_mode: bool = true
+@export var size: Vector2 = Vector2(640., 360.)
 @export var underpass_line: Array[RoomInformation]
 @export_flags_2d_physics var mask: int = 1
 
@@ -14,7 +15,6 @@ var arr: Array[A] = []
 func _enter_tree() -> void:
 	if !Engine.is_editor_hint():
 		create()
-
 
 
 func create() -> void:
@@ -29,8 +29,8 @@ func create() -> void:
 		for i: int in range(underpass_line.size()):
 			var a: A = A.new()
 			
-			a.pos = underpass_line[i].pos
-			a.size = underpass_line[i].size
+			a.pos = Vector2(underpass_line[i].pos) * size
+			a.size = size
 			
 			a.cid = RenderingServer.canvas_item_create()
 			RenderingServer.canvas_item_set_parent(a.cid, get_canvas_item())
@@ -41,7 +41,7 @@ func create() -> void:
 			PhysicsServer2D.body_set_space(a.body, get_viewport().world_2d.space)
 			PhysicsServer2D.body_set_collision_mask(a.body, mask)
 			
-			var area_rect: Rect2 = Rect2(Vector2(), underpass_line[i].size)
+			var area_rect: Rect2 = Rect2(Vector2(), a.size)
 			a.rect = area_rect
 			
 			a.segments.resize(4)
@@ -74,6 +74,9 @@ func create() -> void:
 			for j: int in range(4):
 				var segment: RID = PhysicsServer2D.segment_shape_create()
 				PhysicsServer2D.shape_set_data(segment, Rect2(segment_poly[j], segment_poly[j + 1]))
+				#PhysicsServer2D.body_set_shape_as_one_way_collision(
+					#a.body, j, true, .08, Vector2.UP
+				#)
 				PhysicsServer2D.body_add_shape(
 					a.body, segment, Transform2D(), !get_segment_state(a, j)
 				)

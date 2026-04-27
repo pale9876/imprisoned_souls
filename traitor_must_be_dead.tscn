@@ -43,14 +43,18 @@
 
 [sub_resource type="Resource" id="Resource_v0yr8"]
 script = ExtResource("3_8acap")
-size = Vector2(1280, 720)
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
 [sub_resource type="Resource" id="Resource_36fc4"]
 script = ExtResource("3_8acap")
 type = 1
-pos = Vector2(1280, 720)
-size = Vector2(1280, 720)
+pos = Vector2i(1, 1)
+metadata/_custom_type_script = "uid://bblcw0t5qxk36"
+
+[sub_resource type="Resource" id="Resource_ng2cp"]
+script = ExtResource("3_8acap")
+type = 1
+pos = Vector2i(1, 0)
 metadata/_custom_type_script = "uid://bblcw0t5qxk36"
 
 [sub_resource type="Resource" id="Resource_l7pm2"]
@@ -397,7 +401,8 @@ metadata/_custom_type_script = "uid://d1ld2v885ur2n"
 
 [node name="UnderpassModule" type="Node" parent="Ingame" unique_id=1840338606]
 script = ExtResource("1_xj7cu")
-underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8"), SubResource("Resource_36fc4")])
+underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8"), SubResource("Resource_36fc4"), SubResource("Resource_ng2cp")])
+mask = 0
 metadata/_custom_type_script = "uid://dc7volit4rbgy"
 
 [node name="Legion" type="Node" parent="Ingame" unique_id=51133145 node_paths=PackedStringArray("target")]
