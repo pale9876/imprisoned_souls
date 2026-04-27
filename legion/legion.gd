@@ -26,13 +26,10 @@ class_name Legion
 
 @export_category("DEBUG")
 @export var body_color: Color = Color(0.89, 0.0, 0.0, 0.537)
-@export var navigation_region: NavigationRegion2D
-
 
 var arr: Array[Instance] = []
 
 var nav_map: RID
-var nav_region: RID
 var scope: Scope
 
 
@@ -50,22 +47,6 @@ func create() -> void:
 	if legion_information.use_nav:
 		nav_map = get_viewport().find_world_2d().navigation_map
 		
-		nav_region = NavigationServer2D.region_create()
-		navigation_polygon = NavigationPolygon.new()
-		#navigation_polygon.baking_rect = scope.rect
-		navigation_polygon.set_vertices(
-			PackedVector2Array([
-				scope.rect.position,
-				Vector2(scope.rect.position.x, scope.rect.position.y + scope.rect.size.y),
-				scope.rect.position + scope.rect.size,
-				Vector2(scope.rect.position.x + scope.rect.size.x, scope.rect.position.y),
-			])
-		)
-		navigation_polygon.add_polygon(PackedInt32Array([0, 1, 2, 3]))
-		NavigationServer2D.region_set_enabled(nav_region, true)
-		NavigationServer2D.region_set_navigation_polygon(nav_region, navigation_polygon)
-		NavigationServer2D.region_set_navigation_layers(nav_region, 1)
-		NavigationServer2D.region_set_map(nav_region, get_viewport().find_world_2d().navigation_map)
 
 	if !Engine.is_editor_hint():
 		arr.resize(amount)
@@ -104,11 +85,11 @@ func spawn_instance(_index: int) -> Instance:
 	
 	# Init Agent
 	instance.agent = NavigationServer2D.agent_create()
-	#NavigationServer2D.agent_get_avoidance_enabled(instance.agent)
-	#NavigationServer2D.agent_set_avoidance_layers(instance.agent, 1)
-	NavigationServer2D.agent_set_map(instance.agent, instance.map)
-	NavigationServer2D.agent_set_radius(instance.agent, 2.)
+	NavigationServer2D.agent_set_map(instance.agent, nav_map)
+	NavigationServer2D.agent_set_avoidance_enabled(instance.agent, true)
+	NavigationServer2D.agent_set_radius(instance.agent, 10.)
 	NavigationServer2D.agent_set_position(instance.agent, instance.position)
+	#NavigationServer2D.agent_set_avoidance_layers(instance.agent, 1)
 	
 	# Init Stat
 	instance.stat = Stat.new()
@@ -257,7 +238,8 @@ func kill() -> void:
 	
 	if legion_information.use_nav:
 		#NavigationServer2D.free_rid(nav_map)
-		NavigationServer2D.free_rid(nav_region)
+		#NavigationServer2D.free_rid(nav_region)
+		pass
 
 	RenderingServer.canvas_item_clear(get_canvas_item())
 
@@ -373,48 +355,13 @@ class Instance extends RefCounted:
 
 	func move(from: Vector2, to: Vector2, space: RID = RID(), test: bool = false) -> MotionResult:
 		var motion_result: MotionResult
-		
-		#var direct_space: PhysicsDirectSpaceState2D = PhysicsServer2D.space_get_direct_state(space)
-		#var shape_param: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
-		
+
 		NavigationServer2D.agent_set_velocity(agent, to)
 		
 		var path: PackedVector2Array = NavigationServer2D.map_get_path(
 			map, from, to, true
 		)
-		
-		#print(path)
 
-		#shape_param.collide_with_areas = true
-		#shape_param.collide_with_bodies = false
-		#shape_param.shape_rid = shape
-		#shape_param.transform = Transform2D(0., from)
-		#shape_param.motion = motion
-		#
-		#var rest_info: Dictionary = direct_space.get_rest_info(shape_param)
-		#var cast_motion: PackedFloat32Array = direct_space.cast_motion(shape_param)
-		#
-		#var safe_proportion: float = cast_motion[0]
-		#var unsafe_proportion: float = cast_motion[1]
-		#
-		#if !rest_info.is_empty():
-			#motion_result = MotionResult.new()
-			#motion_result.collider = instance_from_id(rest_info["collider_id"] as int)
-			#motion_result.remainder = shape_param.motion
-			#motion_result.safe_proportion = safe_proportion
-			#motion_result.unsafe_proportion = unsafe_proportion
-			#motion_result.normal = rest_info["normal"] as Vector2
-			#motion_result.point = rest_info["point"] as Vector2
-			#
-			#if !test:
-				#if motion_result.collider is Instance:
-					#position += motion * (safe_proportion)
-				#else:
-					#position += motion
-		#else:
-			#if !test:
-				#position += motion
-		
 		return motion_result
 
 

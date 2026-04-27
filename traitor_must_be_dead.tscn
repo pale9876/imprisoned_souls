@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dx6nf5xy18w4"]
 
-[ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass_demo.gd" id="1_xj7cu"]
+[ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass.gd" id="1_xj7cu"]
 [ext_resource type="Script" uid="uid://dt0b8s8e5kooo" path="res://traitor_must_be_dead.gd" id="1_ym5dx"]
 [ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="2_my6s6"]
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
@@ -330,7 +330,7 @@ follow_viewport_enabled = true
 script = ExtResource("2_my6s6")
 metadata/_custom_type_script = "uid://d1ld2v885ur2n"
 
-[node name="UnderpassModule" type="Node" parent="Ingame" unique_id=1840338606]
+[node name="UnderpassRegion" type="Node" parent="Ingame" unique_id=1840338606]
 script = ExtResource("1_xj7cu")
 underpass_line = Array[ExtResource("3_8acap")]([SubResource("Resource_v0yr8"), SubResource("Resource_36fc4"), SubResource("Resource_ng2cp")])
 mask = 0

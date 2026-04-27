@@ -1,6 +1,30 @@
 [gd_scene format=3 uid="uid://bfhypc6feo82a"]
 
 [ext_resource type="Script" uid="uid://7qryufyx3alv" path="res://test_scene/navigation_node_test.gd" id="1_hgsn0"]
+[ext_resource type="Script" uid="uid://mn0que025oqk" path="res://test_scene/agent.gd" id="2_a0emi"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_a0emi"]
+vertices = PackedVector2Array(310, 118, 10, 118, 10, 10, 310, 10)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 320, 0, 320, 128, 0, 128)])
 
 [node name="Node2D" type="Node2D" unique_id=1892761474]
 script = ExtResource("1_hgsn0")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1989105545]
+navigation_polygon = SubResource("NavigationPolygon_a0emi")
+
+[node name="agent" type="Node2D" parent="." unique_id=1288881071]
+position = Vector2(64, 56)
+script = ExtResource("2_a0emi")
+movement_speed = 50.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="agent" unique_id=1799449391]
+avoidance_enabled = true
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1282743205]
+position = Vector2(168, 64)
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="Node2D" unique_id=1318968652]
+vertices = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+affect_navigation_mesh = true
