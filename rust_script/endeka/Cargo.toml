@@ -1,14 +1,12 @@
 [package]
-name = "endeka_renderer"
+name = "endeka"
 version = "0.1.0"
 edition = "2024"
 
-
 [lib]
-name = "endeka_renderer"
-path = "src/lib.rs"
 proc-macro = true
 
 
 [dependencies]
-godot = "0.5.1"
+syn = "2.0"
+quote = "1.0"

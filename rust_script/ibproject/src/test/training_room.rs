@@ -1,7 +1,4 @@
-use godot::{classes::{CanvasLayer, ICanvasLayer, RenderingServer, canvas_item}, prelude::*};
-
-
-
+use godot::{classes::{CanvasLayer, ICanvasLayer, RenderingServer}, prelude::*};
 
 struct Tile
 {
@@ -52,6 +49,7 @@ impl ICanvasLayer for TrainingMap
     }
 }
 
+#[godot_api]
 impl TrainingMap
 {
     fn create(&mut self)

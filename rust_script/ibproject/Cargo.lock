@@ -148,13 +148,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "endeka_renderer"
-version = "0.1.0"
-dependencies = [
- "godot",
-]
-
-[[package]]
 name = "find-msvc-tools"
 version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -458,7 +451,6 @@ dependencies = [
 name = "ibproject"
 version = "0.1.0"
 dependencies = [
- "endeka_renderer",
  "godot",
  "oauth2",
  "tossicat",

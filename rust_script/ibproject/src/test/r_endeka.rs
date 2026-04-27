@@ -1,14 +1,15 @@
-use godot::{classes::{CanvasLayer, RenderingServer}, prelude::*};
-use crate::rendering_help;
+use godot::{
+    classes::{CanvasLayer, RenderingServer},
+    prelude::*,
+};
 
 #[derive(GodotClass)]
 #[class(base=CanvasLayer, init, tool)]
-pub struct REndeka
-{
+pub struct REndeka {
     #[init(val=Rid::Invalid)]
     cid: Rid,
 
-    #[init(val=false)]
+    #[init(val = false)]
     init: bool,
 
     #[export_tool_button(fn = Self::create, name = "Create", icon = "2D")]
@@ -17,12 +18,11 @@ pub struct REndeka
     base: Base<CanvasLayer>,
 }
 
+pub struct REEAD {}
 
 #[godot_api]
-impl REndeka
-{
-    fn create(&mut self)
-    {
-        
+impl REndeka {
+    fn create(&mut self) {
+        // self.cid = !();
     }
 }

@@ -1,5 +1,13 @@
 use godot::prelude::*;
-use godot::classes::{CanvasLayer, Curve2D, Engine, ICanvasLayer, PhysicsServer2D, RenderingServer, physics_server_2d};
+use godot::classes::{
+    CanvasLayer,
+    ICanvasLayer,
+    Curve2D,
+    Engine,
+    PhysicsServer2D,
+    RenderingServer,
+    physics_server_2d
+};
 
 
 pub struct BouncingBall
@@ -18,7 +26,6 @@ impl Default for BouncingBall
         Self::create(10.)
     }
 }
-
 
 impl BouncingBall
 {
@@ -51,6 +58,7 @@ impl BouncingBall
             radius: _radius,
             speed: 300.
         }
+
     }
 
     fn kill(&mut self)
@@ -75,45 +83,58 @@ impl BouncingBall
 
 
 #[derive(GodotClass)]
-#[class(tool, base=CanvasLayer, init)]
+#[class(tool, base=CanvasLayer)]
 pub struct TestBox
 {
-    #[init(val = 100)]
     amount: u16,
-    #[init(val = Rid::Invalid)]
     cid: Rid,
-    #[init(val = Rid::Invalid)]
     body: Rid,
-    #[init(val = Rid::Invalid)]
-    shape: Rid,
-    #[init(val = Vector2{x:100., y: 100.})]
     size: Vector2,
+
     balls: Vec<BouncingBall>,
     segments: Vec<Rid>,
+
     init: bool,
 
     #[export_tool_button(fn = Self::create, icon = "2D", name = "Create")]
     _create: PhantomVar<Callable>,
 
-    base: Base<CanvasLayer>,
+    base: Base<CanvasLayer>
 }
-
 
 #[godot_api]
 impl ICanvasLayer for TestBox
 {
-    fn physics_process(&mut self, delta: f32)
+
+    fn init(base: Base<CanvasLayer>) -> Self
     {
-        if !Engine::singleton().is_editor_hint()
-        {
+        let mut rs = RenderingServer::singleton();
+        let mut ps = PhysicsServer2D::singleton();
+
+        Self {
+            amount: 10,
+            cid: rs.canvas_item_create(),
+            body: ps.body_create(),
+            size: Vector2 { x: 640., y: 360. },
+            balls: Vec::new(),
+            segments: Vec::new(),
+            init: false,
+            _create: PhantomVar::default(),
             
+            base
         }
     }
+
+    fn enter_tree(&mut self)
+    {
+    }
 }
+
 
 #[godot_api]
 impl TestBox
 {
+
     #[func]
     fn create(&mut self)
     {
