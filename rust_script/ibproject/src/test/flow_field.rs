@@ -1,5 +1,6 @@
 use std::{collections::HashMap};
-use godot::prelude::*;
+use godot::{obj::NewAlloc, prelude::*};
+use oauth2::reqwest::tls;
 
 
 #[derive(GodotClass)]
@@ -9,7 +10,7 @@ struct FlowField
     region: HashMap<Vector2i, Cell>,
 }
 
-
+#[derive(Debug)]
 struct Cell
 {
     height: f32,
@@ -47,7 +48,10 @@ impl FlowField
     #[func]
     fn set_cell_height(&mut self, cell: Vector2i, height: f32)
     {
-
+        if self.region.contains_key(&cell)
+        {
+            self.region.get_mut(&cell).unwrap().height = height;
+        }
     }
 
 
@@ -67,23 +71,42 @@ impl FlowField
     #[func]
     fn get_low(&mut self, point: Vector2i)
     {
-        let neighbors = self.get_neighbors(point);
+        let mut neighbors = self.get_neighbors(point);
+        neighbors.sort_by(
+            |a, b|
+                a.1.height.total_cmp(&b.1.height)
+        );
 
-        
+        godot_print!("{:?}", neighbors[0]);
     }
 
-    fn get_neighbors(&self, point: Vector2i) -> [&Cell; 8]
+    fn get_neighbors(&self, point: Vector2i) -> [(Vector2i, &Cell); 8]
     {
-        let top_left = self.region.get(&Vector2i{x: point.x - 1, y: point.y - 1}).unwrap();
-        let top = self.region.get(&Vector2i{x: point.x, y: point.y - 1}).unwrap();
-        let top_right = self.region.get(&Vector2i{x: point.x + 1, y: point.y - 1}).unwrap();
-        let right = self.region.get(&Vector2i{x: point.x + 1, y: point.y}).unwrap();
-        let bottom_right = self.region.get(&Vector2i{x: point.x + 1, y: point.y + 1}).unwrap();
-        let bottom = self.region.get(&Vector2i{x: point.x, y: point.y + 1}).unwrap();
-        let bottom_left = self.region.get(&Vector2i{x: point.x - 1, y: point.y + 1}).unwrap();
-        let left = self.region.get(&Vector2i{x: point.x - 1, y: point.y}).unwrap();
+        
+        let tl = Vector2i{x: point.x - 1, y: point.y - 1};
+        let t= Vector2i{x: point.x, y: point.y - 1};
+        let tr = Vector2i{x: point.x + 1, y: point.y - 1};
+        let r = Vector2i{x: point.x + 1, y: point.y};
+        let br = Vector2i{x: point.x + 1, y: point.y + 1};
+        let b = Vector2i{x: point.x, y: point.y + 1};
+        let bl = Vector2i{x: point.x - 1, y: point.y + 1};
+        let l = Vector2i{x: point.x - 1, y: point.y};
 
-        return [top_left, top, top_right, right, bottom_right, bottom, bottom_left, left]
+        let top_left = self.region.get(&tl).unwrap();
+        let top = self.region.get(&t).unwrap();
+        let top_right = self.region.get(&tr).unwrap();
+        let right = self.region.get(&r).unwrap();
+        let bottom_right = self.region.get(&br).unwrap();
+        let bottom = self.region.get(&b).unwrap();
+        let bottom_left = self.region.get(&bl).unwrap();
+        let left = self.region.get(&l).unwrap();
+
+        let result = [
+            (tl, top_left), (t, top), (tr, top_right),
+            (r, right), (br, bottom_right), (b, bottom), (bl, bottom_left), (l, left)
+        ];
+
+        result
     }
 
 }
