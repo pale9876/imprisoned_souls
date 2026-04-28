@@ -103,3 +103,7 @@ func draw_eeads() -> void:
 
 func get_eead() -> Array:
 	return get_children().filter(func(node: Node) -> bool: return node is EEAD)
+
+
+func get_global_mouse_position() -> Vector2:
+	return get_viewport().canvas_transform.affine_inverse().basis_xform(get_viewport().get_mouse_position())

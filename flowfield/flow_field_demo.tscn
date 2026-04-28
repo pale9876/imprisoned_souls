@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cprqrwxyv1oks"]
+
+[ext_resource type="Script" uid="uid://dhjgke3354cl4" path="res://endeka.gd" id="1_y1x1n"]
+
+[node name="Endeka" type="CanvasLayer" unique_id=277306552]
+script = ExtResource("1_y1x1n")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
