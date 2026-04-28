@@ -1,4 +1,4 @@
-use std::{collections::HashMap};
+use std::collections::{HashMap, HashSet};
 use godot::{obj::NewAlloc, prelude::*};
 use oauth2::reqwest::tls;
 
@@ -69,20 +69,24 @@ impl FlowField
 
 
     #[func]
-    fn get_low(&mut self, point: Vector2i)
+    fn get_lowest(&mut self, point: Vector2i) -> Vector2i
     {
-        let mut neighbors = self.get_neighbors(point);
-        neighbors.sort_by(
+        let mut hash = self.get_neighbors(point);
+        let mut map: Vec<_> = hash.iter_mut().collect();
+        map.sort_by(
             |a, b|
                 a.1.height.total_cmp(&b.1.height)
         );
+        map.reverse();
 
-        godot_print!("{:?}", neighbors[0]);
+        *map[0].0 // return
     }
 
-    fn get_neighbors(&self, point: Vector2i) -> [(Vector2i, &Cell); 8]
-    {
+    fn get_neighbors(&self, point: Vector2i) -> HashMap<Vector2i, &Cell>{
         
+
+        let mut result = HashMap::<Vector2i, &Cell>::new();
+
         let tl = Vector2i{x: point.x - 1, y: point.y - 1};
         let t= Vector2i{x: point.x, y: point.y - 1};
         let tr = Vector2i{x: point.x + 1, y: point.y - 1};
@@ -92,19 +96,23 @@ impl FlowField
         let bl = Vector2i{x: point.x - 1, y: point.y + 1};
         let l = Vector2i{x: point.x - 1, y: point.y};
 
-        let top_left = self.region.get(&tl).unwrap();
-        let top = self.region.get(&t).unwrap();
-        let top_right = self.region.get(&tr).unwrap();
+        let mut call = |a| if let Some(c) = self.region.get(a){result.insert(*a, c);};
+
+        // if let Some(top_left) = self.region.get(&tl)
+        // {
+        //     result.insert(tl, top_left);
+        // }
+        call(&tl);
+        // let top = self.region.get(&t).unwrap();
+        call(&t);
+        call(&tr);
+        // let top_right = self.region.get(&tr).unwrap();
+        call(&r);
         let right = self.region.get(&r).unwrap();
         let bottom_right = self.region.get(&br).unwrap();
         let bottom = self.region.get(&b).unwrap();
         let bottom_left = self.region.get(&bl).unwrap();
         let left = self.region.get(&l).unwrap();
-
-        let result = [
-            (tl, top_left), (t, top), (tr, top_right),
-            (r, right), (br, bottom_right), (b, bottom), (bl, bottom_left), (l, left)
-        ];
 
         result
     }
