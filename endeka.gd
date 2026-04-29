@@ -1,24 +1,23 @@
 @tool
 extends Endeka
 
-var field: Field
+var field: DetourField
 
 
 func _enter_tree() -> void:
-	field = Field.create(
+	field = DetourField.create(
 		Rect2i(Vector2i(0, 0), Vector2i(640, 360))
 	)
 	
 
 
-class Field:
-	
+class DetourField:
 	var rect: Rect2i
 	var cell: Dictionary[Vector2i, Cell]
 
 
-	static func create(_rect: Rect2i) -> Field:
-		var _field = Field.new()
+	static func create(_rect: Rect2i) -> DetourField:
+		var _field = DetourField.new()
 		_field.rect = _rect
 		return _field
 	
@@ -30,7 +29,6 @@ class Field:
 		cell[point].height = height
 		
 		var neighbors: PackedVector2Array = get_neighbors(point)
-		
 
 
 	func get_neighbors(point: Vector2i) -> PackedVector2Array:
