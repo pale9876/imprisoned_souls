@@ -4,7 +4,7 @@ use godot::{prelude::*};
 
 #[derive(GodotClass)]
 #[class(init, base=RefCounted)]
-struct DetourField
+struct RDetourField
 {
     rect: Rect2i,
     region: HashMap<(i32, i32), Cell>,
@@ -31,9 +31,8 @@ impl Default for Cell
 
 
 #[godot_api]
-impl DetourField
+impl RDetourField
 {
-
     fn create(&mut self, rect: Rect2i)
     {
         self.rect = rect
@@ -59,9 +58,10 @@ impl DetourField
     }
 
 
-    fn get_neighbors()
+    fn get_neighbors(&mut self, &point: Vector2i)
     {
-
+        let top_left = Self::TL(point);
+        
     }
 
 
@@ -88,7 +88,15 @@ impl DetourField
     {
 
     }
-
+    
+    const TL: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x - 1, y: a.y - 1} };
+    const T: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x, y: a.y - 1} };
+    const TR: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x + 1, y: a.y - 1} };
+    const L: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x - 1, y: a.y} };
+    const R: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x + 1, y: a.y} };
+    const BL: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x - 1, y: a.y + 1} };
+    const B: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x, y: a.y + 1} };
+    const BR: fn(Vector2i) -> Vector2i = |a: Vector2i| { return Vector2i{x: a.x + 1, y: a.y + 1} };
 
 }
 
