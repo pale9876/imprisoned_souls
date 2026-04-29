@@ -13,18 +13,6 @@ func _enter_tree() -> void:
 
 class Field:
 	
-	enum
-	{
-		TL,
-		T,
-		TR,
-		L,
-		R,
-		BL,
-		B,
-		BR,
-	}
-	
 	var rect: Rect2i
 	var cell: Dictionary[Vector2i, Cell]
 
@@ -49,7 +37,7 @@ class Field:
 		var result: PackedVector2Array = PackedVector2Array()
 		
 		if rect.has_point(point):
-			var top_left: Vector2i = Vector2i(point.x - 1, point.y - 1)
+			var top_left: Vector2i = TL.call(point)
 			var top: Vector2i = Vector2i(point.x, point.y - 1)
 			var top_right: Vector2i = Vector2i(point.x + 1, point.y - 1)
 			var left: Vector2i = Vector2i(point.x - 1, point.y)
@@ -69,7 +57,9 @@ class Field:
 					result.push_back(p)
 			
 		return result
-
+		
+	var TL: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x - 1, p.y - 1)
+	
 
 class Cell:
 	var direction: Vector2 = Vector2.ZERO
