@@ -6,24 +6,45 @@ use godot::prelude::*;
 #[class(tool, base=RefCounted, no_init)]
 pub struct Hangul
 {
-    
+    naratmal: Naratmal
 }
+
+
+
+pub struct Naratmal
+{
+    sentence: String,
+    current: i32,
+}
+
 
 #[godot_api]
 impl Hangul
 {
+    #[func]
+    fn make_naratmal(&mut self, _sentense: String)
+    {
+        if !_sentense.is_empty()
+        {
+            let mut naratmal = Naratmal {
+                sentence: _sentense, current: 0
+            };
+
+        }
+    }
+
 
     #[func]
-    fn join_phonemes(chrs: Array<GString>) -> String
+    fn join_phonemes(chrs: PackedStringArray) -> String
     {
         if !chrs.is_empty() && chrs.len() < 4
         {
             let mut chr_arr: [char; 3] = [' ', ' ', ' '];
             for i in 0..chrs.len()
             {
-                if !chrs.at(i).is_empty()
+                if !chrs[i].is_empty()
                 {
-                    chr_arr[i] = *(chrs.at(i).chars().iter().nth(0).unwrap());
+                    chr_arr[i] = *(chrs[i].chars().iter().nth(0).unwrap());
                 }
             }
             
@@ -48,9 +69,9 @@ impl Hangul
     }
 
     #[func]
-    fn split_phonemes(word: GString) -> Array<GString>
+    fn split_phonemes(word: GString) -> PackedStringArray
     {
-        let mut result: Array<GString> = Array::new();
+        let mut result: PackedStringArray = PackedStringArray::new();
 
         for i in 0..word.len()
         {

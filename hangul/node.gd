@@ -49,12 +49,7 @@ class TypingMachine extends RefCounted:
 		machine.splited = _sentence.split("")
 		machine.result = ""
 		
-		
-		
 		return machine
-	
-	
-	
 	
 	
 	func clear() -> void:
