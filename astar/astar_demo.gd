@@ -25,6 +25,7 @@ func _enter_tree() -> void:
 	mark_cid = RenderingServer.canvas_item_create()
 	RenderingServer.canvas_item_set_parent(mark_cid, get_canvas())
 
+
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 	
@@ -44,11 +45,13 @@ func _process(delta: float) -> void:
 			RenderingServer.canvas_item_add_circle(cid, start_pos, 3., Color.WHITE)
 			RenderingServer.canvas_item_add_circle(cid, global_mouse_pos, 3., Color.RED)
 
+
 		elif Input.is_action_just_pressed("right_click"):
 			start_pos = get_global_mouse_position()
 			RenderingServer.canvas_item_clear(cid)
 			RenderingServer.canvas_item_add_circle(cid, start_pos, 3., Color.WHITE)
-		
+
+
 		elif Input.is_action_just_pressed("jump"):
 			var radius: int = 30
 			var sz: Vector2 = Vector2(float(radius), float(radius))

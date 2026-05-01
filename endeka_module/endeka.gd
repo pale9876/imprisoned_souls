@@ -2,10 +2,8 @@
 extends CanvasLayer
 class_name Endeka
 
-
 # INFO
 # 하위 EEAD의 Z값 변화에 따라 EndekaRenderItem을 내림차순으로 정렬합니다.
-
 
 const NOTIFICATION_EEAD_Z_VALUE_CHANGED: int = 1402
 const NOTIFICATION_MINMAX_CHANGED: int = 1403
@@ -25,8 +23,10 @@ const NOTIFICATION_MINMAX_CHANGED: int = 1403
 			max_z = value
 		notification(NOTIFICATION_MINMAX_CHANGED)
 
-@export_category("Sort Option")
+
+@export_category("Option")
 @export var ysorting: bool = true
+@export var auto_init: bool = false
 
 
 @export_tool_button("Sort", "2D") var _sort: Callable = sort
@@ -41,6 +41,7 @@ var init: bool = false
 func create() -> void:
 	init = true
 
+
 # OVERRIDE
 func kill() -> void:
 	pass
@@ -53,7 +54,11 @@ func _notification(what: int) -> void:
 	elif what == NOTIFICATION_MINMAX_CHANGED:
 		for eead in get_eead():
 			(eead as EEAD).z_value = clampf((eead as EEAD).z_value, min_z, max_z)
-
+	
+	elif what == NOTIFICATION_ENTER_TREE:
+		if auto_init:
+			create()
+	
 	elif what == NOTIFICATION_READY:
 		sort()
 
@@ -86,10 +91,9 @@ func sort() -> Array:
 	var idx: int = 0
 
 	for eead in arr:
-		RenderingServer.canvas_item_set_draw_index(
-			eead.get_canvas_item(), idx
-		)
-		idx += 1
+		if eead.init:
+			RenderingServer.canvas_item_set_draw_index(eead.get_canvas_item(), idx)
+			idx += 1
 
 	return arr
 

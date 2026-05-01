@@ -1,8 +1,9 @@
 extends RefCounted
 class_name Region
 
+
 var cid: RID
-var type: int
+var type: RoomInformation.Orientation
 var pos: Vector2
 var size: Vector2
 var body: RID

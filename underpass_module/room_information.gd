@@ -3,7 +3,7 @@ extends Resource
 class_name RoomInformation
 
 
-enum Oreientation
+enum Orientation
 {
 	TOP,
 	LEFT,
@@ -18,7 +18,7 @@ enum Oreientation
 }
 
 
-@export var type: Orientation = HORIZONTAL
+@export var type: RoomInformation.Orientation = RoomInformation.Orientation.HORIZONTAL
 @export var pos: Vector2i = Vector2i()
 @export var modulate: Color = Color.WHITE
 @export var closed: bool = false

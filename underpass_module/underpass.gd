@@ -33,6 +33,7 @@ func create() -> void:
 	if init:
 		kill()
 	
+	
 	RenderingServer.canvas_item_set_parent(get_canvas_item(), get_canvas())
 	
 	var navigation_map: RID = get_viewport().world_2d.navigation_map
@@ -82,7 +83,6 @@ func create() -> void:
 			# 세로면 2번째, 4번째 세그먼트를 닫아야함.
 			# 길이 가로면 항상 2번째 4번째 세그먼트가 항상 활성화되어야 하고
 			# 세로면 1번째 3번째 세그먼트가 항상 활성화되어야함.
-			#print(segment_poly)
 			_region.type = underpass_line[i].type
 			_region.closed = underpass_line[i].closed
 			
@@ -95,7 +95,6 @@ func create() -> void:
 				PhysicsServer2D.body_add_shape(
 					_region.body, segment, Transform2D(), !get_segment_state(_region, j)
 				)
-				print(!get_segment_state(_region, j))
 				_region.segments[j] = segment
 			
 			if Engine.is_editor_hint() or debug_mode:
@@ -168,12 +167,3 @@ func get_segment_state(a: Region, i: int) -> bool:
 			(a.type == HORIZONTAL and (i == 1 or i == 3)) or (a.type == VERTICAL and (i == 0 or i == 2))
 		)
 	)
-
-
-func area_disabled() -> void:
-	pass
-
-
-
-func _draw() -> void:
-	pass

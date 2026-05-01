@@ -15,13 +15,22 @@ class DetourField:
 	var rect: Rect2i
 	var cell: Dictionary[Vector2i, Cell]
 
+	var TL: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x - 1, p.y - 1)
+	var T: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x, p.y - 1)
+	var TR: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x + 1, p.y - 1)
+	var L: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x - 1, p.y)
+	var R: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x + 1, p.y)
+	var BL: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x - 1, p.y + 1)
+	var B: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x, p.y + 1)
+	var BR: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x + 1, p.y + 1)
+
 
 	static func create(_rect: Rect2i) -> DetourField:
 		var _field = DetourField.new()
 		_field.rect = _rect
 		return _field
-	
-	
+
+
 	func set_height(point: Vector2i, height: float) -> void:
 		if !cell.has(point):
 			cell[point] = Cell.new()
@@ -55,9 +64,8 @@ class DetourField:
 					result.push_back(p)
 			
 		return result
-		
-	var TL: Callable = func(p: Vector2i) -> Vector2i: return Vector2i(p.x - 1, p.y - 1)
-	
+
+
 
 class Cell:
 	var direction: Vector2 = Vector2.ZERO

@@ -3,11 +3,23 @@ extends EEAD
 class_name Legion
 
 
+@export_category("Util")
+@export var auto_free: bool = false
+@export var z_relationship: bool = true
+
+
 @export_category("Instance")
 @export var legion_information: LegionInformation = LegionInformation.new()
-@export var amount: int = 100
+@export_range(0, 1000, 1) var amount: int = 100:
+	set(value):
+		amount = maxi(value, 0)
+var _state: int = amount - 1
 @export_flags_2d_physics var layer: int = 1
 @export_flags_2d_physics var mask: int = 0
+@export var spawn_interval: int = 100
+var _interval: int = 0:
+	set(value):
+		_interval = clampi(value, 0, spawn_interval)
 
 
 @export_category("Path")
@@ -32,12 +44,11 @@ var arr: Array[Instance] = []
 var nav_map: RID
 var scope: Scope
 
-
 @export var target: Node2D
 
 
 func create() -> void:
-	if !legion_information or amount <= 0: return
+	if !legion_information: return
 	
 	if init:
 		kill()
@@ -46,35 +57,61 @@ func create() -> void:
 	
 	if legion_information.use_nav:
 		nav_map = get_viewport().find_world_2d().navigation_map
-		
+	
+	
+	
 
 	if !Engine.is_editor_hint():
 		arr.resize(amount)
-		
-		for i: int in range(amount):
-			arr[i] = spawn_instance(i) # i번째 인스턴스 생성
+		_state = amount - 1
+		#for i: int in range(amount):
+			#arr[i] = spawn_instance(i) # i번째 인스턴스 생성
 
 	init = true
 
 
 func _physics_process(delta: float) -> void:
-	for instance: Instance in arr:
+	if Engine.is_editor_hint(): return
+	
+	# 변수 애니힐레이션(annihilation)은 배열을 순환하다, _state가 0이고 배열 안의 모든 인스턴스가 해제되었을 때에 true를 돌려준다.
+	var annihilation: bool = true
+
+	for i: int in range(arr.size()):
+		var instance: Instance = arr[i]
 		if instance != null:
+			annihilation = false
+			
 			if behavior_tree:
 				var direction: Vector2 = instance.position.direction_to(target.global_position)
 				instance.last_direction = direction
 				var execute: BT.Status = instance.bt.get_root_task().execute(delta)
+				if execute == BT.Status.FRESH:
+					pass
 		
-		PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., instance.position))
-		PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., instance.position))
-		#PhysicsServer2D.area_set_transform(instance.hitbox.rid, Transform2D(0., instance.position))
-		
-		RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., instance.position))
-		RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., instance.position))
-		RenderingServer.canvas_item_set_transform(instance.hitbox.cid, Transform2D(0., instance.position))
+			PhysicsServer2D.area_set_transform(instance.awareness.rid, Transform2D(0., instance.position))
+			PhysicsServer2D.area_set_transform(instance.hurtbox.rid, Transform2D(0., instance.position))
+			
+			RenderingServer.canvas_item_set_transform(instance.cid, Transform2D(0., instance.position))
+			RenderingServer.canvas_item_set_transform(instance.awareness.cid, Transform2D(0., instance.position))
+			RenderingServer.canvas_item_set_transform(instance.hitbox.cid, Transform2D(0., instance.position))
+	
+	if _state != 0:
+		annihilation = false
+	
+	if !annihilation:
+		if _interval <= 0:
+			_interval = spawn_interval
+			arr[_state] = spawn_instance(_state)
+			_state -= 1
+		else:
+			_interval -= 1
+	elif annihilation:
+		if auto_free:
+			queue_free.call_deferred()
 
 
-func spawn_instance(_index: int) -> Instance:
+
+func spawn_instance(_index: int = -1) -> Instance:
 	var instance: Instance = Instance.new()
 	
 	instance.space = get_viewport().world_2d.space
@@ -260,6 +297,7 @@ func create_path() -> void:
 		scope.path.add_point((scope.rect.position) + Vector2(0., scope.rect.size.y))
 		scope.path.add_point((scope.rect.position) + scope.rect.size)
 		scope.path.add_point((scope.rect.position) + Vector2(scope.rect.size.x, 0.))
+		scope.path.add_point((scope.rect.position))
 
 		var polygon: PackedVector2Array = PackedVector2Array()
 		polygon.resize(8)

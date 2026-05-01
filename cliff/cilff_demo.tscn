@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://2bqb8r17jnqe"]
+
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="1_sewqy"]
+[ext_resource type="Script" uid="uid://v7m5o1fmouxs" path="res://cliff/eead.gd" id="2_r1fmv"]
+
+[sub_resource type="Gradient" id="Gradient_4s2qs"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.009009009, 0.24774775, 0.5405405, 0.8063063)
+colors = PackedColorArray(0.41030064, 0.4133988, 0.6312768, 1, 0.12767941, 0.12771922, 0.22870308, 1, 0.032621723, 0.03260776, 0.08087004, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6q8dv"]
+gradient = SubResource("Gradient_4s2qs")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.50427353, 0.4871795)
+fill_to = Vector2(0.95726496, 0.9444444)
+
+[sub_resource type="Gradient" id="Gradient_r1fmv"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.26126125, 0.5855856, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.050980393, 0.02745098, 0.05882353, 1, 0.05490196, 0.05882353, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4s2qs"]
+gradient = SubResource("Gradient_r1fmv")
+fill_to = Vector2(0, 1)
+
+[node name="CilffDemo" type="CanvasLayer" unique_id=714016739]
+script = ExtResource("1_sewqy")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
+
+[node name="EEAD" type="Node" parent="." unique_id=1083962334]
+script = ExtResource("2_r1fmv")
+y_size = 100.0
+texture = SubResource("GradientTexture2D_6q8dv")
+gradient = SubResource("GradientTexture2D_4s2qs")
+step = 12
+auto_init = true
+metadata/_custom_type_script = "uid://dv8iprcieglbg"

@@ -235,8 +235,6 @@ func move(motion: Vector2, delta: float) -> void:
 			_onwall = false
 			_onceil = true
 
-
-
 func create_hitbox(duration: float, timer_scale: float) -> void:
 	var hitbox: Hitbox = Hitbox.new()
 	hitbox.rid = PhysicsServer2D.area_create()
