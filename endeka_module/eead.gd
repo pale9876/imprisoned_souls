@@ -5,11 +5,19 @@ class_name EEAD
 # INFO
 # Z축을 실수값으로 받는 2D 객체입니다.
 
-const UV_DEFAULT: PackedVector2Array = [
+const UV_DEFAULT_HORIZONTAL: PackedVector2Array = [
 	Vector2(),
 	Vector2(1., 0.),
 	Vector2(1., 1.),
 	Vector2(0., 1.)
+]
+
+
+const UV_DEFAULT_VERTICAL: PackedVector2Array = [
+	Vector2(),
+	Vector2(0., 1.),
+	Vector2(1., 1.),
+	Vector2(1., 0.)
 ]
 
 
