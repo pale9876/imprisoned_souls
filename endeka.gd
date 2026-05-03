@@ -1,6 +1,7 @@
 @tool
 extends Endeka
 
+
 var field: DetourField
 
 
@@ -8,7 +9,7 @@ func _enter_tree() -> void:
 	field = DetourField.create(
 		Rect2i(Vector2i(0, 0), Vector2i(640, 360))
 	)
-	
+
 
 
 class DetourField:

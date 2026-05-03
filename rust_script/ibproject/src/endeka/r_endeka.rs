@@ -22,7 +22,6 @@ pub struct REndeka {
 }
 
 
-
 #[godot_api]
 impl REndeka {
     fn create(&mut self) {
@@ -30,9 +29,10 @@ impl REndeka {
     }
 }
 
-#[derive(EndekaEEAD)]
+#[derive(EndekaEEAD, GodotClass)]
+#[class(base=Node, init, tool)]
 struct REEAD
 {
-
+    base: Base<Node>,
 }
 
