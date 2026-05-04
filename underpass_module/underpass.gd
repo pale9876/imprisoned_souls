@@ -145,8 +145,6 @@ func create() -> void:
 			# Create Link
 			_region.link = NavigationServer2D.link_create()
 			
-
-			
 			arr[i] = _region
 	
 	init = true
@@ -155,10 +153,7 @@ func create() -> void:
 func kill() -> void:
 	if !arr.is_empty():
 		for _region: Region in arr:
-			RenderingServer.free_rid(_region.cid)
-			PhysicsServer2D.free_rid(_region.body)
-			for s: RID in _region.segments:
-				PhysicsServer2D.free_rid(s)
+			_region.kill()
 
 
 func get_segment_state(a: Region, i: int) -> bool:

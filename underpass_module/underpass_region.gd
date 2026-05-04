@@ -15,3 +15,10 @@ var closed: bool = false
 var disabled: bool = false
 var rid: RID
 var link: RID
+
+func kill() -> void:
+	RenderingServer.free_rid(cid)
+	PhysicsServer2D.free_rid(body)
+	
+	for s: RID in segments:
+		PhysicsServer2D.free_rid(s)

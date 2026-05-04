@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dpd2ihepydig8"]
+
+[ext_resource type="Script" uid="uid://dl5j7a7dq1qrf" path="res://hallway/hallway_demo.gd" id="1_msnjv"]
+
+[node name="Hallway" type="CanvasLayer" unique_id=570910777]
+script = ExtResource("1_msnjv")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"

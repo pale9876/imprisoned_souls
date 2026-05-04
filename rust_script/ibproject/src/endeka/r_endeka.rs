@@ -1,12 +1,12 @@
 use godot::{
-    classes::{CanvasLayer, RenderingServer},
+    classes::{CanvasLayer, ICanvasLayer,RenderingServer},
     prelude::*,
 };
 
-use endeka::EndekaEEAD;
+use endeka::*;
 
 
-#[derive(GodotClass)]
+#[derive(GodotClass, Endeka)]
 #[class(base=CanvasLayer, init, tool)]
 pub struct REndeka {
     #[init(val=Rid::Invalid)]
@@ -22,14 +22,7 @@ pub struct REndeka {
 }
 
 
-#[godot_api]
-impl REndeka {
-    fn create(&mut self) {
-        // self.cid = !();
-    }
-}
-
-#[derive(EndekaEEAD, GodotClass)]
+#[derive(EEAD, GodotClass)]
 #[class(base=Node, init, tool)]
 struct REEAD
 {

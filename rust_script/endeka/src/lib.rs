@@ -5,21 +5,63 @@ use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
 
 
-#[proc_macro_derive(EndekaEEAD)]
-pub fn derive(input: TokenStream) -> TokenStream {
+#[proc_macro_derive(EEAD)]
+pub fn derive_eead(input: TokenStream) -> TokenStream
+{
     let DeriveInput { ident, .. } = parse_macro_input!(input);
-    let output = quote! {
 
+    let output = quote! {
         trait EEAD {
-            fn sort();
+
         }
 
         impl EEAD for #ident {
-            fn sort()
+            
+        }
+    };
+
+    output.into()
+}
+
+
+#[proc_macro_derive(Endeka)]
+pub fn derive_endeka(input: TokenStream) -> TokenStream
+{
+    let DeriveInput {ident, ..} = parse_macro_input!(input);
+
+    let output = quote! {
+        trait Endeka
+        {
+            fn sort(&mut self)
+            {
+            
+            }
+        }
+
+        impl Endeka for #ident
+        {
+            fn sort(&mut self)
+            {
+
+            }
+        }
+
+        #[godot_api]
+        impl ICanvasLayer for #ident
+        {
+
+        }
+
+        #[godot_api]
+        impl #ident
+        {
+            #[func]
+            fn create(&mut self)
             {
                 
             }
         }
     };
+
     output.into()
 }

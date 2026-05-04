@@ -5,6 +5,7 @@
 
 [node name="Endeka" type="CanvasLayer" unique_id=1443679806]
 script = ExtResource("1_6n3c2")
+ysorting = true
 metadata/_custom_type_script = "uid://d1ld2v885ur2n"
 
 [node name="EEAD" type="Node" parent="." unique_id=1720756910]

@@ -30,7 +30,11 @@ impl Hangul
                 sentence: _sentense, current: 0
             };
 
+            self.naratmal = naratmal;
+
         }
+
+        
     }
 
 
