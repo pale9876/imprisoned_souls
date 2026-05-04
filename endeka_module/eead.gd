@@ -137,4 +137,4 @@ func create() -> void:
 
 # OVERRIDE
 func kill() -> void:
-	pass
+	RenderingServer.canvas_item_clear(get_canvas_item())

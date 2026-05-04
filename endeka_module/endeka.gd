@@ -111,8 +111,14 @@ func sort() -> Array:
 func draw_eeads() -> void:
 	var arr: Array = sort()
 	
+	if init:
+		for eead in arr:
+			eead.kill()
+	
 	for eead in arr:
-		if eead is EEAD: eead.create()
+		eead.create()
+	
+	init = true
 
 
 func get_eead() -> Array:

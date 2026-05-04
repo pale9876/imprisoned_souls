@@ -32,5 +32,5 @@ metadata/_custom_type_script = "uid://dv8iprcieglbg"
 script = ExtResource("2_7pbbh")
 color = Color(0.4712167, 0.7, 0.32900003, 1)
 z_value = 15.0
-position = Vector2(2.5, 3)
+position = Vector2(-9.75, 3)
 metadata/_custom_type_script = "uid://dv8iprcieglbg"
