@@ -4,6 +4,7 @@ extends Endeka
 
 @export_category("Background")
 @export var background_wall_color: Color = Color.WHITE_SMOKE
+@export var wall_rect: Rect2 = Rect2(Vector2(), Vector2(640., 360.))
 
 
 @export_category("LeadLine")
@@ -18,7 +19,6 @@ var ground: RID
 
 
 func create() -> void:
-	get_viewport().world_2d.canvas
 	background_wall = RenderingServer.canvas_item_create()
 	ground = RenderingServer.canvas_item_create()
 	

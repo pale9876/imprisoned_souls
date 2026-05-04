@@ -9,8 +9,4 @@ class_name LegionInformation
 @export var awareness_information: AwarenessInformation = AwarenessInformation.new()
 @export var hitbox_information: HitboxInformation = HitboxInformation.new()
 @export var behavior_tree: BehaviorTree
-
-#[0]: start frame, [1]: end frame, [2] progress, [3] [[frame, callable], [frame, callable]]
-@export var animation: Dictionary[String, Array] = {
-	
-}
+@export var path_update_interval: float = .75

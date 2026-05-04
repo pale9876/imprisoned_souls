@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bf31ft61qfa7i"]
+
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="1_ko5so"]
+[ext_resource type="Script" uid="uid://ccb60t84b0coj" path="res://blood_particle/eead_crystal.gd" id="2_qbrin"]
+[ext_resource type="Script" uid="uid://v7m5o1fmouxs" path="res://cliff/cliff.gd" id="3_xvrkb"]
+[ext_resource type="Script" uid="uid://cw4x4jmgkvmmy" path="res://cliff/cliff_information.gd" id="4_sh1rw"]
+[ext_resource type="Script" uid="uid://bxhmiww6qir7c" path="res://traitor_must_be_dead/eead_group.gd" id="5_sh1rw"]
+
+[sub_resource type="Gradient" id="Gradient_em81f"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3f0ml"]
+gradient = SubResource("Gradient_em81f")
+
+[sub_resource type="Gradient" id="Gradient_6aq0y"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r6hop"]
+gradient = SubResource("Gradient_6aq0y")
+
+[sub_resource type="Resource" id="Resource_p6uol"]
+script = ExtResource("4_sh1rw")
+size = Vector2(256, 256)
+texture = SubResource("GradientTexture2D_r6hop")
+gradient = SubResource("GradientTexture1D_3f0ml")
+
+[node name="Background" type="CanvasLayer" unique_id=436839414]
+script = ExtResource("1_ko5so")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
+
+[node name="Cliff" type="Node" parent="." unique_id=1506033079]
+script = ExtResource("3_xvrkb")
+cliff_information = SubResource("Resource_p6uol")
+metadata/_custom_type_script = "uid://v7m5o1fmouxs"
+
+[node name="EEADGroup" type="Node" parent="." unique_id=1114438913]
+script = ExtResource("5_sh1rw")
+position = Vector2(200, 300)
+
+[node name="EEADCrystal3" type="Node" parent="EEADGroup" unique_id=104347754]
+script = ExtResource("2_qbrin")
+z_value = 1.0
+rotation = 0.645
+metadata/_custom_type_script = "uid://ccb60t84b0coj"
+
+[node name="EEADCrystal" type="Node" parent="EEADGroup" unique_id=64888326]
+script = ExtResource("2_qbrin")
+rotation = 15.63
+metadata/_custom_type_script = "uid://ccb60t84b0coj"
+
+[node name="EEADCrystal2" type="Node" parent="EEADGroup" unique_id=2032956165]
+script = ExtResource("2_qbrin")
+rotation = -12.945
+metadata/_custom_type_script = "uid://ccb60t84b0coj"
+
+[node name="EEADGroup2" type="Node" parent="." unique_id=1746355424]
+script = ExtResource("5_sh1rw")
+position = Vector2(210, 300)
+rotation = 10.0
+
+[node name="EEADCrystal3" type="Node" parent="EEADGroup2" unique_id=2041636110]
+script = ExtResource("2_qbrin")
+z_value = 1.0
+rotation = 0.645
+metadata/_custom_type_script = "uid://ccb60t84b0coj"
+
+[node name="EEADCrystal" type="Node" parent="EEADGroup2" unique_id=1765662030]
+script = ExtResource("2_qbrin")
+rotation = 15.63
+metadata/_custom_type_script = "uid://ccb60t84b0coj"
+
+[node name="EEADCrystal2" type="Node" parent="EEADGroup2" unique_id=1375622787]
+script = ExtResource("2_qbrin")
+rotation = -12.945
+metadata/_custom_type_script = "uid://ccb60t84b0coj"

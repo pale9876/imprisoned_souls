@@ -15,8 +15,10 @@ class_name TraitorMustBeDead
 @onready var character_icon: CharacterProfile = %CharacterIcon
 @onready var hp_progress: GradientProgress = %HpProgress
 
+
 # Title
 @onready var start_btn: Button = %Start
+
 
 # Select Class
 @onready var main_title: Control = $Title/MainTitle
@@ -37,8 +39,9 @@ func _ready() -> void:
 	player.transform = Transform2D(0., Vector2(640., 360.) / 2.)
 	character_icon.texture = player.unit_information.icon
 	
-	player.health_changed.connect(_on_player_health_changed)
 	start_btn.pressed.connect(select_class_mode)
+	
+	Global.player_health_changed.connect(_on_player_health_changed)
 
 
 func select_class_mode() -> void:

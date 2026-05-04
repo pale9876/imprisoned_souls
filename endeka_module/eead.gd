@@ -98,6 +98,8 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_ENTER_TREE:
 		if get_parent() is Endeka:
 			RenderingServer.canvas_item_set_parent(get_canvas_item(), get_canvas())
+		elif get_parent() is EEADGroup:
+			RenderingServer.canvas_item_set_parent(get_canvas_item(), (get_parent() as EEADGroup).canvas_item)
 		
 		if auto_init:
 			create()

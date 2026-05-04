@@ -33,6 +33,16 @@ class_name MultiBloodParticle
 
 var arr: Array[Particle] = []
 
+@export_category("Test")
+@export var rect: Rect2 = Rect2(Vector2(), Vector2(640., 360.))
+@export_tool_button("Push To Random Position", "2D")
+var _push_to_random: Callable = push_to_random_position
+
+
+# For Test
+func push_to_random_position() -> void:
+	emit(Vector2(randf_range(rect.position.x, rect.size.x), randf_range(rect.position.y, rect.size.y)))
+
 
 func create() -> void:
 	if init:

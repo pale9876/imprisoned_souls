@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass.gd" id="1_xj7cu"]
 [ext_resource type="Script" uid="uid://dt0b8s8e5kooo" path="res://traitor_must_be_dead.gd" id="1_ym5dx"]
 [ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="2_my6s6"]
+[ext_resource type="PackedScene" uid="uid://bf31ft61qfa7i" path="res://traitor_must_be_dead/background.tscn" id="2_weayq"]
 [ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_8acap"]
-[ext_resource type="Script" uid="uid://ccb60t84b0coj" path="res://blood_particle/eead_crystal.gd" id="3_weayq"]
 [ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://legion/legion_information.gd" id="6_67q55"]
 [ext_resource type="Script" uid="uid://drl2kykjmd5mp" path="res://awareness_information/awareness_information.gd" id="6_my6s6"]
 [ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="6_y0qeb"]
@@ -82,6 +82,7 @@ unit_information = SubResource("Resource_xybxg")
 hurtbox_information = SubResource("Resource_0mlyx")
 awareness_information = SubResource("Resource_l7pm2")
 hitbox_information = SubResource("Resource_vec88")
+path_update_interval = null
 
 [sub_resource type="Resource" id="Resource_fi42c"]
 script = ExtResource("7_hkiqx")
@@ -327,21 +328,8 @@ player = NodePath("Ingame/Player")
 legion = NodePath("Ingame/Legion")
 camera = NodePath("Ingame/MultiCamera")
 
-[node name="Background" type="CanvasLayer" parent="." unique_id=2111919513]
-script = ExtResource("2_my6s6")
-metadata/_custom_type_script = "uid://d1ld2v885ur2n"
-
-[node name="EEADCrystal" type="Node" parent="Background" unique_id=917781434]
-script = ExtResource("3_weayq")
-position = Vector2(244.51, 250)
-rotation = 15.63
-metadata/_custom_type_script = "uid://ccb60t84b0coj"
-
-[node name="EEADCrystal2" type="Node" parent="Background" unique_id=112563123]
-script = ExtResource("3_weayq")
-position = Vector2(246.85, 245.82)
-rotation = -12.945
-metadata/_custom_type_script = "uid://ccb60t84b0coj"
+[node name="Background" parent="." unique_id=436839414 instance=ExtResource("2_weayq")]
+follow_viewport_enabled = true
 
 [node name="Ingame" type="CanvasLayer" parent="." unique_id=1908545887]
 follow_viewport_enabled = true
@@ -414,7 +402,6 @@ metadata/_custom_type_script = "uid://ca82fhyokguoj"
 
 [node name="Title" type="CanvasLayer" parent="." unique_id=528270557]
 unique_name_in_owner = true
-visible = false
 
 [node name="BackgroundMonitor" type="Node2D" parent="Title" unique_id=2109883242]
 modulate = Color(0.55, 0.55, 0.55, 1)
@@ -860,6 +847,26 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Start Game"
 
+[node name="MarginContainer" type="MarginContainer" parent="Title/MainTitle" unique_id=540140027]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Option" type="Button" parent="Title/MainTitle/MarginContainer" unique_id=1799352054]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Option"
+
 [node name="SelectClass" type="Control" parent="Title" unique_id=649562773]
 unique_name_in_owner = true
 visible = false
@@ -923,6 +930,27 @@ unique_name_in_owner = true
 layout_mode = 2
 toggle_mode = true
 texture_normal = ExtResource("39_weayq")
+
+[node name="OptionPanel" type="Control" parent="Title" unique_id=480184922]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Title/OptionPanel" unique_id=1455729897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1678461789]
 environment = SubResource("Environment_1ukh0")

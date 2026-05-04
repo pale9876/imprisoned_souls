@@ -14,8 +14,6 @@ const GROUNDED: Mode = Mode.GROUNDED
 const FLOAT: Mode = Mode.FLOAT
 
 
-signal health_changed(value: float)
-
 
 @export_category("Settings")
 @export var mode: Mode = GROUNDED

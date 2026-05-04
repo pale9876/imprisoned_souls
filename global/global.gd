@@ -1,9 +1,6 @@
 extends Node
 
 
-const SCREEN_JOY_PAD: PackedScene = preload("uid://bk1bnhqoyyuuj")
-
-
 enum {
 	INIT,
 	READY,
@@ -11,16 +8,18 @@ enum {
 }
 
 
+signal start()
+signal restart()
+
+signal player_health_changed( value: float )
+signal change_camera( cam_name: String )
+
+signal default()
+
+
 var state: int = INIT
 var os: String = ""
-
-var screen_joypad: CanvasLayer = null
-var main_scene: Node = null
-
-
-#func _notification(what: int) -> void:
-	#match what:
-		#pass
+var player_information: PlayerInformation = PlayerInformation.new()
 
 
 func _enter_tree() -> void:
@@ -31,8 +30,15 @@ func _enter_tree() -> void:
 		_:
 			pass
 
+
 func _ready() -> void:
 	pass
+
+
+class PlayerInformation extends RefCounted:
+	var character: Resource
+	var character_class: Resource
+	var position: Vector2
 
 
 class SaveData extends Resource:

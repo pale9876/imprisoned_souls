@@ -49,6 +49,7 @@ buses/default_bus_layout=""
 
 Global="*uid://d1fcpj0k6kkip"
 DialogueManager="*uid://c3rodes2l3gxb"
+WeatherApi="*uid://b80knl185v3xh"
 
 [debug]
 
