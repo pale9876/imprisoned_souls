@@ -112,7 +112,7 @@ static var SETTINGS_CONFIGURATION = {
 	},
 
 	CUSTOM_TEST_SCENE_PATH: {
-		value = preload("uid://ugd552efvil0").resource_path,
+		value = preload("./test_scene.tscn").resource_path,
 		type = TYPE_STRING,
 		hint = PROPERTY_HINT_FILE,
 		is_advanced = true

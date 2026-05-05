@@ -9,7 +9,10 @@ enum Type {
 	LONG_RANGE,
 }
 
-
-@export var range: float = 10.
+@export_category("Spec")
+@export var hitrange: float = 10.
 @export var damage: int = 30
 @export var type: Type = Type.NONE
+
+@export_category("Preview")
+@export var duration: float = 1.

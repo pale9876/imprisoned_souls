@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bj5at6agy0q12"]
+
+[ext_resource type="Script" uid="uid://cfwq23ku6uauo" path="res://hitbox_notifier/hitbox_notifier_demo.gd" id="1_frnbw"]
+[ext_resource type="Script" uid="uid://dv8iprcieglbg" path="res://endeka_module/eead.gd" id="2_lv6cd"]
+
+[node name="Endeka" type="CanvasLayer" unique_id=619147882]
+script = ExtResource("1_frnbw")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
+
+[node name="EEAD" type="Node" parent="." unique_id=51488023]
+script = ExtResource("2_lv6cd")
+metadata/_custom_type_script = "uid://dv8iprcieglbg"
