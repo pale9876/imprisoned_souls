@@ -13,6 +13,3 @@ enum Type {
 @export var hitrange: float = 10.
 @export var damage: int = 30
 @export var type: Type = Type.NONE
-
-@export_category("Preview")
-@export var duration: float = 1.

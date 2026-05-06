@@ -1,0 +1,172 @@
+[gd_scene format=3 uid="uid://p0bkopss8svy"]
+
+[ext_resource type="Script" uid="uid://d1ld2v885ur2n" path="res://endeka_module/endeka.gd" id="1_gj2at"]
+[ext_resource type="Script" uid="uid://dc7volit4rbgy" path="res://underpass_module/underpass.gd" id="2_l3vfh"]
+[ext_resource type="Script" uid="uid://bblcw0t5qxk36" path="res://underpass_module/room_information.gd" id="3_lgwd6"]
+[ext_resource type="Script" uid="uid://dfku5xh0yuklb" path="res://legion/legion.gd" id="4_ntnlo"]
+[ext_resource type="Script" uid="uid://drl2kykjmd5mp" path="res://awareness_information/awareness_information.gd" id="5_exjtw"]
+[ext_resource type="Script" uid="uid://di7bi4ybepb0a" path="res://hitbox_information.gd" id="6_j1vk6"]
+[ext_resource type="Script" uid="uid://cotxam656beso" path="res://hurtbox_information/hurtbox_collide_info.gd" id="7_qpcy3"]
+[ext_resource type="Script" uid="uid://bh5hl7parw7s5" path="res://legion/legion_information.gd" id="8_se02q"]
+[ext_resource type="Script" uid="uid://cukf7tedk28ls" path="res://chara/unit_information.gd" id="9_snpes"]
+[ext_resource type="Script" uid="uid://chpo875sjp28p" path="res://path_scope/path_scope.gd" id="10_eqgxm"]
+[ext_resource type="Script" uid="uid://d12ai6r2s7nql" path="res://unit/player.gd" id="11_lh3wr"]
+[ext_resource type="Script" uid="uid://cnfkyf0kpxdkb" path="res://skill_module/skill_information.gd" id="12_w07j4"]
+[ext_resource type="Script" uid="uid://dn5ye7nafhkbh" path="res://skill_module/skill.gd" id="13_t2xd3"]
+[ext_resource type="Script" uid="uid://b1bqrmlwq8v45" path="res://animated_parts_module/animated_part.gd" id="14_jo17r"]
+[ext_resource type="Script" uid="uid://b4paed8n75wrv" path="res://pose_module/pose.gd" id="15_vtohf"]
+[ext_resource type="Script" uid="uid://bficp4xgs2cmc" path="res://pose_module/pose/dash_pose.gd" id="16_xvjyt"]
+[ext_resource type="Script" uid="uid://dhjxygaewnshj" path="res://pose_module/pose/idle_pose.gd" id="17_d0kbk"]
+[ext_resource type="Script" uid="uid://wbmkbtyq2w6v" path="res://pose_module/pose/move_pose.gd" id="18_pkloq"]
+[ext_resource type="Script" uid="uid://chmyv3i5lg6po" path="res://pose_module/pose_information.gd" id="19_wm2vt"]
+[ext_resource type="Texture2D" uid="uid://qbqwt4wtvbgd" path="res://aseprite/traitor_will_be_dead/player-Sheet.png" id="20_c86kc"]
+[ext_resource type="Script" uid="uid://bbvx0b83akfkq" path="res://multi_camera/multi_camera.gd" id="21_jb3j5"]
+[ext_resource type="Script" uid="uid://betj1u6dfr7n" path="res://multi_camera/Cam.gd" id="22_vqwcp"]
+
+[sub_resource type="Resource" id="Resource_v0yr8"]
+script = ExtResource("3_lgwd6")
+type = 0
+metadata/_custom_type_script = "uid://bblcw0t5qxk36"
+
+[sub_resource type="Resource" id="Resource_36fc4"]
+script = ExtResource("3_lgwd6")
+type = 1
+pos = Vector2i(1, 1)
+metadata/_custom_type_script = "uid://bblcw0t5qxk36"
+
+[sub_resource type="Resource" id="Resource_ng2cp"]
+script = ExtResource("3_lgwd6")
+type = 1
+pos = Vector2i(1, 0)
+metadata/_custom_type_script = "uid://bblcw0t5qxk36"
+
+[sub_resource type="Resource" id="Resource_l7pm2"]
+script = ExtResource("5_exjtw")
+radius = 10.0
+metadata/_custom_type_script = "uid://drl2kykjmd5mp"
+
+[sub_resource type="Resource" id="Resource_vec88"]
+script = ExtResource("6_j1vk6")
+metadata/_custom_type_script = "uid://di7bi4ybepb0a"
+
+[sub_resource type="Resource" id="Resource_0mlyx"]
+script = ExtResource("7_qpcy3")
+metadata/_custom_type_script = "uid://cotxam656beso"
+
+[sub_resource type="Resource" id="Resource_xybxg"]
+script = ExtResource("9_snpes")
+metadata/_custom_type_script = "uid://cukf7tedk28ls"
+
+[sub_resource type="Resource" id="Resource_qy11e"]
+script = ExtResource("8_se02q")
+use_nav = true
+unit_information = SubResource("Resource_xybxg")
+hurtbox_information = SubResource("Resource_0mlyx")
+awareness_information = SubResource("Resource_l7pm2")
+hitbox_information = SubResource("Resource_vec88")
+
+[sub_resource type="Resource" id="Resource_fi42c"]
+script = ExtResource("10_eqgxm")
+path_type = 1
+to = Vector2(1280, 720)
+margin = 30.0
+metadata/_custom_type_script = "uid://chpo875sjp28p"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_weayq"]
+baking_rect = Rect2(0, 0, 1280, 720)
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_l7pm2"]
+
+[sub_resource type="Resource" id="Resource_ym5dx"]
+script = ExtResource("9_snpes")
+init_hp = 300
+speed = 300.0
+metadata/_custom_type_script = "uid://cukf7tedk28ls"
+
+[sub_resource type="Resource" id="Resource_63v35"]
+script = ExtResource("12_w07j4")
+metadata/_custom_type_script = "uid://cnfkyf0kpxdkb"
+
+[sub_resource type="Resource" id="Resource_k7ju8"]
+script = ExtResource("7_qpcy3")
+
+[sub_resource type="Resource" id="Resource_mtpqi"]
+script = ExtResource("14_jo17r")
+metadata/_custom_type_script = "uid://b1bqrmlwq8v45"
+
+[sub_resource type="Curve" id="Curve_weayq"]
+_data = [Vector2(0, 1), 0.0, 0.14090493, 0, 0, Vector2(0.5862069, 0.17977536), -4.518349, 0.0, 0, 0, Vector2(1, 0.18), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_juhcf"]
+script = ExtResource("16_xvjyt")
+motion_curve = SubResource("Curve_weayq")
+metadata/_custom_type_script = "uid://bficp4xgs2cmc"
+
+[sub_resource type="Resource" id="Resource_my6s6"]
+script = ExtResource("17_d0kbk")
+metadata/_custom_type_script = "uid://dhjxygaewnshj"
+
+[sub_resource type="Resource" id="Resource_weayq"]
+script = ExtResource("18_pkloq")
+metadata/_custom_type_script = "uid://wbmkbtyq2w6v"
+
+[sub_resource type="Resource" id="Resource_jsaji"]
+script = ExtResource("19_wm2vt")
+data = Dictionary[String, ExtResource("15_vtohf")]({
+"dash": SubResource("Resource_juhcf"),
+"idle": SubResource("Resource_my6s6"),
+"move": SubResource("Resource_weayq")
+})
+init_pose = "idle"
+metadata/_custom_type_script = "uid://chmyv3i5lg6po"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym5dx"]
+atlas = ExtResource("20_c86kc")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="Resource" id="Resource_oq44s"]
+script = ExtResource("22_vqwcp")
+metadata/_custom_type_script = "uid://betj1u6dfr7n"
+
+[node name="Ingame" type="CanvasLayer" unique_id=1943845084]
+follow_viewport_enabled = true
+script = ExtResource("1_gj2at")
+metadata/_custom_type_script = "uid://d1ld2v885ur2n"
+
+[node name="UnderpassRegion" type="Node" parent="." unique_id=1081337693]
+script = ExtResource("2_l3vfh")
+underpass_line = Array[ExtResource("3_lgwd6")]([SubResource("Resource_v0yr8"), SubResource("Resource_36fc4"), SubResource("Resource_ng2cp")])
+mask = 0
+metadata/_custom_type_script = "uid://dc7volit4rbgy"
+
+[node name="Legion" type="Node" parent="." unique_id=1681334867 node_paths=PackedStringArray("target")]
+script = ExtResource("4_ntnlo")
+legion_information = SubResource("Resource_qy11e")
+amount = 1
+path_scope = SubResource("Resource_fi42c")
+navigation_polygon = SubResource("NavigationPolygon_weayq")
+behavior_tree = SubResource("BehaviorTree_l7pm2")
+target = NodePath("../Player")
+metadata/_custom_type_script = "uid://dfku5xh0yuklb"
+
+[node name="Player" type="Node2D" parent="." unique_id=613175272]
+position = Vector2(127, 82)
+script = ExtResource("11_lh3wr")
+mode = 1
+is_player = true
+unit_information = SubResource("Resource_ym5dx")
+skill_information = SubResource("Resource_63v35")
+hurtbox_information = SubResource("Resource_k7ju8")
+body_parts = Array[ExtResource("14_jo17r")]([SubResource("Resource_mtpqi")])
+pose_information = SubResource("Resource_jsaji")
+texture = Dictionary[String, AtlasTexture]({
+"idle_down": SubResource("AtlasTexture_ym5dx")
+})
+
+[node name="MultiCamera" type="Node" parent="." unique_id=116228171]
+script = ExtResource("21_jb3j5")
+camera = Dictionary[String, ExtResource("22_vqwcp")]({
+"idle": SubResource("Resource_oq44s")
+})
+metadata/_custom_type_script = "uid://bbvx0b83akfkq"

@@ -50,6 +50,7 @@ buses/default_bus_layout=""
 Global="*uid://d1fcpj0k6kkip"
 WorldTimeApi="*uid://b80knl185v3xh"
 DialogueManager="*uid://c3rodes2l3gxb"
+Chrono="*uid://d0uitimyd55vj"
 
 [debug]
 

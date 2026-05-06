@@ -70,11 +70,13 @@ func _notification(what: int) -> void:
 	elif what == NOTIFICATION_KILLED:
 		pass
 
+	elif what == NOTIFICATION_PROCESS:
+		if reserve:
+			sort()
+			reserve = false
 
 func _process(_delta: float) -> void:
-	if reserve:
-		sort()
-		reserve = false
+	pass
 
 
 func sort() -> Array:

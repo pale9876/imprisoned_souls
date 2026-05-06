@@ -2,10 +2,12 @@ extends Node
 
 
 const WINTER_BRIGHTNESS_CURVE: Curve = preload("uid://dbugn338oegsq")
+const GRAY: Color = Color(0.296, 0.341, 0.4, 0.541)
+
 const MAX_SEC: float = 60. * 60. * 24.
 
-var time_scale: float = 1.
 
+var time_scale: float = 1.
 var _current: float = 0.
 
 
@@ -33,8 +35,17 @@ func _init() -> void:
 	)
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		pass
+		#RenderingServer.canvas_set_modulate(
+			#
+		#)
+
+
 func _process(delta: float) -> void:
 	_elapsed(delta * time_scale)
+
 
 
 func get_time_from_sys() -> float:

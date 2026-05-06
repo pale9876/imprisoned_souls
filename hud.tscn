@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://raywofrmwiao"]
+
+[ext_resource type="Script" uid="uid://byk7fljca5whk" path="res://canvas_screen_pointer.gd" id="1_640wx"]
+[ext_resource type="Script" uid="uid://dkp47oinac6tt" path="res://profile.gd" id="2_a2258"]
+[ext_resource type="Script" uid="uid://ca82fhyokguoj" path="res://gradient_progress/gradient_progress.gd" id="3_1xsix"]
+[ext_resource type="Shader" uid="uid://cnty0ecobwyho" path="res://progress.gdshader" id="4_rftc2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_waig6"]
+shader = ExtResource("4_rftc2")
+shader_parameter/progress = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ym5dx"]
+shader = ExtResource("4_rftc2")
+shader_parameter/progress = 1.0
+
+[sub_resource type="Gradient" id="Gradient_xj7cu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75)
+colors = PackedColorArray(0.12, 0.12, 0.12, 1, 0.36199096, 0.36199096, 0.36199096, 1, 0.71945703, 0.71945703, 0.71945703, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_k7ju8"]
+gradient = SubResource("Gradient_xj7cu")
+width = 64
+
+[sub_resource type="Curve" id="Curve_6hyso"]
+_data = [Vector2(0, 0), 0.0, 5.132192, 0, 0, Vector2(0.4784314, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_waig6"]
+_data = [Vector2(0, 0), 0.0, 3.263818, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="HUD" type="CanvasLayer" unique_id=1142909072]
+
+[node name="CanvasScreenPointer" type="Node2D" parent="." unique_id=1085914406]
+position = Vector2(118, 171)
+script = ExtResource("1_640wx")
+
+[node name="Profile" type="Node2D" parent="." unique_id=850438302]
+
+[node name="CharacterIcon" type="Node2D" parent="Profile" unique_id=399885855]
+unique_name_in_owner = true
+position = Vector2(42, 322)
+script = ExtResource("2_a2258")
+bg_color = Color(0.06, 0.024000002, 0, 1)
+
+[node name="HpProgress" type="Node2D" parent="Profile" unique_id=1907323887]
+unique_name_in_owner = true
+position = Vector2(107.00003, 316.00003)
+scale = Vector2(1.535, 1.535)
+skew = -0.8115781
+script = ExtResource("3_1xsix")
+PROGRESS_SHADER = SubResource("ShaderMaterial_waig6")
+TRAUMA_SHADER = SubResource("ShaderMaterial_ym5dx")
+gradient = SubResource("GradientTexture1D_k7ju8")
+progress_curve = SubResource("Curve_6hyso")
+trauma_curve = SubResource("Curve_waig6")
+metadata/_custom_type_script = "uid://ca82fhyokguoj"

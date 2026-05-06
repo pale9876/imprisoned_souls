@@ -1,11 +1,30 @@
 extends Node
 
 
-enum {
+enum State {
 	INIT,
 	READY,
 	INGAME,
 }
+
+
+enum Class {
+	PREDETOR = 0,
+	TRICKSTER = 1,
+	EXECUTIONER = 2,
+	PUPPETEER = 3,
+}
+
+
+const INIT: State = State.INIT
+const READY: State = State.READY
+const INGAME: State = State.INGAME
+
+
+const PREDETOR: Class = Class.PREDETOR
+const TRICKSTER: Class = Class.TRICKSTER
+const EXECUTIONER: Class = Class.EXECUTIONER
+const PUPPETEER: Class = Class.PUPPETEER
 
 
 signal start()
@@ -17,7 +36,6 @@ signal change_camera( cam_name: String )
 signal default()
 
 
-var state: int = INIT
 var os: String = ""
 var player_information: PlayerInformation = PlayerInformation.new()
 
@@ -33,6 +51,12 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	pass
+
+
+
+func process() -> void:
+	pass
+
 
 
 class PlayerInformation extends RefCounted:
