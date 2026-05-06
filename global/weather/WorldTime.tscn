@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://gdqjsj40qw28"]
+
+[ext_resource type="Script" uid="uid://b80knl185v3xh" path="res://global/weather/world_time_api.gd" id="1_0e8xx"]
+
+[node name="WorldTime" type="Node" unique_id=1121104417]
+script = ExtResource("1_0e8xx")

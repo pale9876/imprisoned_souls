@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://gdqjsj40qw28"]
-
-[ext_resource type="Script" uid="uid://b80knl185v3xh" path="res://global/weather/weather_api.gd" id="1_4ggq6"]
-
-[node name="weather" type="Node" unique_id=1121104417]
-script = ExtResource("1_4ggq6")

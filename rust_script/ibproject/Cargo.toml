@@ -13,3 +13,4 @@ godot = "0.5.1"
 oauth2 = "5.0.0"
 tossicat = "0.8.0"
 endeka = {path = "../endeka"}
+rodio = "0.22.2"
