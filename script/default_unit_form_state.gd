@@ -1,3 +1,4 @@
+@icon("res://icon/node/components/icon-comp-person.svg")
 @abstract
 extends LimboState
 class_name DefaultUnitFormState
