@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://erjuf88hv5dc"]
+
+[ext_resource type="Script" uid="uid://bm4r8i1mhvrm8" path="res://script/strange_mockery.gd" id="1_ft1jr"]
+[ext_resource type="Script" uid="uid://y2wiaxsoiu7c" path="res://script/resource/index_stat/index_stat.gd" id="2_fwuod"]
+[ext_resource type="Script" uid="uid://cpmmttu73v8dd" path="res://script/resource/index_stat/damage_strength.gd" id="3_mg2wq"]
+[ext_resource type="Script" uid="uid://cbrm1hl430kkt" path="res://script/resource/index_stat/motion_speed.gd" id="4_gpvkm"]
+[ext_resource type="Script" uid="uid://5ejddr74s21u" path="res://script/resource/index_stat/move_speed.gd" id="5_dvkcx"]
+
+[sub_resource type="Resource" id="Resource_ft1jr"]
+script = ExtResource("3_mg2wq")
+ratio = 30.0
+duration = 30.0
+metadata/_custom_type_script = "uid://cpmmttu73v8dd"
+
+[sub_resource type="Resource" id="Resource_fwuod"]
+script = ExtResource("4_gpvkm")
+ratio = 5.0
+metadata/_custom_type_script = "uid://cbrm1hl430kkt"
+
+[sub_resource type="Resource" id="Resource_g6bc5"]
+script = ExtResource("5_dvkcx")
+ratio = 5.0
+metadata/_custom_type_script = "uid://5ejddr74s21u"
+
+[node name="StrangeMockery" type="Timer" unique_id=1589558522]
+script = ExtResource("1_ft1jr")
+when_activate = Array[ExtResource("2_fwuod")]([SubResource("Resource_ft1jr")])
+when_deactivate = Array[ExtResource("2_fwuod")]([SubResource("Resource_fwuod"), SubResource("Resource_g6bc5")])
+metadata/_custom_type_script = "uid://cakbssudnuou6"

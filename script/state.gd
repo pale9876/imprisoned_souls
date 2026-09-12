@@ -1,5 +1,5 @@
-extends Node
-class_name State
+extends RefCounted
+class_name Debite
 
 
 signal face_changed()

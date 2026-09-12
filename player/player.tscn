@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://br4srsyh160du"]
 
 [ext_resource type="Script" uid="uid://c2uxhumgng18h" path="res://player/player.gd" id="1_bvu1k"]
+[ext_resource type="Script" uid="uid://cy5ux4udfco7" path="res://script/ae_index_library.gd" id="2_7crtr"]
 [ext_resource type="Script" uid="uid://nmmtety5yvve" path="res://player/state_machine.gd" id="3_2ieo8"]
 [ext_resource type="Script" uid="uid://c08p61o8pw6vo" path="res://player/state/idle.gd" id="4_bvu1k"]
 [ext_resource type="PackedScene" uid="uid://c1uoslrnfk3vt" path="res://player/tail.tscn" id="5_7crtr"]
@@ -56,21 +57,21 @@
 [ext_resource type="Script" uid="uid://sjqmjeqxy8nt" path="res://player/health.gd" id="51_w7j2h"]
 [ext_resource type="Script" uid="uid://xbjs4cvnl1lm" path="res://player/spawn_shot.gd" id="64_35wys"]
 
-[sub_resource type="Gradient" id="Gradient_wpyo2"]
+[sub_resource type="Gradient" id="Gradient_7crtr"]
 interpolation_mode = 1
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7crtr"]
-gradient = SubResource("Gradient_wpyo2")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vgvch"]
+gradient = SubResource("Gradient_7crtr")
 height = 10
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.789, 0.789)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgvch"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1u5o"]
 size = Vector2(38, 92)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1u5o"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dxkp"]
 size = Vector2(50, 81)
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_a1u5o"]
@@ -166,7 +167,7 @@ size = Vector2(40, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jywp"]
 size = Vector2(47, 48)
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_3dxkp"]
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_6wior"]
 points = PackedVector2Array(0, -95, 0, -33, 0, -33, 0, -95)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ch6w5"]
@@ -193,15 +194,18 @@ floor_snap_length = 10.0
 script = ExtResource("1_bvu1k")
 toggles = [NodePath("StateLabel")]
 
+[node name="AEIndexLibrary" type="Node" parent="." unique_id=1829712396]
+script = ExtResource("2_7crtr")
+
 [node name="DropShadow" type="Sprite2D" parent="." unique_id=981265406]
-texture = SubResource("GradientTexture2D_7crtr")
+texture = SubResource("GradientTexture2D_vgvch")
 script = ExtResource("6_jbx34")
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 mask = 4
 
 [node name="UnitCollision" type="CollisionShape2D" parent="." unique_id=1250735462]
 position = Vector2(0, -46)
-shape = SubResource("RectangleShape2D_vgvch")
+shape = SubResource("RectangleShape2D_a1u5o")
 script = ExtResource("8_pjwc4")
 metadata/_custom_type_script = "uid://bhhy483vjefa1"
 
@@ -214,7 +218,7 @@ state = 3
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=78373728]
 position = Vector2(-0.5, -46.5)
-shape = SubResource("RectangleShape2D_a1u5o")
+shape = SubResource("RectangleShape2D_3dxkp")
 debug_color = Color(0.7921569, 0, 0.07450981, 0.41960785)
 script = ExtResource("8_pjwc4")
 width = 50
@@ -715,7 +719,7 @@ metadata/_custom_type_script = "uid://0dw4edo0eshv"
 
 [node name="HitPolygon" type="CollisionShape2D" parent="HitboxComponent/ChargingCounter" unique_id=525022277]
 visible = false
-shape = SubResource("ConvexPolygonShape2D_3dxkp")
+shape = SubResource("ConvexPolygonShape2D_6wior")
 disabled = true
 script = ExtResource("49_n0b8q")
 offset = Vector2(0, -64)

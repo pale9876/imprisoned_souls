@@ -4,61 +4,64 @@ extends Node2D
 class_name KaradaModule
 
 
-enum PartsOrder
-{
-	DEFAULT,
-	HIGH_KICK,
-	LEFT_HAND_BACK,
-	RIGHT_HAND_BACK,
-	BOTH_HAND_LEFT,
-	BOTH_HAND_RIGHT,
-}
+const HeadParts: Script = preload("uid://v08g5hwim8i0")
 
 
-const ORDER_BY_PARTS: Dictionary[PartsOrder, Array] = {
-	PartsOrder.DEFAULT : [
+const ORDER_BY_PARTS: Dictionary[String, Array] = {
+	"Default" : [
 			"BackHairAccessory",
 			"BackHair",
 			"BodyBackRace",
-			"RightArm",
-			"Leg",
+			"ArmRight",
+			"LegLeft",
 			"Body",
-			"LeftArm",
+			"LegRight",
+			"ArmLeft",
 			"Head",
+			"FrontHairAccessory"
 	],
 }
 
-@export var order: PartsOrder = PartsOrder.DEFAULT:
+
+@export var order: String = "Default":
 	set(type):
 		order = type
-		ordering_parts(order)
+		if ORDER_BY_PARTS.has(order):
+			ordering_parts(order)
+
+@export var parts_groups: Array[Node2D] = []
+
 
 @export_range(-1, 1, 2) var direction: int = 1:
 	set(val):
 		if direction != val and is_node_ready() and direction != 0:
 			direction = val
 			for node: Node in get_children():
-				if node.name == &"Head":
+				if node is not Node2D: return
+				
+				if node.name in [&"Head", &"ArmRight", &"ArmLeft", &"LegRight", &"LegLeft"]:
 					for head_part: Node in node.get_children():
 						(head_part as DirectionSpriteModuler).direction = direction
-					face_dir_order()
+					update_face_dir()
 				elif node is DirectionSpriteModuler:
 					node.direction = direction
+				
 			ordering_parts(order)
+
 @export_enum("NONE", "Left", "Right", "BOTH") var weapon_handle: String = "NONE"
 
 
 func _ready() -> void:
-	order = PartsOrder.DEFAULT
+	order = "Default"
 
 
-func order_place_arm_by_dir(order_type: PartsOrder) -> PackedStringArray:
+func order_place_arm_by_dir(_order: String) -> PackedStringArray:
 	var result: PackedStringArray = PackedStringArray()
 	
-	if !ORDER_BY_PARTS.has(order_type):
+	if !ORDER_BY_PARTS.has(_order):
 		return []
 	
-	var values: PackedStringArray = ORDER_BY_PARTS[order_type]
+	var values: PackedStringArray = ORDER_BY_PARTS[_order]
 	
 	result.resize(values.size())
 	
@@ -77,24 +80,11 @@ func order_place_arm_by_dir(order_type: PartsOrder) -> PackedStringArray:
 	return result
 
 
-func face_dir_order() -> void:
-	var left_side_tail: Node = get_head().get_node(^"LeftSideTail")
-	var right_side_tail: Node = get_head().get_node(^"RightSideTail")
-	var _head: Node = get_head()
-	
-	if direction == 1:
-		if left_side_tail.get_index() != 2:
-			_head.move_child(left_side_tail, 2)
-		if right_side_tail.get_index() != 0:
-			_head.move_child(right_side_tail, 0)
-	elif direction == -1:
-		if left_side_tail.get_index() != 0:
-			_head.move_child(left_side_tail, 0)
-		if right_side_tail.get_index() != 2:
-			_head.move_child(right_side_tail, 2)
+func update_face_dir() -> void:
+	pass
 
 
-func ordering_parts(_order: PartsOrder) -> void:
+func ordering_parts(_order: String) -> void:
 	if !is_node_ready(): return
 	
 	var parts_order: PackedStringArray = order_place_arm_by_dir(order)
@@ -108,12 +98,5 @@ func ordering_parts(_order: PartsOrder) -> void:
 			move_child(get_node(NodePath(cursor)), index)
 
 
-func get_head_parts() -> Array[Node]:
-	return get_head().get_children()
-
-
-func get_head() -> Node:
-	return get_node(^"Head")
-	
-	
-	
+func get_head() -> HeadParts:
+	return get_node(^"Head") as HeadParts

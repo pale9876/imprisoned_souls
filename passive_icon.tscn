@@ -1,0 +1,44 @@
+[gd_scene format=4 uid="uid://bojnccbrr3ouj"]
+
+[ext_resource type="Script" uid="uid://d1eyajeuwko5u" path="res://script/passive_icon.gd" id="1_ev67k"]
+[ext_resource type="Resource" uid="uid://biwt5y8u2wy1c" path="res://skill/passive/strange_mockery.tres" id="2_jtikd"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_imdm1"]
+_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAADmAgAAUklGRt4CAABXRUJQVlA4TNICAAAv/8A/EA8w//M///Mf8KCj7X/cxvlxMI8xWTFlds4NMmWqQY7ikwTIXuZIgbNeA67SwlWQZzD8FZTw//9FZW8i+j8B+P/+Z1aVzmizyqSfeiFrgsYkGoJOOkGmYJBBUBWioCtQMEgGyTJHDT+VVcJUUYlTVSUZvSSnmoIbdDNdx5uFmaGxMc6lKvFkmtkYM72IgiIJJB02knS7tWn4jScDuHMznevgbCBDlcQ+lcjQ5hpTmyLpu4RFNLgIPpc4mTPzQ7BsorXJMFvJWF8KKEr51VwWFJIYc4VJ5La5rMH5O4XPBWScyhdxJ1qnQPJeFOY28kHkRV3k5obGMtfJYbaJMF+ZREmQmSiNAmwUr5Iu8xLInGg73DDrZk20iOpcVsJ2JqkUEv1MVEpoJpkR5cxqVzTAiHwmFBImXmebqmZdZXBmKIWJTYnfnvmVKp387sxvat+f+Z1MCo2TdjxGPVy5sHiF8oWtB8CVCUfYLstfPXeNxmUth8OfXTpEn4qHWw8XVNplLMg2DsCwWAGgcaPXCrvKoed3hYPOJLPruVNNqU486C27Z3zgovX5AuAT3isVEg7Am7wntLIHEHinlMm8AtkmATXwRz0QaJ5fpuO8AOrCL6MegAorXMRq5ZRALmfC1fMHeUV36ktnk/X+oD/YA8Ou8HO91SZXpl3lnVcq5KmilUkHoOmBDMAHFoNxY+isSgWDYXDpSetTVC51xUj1sdb+BiPdGjE+v9G5PfEIjE+Vnp0qjDBB46r1/NTQe3oikwFvG2QavAOgkqTPQecJgLJzFqhkhNabO1Quao9P7I9yY/bIzJktVrdm3aoQRt2qMBltVo38eGoVZVoNkmEqSjIlRdRkSbJZFe4Xg75LmK0qwWyxWmHlrCKsgqBJGrlYRVh5SZctVhEiSrzZIhqSW1gpXr/tcLx2melg5QpEo3r12uH64cYFrEbb4YoZYPeXEg==")
+size_override = Vector2(256, 256)
+
+[node name="PassiveIcon" type="TextureRect" unique_id=1946093756]
+texture_filter = 1
+custom_minimum_size = Vector2(36, 36)
+custom_maximum_size = Vector2(36, 36)
+offset_right = 0.15999985
+texture = SubResource("PortableCompressedTexture2D_imdm1")
+expand_mode = 1
+stretch_mode = 4
+script = ExtResource("1_ev67k")
+passive_info = ExtResource("2_jtikd")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {},
+"slice_section": true
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": ["Layer 2"],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/icon/passive_기괴한_조소.aseprite",
+"source_uid": 1221745449988197703
+}
+metadata/_aseprite_wizard_source_file_hash_ = "36d4c2511efe43fba42f87a0fb1799ff"

@@ -37,6 +37,8 @@ var blood: float = 1.:
 		blood = clampf(val, 0., 1.)
 var max_hp: int = 10
 var speed: float = 0.
+var atk: int = 1
+var def: int = 1
 
 
 func hp_get_progress() -> float:

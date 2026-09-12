@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=4 uid="uid://biwt5y8u2wy1c"]
+
+[ext_resource type="PackedScene" uid="uid://erjuf88hv5dc" path="res://strange_mockery.tscn" id="1_krok2"]
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="2_x643x"]
+
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_imdm1"]
+_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAADmAgAAUklGRt4CAABXRUJQVlA4TNICAAAv/8A/EA8w//M///Mf8KCj7X/cxvlxMI8xWTFlds4NMmWqQY7ikwTIXuZIgbNeA67SwlWQZzD8FZTw//9FZW8i+j8B+P/+Z1aVzmizyqSfeiFrgsYkGoJOOkGmYJBBUBWioCtQMEgGyTJHDT+VVcJUUYlTVSUZvSSnmoIbdDNdx5uFmaGxMc6lKvFkmtkYM72IgiIJJB02knS7tWn4jScDuHMznevgbCBDlcQ+lcjQ5hpTmyLpu4RFNLgIPpc4mTPzQ7BsorXJMFvJWF8KKEr51VwWFJIYc4VJ5La5rMH5O4XPBWScyhdxJ1qnQPJeFOY28kHkRV3k5obGMtfJYbaJMF+ZREmQmSiNAmwUr5Iu8xLInGg73DDrZk20iOpcVsJ2JqkUEv1MVEpoJpkR5cxqVzTAiHwmFBImXmebqmZdZXBmKIWJTYnfnvmVKp387sxvat+f+Z1MCo2TdjxGPVy5sHiF8oWtB8CVCUfYLstfPXeNxmUth8OfXTpEn4qHWw8XVNplLMg2DsCwWAGgcaPXCrvKoed3hYPOJLPruVNNqU486C27Z3zgovX5AuAT3isVEg7Am7wntLIHEHinlMm8AtkmATXwRz0QaJ5fpuO8AOrCL6MegAorXMRq5ZRALmfC1fMHeUV36ktnk/X+oD/YA8Ou8HO91SZXpl3lnVcq5KmilUkHoOmBDMAHFoNxY+isSgWDYXDpSetTVC51xUj1sdb+BiPdGjE+v9G5PfEIjE+Vnp0qjDBB46r1/NTQe3oikwFvG2QavAOgkqTPQecJgLJzFqhkhNabO1Quao9P7I9yY/bIzJktVrdm3aoQRt2qMBltVo38eGoVZVoNkmEqSjIlRdRkSbJZFe4Xg75LmK0qwWyxWmHlrCKsgqBJGrlYRVh5SZctVhEiSrzZIhqSW1gpXr/tcLx2melg5QpEo3r12uH64cYFrEbb4YoZYPeXEg==")
+size_override = Vector2(256, 256)
+
+[resource]
+script = ExtResource("2_x643x")
+name = &"Strange Mockery"
+icon = SubResource("PortableCompressedTexture2D_imdm1")
+description = "활성화 시, 30초간 최종 데미지가 15퍼센트 증가합니다.
+
+비 활성화 시, 10초간 이동속도와 모션속도가 10% 증가합니다."
+ae_index_scene = ExtResource("1_krok2")
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

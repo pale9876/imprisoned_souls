@@ -1,0 +1,3 @@
+@tool
+extends SkillInformation
+class_name ActiveSkillInformation

@@ -18,7 +18,6 @@ var input_state: InputState
 var _prefix: StringName = &""
 
 
-
 func _init() -> void:
 	super()
 	

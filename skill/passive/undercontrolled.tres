@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://2j37ys2ie36k"]
+
+[ext_resource type="Texture2D" uid="uid://bhqvn5ck1cxoh" path="res://aseprite/icon/passive_통제.png" id="1_5l1pi"]
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_a0swl"]
+
+[resource]
+script = ExtResource("1_a0swl")
+name = &"Undercontrolled"
+icon = ExtResource("1_5l1pi")
+description = "찍기로 끝나는 잡기 기술에 다수를 띄울 수 있는 강한 충격파가 생성됩니다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

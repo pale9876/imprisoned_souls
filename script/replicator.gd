@@ -5,7 +5,6 @@ class_name Replicator
 # Import
 const SpriteComponent: Script = preload("uid://b0paoljcmbiys")
 const SpriteModuler: Script = preload("uid://dbcsuysfwo30x")
-const StateMachine: Script = preload("uid://nmmtety5yvve")
 
 
 @export var unit_info: UnitInformation
@@ -18,7 +17,7 @@ const StateMachine: Script = preload("uid://nmmtety5yvve")
 
 
 var stat: Stat = Stat.new()
-var state: State = State.new()
+var state: Debite = Debite.new()
 
 
 func _init() -> void:
@@ -79,3 +78,18 @@ func get_stage() -> Stage:
 
 func is_in_stage() -> bool:
 	return get_parent() is Stage
+
+
+func get_ae_library() -> AEIndexLibrary:
+	return get_node(^"AEIndexLibrary") as AEIndexLibrary
+
+
+
+
+
+func get_stat_effects() -> void:
+	pass
+
+
+
+	

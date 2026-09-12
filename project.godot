@@ -18,9 +18,7 @@ config/icon="res://icon.svg"
 
 [aseprite]
 
-import/import_plugin/default_automatic_importer="Static Texture"
-import/import_plugin/generate_bake_files=true
-animation/layers/only_include_visible_layers_by_default=true
+animation/loop/enabled=false
 
 [audio]
 

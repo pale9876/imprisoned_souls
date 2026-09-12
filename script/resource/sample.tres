@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="BladeMotionTrigger" format=3 uid="uid://ddcm0rls0h78q"]
-
-[ext_resource type="Script" uid="uid://c72ufy7n2lsjy" path="res://script/resource/blade_motion_trigger.gd" id="1_xil6o"]
-
-[resource]
-script = ExtResource("1_xil6o")
-metadata/_custom_type_script = "uid://c72ufy7n2lsjy"
