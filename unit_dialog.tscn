@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c0jonkfxrw7de"]
+
+[ext_resource type="Script" uid="uid://qe10050prjrn" path="res://script/character_dialog.gd" id="1_fucy2"]
+
+[node name="CharacterDialog" type="Control" unique_id=946108885]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_fucy2")
+
+[node name="Label" type="Label" parent="." unique_id=1349451357]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "안녕하세요"
+
+[node name="Timer" type="Timer" parent="." unique_id=44993661]

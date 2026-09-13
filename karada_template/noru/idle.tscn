@@ -16,10 +16,6 @@ size_override = Vector2(256, 256)
 _data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAACsAAAAUklGRqQAAABXRUJQVlA4TJcAAAAv/8A/EB8gECD8H5phQ0hA+L/REI2QgJD93+WS+Q/A35KC28i21UZMufpRCcyGXJE6kJtwB45edcb4U3i/mSL6PwHG3/8/rxPahiKwHY1YyZZGFyqtqEerqhiq1EJ10y0U85ZLNcDYDDUxxhjUHm5ijM1YF8bWWNWFVWBVddulV28BVz6H3Hsu1YOJlMAZVVW5xt//v04DAA==")
 size_override = Vector2(256, 256)
 
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_fybp7"]
-_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAAB8AAAAUklGRnQAAABXRUJQVlA4TGgAAAAv/8A/EBcgFkzmL9kfkVgw2Z2/Xi4C2eT+kC2U+Q/o3sCotm0lH5eRR9AWPwLahygMWVQ9X2a8iP5PgBL/CxgrnLZfQFtxJy9xvt77Ltpqvx434Baa/mi39ykHCJ2vdL0X94Q08f/vcQ==")
-size_override = Vector2(256, 256)
-
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_l60pe"]
 _data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAABSAAAAUklGRkoAAABXRUJQVlA4TD0AAAAv/8A/EA8wLbM0C/Mf8FAUSVJD5nkOwAlYO2nYyzlE9H8CyHM90lhER4NoNjtfPRfNxEIbK0As5LG+/xdkAA==")
 size_override = Vector2(256, 256)
@@ -42,7 +38,6 @@ size_override = Vector2(256, 256)
 
 [node name="Idle" type="Node2D" unique_id=1893632528]
 script = ExtResource("1_uojtt")
-weapon_handle = "Left"
 
 [node name="BackHairAccessory" type="Node2D" parent="." unique_id=1731142679]
 script = ExtResource("2_dhccw")
@@ -102,7 +97,9 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
 
-[node name="ArmRight" type="Node2D" parent="." unique_id=1373498293]
+[node name="ArmRight" type="Node2D" parent="." unique_id=278079514]
+script = ExtResource("4_uojtt")
+metadata/_custom_type_script = "uid://ba6hdg6q72xrm"
 
 [node name="Upper" type="Node2D" parent="ArmRight" unique_id=2078841791]
 script = ExtResource("2_dhccw")
@@ -212,7 +209,9 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
 
-[node name="LegLeft" type="Node2D" parent="." unique_id=1182318486]
+[node name="LegLeft" type="Node2D" parent="." unique_id=1979201437]
+script = ExtResource("4_uojtt")
+metadata/_custom_type_script = "uid://ba6hdg6q72xrm"
 
 [node name="Upper" type="Node2D" parent="LegLeft" unique_id=1229195811]
 script = ExtResource("2_dhccw")
@@ -287,6 +286,42 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
 
+[node name="Weapon" type="Node2D" parent="LegLeft" unique_id=1068495205]
+script = ExtResource("2_dhccw")
+metadata/_custom_type_script = "uid://dghhexdudu0xy"
+
+[node name="Left" type="Sprite2D" parent="LegLeft/Weapon" unique_id=111587427]
+visible = false
+flip_h = true
+
+[node name="Right" type="Sprite2D" parent="LegLeft/Weapon" unique_id=1148251125]
+texture_filter = 1
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {},
+"slice_section": true
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": ["RightArm"],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
+"source_uid": 6290199164166850251
+}
+metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
+
 [node name="Body" type="Node2D" parent="." unique_id=1987647964]
 script = ExtResource("2_dhccw")
 metadata/_custom_type_script = "uid://dghhexdudu0xy"
@@ -326,7 +361,9 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "7bf53fed3104cf0bfe9b59ef9eb623ca"
 
-[node name="LegRight" type="Node2D" parent="." unique_id=1362642951]
+[node name="LegRight" type="Node2D" parent="." unique_id=1426036386]
+script = ExtResource("4_uojtt")
+metadata/_custom_type_script = "uid://ba6hdg6q72xrm"
 
 [node name="Upper" type="Node2D" parent="LegRight" unique_id=874645068]
 script = ExtResource("2_dhccw")
@@ -400,8 +437,45 @@ metadata/_aseprite_wizard_config_ = {
 }
 metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
 
-[node name="ArmLeft" type="Node2D" parent="." unique_id=1724646454]
+[node name="Weapon" type="Node2D" parent="LegRight" unique_id=1031482393]
+script = ExtResource("2_dhccw")
+metadata/_custom_type_script = "uid://dghhexdudu0xy"
+
+[node name="Left" type="Sprite2D" parent="LegRight/Weapon" unique_id=163503927]
+visible = false
+flip_h = true
+
+[node name="Right" type="Sprite2D" parent="LegRight/Weapon" unique_id=1634977711]
+texture_filter = 1
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": true,
+"output_section": true,
+"pending_changes": {},
+"slice_section": true
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 1,
+"keep_anim_length": false,
+"layers": ["RightArm"],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": true,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
+"source_uid": 6290199164166850251
+}
+metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
+
+[node name="ArmLeft" type="Node2D" parent="." unique_id=67596147]
 script = ExtResource("4_uojtt")
+metadata/_custom_type_script = "uid://ba6hdg6q72xrm"
 
 [node name="Upper" type="Node2D" parent="ArmLeft" unique_id=809046642]
 script = ExtResource("2_dhccw")
@@ -413,7 +487,6 @@ flip_h = true
 
 [node name="Right" type="Sprite2D" parent="ArmLeft/Upper" unique_id=540994634]
 texture_filter = 1
-texture = SubResource("PortableCompressedTexture2D_fybp7")
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -450,7 +523,6 @@ flip_h = true
 
 [node name="Right" type="Sprite2D" parent="ArmLeft/Lower" unique_id=1029314953]
 texture_filter = 1
-texture = SubResource("PortableCompressedTexture2D_fybp7")
 metadata/_aseprite_wizard_interface_config_ = {
 "layer_section": true,
 "output_section": true,
@@ -515,6 +587,7 @@ metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
 
 [node name="Head" type="Node2D" parent="." unique_id=1990522908]
 script = ExtResource("5_uojtt")
+z_dir = -1
 
 [node name="SideTailRight" type="Node2D" parent="Head" unique_id=1485810712]
 script = ExtResource("2_dhccw")

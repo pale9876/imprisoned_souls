@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="PlayerInformation" format=3 uid="uid://cp3ft6roppleg"]
-
-[ext_resource type="Script" uid="uid://r11y6g0g5cvx" path="res://player/player_information.gd" id="1_qjyon"]
-
-[resource]
-script = ExtResource("1_qjyon")
-name = &"Amelia Watson"
-metadata/_custom_type_script = "uid://r11y6g0g5cvx"

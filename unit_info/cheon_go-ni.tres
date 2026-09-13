@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_rhfd8")
+last_name = &"Goni"
+first_name = &"Cheon"
 metadata/_custom_type_script = "uid://c3ykemf4n3om1"

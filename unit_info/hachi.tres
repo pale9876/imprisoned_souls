@@ -4,6 +4,10 @@
 
 [resource]
 script = ExtResource("1_q5pwm")
+mosaiced_name = &"Hachi"
+mosaiced = true
+last_name = &"Ichigo"
+first_name = &"Kaibana"
 is_replicant = false
 unique = true
 race = 3

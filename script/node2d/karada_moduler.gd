@@ -24,35 +24,45 @@ const ORDER_BY_PARTS: Dictionary[String, Array] = {
 
 
 @export var order: String = "Default":
-	set(type):
-		order = type
-		if ORDER_BY_PARTS.has(order):
-			ordering_parts(order)
-
-@export var parts_groups: Array[Node2D] = []
+	set(value):
+		order = value
+		if ORDER_BY_PARTS.has(value):
+			ordering_parts(value)
 
 
 @export_range(-1, 1, 2) var direction: int = 1:
 	set(val):
-		if direction != val and is_node_ready() and direction != 0:
-			direction = val
-			for node: Node in get_children():
-				if node is not Node2D: return
-				
-				if node.name in [&"Head", &"ArmRight", &"ArmLeft", &"LegRight", &"LegLeft"]:
-					for head_part: Node in node.get_children():
-						(head_part as DirectionSpriteModuler).direction = direction
-					update_face_dir()
-				elif node is DirectionSpriteModuler:
-					node.direction = direction
-				
-			ordering_parts(order)
+		if is_node_ready():
+			if direction != val and direction != 0:
+				direction = val
+				for node: Node in get_children():
+					if node is not Node2D: return
 
-@export_enum("NONE", "Left", "Right", "BOTH") var weapon_handle: String = "NONE"
+					if node.name == &"Head":
+						update_head_dir()
+					elif node is DirectionSpriteModuler:
+						node.direction = direction
+					elif node is SpritePartsGroup:
+						pass
+				ordering_parts(order)
+
+
+@export_custom(
+	PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_KEYING_INCREMENTS
+) var frame: int = 0:
+	set(val):
+		frame = maxi(val, 0)
+		propagate_frame()
 
 
 func _ready() -> void:
 	order = "Default"
+
+
+func propagate_frame() -> void:
+	for node: Node in get_children():
+		if node is DirectionSpriteModuler:
+			node.frame = frame
 
 
 func order_place_arm_by_dir(_order: String) -> PackedStringArray:
@@ -80,14 +90,14 @@ func order_place_arm_by_dir(_order: String) -> PackedStringArray:
 	return result
 
 
-func update_face_dir() -> void:
-	pass
+func update_head_dir() -> void:
+	get_head()
 
 
 func ordering_parts(_order: String) -> void:
 	if !is_node_ready(): return
 	
-	var parts_order: PackedStringArray = order_place_arm_by_dir(order)
+	var parts_order: PackedStringArray = order_place_arm_by_dir(_order)
 	
 	if parts_order.is_empty(): return
 	
@@ -100,3 +110,8 @@ func ordering_parts(_order: String) -> void:
 
 func get_head() -> HeadParts:
 	return get_node(^"Head") as HeadParts
+
+
+
+
+	

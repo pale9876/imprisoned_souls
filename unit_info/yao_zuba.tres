@@ -4,6 +4,12 @@
 
 [resource]
 script = ExtResource("1_j2mvx")
+mosaiced_name = &"Yao-Zuba"
+mosaiced = true
+last_name = &"Rhyao"
+first_name = &"Chunwi"
+is_replicant = false
+unique = true
 race = 5
 nation = 2
 chara_class = 16

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UnitInformation" format=3 uid="uid://dim5ico12p5kg"]
+
+[ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="1_o46d8"]
+
+[resource]
+script = ExtResource("1_o46d8")
+mosaiced_name = &"Man-Teou"
+mosaiced = true
+last_name = &"Manteou"
+first_name = &"Shi"
+is_replicant = false
+unique = true
+cannot_terminate = true
+race = 5
+nation = 2
+chara_class = 15
+metadata/_custom_type_script = "uid://c3ykemf4n3om1"

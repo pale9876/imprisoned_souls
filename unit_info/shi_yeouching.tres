@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_07w8y")
+last_name = &"Yeou-Ching"
+first_name = &"Shi"
 is_replicant = false
 unique = true
 cannot_terminate = true

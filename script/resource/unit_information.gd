@@ -57,15 +57,17 @@ enum CharacterClass {
 }
 
 
-@export_group("캐릭터 정보 및 클래스")
+@export_group("캐릭터 정보")
+@export var mosaiced_name: StringName = &"Unknowned"
+@export var mosaiced: bool = false
+@export var last_name: StringName = &"Unnamed"
+@export var first_name: StringName = &"Unnamed"
 @export var is_replicant: bool = true # replicant가 아닐 시, NPC 진영
 @export var unique: bool = false
 @export var cannot_terminate: bool = false
 @export var race: Race = Race.UMONEIRA
 @export var nation: Nation = Nation.BYEONHAN_GUORE
 @export var chara_class: CharacterClass = CharacterClass.NONE
-@export var last_name: StringName = &"Unnamed"
-@export var first_name: StringName = &"Unnamed"
 
 
 @export_group("초기 스탯")
@@ -73,6 +75,7 @@ enum CharacterClass {
 @export var hp: int = 1826
 
 
+@export_group("etc 메타데이터")
 @export var meta: Dictionary[String, Variant] = {
 	# ! 이곳에 기록되어야 할 정도
 	# - 해당 캐릭터의 성격 및 전투 기록

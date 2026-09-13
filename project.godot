@@ -29,13 +29,14 @@ buses/default_bus_layout="uid://w8hk2j6ewb5f"
 InputState="*uid://dv50hrkfe2ifw"
 GSignal="*uid://bjpdnvlv58vit"
 Global="*uid://o1g358yfihj8"
-SproutyDialogs="*uid://c8gxm75j80u8c"
 RumblePak="*uid://cf4u12dx32nt7"
 EventHorizon="*uid://bwlhcpcfc837b"
 SpawningPool="*uid://dj84j0yu4jr3v"
 UnitGenerator="*uid://cxglnv6na8ms4"
 Gmotion="*uid://5kgxu2bov14j"
 PDF="*uid://crqknxquwocqh"
+DialogueManager="*uid://c3rodes2l3gxb"
+Dice="*uid://2ovl8inv5dmr"
 
 [display]
 
@@ -54,7 +55,7 @@ project/assembly_name="Holoverse"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/GodotPDForm/plugin.cfg", "res://addons/godot_gif/plugin.cfg", "res://addons/rumblepak/plugin.cfg", "res://addons/scriptory/plugin.cfg", "res://addons/sprouty_dialogs/plugin.cfg", "res://addons/yard/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/GodotPDForm/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_gif/plugin.cfg", "res://addons/rumblepak/plugin.cfg", "res://addons/scriptory/plugin.cfg", "res://addons/yard/plugin.cfg")
 
 [global]
 
@@ -190,7 +191,7 @@ mouse_left={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/sample.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/ending.dialogue")
 
 [layer_names]
 

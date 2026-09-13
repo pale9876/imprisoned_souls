@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UnitInformation" format=3 uid="uid://fdfctxpd18kq"]
+
+[ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="1_slt2k"]
+
+[resource]
+script = ExtResource("1_slt2k")
+last_name = &"Mimonai"
+first_name = &"Shin-Ku"
+race = 3
+nation = 3
+chara_class = 16
+metadata/_custom_type_script = "uid://c3ykemf4n3om1"
