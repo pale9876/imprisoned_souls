@@ -39,16 +39,6 @@ size_override = Vector2(256, 256)
 [node name="Idle" type="Node2D" unique_id=1893632528]
 script = ExtResource("1_uojtt")
 
-[node name="BackHairAccessory" type="Node2D" parent="." unique_id=1731142679]
-script = ExtResource("2_dhccw")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="BackHairAccessory" unique_id=1517609946]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="BackHairAccessory" unique_id=921218792]
-
 [node name="BackHair" type="Node2D" parent="." unique_id=2146823369]
 script = ExtResource("2_dhccw")
 metadata/_custom_type_script = "uid://dghhexdudu0xy"
@@ -826,3 +816,13 @@ visible = false
 flip_h = true
 
 [node name="Right" type="Sprite2D" parent="FrontHairAccessory" unique_id=1428979679]
+
+[node name="BackHairAccessory" type="Node2D" parent="." unique_id=1731142679]
+script = ExtResource("2_dhccw")
+metadata/_custom_type_script = "uid://dghhexdudu0xy"
+
+[node name="Left" type="Sprite2D" parent="BackHairAccessory" unique_id=1517609946]
+visible = false
+flip_h = true
+
+[node name="Right" type="Sprite2D" parent="BackHairAccessory" unique_id=921218792]

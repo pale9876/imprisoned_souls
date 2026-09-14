@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://ch048roik4bmb"
+path="res://.godot/imported/intel.dialogue-ee871d530ae801b022aa301912d7f2ec.tres"
+
+[deps]
+
+source_file="res://dialogue/intel.dialogue"
+dest_files=["res://.godot/imported/intel.dialogue-ee871d530ae801b022aa301912d7f2ec.tres"]
+
+[params]
+
+defaults=true
