@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bbu8js5m5odbe"]
+
+[ext_resource type="Script" uid="uid://dh785lhqeohnd" path="res://script/input_change_option_editor.gd" id="1_3dc0k"]
+
+[node name="InputChangeOptionEditor" type="Control" unique_id=3866903]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3dc0k")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=682098947]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=756224377]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer" unique_id=1946128876]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/MarginContainer/ScrollContainer" unique_id=1618768148]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ActionNameContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1634727902]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="KeyAttrList" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1413160690]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
