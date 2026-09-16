@@ -1,10 +1,11 @@
 @tool
-extends Button
+extends SoundButton
 
 
 # Import
 const VariableStatisticsProgress: Script = preload("uid://dvcrrp6wpmrtp")
 const StatAttrContainer: Script = preload("uid://5kps1ydik3il")
+
 
 # Placeholder
 const PLACEHOLDER_EXECUTIONER: Texture = preload("uid://clcjxox00b83s")
@@ -16,10 +17,13 @@ const PLACEHOLDER_TRICKSTER: Texture = preload("uid://clf6um28evr5d")
 
 
 func _init() -> void:
+	super()
 	class_info = ClassInformation.new()
 
 
 func _enter_tree() -> void:
+	if Engine.is_editor_hint(): return
+	
 	var ui_info := get_class_ui_info()
 	get_class_label().text = ui_info.name
 	get_icon().texture = ui_info.icon

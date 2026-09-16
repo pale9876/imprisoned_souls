@@ -23,3 +23,7 @@ func _draw() -> void:
 		Vector2(size.x, grid_y),
 		Color.WHITE
 	)
+
+
+func get_enter_btn() -> Button:
+	return get_node("%Enter") as Button

@@ -1,11 +1,15 @@
 # title_ui_button.gd
-extends Button
+@tool
+extends SoundButton
 
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
 
 func _init() -> void:
+	super()
+	if Engine.is_editor_hint(): return
+	
 	mouse_entered.connect(
 		func() -> void:
 			anim.play(&"hover")

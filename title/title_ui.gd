@@ -6,11 +6,12 @@ const TitleUiButton: Script = preload("uid://chmqpyka2hi81")
 const ClassList: Script = preload("uid://cdgr4w6hpl2ud")
 const CharacterList: Script = preload("uid://dq6jdkets46eg")
 const RadioButtonContainer: Script = preload("uid://dgxb13iyu7nlx")
+const GateScreen: Script = preload("uid://bpje5fqosbd7a")
 
 
-@onready var gate_screen: Control = %GateScreen
+@onready var gate_screen: GateScreen = %GateScreen
 @onready var ingame_option_ui: Control = %IngameOptionUI
-@onready var enter_btn: Button = %Enter
+#@onready var enter_btn: Button = %Enter
 @onready var title_screen: TextureRect = %TitleScreen
 
 
@@ -64,7 +65,7 @@ func _ready() -> void:
 	
 	initialize()
 	
-	enter_btn.button_up.connect(
+	gate_screen.get_enter_btn().button_up.connect(
 		func () -> void:
 			gate_screen.visible = false
 			get_main_ui().visible = true

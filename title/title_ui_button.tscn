@@ -16,9 +16,12 @@ _data = {
 &"idle": SubResource("Animation_8wuor")
 }
 
-[node name="Start" type="Button" unique_id=938715085]
+[node name="Start" type="Button" unique_id=1711081252]
+offset_right = 50.0
+offset_bottom = 31.0
 text = "Enter"
 script = ExtResource("1_1kxe0")
+metadata/_custom_type_script = "uid://tmumxa0lec7e"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=444427602]
 libraries/ = SubResource("AnimationLibrary_8wuor")
