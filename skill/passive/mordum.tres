@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://clsobwjsuywda"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_owkot"]
+
+[resource]
+script = ExtResource("1_owkot")
+name = &"Mordum"
+description = "무장한 NPC의 공격력이 45% 감소하고, 모든 피격 효과를 무효화한다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

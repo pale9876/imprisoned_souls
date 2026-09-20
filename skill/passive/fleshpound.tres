@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://cgjnx1j1vgxuf"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_ylcpb"]
+
+[resource]
+script = ExtResource("1_ylcpb")
+name = &"Fleshpound"
+description = "10초 안에 120의 데미지를 받을 때, 2초간 모든 공격에 면역되고, 공격력이 10% 증가한다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

@@ -15,11 +15,27 @@ _scan_rulesets = Array[Dictionary]([{
 }])
 _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://2j37ys2ie36k": &"undercontrolled",
+&"uid://b8rf1p8up0dbc": &"psychopathy",
 &"uid://bb63505xb73tf": &"future_diary",
-&"uid://biwt5y8u2wy1c": &"strange_mockery"
+&"uid://biwt5y8u2wy1c": &"strange_mockery",
+&"uid://cgjnx1j1vgxuf": &"fleshpound",
+&"uid://clsobwjsuywda": &"mordum",
+&"uid://cs753835ts5uf": &"commemoration",
+&"uid://ded7eqd8fgrg8": &"toe_tag",
+&"uid://gi871mftn27l": &"lost_card",
+&"uid://k411lef52eba": &"maggot",
+&"uid://ptg256owpxwg": &"sabotage"
 })
 _string_ids_to_uids = Dictionary[StringName, StringName]({
+&"commemoration": &"uid://cs753835ts5uf",
+&"fleshpound": &"uid://cgjnx1j1vgxuf",
 &"future_diary": &"uid://bb63505xb73tf",
+&"lost_card": &"uid://gi871mftn27l",
+&"maggot": &"uid://k411lef52eba",
+&"mordum": &"uid://clsobwjsuywda",
+&"psychopathy": &"uid://b8rf1p8up0dbc",
+&"sabotage": &"uid://ptg256owpxwg",
 &"strange_mockery": &"uid://biwt5y8u2wy1c",
+&"toe_tag": &"uid://ded7eqd8fgrg8",
 &"undercontrolled": &"uid://2j37ys2ie36k"
 })

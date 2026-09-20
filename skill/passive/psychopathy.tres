@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://b8rf1p8up0dbc"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_k010l"]
+
+[resource]
+script = ExtResource("1_k010l")
+name = &"Psychopathy"
+description = "플레이어의 모든 행동속도가 9% 빨라진다.
+NPC를 제외한 적 유닛에게 부여하는 데미지가 4% 감소된다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

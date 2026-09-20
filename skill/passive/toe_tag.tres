@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://ded7eqd8fgrg8"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_sryet"]
+
+[resource]
+script = ExtResource("1_sryet")
+name = &"Toe Tag"
+description = "[F]키를 누르면 플레이어가 죽인 NPC의 시신을 조사하면 이름을 알 수 있다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

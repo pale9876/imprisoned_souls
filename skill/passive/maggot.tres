@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://k411lef52eba"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_jvqyn"]
+
+[resource]
+script = ExtResource("1_jvqyn")
+name = &"Maggot"
+description = "공격에 맞은 적은 공격당 모든 행동속도가 1초간 1.2% 감소하고 최대 7% 감소한다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bbu8js5m5odbe"]
 
 [ext_resource type="Script" uid="uid://dh785lhqeohnd" path="res://script/input_change_option_editor.gd" id="1_3dc0k"]
+[ext_resource type="Script" uid="uid://3o5ols0f4pqc" path="res://script/key_awating_popup.gd" id="2_1r2pf"]
 
 [node name="InputChangeOptionEditor" type="Control" unique_id=3866903]
 layout_mode = 3
@@ -26,20 +27,75 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer" unique_id=1946128876]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/MarginContainer" unique_id=532750815]
 layout_mode = 2
+current_tab = 0
 
-[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/MarginContainer/ScrollContainer" unique_id=1618768148]
+[node name="KeyboardSettings" type="TabBar" parent="PanelContainer/MarginContainer/TabContainer" unique_id=1896837191]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings" unique_id=1946128876]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -31.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer" unique_id=1513480662]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ActionNameContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1634727902]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer/HBoxContainer" unique_id=616929850]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+
+[node name="ActionNameContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer/HBoxContainer/PanelContainer" unique_id=1634727902]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="KeyAttrList" type="VBoxContainer" parent="PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1413160690]
+[node name="Action" type="Label" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer/HBoxContainer/PanelContainer/ActionNameContainer" unique_id=1653718409]
+layout_mode = 2
+text = "Actions"
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer/HBoxContainer" unique_id=1354973806]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="KeyAttrList" type="VBoxContainer" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer/HBoxContainer/PanelContainer2" unique_id=1413160690]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Key" type="Label" parent="PanelContainer/MarginContainer/TabContainer/KeyboardSettings/ScrollContainer/HBoxContainer/PanelContainer2/KeyAttrList" unique_id=1324870081]
+layout_mode = 2
+text = "Keys"
+
+[node name="KeyAwatingPopup" type="PopupPanel" parent="." unique_id=1559333202]
+handle_input_locally = false
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(300, 100)
+script = ExtResource("2_1r2pf")
+
+[node name="MarginContainer" type="MarginContainer" parent="KeyAwatingPopup" unique_id=577571829]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 296.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="KeyAwatingPopup/MarginContainer" unique_id=429371734]
+layout_mode = 2
+text = "Changing Key"
+horizontal_alignment = 1

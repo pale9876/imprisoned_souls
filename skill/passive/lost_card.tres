@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://gi871mftn27l"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_4fnae"]
+
+[resource]
+script = ExtResource("1_4fnae")
+name = &"Lost Card"
+description = "특수한 구역에 입장할 수 있다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

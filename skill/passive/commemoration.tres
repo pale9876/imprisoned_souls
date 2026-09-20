@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://cs753835ts5uf"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_pv8xr"]
+
+[resource]
+script = ExtResource("1_pv8xr")
+name = &"Commemoration"
+description = "비전투 상태 시, 초당 2씩 체력이 재생된다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"
