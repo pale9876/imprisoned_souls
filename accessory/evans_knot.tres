@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://bihd7lbd53duy"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_6xm6s"]
+
+[resource]
+script = ExtResource("1_6xm6s")
+name = &"매듭 장식"
+description = "새끼손가락만 들어갈 정도의 구멍만 있는 교수인 매듭 장식이다. 미마에 공방에서 제작한 어른용 장식품을 수입하여 나눠준 것이다."
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

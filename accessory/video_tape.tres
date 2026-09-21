@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://6oqpll5mjdpo"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_b44qw"]
+
+[resource]
+script = ExtResource("1_b44qw")
+name = &"홈 비디오 테이프"
+description = "'노아' 의 이름표를 붙힌 캠코더용 녹화 테이프이다. 기밀 테이프의 재생을 막는 구조가 존재하지 않는 일반적인 테이프인 것 같다."
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

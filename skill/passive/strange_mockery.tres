@@ -9,6 +9,7 @@ size_override = Vector2(256, 256)
 
 [resource]
 script = ExtResource("2_x643x")
+enable = true
 name = &"Strange Mockery"
 icon = SubResource("PortableCompressedTexture2D_imdm1")
 description = "활성화 시, 30초간 최종 데미지가 15퍼센트 증가한다.

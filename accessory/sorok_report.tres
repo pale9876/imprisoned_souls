@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://xb1j6e6diycm"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_ffan1"]
+
+[resource]
+script = ExtResource("1_ffan1")
+name = &"소록 필름"
+description = "의사 종재곤이 40년에 나병 환자들을 찍은 사진이 담긴 필름이다."
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

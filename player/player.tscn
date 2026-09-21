@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://br4srsyh160du"]
+[gd_scene format=3 uid="uid://br4srsyh160du"]
 
 [ext_resource type="Script" uid="uid://c2uxhumgng18h" path="res://player/player.gd" id="1_bvu1k"]
 [ext_resource type="Script" uid="uid://cy5ux4udfco7" path="res://script/ae_index_library.gd" id="2_7crtr"]
@@ -15,17 +15,9 @@
 [ext_resource type="Script" uid="uid://bsrhpk5urdhab" path="res://player/high_punch.gd" id="9_yllr7"]
 [ext_resource type="Script" uid="uid://tmgum3lt28ad" path="res://player/state/jump.gd" id="10_8t03j"]
 [ext_resource type="PackedScene" uid="uid://icrh2ja363p" path="res://karada_template/noru/idle.tscn" id="11_6wior"]
-[ext_resource type="Script" uid="uid://dh5p5e7a2p0on" path="res://script/node2d/karada_moduler.gd" id="11_a1u5o"]
-[ext_resource type="Script" uid="uid://dghhexdudu0xy" path="res://component/direction_moduler.gd" id="12_3dxkp"]
-[ext_resource type="Texture2D" uid="uid://o3iwk43i42mj" path="res://aseprite/asso_project/characters/noru/idle/back_hair2.png" id="13_6wior"]
-[ext_resource type="Texture2D" uid="uid://cmey6ycwwsbag" path="res://aseprite/asso_project/characters/noru/idle/left_arm2.png" id="14_p5tca"]
 [ext_resource type="Script" uid="uid://c1823275u0dxi" path="res://player/state/comment.gd" id="15_fjxoa"]
-[ext_resource type="Texture2D" uid="uid://71c7mfxyhx7h" path="res://aseprite/asso_project/characters/noru/idle/left_side_tail.png" id="15_jbx34"]
-[ext_resource type="Texture2D" uid="uid://c1bbrfhxoapfw" path="res://aseprite/asso_project/characters/noru/idle/right_side_tail.png" id="16_s3g0c"]
 [ext_resource type="PackedScene" uid="uid://rcr22hd12ue1" path="res://player/state/slide.tscn" id="16_uw77l"]
-[ext_resource type="Texture2D" uid="uid://dp845eh675c3m" path="res://aseprite/asso_project/characters/noru/idle/front_hair.png" id="17_35wys"]
 [ext_resource type="PackedScene" uid="uid://f6fubhe2evfi" path="res://player/state/block.tscn" id="17_uw77l"]
-[ext_resource type="Texture2D" uid="uid://mgesd7eg82uf" path="res://player/Leg.png" id="18_3dxkp"]
 [ext_resource type="Script" uid="uid://bksr64dd5dok4" path="res://player/knockback.gd" id="18_q28gw"]
 [ext_resource type="PackedScene" uid="uid://c7ovni3xc3aqc" path="res://player/state/jump_kick.tscn" id="19_r7pn3"]
 [ext_resource type="Script" uid="uid://c78eee8r755ls" path="res://player/state/jump_kick.gd" id="20_2uvqg"]
@@ -57,76 +49,36 @@
 [ext_resource type="Script" uid="uid://sjqmjeqxy8nt" path="res://player/health.gd" id="51_w7j2h"]
 [ext_resource type="Script" uid="uid://xbjs4cvnl1lm" path="res://player/spawn_shot.gd" id="64_35wys"]
 
-[sub_resource type="Gradient" id="Gradient_7crtr"]
+[sub_resource type="Gradient" id="Gradient_mmwog"]
 interpolation_mode = 1
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vgvch"]
-gradient = SubResource("Gradient_7crtr")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8pxes"]
+gradient = SubResource("Gradient_mmwog")
 height = 10
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.789, 0.789)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1u5o"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmu53"]
 size = Vector2(38, 92)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dxkp"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7j2h"]
 size = Vector2(50, 81)
-
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_a1u5o"]
-_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAABYAAAAUklGRlAAAABXRUJQVlA4TEMAAAAv/8A/EBcgEEjC33oNAUHRfasJCIrme23+A/4VKAoAMsJTKtFE0PvcvYj+TwB8/3//r46YHnmT9NSdcXrkTeH7/4keAA==")
-size_override = Vector2(256, 256)
-
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_3dxkp"]
-_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAAB8AAAAUklGRnQAAABXRUJQVlA4TGgAAAAv/8A/EBcgFkzmL9kfkVgw2Z2/Xi4C2eT+kC2U+Q/o3sCotm0lH5eRR9AWPwLahygMWVQ9X2a8iP5PgBL/CxgrnLZfQFtxJy9xvt77Ltpqvx434Baa/mi39ykHCJ2vdL0X94Q08f/vcQ==")
-size_override = Vector2(256, 256)
-
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_p5tca"]
-_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAACsAAAAUklGRqQAAABXRUJQVlA4TJcAAAAv/8A/EB8gECD8H5phQ0hA+L/REI2QgJD93+WS+Q/A35KC21rb1iSO9NknI+AufapsEJZgA6pvOrT+rXx+3CL6PwHB3/8/rwttI23YTkpWsZUyRXWGMqMNhzlq4IXhTbdwwluu4wGlalSllFKoPa5SStWsi1Jr1vCihrDh8Lbr+CElLXCDp0/nMRCSCidAD4bDnPX3/0/UAA==")
-size_override = Vector2(256, 256)
-
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_jbx34"]
-_data = PackedByteArray("AAADAAUAAAABAAAAAAEAAAABAACwAAAAUklGRqgAAABXRUJQVlA4TJsAAAAv/8A/EC+gpm0jqFPZlf/yHZOjQSZgsUhrr4JAforatoH6K82CPrah2fwHgP+ndD2eKQJXjWy7zZWuCVQCzwSuvAZQGUThT+Ymf+7lRvR/AiT8H/6PXhugS4ary2Uey8VP3XwslR1+PaQETSJbJoMm/8KnbudsiQzAm+Z5ieQ/WegZX2Wp+8WTzpMFd3TJxEAl/B/+D/+H/18gAgA=")
-size_override = Vector2(256, 256)
 
 [sub_resource type="Animation" id="Animation_7crtr"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteComponent/Walk/BodyBackRace/Right:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
 
 [sub_resource type="Animation" id="Animation_wpyo2"]
 resource_name = "sampl"
 step = 0.016666668
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpriteComponent/Walk/BodyBackRace/Right:frame")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.05),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(),
 "transitions": PackedFloat32Array(),
 "values": []
@@ -167,7 +119,7 @@ size = Vector2(40, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jywp"]
 size = Vector2(47, 48)
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_6wior"]
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_n0b8q"]
 points = PackedVector2Array(0, -95, 0, -33, 0, -33, 0, -95)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ch6w5"]
@@ -198,14 +150,14 @@ toggles = [NodePath("StateLabel")]
 script = ExtResource("2_7crtr")
 
 [node name="DropShadow" type="Sprite2D" parent="." unique_id=981265406]
-texture = SubResource("GradientTexture2D_vgvch")
+texture = SubResource("GradientTexture2D_8pxes")
 script = ExtResource("6_jbx34")
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 mask = 4
 
 [node name="UnitCollision" type="CollisionShape2D" parent="." unique_id=1250735462]
 position = Vector2(0, -46)
-shape = SubResource("RectangleShape2D_a1u5o")
+shape = SubResource("RectangleShape2D_fmu53")
 script = ExtResource("8_pjwc4")
 metadata/_custom_type_script = "uid://bhhy483vjefa1"
 
@@ -218,7 +170,7 @@ state = 3
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=78373728]
 position = Vector2(-0.5, -46.5)
-shape = SubResource("RectangleShape2D_3dxkp")
+shape = SubResource("RectangleShape2D_w7j2h")
 debug_color = Color(0.7921569, 0, 0.07450981, 0.41960785)
 script = ExtResource("8_pjwc4")
 width = 50
@@ -237,273 +189,6 @@ scale = Vector2(1, -1)
 
 [node name="Idle" parent="SpriteComponent" unique_id=1893632528 instance=ExtResource("11_6wior")]
 position = Vector2(0, -64)
-
-[node name="Walk" type="Node2D" parent="SpriteComponent" unique_id=1071251709]
-visible = false
-position = Vector2(0, -64)
-script = ExtResource("11_a1u5o")
-
-[node name="BackHairAccessory" type="Node2D" parent="SpriteComponent/Walk" unique_id=1591016064]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/BackHairAccessory" unique_id=963783547]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/BackHairAccessory" unique_id=1864990036]
-
-[node name="BackHair" type="Node2D" parent="SpriteComponent/Walk" unique_id=1715954973]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/BackHair" unique_id=94609349]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/BackHair" unique_id=1111321073]
-texture = ExtResource("13_6wior")
-
-[node name="BodyBackRace" type="Node2D" parent="SpriteComponent/Walk" unique_id=1000148167]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/BodyBackRace" unique_id=562376971]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/BodyBackRace" unique_id=1480233704]
-texture_filter = 1
-texture = SubResource("PortableCompressedTexture2D_a1u5o")
-metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true,
-"output_section": true,
-"pending_changes": {},
-"slice_section": true
-}
-metadata/_aseprite_wizard_config_ = {
-"convert_fps_field": 60.0,
-"convert_ms_field": 16.0,
-"convert_to_fps": false,
-"embed_tex": true,
-"i_mode": 1,
-"keep_anim_length": false,
-"layers": ["body_backrace"],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"player": "",
-"scale": "1.0",
-"slice": "",
-"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
-"source_uid": 6290199164166850251
-}
-metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
-
-[node name="RightArm" type="Node2D" parent="SpriteComponent/Walk" unique_id=420571830]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/RightArm" unique_id=1073938889]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/RightArm" unique_id=2101336513]
-texture_filter = 1
-texture = SubResource("PortableCompressedTexture2D_3dxkp")
-metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true,
-"output_section": true,
-"pending_changes": {},
-"slice_section": true
-}
-metadata/_aseprite_wizard_config_ = {
-"convert_fps_field": 60.0,
-"convert_ms_field": 16.0,
-"convert_to_fps": false,
-"embed_tex": true,
-"i_mode": 1,
-"keep_anim_length": false,
-"layers": ["RightArm"],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": true,
-"player": "",
-"scale": "1.0",
-"slice": "",
-"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
-"source_uid": 6290199164166850251
-}
-metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
-
-[node name="Leg" type="Node2D" parent="SpriteComponent/Walk" unique_id=1802642935]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Leg" unique_id=9435923]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Leg" unique_id=1789802867]
-texture_filter = 1
-texture = ExtResource("18_3dxkp")
-metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true,
-"output_section": true,
-"pending_changes": {},
-"slice_section": true
-}
-metadata/_aseprite_wizard_config_ = {
-"convert_fps_field": 60.0,
-"convert_ms_field": 16.0,
-"convert_to_fps": false,
-"embed_tex": false,
-"i_mode": 1,
-"keep_anim_length": false,
-"layers": ["Leg"],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"player": "",
-"scale": "1.0",
-"slice": "",
-"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
-"source_uid": 6290199164166850251
-}
-metadata/_aseprite_wizard_source_file_hash_ = "a821b44c9ee378302cc4ef5bcec28759"
-
-[node name="Body" type="Node2D" parent="SpriteComponent/Walk" unique_id=1168966164]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Body" unique_id=1405177516]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Body" unique_id=314773904]
-texture_filter = 1
-texture = SubResource("PortableCompressedTexture2D_p5tca")
-metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true,
-"output_section": true,
-"pending_changes": {},
-"slice_section": true
-}
-metadata/_aseprite_wizard_config_ = {
-"convert_fps_field": 60.0,
-"convert_ms_field": 16.0,
-"convert_to_fps": false,
-"embed_tex": true,
-"i_mode": 1,
-"keep_anim_length": false,
-"layers": ["body"],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"player": "",
-"scale": "1.0",
-"slice": "",
-"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
-"source_uid": 6290199164166850251
-}
-metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
-
-[node name="LeftArm" type="Node2D" parent="SpriteComponent/Walk" unique_id=1747945129]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/LeftArm" unique_id=385447582]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/LeftArm" unique_id=1958978839]
-texture = ExtResource("14_p5tca")
-
-[node name="Head" type="Node2D" parent="SpriteComponent/Walk" unique_id=1009518189]
-
-[node name="Face" type="Node2D" parent="SpriteComponent/Walk/Head" unique_id=122978597]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Head/Face" unique_id=1784084644]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Head/Face" unique_id=1597626052]
-texture_filter = 1
-texture = SubResource("PortableCompressedTexture2D_jbx34")
-metadata/_aseprite_wizard_interface_config_ = {
-"layer_section": true,
-"output_section": true,
-"pending_changes": {},
-"slice_section": true
-}
-metadata/_aseprite_wizard_config_ = {
-"convert_fps_field": 60.0,
-"convert_ms_field": 16.0,
-"convert_to_fps": false,
-"embed_tex": true,
-"i_mode": 1,
-"keep_anim_length": false,
-"layers": ["face"],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": true,
-"player": "",
-"scale": "1.0",
-"slice": "",
-"source": "res://aseprite/asso_project/characters/noru/noru_idle.aseprite",
-"source_uid": 6290199164166850251
-}
-metadata/_aseprite_wizard_source_file_hash_ = "f7e126ddefea898856a3f4c3463df43a"
-
-[node name="FaceAccessory" type="Node2D" parent="SpriteComponent/Walk/Head" unique_id=1223607157]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Head/FaceAccessory" unique_id=826984919]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Head/FaceAccessory" unique_id=1577560057]
-
-[node name="LeftSideTail" type="Node2D" parent="SpriteComponent/Walk/Head" unique_id=2071613200]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Head/LeftSideTail" unique_id=383355435]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Head/LeftSideTail" unique_id=1174345533]
-texture = ExtResource("15_jbx34")
-
-[node name="RightSideTail" type="Node2D" parent="SpriteComponent/Walk/Head" unique_id=262356966]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Head/RightSideTail" unique_id=1170492694]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Head/RightSideTail" unique_id=1759620832]
-texture = ExtResource("16_s3g0c")
-
-[node name="FrontHair" type="Node2D" parent="SpriteComponent/Walk/Head" unique_id=521731926]
-script = ExtResource("12_3dxkp")
-metadata/_custom_type_script = "uid://dghhexdudu0xy"
-
-[node name="Left" type="Sprite2D" parent="SpriteComponent/Walk/Head/FrontHair" unique_id=682622726]
-visible = false
-flip_h = true
-
-[node name="Right" type="Sprite2D" parent="SpriteComponent/Walk/Head/FrontHair" unique_id=261434805]
-texture = ExtResource("17_35wys")
 
 [node name="MotionLibrary" type="AnimationPlayer" parent="." unique_id=1781161408]
 callback_mode_discrete = 0
@@ -719,7 +404,7 @@ metadata/_custom_type_script = "uid://0dw4edo0eshv"
 
 [node name="HitPolygon" type="CollisionShape2D" parent="HitboxComponent/ChargingCounter" unique_id=525022277]
 visible = false
-shape = SubResource("ConvexPolygonShape2D_6wior")
+shape = SubResource("ConvexPolygonShape2D_n0b8q")
 disabled = true
 script = ExtResource("49_n0b8q")
 offset = Vector2(0, -64)

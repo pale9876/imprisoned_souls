@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://byecpnsbsv16o"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_ag4bj"]
+
+[resource]
+script = ExtResource("1_ag4bj")
+name = &"추적자의 귀고리"
+description = "착용자의 상태를 기관에 송신하는 귀걸이 장식이다."
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

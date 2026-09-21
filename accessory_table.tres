@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Registry" format=3 uid="uid://dul35bxt2h4l0"]
+
+[ext_resource type="Script" uid="uid://dqtv77mng5dyh" path="res://addons/yard/registry.gd" id="1_5sfus"]
+
+[resource]
+script = ExtResource("1_5sfus")
+_version = 2
+_scan_rulesets = Array[Dictionary]([{
+&"allowed_file_extensions": Array[String]([".tres"]),
+&"class_restrictions": Array[StringName]([&"\"res://script/resource/accessory_information.gd\""]),
+&"recursive_scan": false,
+&"scan_directories": Array[String](["res://accessory"]),
+&"scan_regex_exclude": "",
+&"scan_regex_include": ""
+}])
+_uids_to_string_ids = Dictionary[StringName, StringName]({
+&"uid://6oqpll5mjdpo": &"video_tape",
+&"uid://bihd7lbd53duy": &"evans_knot",
+&"uid://byecpnsbsv16o": &"earring",
+&"uid://c0y3j28ma1l3a": &"lost_card",
+&"uid://cjx4tjbmf2yww": &"medical_certificate",
+&"uid://dk747ci07bf1j": &"nayang_accessory_knife",
+&"uid://xb1j6e6diycm": &"sorok_report"
+})
+_string_ids_to_uids = Dictionary[StringName, StringName]({
+&"earring": &"uid://byecpnsbsv16o",
+&"evans_knot": &"uid://bihd7lbd53duy",
+&"lost_card": &"uid://c0y3j28ma1l3a",
+&"medical_certificate": &"uid://cjx4tjbmf2yww",
+&"nayang_accessory_knife": &"uid://dk747ci07bf1j",
+&"sorok_report": &"uid://xb1j6e6diycm",
+&"video_tape": &"uid://6oqpll5mjdpo"
+})

@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_pv8xr")
+enable = true
 name = &"Commemoration"
 description = "비전투 상태 시, 초당 2씩 체력이 재생된다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

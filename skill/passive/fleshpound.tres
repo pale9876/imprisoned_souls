@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_ylcpb")
+enable = true
 name = &"Fleshpound"
 description = "10초 안에 120의 데미지를 받을 때, 2초간 모든 공격에 면역되고, 공격력이 10% 증가한다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

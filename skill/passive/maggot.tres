@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_jvqyn")
+enable = true
 name = &"Maggot"
 description = "공격에 맞은 적은 공격당 모든 행동속도가 1초간 1.2% 감소하고 최대 7% 감소한다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

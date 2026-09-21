@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://cjx4tjbmf2yww"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_wiuc0"]
+
+[resource]
+script = ExtResource("1_wiuc0")
+name = &"진단서"
+description = "진료받은 복제체의 등록번호가 지워진 진단서이다."
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_8jykf")
+enable = true
 name = &"Sabotage"
 description = "자신을 제외한 주변의 적들의 모든 행동이 5% 느려진다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

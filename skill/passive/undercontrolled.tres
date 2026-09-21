@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_a0swl")
+enable = true
 name = &"Undercontrolled"
 icon = ExtResource("1_5l1pi")
 description = "바닥에 매다꽂는 잡기 기술에 좁은 범위의 충격파가 생성됩니다. 충격파는 주변의 적과 NPC 상관없이 가까운 2명의 적을 낮게 띄웁니다."

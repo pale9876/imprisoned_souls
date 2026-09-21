@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://6ylihv402nx8"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_5e334"]
+
+[resource]
+script = ExtResource("1_5e334")
+enable = true
+name = &"Sanctuary"
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

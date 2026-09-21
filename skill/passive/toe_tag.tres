@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_sryet")
+enable = true
 name = &"Toe Tag"
 description = "[F]키를 누르면 플레이어가 죽인 NPC의 시신을 조사하면 이름을 알 수 있다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

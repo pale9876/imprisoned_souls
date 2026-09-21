@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_owkot")
+enable = true
 name = &"Mordum"
 description = "무장한 NPC의 공격력이 45% 감소하고, 모든 피격 효과를 무효화한다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"
