@@ -9,11 +9,13 @@ size_override = Vector2(256, 256)
 
 [resource]
 script = ExtResource("2_x643x")
+perk_description = "활성화 시, 30초간 최종 데미지가 15퍼센트 증가한다.
+
+비활성화 시, 10초간 이동속도와 모션속도가 10% 증가한다."
 enable = true
 name = &"Strange Mockery"
 icon = SubResource("PortableCompressedTexture2D_imdm1")
-description = "활성화 시, 30초간 최종 데미지가 15퍼센트 증가한다.
-
-비활성화 시, 10초간 이동속도와 모션속도가 10% 증가한다."
+narrator = "72번 진료 기록"
+description = "모든 사람들이 자신을 기분 나쁜 표정으로 바라보는 환각에 자주 빠진다고 호소하였다."
 ae_index_scene = ExtResource("1_krok2")
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

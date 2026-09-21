@@ -19,12 +19,13 @@ enum Race {
 
 enum Nation { # s = simillar
 	UNKNOWN = 0,
-	BYEONHAN_GUORE, # s(Korea), DEFAULT
-	MANDAGAN, # s(Chinese)
+	SOLINIA, # s(Korea), DEFAULT
+	MANDALIA, # s(Chinese)
 	EMPIRE_ARIMIN, # s(Japanese)
 	
-	SLOVANACCI, # s(Russia)
-	SUBORTEAR, # s(German),
+	SLOVONICA, # s(Russia)
+	SUBORTEAR, # s(German)
+	SALO, # s(Italy)
 }
 
 
@@ -66,7 +67,7 @@ enum CharacterClass {
 @export var unique: bool = false
 @export var cannot_terminate: bool = false
 @export var race: Race = Race.UMONEIRA
-@export var nation: Nation = Nation.BYEONHAN_GUORE
+@export var nation: Nation = Nation.SOLINIA
 @export var chara_class: CharacterClass = CharacterClass.NONE
 
 
@@ -122,7 +123,7 @@ func init_npc_stat() -> void:
 func get_full_name() -> String:
 	var ret: String = ""
 	
-	if Nation.BYEONHAN_GUORE:
+	if Nation.SOLINIA:
 		ret = first_name + " " + last_name
 	else:
 		ret = last_name + " " + first_name

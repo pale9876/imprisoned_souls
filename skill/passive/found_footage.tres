@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_6274h")
+perk_description = "전투 상태 돌입 시, 공격속도와 공격력이 2초간 20% 증가한다."
 enable = true
 name = &"Found Footage"
+narrator = "Ih Il-Cheon"
+description = "발견된 비디오를 분석한 결과, 사진 속 시신의 정체는 당시 14세였던 의사의 딸 노아로 확인했습니다. 하지만 화면에 나오는 장소가 정확히 어디인지는 확인할 수 없습니다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

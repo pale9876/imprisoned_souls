@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_5e334")
+perk_description = "범위 안에 있는 적 유닛 한 명당, 공격력과 행동속도가 4% 증가한다. (최대 12%)"
 enable = true
 name = &"Sanctuary"
+narrator = "병원장 자서전의 첫 줄"
+description = "시설, 신뢰, 가족, 그 모든 것을 토대 하나 없이 세우다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

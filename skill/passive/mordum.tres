@@ -4,7 +4,11 @@
 
 [resource]
 script = ExtResource("1_owkot")
+perk_description = "무장한 NPC의 공격력이 45% 감소하고, 모든 피격 효과를 무효화한다."
 enable = true
 name = &"Mordum"
-description = "무장한 NPC의 공격력이 45% 감소하고, 모든 피격 효과를 무효화한다."
+narrator = "R2P 진압대원"
+description = "복제체들이 훈련하는 걸 보았는데, 지금 지급받은 무기들로는 그들을 수적 우세만으로는 절대로 쉽게 제압할 수 없다.
+
+시설이 이 무장 수준을 그대로 유지하는 이유가 있다면, 그건 비용이나 정보의 문제가 아니라 사실 우리도 그 희생양들의 대열에 넣기 위해서 그런 거 아닐까?"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

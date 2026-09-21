@@ -4,8 +4,10 @@
 
 [resource]
 script = ExtResource("1_k010l")
+perk_description = "플레이어의 모든 행동속도가 9% 빨라진다.
+NPC를 제외한 적 유닛에게 부여하는 데미지가 4% 감소된다."
 enable = true
 name = &"Psychopathy"
-description = "플레이어의 모든 행동속도가 9% 빨라진다.
-NPC를 제외한 적 유닛에게 부여하는 데미지가 4% 감소된다."
+narrator = "반란 주동자 부검 담당관"
+description = "아쉽게도 머리에 생긴 총상으로 인한 전두엽에 손상이 있었습니다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

@@ -4,7 +4,9 @@
 
 [resource]
 script = ExtResource("1_8jykf")
+perk_description = "자신을 제외한 주변의 적들의 모든 행동이 5% 느려진다."
 enable = true
 name = &"Sabotage"
-description = "자신을 제외한 주변의 적들의 모든 행동이 5% 느려진다."
+narrator = "구역 관리 감독관"
+description = "이거 일부러 선을 절단해 놓은 거 맞지? 그런데 정확히 감시카메라 연결선만 끊어놓은 걸로 봐서는 복제체가 범인인데 이곳은 관리자 카드가 없으면 들어올 수 없어."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

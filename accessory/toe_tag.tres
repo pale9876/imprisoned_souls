@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://b0hbunia1cjs1"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_4hmjg"]
+
+[resource]
+script = ExtResource("1_4hmjg")
+name = &"발가락 태그"
+description = "처리된 시신에 붙은 발가락 태그를 때어낸 것이다. 방금 붙은 거라 번호를 달지 않은 것 같다."
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"
