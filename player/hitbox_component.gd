@@ -1,4 +1,5 @@
 # hitbox_component.gd
+@tool
 extends Node2D
 class_name HitboxComponent
 
@@ -6,7 +7,6 @@ class_name HitboxComponent
 
 func _enter_tree() -> void:
 	set_owner(get_parent())
-
 
 
 func has_projectile() -> void:

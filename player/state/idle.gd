@@ -1,21 +1,21 @@
-extends PlayerState
+extends DefaultUnitFormState
 
 
-# state
-var move_state: LimboState
-var fall_state: LimboState
-var jump_state: LimboState
+func get_move_state() -> DefaultUnitFormState:
+	return get_state(^"Move") as DefaultUnitFormState
+
+
+func get_fall_state() -> DefaultUnitFormState:
+	return get_state(^"Fall") as DefaultUnitFormState
+
+
+func get_jump_state() -> DefaultUnitFormState:
+	return get_state(^"Jump") as DefaultUnitFormState
 
 
 func _enter_tree() -> void:
 	#add_library()
 	pass
-
-
-func _ready() -> void:
-	move_state = get_state(^"Move")
-	fall_state = get_state(^"Fall")
-	jump_state = get_state(^"Jump")
 
 
 func _enter() -> void:
@@ -32,14 +32,14 @@ func _update(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("jump"):
 		player.velocity.y = -450.
-		change_state(jump_state)
+		change_state(get_jump_state())
 		return
 
 	if absf(player.get_input_direction().x) > .3:
-		hsm.change_active_state(move_state)
+		hsm.change_active_state(get_move_state())
 		return
 
 	if !is_on_floor():
-		hsm.change_active_state(fall_state)
+		hsm.change_active_state(get_fall_state())
 		return
 	

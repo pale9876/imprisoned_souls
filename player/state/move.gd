@@ -5,25 +5,10 @@ extends PlayerState
 @export var footstep_sound: AudioStreamRandomizer
 
 
-# state
-var idle_state: LimboState
-var fall_state: LimboState
-var jump_state: LimboState
-var slide_state: LimboState
-
-
 func _enter_tree() -> void:
 	#add_library()
 	pass
 
-
-func _ready() -> void:
-	var state_machine := get_state_machine()
-	
-	idle_state = state_machine.get_state(^"Idle")
-	jump_state = state_machine.get_state(^"Jump")
-	slide_state = state_machine.get_state(^"Slide")
-	fall_state = state_machine.get_state(^"Fall")
 
 
 func _enter() -> void:
@@ -43,12 +28,12 @@ func _update(_delta: float) -> void:
 	move_and_slide()
 	
 	if !is_on_floor():
-		change_state(fall_state)
+		change_state(get_state(^"Fall"))
 		return
 
 	if Input.is_action_just_pressed(&"jump"):
 		player.velocity.y = -450.
-		change_state(jump_state)
+		change_state(get_state(^"Jump"))
 		return
 
 	var input_dir: Vector2 = player.get_input_direction()
@@ -56,7 +41,7 @@ func _update(_delta: float) -> void:
 		player.state.face.x = int(input_dir.x)
 		
 	if input_dir.x == 0.:
-		change_state(idle_state)
+		change_state(get_state(^"Idle"))
 
 
 
@@ -82,8 +67,6 @@ func play_footstep() -> void:
 					&"SFX",
 					player
 				)
-	
-
 
 
 	

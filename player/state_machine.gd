@@ -4,8 +4,7 @@ class_name StateMachine
 
 
 # Import
-const Idle: Script = preload("uid://c08p61o8pw6vo")
-#const Move: Script = preload("uid://c4q85mvv6k6wb")
+#const Idle: Script = preload("uid://c08p61o8pw6vo")
 const Player: Script = preload("uid://c2uxhumgng18h")
 
 
@@ -14,28 +13,7 @@ const EV_REVERT: StringName = &"revert"
 
 
 @export var label: Label
-#@export var input_postpone: int = 3
-
-
-#var locked_frame: int = 0:
-	#set(value):
-		#locked_frame = maxi(value, 0)
-
-
-#func type_set_action(
-	#type: PlayerState.Type,
-	#input_act: PackedStringArray,
-	#_state: LimboState,
-	#ev: StringName,
-	#_guard: Callable
-#) -> void:
-	#if ev.is_empty():
-		#printerr("%s => 이벤트 이름이 비어 있습니다." % [_state.name])
-		#return
-	#
-	#input_map[type][input_act] = ev
-	#add_transition(ANYSTATE, _state, ev, _guard)
-
+var input: Vector2 = Vector2()
 
 
 func _ready() -> void:
@@ -100,8 +78,9 @@ func get_player() -> Player:
 	return get_parent() as Player
 
 
-func get_state(state_name: NodePath) -> PlayerState:
-	return get_node(state_name) as PlayerState
+
+func get_state(state_name: NodePath) -> DefaultUnitFormState:
+	return get_node(state_name) as DefaultUnitFormState
 
 
 

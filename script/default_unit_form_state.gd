@@ -12,26 +12,11 @@ const NitraAnime: Script = preload("uid://chb5h0vw5lpvq")
 const ANIM_LIB_PLACEHOLDER := preload("uid://h2rfntctgomi") as AnimationLibrary
 
 
-enum Type { # 커맨드 버스 타입
-	IDLE, # 통상, 이동
-	JUMP, # 공중에서의 통상 모션
-	HURT, # 피격 모션 중 회피기동할 때 사용
-}
 
 
-# const (Type)
-const IDLE := Type.IDLE
-const JUMP := Type.JUMP
-const HURT := Type.HURT
 
+@export var motion_info: UnitMotionInformation
 
-@export_group("State Type")
-@export var type: Type = IDLE
-
-
-@export_group("Animations")
-@export var anim_library: AnimationLibrary
-@export var library_name: StringName
 
 
 var motion: Vector2 = Vector2()
@@ -50,9 +35,9 @@ func has_substate(state_name: String) -> bool:
 
 
 func _init() -> void:
-	anim_library = ANIM_LIB_PLACEHOLDER
-	library_name = &"placeholder"
-
+	#anim_library = ANIM_LIB_PLACEHOLDER
+	#library_name = &"placeholder"
+	pass
 
 func change_sub_state(sub_state: LimboSubState) -> void:
 	assert(sub_state, "%s => sub_state 값이 null입니다." % name)
@@ -118,7 +103,7 @@ func get_anim() -> MotionLibrary:
 
 
 func play(anim_name: StringName) -> void:
-	get_anim().play(library_name + &"/" + anim_name)
+	get_anim().play(motion_info.library_name + &"/" + anim_name)
 
 
 func get_player() -> Player:
@@ -147,21 +132,19 @@ func _propel(_motion: Vector2) -> void:
 	unit.velocity = _motion
 
 
-func create_animlib() -> void:
-	assert(library_name)
-	get_anim().add_animation_library(library_name, AnimationLibrary.new())
+func create_animlib() -> AnimationLibrary:
+	var anim_lib := AnimationLibrary.new()
+	get_anim().add_animation_library(motion_info.library_name, anim_lib)
+	
+	return anim_lib
 
 
 func add_library() -> void:
-	assert(library_name, "%s에 애니메이션 라이브러리 이름을 기입해야 합니다.." % [self.name])
-	assert(anim_library, "%s에 애니메이션 라이브러리 파일을 추가하세요." % [self.name])
-	get_anim().add_animation_library(library_name, anim_library)
+	get_anim().add_animation_library(motion_info.library_name, motion_info.anim_library)
 
 
 func add_animation(anim_name: StringName, anim: Animation) -> void:
-	assert(library_name)
-	assert(anim_library)
-	var _lib := get_anim().get_animation_library(library_name)
+	var _lib := get_anim().get_animation_library(motion_info.library_name)
 	_lib.add_animation(anim_name, anim)
 
 

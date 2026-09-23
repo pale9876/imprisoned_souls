@@ -2,48 +2,38 @@ extends DefaultUnitFormState
 class_name PlayerState
 
 
-# Import
-#const StateMachine: Script = preload("uid://nmmtety5yvve")
-
-
-# Conditions
-@export var action_input: PackedStringArray
-@export var ev_name: StringName
-@export var block_cancel: bool = false
-@export var dodge_cancel: bool = false
-
-
-## get_root()를 통하여 찾음.
-#func get_state(node_path: NodePath) -> PlayerState:
-	#return get_state_machine().get_state(node_path)
-
-
 func get_hsm() -> StateMachine:
 	return get_root() as StateMachine
 
 
 func get_anim() -> MotionLibrary:
-	return (get_state_machine().get_parent() as Player).get_anim()
+	return (get_state_machine().get_player()).get_anim()
 
 
 func add_library() -> void:
-	assert(!library_name.is_empty(), "%s => 라이브러리 이름이 비어있습니다." % [name])
-	assert(anim_library != null, "%s => 모션이 비어있습니다." % [name])
+	if motion_info.library_name.is_empty():
+		printerr("라이브러리 이름이 비어있습니다."  % [name])
+		return
+	
+	if motion_info.anim_library == null:
+		printerr("%s => 모션이 비어있습니다." % [name])
+		return
+	
 	var _anim := get_anim()
-	if !_anim.has_animation_library(library_name):
-		_anim.add_animation_library(library_name, anim_library)
+	if !_anim.has_animation_library(motion_info.library_name):
+		_anim.add_animation_library(motion_info.library_name, motion_info.anim_library)
 
 
 func create_library() -> void:
-	get_anim().add_animation_library(library_name, AnimationLibrary.new())
+	get_anim().add_animation_library(motion_info.library_name, AnimationLibrary.new())
 	
 
 func add_animation(_anim_name: StringName, anim: Animation) -> void:
-	get_anim().get_animation_library(library_name).add_animation(_anim_name, anim)
+	get_anim().get_animation_library(motion_info.library_name).add_animation(_anim_name, anim)
 
 
 func play(_anim_name: StringName) -> void:
-	get_anim().play(library_name + &"/" + _anim_name)
+	get_anim().play(motion_info.library_name + &"/" + _anim_name)
 
 
 func get_player() -> Player:
@@ -128,13 +118,17 @@ func _propel(_motion: Vector2) -> void:
 
 
 func anim_name(_name: StringName) -> StringName:
-	return library_name + &"/" + _name
+	return motion_info.library_name + &"/" + _name
 
 
 func init_action() -> void:
 	var state_machine := get_state_machine()
 	state_machine.type_set_action(
-		type, action_input, self, ev_name, _guard
+		motion_info.type,
+		motion_info.action_input,
+		self,
+		motion_info.ev_name,
+		_guard
 	)
 
 
