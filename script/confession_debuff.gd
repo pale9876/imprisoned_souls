@@ -9,12 +9,14 @@ const Confession: Script = preload("uid://ct5rqf0ti5jej")
 
 
 var link: Confession
-var active: bool = false
 
 
 func activate() -> void:
 	stat.def_ratio = decrease_def_ratio
 
+
+func deactivate() -> void:
+	clear()
 
 
 	
