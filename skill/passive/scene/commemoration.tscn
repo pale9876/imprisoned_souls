@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cfetbotmlt5i6"]
+
+[ext_resource type="Script" uid="uid://bcf0pspr4hvy5" path="res://script/commemoration.gd" id="1_ngl64"]
+
+[node name="Commemoration" type="Node2D" unique_id=805286249]
+script = ExtResource("1_ngl64")
+metadata/_custom_type_script = "uid://cakbssudnuou6"
+
+[node name="Tick" type="Timer" parent="." unique_id=992029924]

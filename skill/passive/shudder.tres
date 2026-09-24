@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://bad0nyxaxq73"]
 
 [ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_3nrdf"]
+[ext_resource type="PackedScene" uid="uid://c32vjbmpiteew" path="res://skill/passive/scene/shudder.tscn" id="1_npass"]
 
 [resource]
 script = ExtResource("1_3nrdf")
@@ -8,4 +9,5 @@ perk_description = "공격력이 40, 행동속도가 5% 증가한다."
 name = &"Shudder"
 narrator = "???"
 description = "인간의 심연 깊은 곳에서 숨어있는 녀석을 끌어올릴 환경이 필요하다."
+ae_index_scene = ExtResource("1_npass")
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"
