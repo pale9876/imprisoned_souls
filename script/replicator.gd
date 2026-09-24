@@ -84,9 +84,6 @@ func get_ae_library() -> AEIndexLibrary:
 	return get_node(^"AEIndexLibrary") as AEIndexLibrary
 
 
-
-
-
 func get_stat_effects() -> void:
 	pass
 

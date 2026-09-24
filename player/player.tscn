@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://c2uxhumgng18h" path="res://player/player.gd" id="1_bvu1k"]
 [ext_resource type="Script" uid="uid://cy5ux4udfco7" path="res://script/ae_index_library.gd" id="2_7crtr"]
 [ext_resource type="Script" uid="uid://nmmtety5yvve" path="res://player/state_machine.gd" id="3_2ieo8"]
+[ext_resource type="PackedScene" uid="uid://erjuf88hv5dc" path="res://skill/passive/scene/strange_mockery.tscn" id="3_fmu53"]
 [ext_resource type="Script" uid="uid://c08p61o8pw6vo" path="res://player/state/idle.gd" id="4_bvu1k"]
+[ext_resource type="PackedScene" uid="uid://cum6ko7v3402w" path="res://skill/passive/scene/confession.tscn" id="4_w7j2h"]
 [ext_resource type="PackedScene" uid="uid://c1uoslrnfk3vt" path="res://player/tail.tscn" id="5_7crtr"]
 [ext_resource type="Script" uid="uid://c4q85mvv6k6wb" path="res://player/state/move.gd" id="5_40lky"]
 [ext_resource type="Script" uid="uid://w3ah3quqa0le" path="res://player/blob_shadow.gd" id="6_jbx34"]
@@ -27,6 +29,7 @@
 [ext_resource type="Script" uid="uid://0dw4edo0eshv" path="res://player/hitbox.gd" id="21_bjvpn"]
 [ext_resource type="Script" uid="uid://cuoebdxrbtlye" path="res://player/state/blowkick.gd" id="22_r7pn3"]
 [ext_resource type="Script" uid="uid://dr8n2mbhooxjo" path="res://player/hitbox_component.gd" id="22_uw77l"]
+[ext_resource type="Script" uid="uid://crbctkdtf2jqy" path="res://script/resource/unit_motion_information.gd" id="24_8pxes"]
 [ext_resource type="Script" uid="uid://b7x8s5btnaxj2" path="res://player/state/player_state.gd" id="24_art4l"]
 [ext_resource type="Script" uid="uid://d2ox33o3w3u0r" path="res://unit/hitbox_shape.gd" id="24_rptt4"]
 [ext_resource type="Script" uid="uid://ddv2b0xf2yme3" path="res://player/grab_box.gd" id="28_rptt4"]
@@ -49,21 +52,21 @@
 [ext_resource type="Script" uid="uid://sjqmjeqxy8nt" path="res://player/health.gd" id="51_w7j2h"]
 [ext_resource type="Script" uid="uid://xbjs4cvnl1lm" path="res://player/spawn_shot.gd" id="64_35wys"]
 
-[sub_resource type="Gradient" id="Gradient_mmwog"]
+[sub_resource type="Gradient" id="Gradient_w7j2h"]
 interpolation_mode = 1
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_8pxes"]
-gradient = SubResource("Gradient_mmwog")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n0b8q"]
+gradient = SubResource("Gradient_w7j2h")
 height = 10
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.789, 0.789)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmu53"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfgyi"]
 size = Vector2(38, 92)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7j2h"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_237xx"]
 size = Vector2(50, 81)
 
 [sub_resource type="Animation" id="Animation_7crtr"]
@@ -107,6 +110,10 @@ stream_3/stream = ExtResource("33_6wior")
 stream_4/stream = ExtResource("34_p5tca")
 stream_5/stream = ExtResource("35_jbx34")
 
+[sub_resource type="Resource" id="Resource_mmwog"]
+script = ExtResource("24_8pxes")
+metadata/_custom_type_script = "uid://crbctkdtf2jqy"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_boad6"]
 size = Vector2(45, 20)
 
@@ -119,7 +126,7 @@ size = Vector2(40, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jywp"]
 size = Vector2(47, 48)
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_n0b8q"]
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_wpyo2"]
 points = PackedVector2Array(0, -95, 0, -33, 0, -33, 0, -95)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ch6w5"]
@@ -146,18 +153,23 @@ floor_snap_length = 10.0
 script = ExtResource("1_bvu1k")
 toggles = [NodePath("StateLabel")]
 
-[node name="AEIndexLibrary" type="Node" parent="." unique_id=1829712396]
+[node name="AEIndexLibrary" type="Node2D" parent="." unique_id=977612540]
 script = ExtResource("2_7crtr")
+metadata/_custom_type_script = "uid://cy5ux4udfco7"
+
+[node name="StrangeMockery" parent="AEIndexLibrary" unique_id=1004133080 instance=ExtResource("3_fmu53")]
+
+[node name="Confession" parent="AEIndexLibrary" unique_id=916381794 instance=ExtResource("4_w7j2h")]
 
 [node name="DropShadow" type="Sprite2D" parent="." unique_id=981265406]
-texture = SubResource("GradientTexture2D_8pxes")
+texture = SubResource("GradientTexture2D_n0b8q")
 script = ExtResource("6_jbx34")
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 mask = 4
 
 [node name="UnitCollision" type="CollisionShape2D" parent="." unique_id=1250735462]
 position = Vector2(0, -46)
-shape = SubResource("RectangleShape2D_fmu53")
+shape = SubResource("RectangleShape2D_jfgyi")
 script = ExtResource("8_pjwc4")
 metadata/_custom_type_script = "uid://bhhy483vjefa1"
 
@@ -170,7 +182,7 @@ state = 3
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=78373728]
 position = Vector2(-0.5, -46.5)
-shape = SubResource("RectangleShape2D_w7j2h")
+shape = SubResource("RectangleShape2D_237xx")
 debug_color = Color(0.7921569, 0, 0.07450981, 0.41960785)
 script = ExtResource("8_pjwc4")
 width = 50
@@ -221,6 +233,7 @@ script = ExtResource("10_8t03j")
 
 [node name="Dodge" parent="StateMachine" unique_id=1740608329 instance=ExtResource("21_b8hi5")]
 just_time = true
+motion_info = SubResource("Resource_mmwog")
 
 [node name="#HurtState" type="LimboState" parent="StateMachine" unique_id=1837165163]
 process_mode = 4
@@ -390,7 +403,7 @@ metadata/_custom_type_script = "uid://0dw4edo0eshv"
 
 [node name="HitPolygon" type="CollisionShape2D" parent="HitboxComponent/ChargingCounter" unique_id=525022277]
 visible = false
-shape = SubResource("ConvexPolygonShape2D_n0b8q")
+shape = SubResource("ConvexPolygonShape2D_wpyo2")
 disabled = true
 script = ExtResource("49_n0b8q")
 offset = Vector2(0, -64)

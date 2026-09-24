@@ -51,5 +51,5 @@ func _on_dodge_successed() -> void:
 
 
 func _on_dodge_anim_finsiehd(anim_name: StringName) -> void:
-	if anim_name == library_name + &"/dodge":
+	if anim_name == motion_info.library_name + &"/dodge":
 		get_hsm().revert()

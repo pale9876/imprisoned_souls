@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cum6ko7v3402w"]
+
+[ext_resource type="Script" uid="uid://ct5rqf0ti5jej" path="res://script/confession.gd" id="1_rgbsd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ckcr"]
+radius = 400.0
+
+[node name="Confession" type="Node2D" unique_id=916381794]
+script = ExtResource("1_rgbsd")
+metadata/_custom_type_script = "uid://cakbssudnuou6"
+
+[node name="ConfessionArea" type="Area2D" parent="." unique_id=889515958]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConfessionArea" unique_id=154725086]
+shape = SubResource("CircleShape2D_5ckcr")
+debug_color = Color(0.7529412, 0.3254902, 0.8156863, 0)

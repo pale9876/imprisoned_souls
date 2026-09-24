@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://erjuf88hv5dc"]
+
+[ext_resource type="Script" uid="uid://bm4r8i1mhvrm8" path="res://script/strange_mockery.gd" id="1_pkbpa"]
+
+[node name="StrangeMockery" type="Node2D" unique_id=1004133080]
+script = ExtResource("1_pkbpa")
+metadata/_custom_type_script = "uid://cakbssudnuou6"
+
+[node name="ActiveTimer" type="Timer" parent="." unique_id=14948492]
+
+[node name="DeactiveTimer" type="Timer" parent="." unique_id=1802147192]

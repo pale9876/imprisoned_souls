@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://5udxobqp28ll"]
+
+[ext_resource type="PackedScene" uid="uid://cum6ko7v3402w" path="res://skill/passive/scene/confession.tscn" id="1_2jupf"]
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_tdgwo"]
+
+[resource]
+script = ExtResource("1_tdgwo")
+perk_description = "400의 범위 안에 적이 두 명 이상 적이 접근 시, 범위 내에 있는 적들의 방어력이 30% 감소한다."
+name = &"Confession"
+narrator = "???"
+description = "무엇을 위해 이미 죽은 이들에게 사죄하는가. 기도 뿐인 참회에는 아무런 의미도 부여할 수 없다."
+ae_index_scene = ExtResource("1_2jupf")
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

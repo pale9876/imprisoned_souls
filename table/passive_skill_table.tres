@@ -15,8 +15,10 @@ _scan_rulesets = Array[Dictionary]([{
 }])
 _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://2j37ys2ie36k": &"undercontrolled",
+&"uid://5udxobqp28ll": &"confession",
 &"uid://6ylihv402nx8": &"sanctuary",
 &"uid://b8rf1p8up0dbc": &"psychopathy",
+&"uid://bad0nyxaxq73": &"shudder",
 &"uid://biwt5y8u2wy1c": &"strange_mockery",
 &"uid://cgjnx1j1vgxuf": &"fleshpound",
 &"uid://clsobwjsuywda": &"mordum",
@@ -27,6 +29,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 })
 _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"commemoration": &"uid://cs753835ts5uf",
+&"confession": &"uid://5udxobqp28ll",
 &"fleshpound": &"uid://cgjnx1j1vgxuf",
 &"found_footage": &"uid://nx55x8yniwiq",
 &"maggot": &"uid://k411lef52eba",
@@ -34,6 +37,7 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"psychopathy": &"uid://b8rf1p8up0dbc",
 &"sabotage": &"uid://ptg256owpxwg",
 &"sanctuary": &"uid://6ylihv402nx8",
+&"shudder": &"uid://bad0nyxaxq73",
 &"strange_mockery": &"uid://biwt5y8u2wy1c",
 &"undercontrolled": &"uid://2j37ys2ie36k"
 })

@@ -3,13 +3,14 @@ extends LimboHSM
 class_name StateMachine
 
 
-# Import
-#const Idle: Script = preload("uid://c08p61o8pw6vo")
 const Player: Script = preload("uid://c2uxhumgng18h")
 
 
 # CONST EV
 const EV_REVERT: StringName = &"revert"
+
+
+signal act_successed(act_result: ActionResult)
 
 
 @export var label: Label
@@ -52,8 +53,8 @@ func has_state(node_path: String) -> bool:
 
 
 
-func get_current_type() -> PlayerState.Type:
-	return current_state().type
+#func get_current_type() -> PlayerState.Type:
+	#return current_state().type
 
 
 func current_state() -> PlayerState:

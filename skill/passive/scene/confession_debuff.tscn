@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bc7w4sc5lem0w"]
+
+[ext_resource type="Script" uid="uid://drvol4efs3hvb" path="res://script/confession_debuff.gd" id="1_bccfr"]
+
+[node name="ConfessionDebuff" type="Node2D" unique_id=1720085463]
+script = ExtResource("1_bccfr")
+metadata/_custom_type_script = "uid://cakbssudnuou6"

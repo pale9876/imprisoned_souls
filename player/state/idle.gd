@@ -1,17 +1,6 @@
 extends DefaultUnitFormState
 
 
-func get_move_state() -> DefaultUnitFormState:
-	return get_state(^"Move") as DefaultUnitFormState
-
-
-func get_fall_state() -> DefaultUnitFormState:
-	return get_state(^"Fall") as DefaultUnitFormState
-
-
-func get_jump_state() -> DefaultUnitFormState:
-	return get_state(^"Jump") as DefaultUnitFormState
-
 
 func _enter_tree() -> void:
 	#add_library()

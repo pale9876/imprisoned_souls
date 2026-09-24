@@ -6,17 +6,12 @@ class_name DefaultUnitFormState
 
 # Import
 const Player: Script = preload("uid://c2uxhumgng18h")
-const NitraAnime: Script = preload("uid://chb5h0vw5lpvq")
 
 # PlaceHolder
 const ANIM_LIB_PLACEHOLDER := preload("uid://h2rfntctgomi") as AnimationLibrary
 
 
-
-
-
 @export var motion_info: UnitMotionInformation
-
 
 
 var motion: Vector2 = Vector2()
@@ -25,8 +20,6 @@ var force_duration: int = 0:
 		force_duration = maxi(value, 0)
 		if force_duration == 0:
 			motion = Vector2()
-
-
 var _substate: LimboSubState
 
 
@@ -35,9 +28,17 @@ func has_substate(state_name: String) -> bool:
 
 
 func _init() -> void:
-	#anim_library = ANIM_LIB_PLACEHOLDER
-	#library_name = &"placeholder"
 	pass
+
+
+func get_first_substate() -> LimboSubState:
+	return get_child(0) as LimboSubState
+
+
+func _ready() -> void:
+	if get_child_count() > 0:
+		_substate = get_first_substate()
+
 
 func change_sub_state(sub_state: LimboSubState) -> void:
 	assert(sub_state, "%s => sub_state 값이 null입니다." % name)
@@ -170,7 +171,20 @@ func get_unit() -> Unit:
 	return agent as Unit
 
 
+# Get Default States
+func get_idle_state() -> DefaultUnitFormState:
+	return get_state(^"Idle")
 
 
+func get_move_state() -> DefaultUnitFormState:
+	return get_state(^"Move") as DefaultUnitFormState
+
+
+func get_fall_state() -> DefaultUnitFormState:
+	return get_state(^"Fall") as DefaultUnitFormState
+
+
+func get_jump_state() -> DefaultUnitFormState:
+	return get_state(^"Jump") as DefaultUnitFormState
 
 	

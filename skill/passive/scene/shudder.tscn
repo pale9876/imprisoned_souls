@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c32vjbmpiteew"]
+
+[ext_resource type="Script" uid="uid://cc5ipojn5pept" path="res://script/shudder.gd" id="1_byebm"]
+
+[node name="Shudder" type="Node2D" unique_id=1292985738]
+script = ExtResource("1_byebm")
+metadata/_custom_type_script = "uid://cakbssudnuou6"

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://b0dnxdeh4bojk"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_kqe4h"]
+
+[resource]
+script = ExtResource("1_kqe4h")
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

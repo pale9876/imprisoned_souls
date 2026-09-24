@@ -1,40 +1,39 @@
-extends Node
+extends Node2D
 class_name AEIndex
 
 
-@export_group("활성화 시")
-@export var when_activate: Array[IndexStat]
-
-@export_group("비활성화 시")
-@export var when_deactivate: Array[IndexStat]
+signal updated()
 
 
+var stat: AEIndexStatInformation = AEIndexStatInformation.new()
+
+
+func _enter_tree() -> void:
+	updated.connect(get_lib().update_total_stat)
+
+
+# Override
 func activate() -> void:
-	var unit := get_unit()
-	for index: IndexStat in when_activate:
-		var timer: Timer = Timer.new()
-		add_child(timer)
-		timer.start(index.duration)
-		index.apply(unit)
-		timer.timeout.connect(
-			func() -> void:
-				index.remove(unit)
-				timer.queue_free.call_deferred()
-		)
+	pass
 
 
+# Override
 func deactivate() -> void:
-	var unit := get_unit()
-	for index: IndexStat in when_activate:
-		var timer: Timer = Timer.new()
-		add_child(timer)
-		timer.start(index.duration)
-		index.apply(unit)
-		timer.timeout.connect(
-			func() -> void:
-				index.remove(unit)
-				timer.queue_free.call_deferred()
-		)
+	pass
+
+
+# Override
+func _update() -> void:
+	pass
+
+
+# Override
+func enable(_act_result: ActionResult = null) -> bool:
+	return false
+
+
+func clear() -> void:
+	stat = AEIndexStatInformation.new()
 
 
 func get_lib() -> AEIndexLibrary:

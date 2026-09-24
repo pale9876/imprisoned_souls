@@ -1,8 +1,8 @@
 extends PlayerActive
 
 
-
 @export var enter_state_height: float = 55.5
+
 
 var idle_state: PlayerState
 var jump_state: PlayerState
@@ -35,9 +35,9 @@ func _guard() -> bool:
 
 
 func _ready() -> void:
-	idle_state = get_state_machine().get_state(^"Idle")
-	jump_state = get_state_machine().get_state(^"Jump")
-	fall_state = get_state_machine().get_state(^"Fall")
+	idle_state = get_idle_state()
+	jump_state = get_jump_state()
+	fall_state = get_fall_state()
 	
 	get_anim().animation_finished.connect(_on_anim_finished)
 
@@ -47,7 +47,7 @@ func _on_anim_finished(anim_name: StringName) -> void:
 		&"/jump_hammer_ready",
 		&"/jump_hammer",
 		&"/delay"
-	].map(func(value: StringName) -> StringName: return library_name + value):
+	].map(func(value: StringName) -> StringName: return motion_info.library_name + value):
 		_anim_finished = true
 
 
@@ -69,17 +69,17 @@ func _update(_delta: float) -> void:
 		if _anim_finished:
 			var current_anim := get_anim().assigned_animation
 			
-			if current_anim == library_name + &"/jump_hammer_ready":
+			if current_anim == motion_info.library_name + &"/jump_hammer_ready":
 				play(&"jump_hammer")
 				_anim_finished = false
 				return
 			
-			if current_anim == library_name + &"/jump_hammer":
+			if current_anim == motion_info.library_name + &"/jump_hammer":
 				play(&"delay")
 				_anim_finished = false
 				return
 			
-			if current_anim == library_name + &"/delay":
+			if current_anim == motion_info.library_name + &"/delay":
 				change_state(idle_state)
 
 
