@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_k010l")
-perk_description = "플레이어의 모든 행동속도가 9% 빨라진다.
+perk_description = "플레이어의 모든 행동속도가 6% 빨라진다.
 NPC를 제외한 적 유닛에게 부여하는 데미지가 4% 감소된다."
 enable = true
 name = &"Psychopathy"

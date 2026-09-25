@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_owkot")
-perk_description = "무장한 NPC의 공격력이 45% 감소하고, 모든 피격 효과를 무효화한다."
+perk_description = "무장한 NPC의 공격력이 35% 감소하고, 모든 피격 효과를 무효화한다."
 enable = true
 name = &"Mordum"
 narrator = "R2P 진압대원"

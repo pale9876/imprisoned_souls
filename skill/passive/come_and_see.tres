@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://dkhhme05f15ga"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_tp1ir"]
+
+[resource]
+script = ExtResource("1_tp1ir")
+perk_description = "죽인 적 한 명당 최종데미지 1%씩 최대 12% 적립된다."
+enable = true
+name = &"Come and See"
+narrator = "Ju Young-Hyeon"
+description = "사람은 두 눈으로 직접 보지 못한 경험을 되풀이한다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

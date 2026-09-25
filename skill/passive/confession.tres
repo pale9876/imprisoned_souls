@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource("1_tdgwo")
-perk_description = "400의 범위 안에 적이 두 명 이상 적이 접근 시, 범위 내에 있는 적들의 방어력이 30% 감소한다."
+perk_description = "400의 범위 안에 적이 두 명 이상 적이 접근 시, 범위 내에 있는 적들의 방어력이 20% 감소한다."
+enable = true
 name = &"Confession"
 narrator = "???"
 description = "무엇을 위해 이미 죽은 이들에게 사죄하는가. 기도 뿐인 참회에는 아무런 의미도 부여할 수 없다."
