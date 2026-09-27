@@ -4,9 +4,9 @@ extends PlayerActive
 @export var enter_state_height: float = 55.5
 
 
-var idle_state: PlayerState
-var jump_state: PlayerState
-var fall_state: PlayerState
+var idle_state: DefaultUnitFormState
+var jump_state: DefaultUnitFormState
+var fall_state: DefaultUnitFormState
 
 
 

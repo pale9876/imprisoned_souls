@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dd1ume1evkwj8"]
+
+[ext_resource type="Texture2D" uid="uid://cf34e8w0e82om" path="res://aseprite/blackboard.png" id="1_n2dtr"]
+[ext_resource type="Script" uid="uid://dlm8d0vfydu4b" path="res://script/drawable_area.gd" id="2_ugmrs"]
+[ext_resource type="Script" uid="uid://vopmjvwbt6nj" path="res://script/board_rect.gd" id="4_e3471"]
+
+[sub_resource type="Gradient" id="Gradient_rgcsi"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lqx4j"]
+gradient = SubResource("Gradient_rgcsi")
+width = 432
+height = 208
+
+[sub_resource type="DrawableTexture2D" id="DrawableTexture2D_rgcsi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqsic"]
+size = Vector2(352, 192)
+
+[node name="Blackboard" type="Sprite2D" unique_id=257701312]
+texture = ExtResource("1_n2dtr")
+script = ExtResource("2_ugmrs")
+enable = true
+
+[node name="DrawBoard" type="Sprite2D" parent="." unique_id=386856564]
+texture = SubResource("GradientTexture2D_lqx4j")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="DrawBoard" unique_id=1344538282]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -216.0
+offset_top = -104.0
+offset_right = -216.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="DrawBoard/SubViewportContainer" unique_id=398398883]
+handle_input_locally = false
+size = Vector2i(432, 208)
+render_target_update_mode = 4
+
+[node name="BoardRect" type="TextureRect" parent="DrawBoard/SubViewportContainer/SubViewport" unique_id=328080628]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("DrawableTexture2D_rgcsi")
+script = ExtResource("4_e3471")
+brush_color = Color(0.93333334, 0.93333334, 0.93333334, 0.49803922)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=612013685]
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1409260234]
+visible = false
+polygon = PackedVector2Array(-216, -104, 216, -104, 216, 104, -216, 104)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1050799796]
+visible = false
+position = Vector2(0, 72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=825157746]
+shape = SubResource("RectangleShape2D_wqsic")

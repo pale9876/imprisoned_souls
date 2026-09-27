@@ -10,8 +10,9 @@ var _success: bool = false
 
 
 func _enter_tree() -> void:
-	init_action()
-	add_library()
+	#init_action()
+	#add_library()
+	pass
 
 
 func _ready() -> void:

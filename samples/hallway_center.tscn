@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dxhhls3k8ovbq"]
+
+[sub_resource type="Gradient" id="Gradient_ibwwx"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.07671406, 0.07671409, 0.07800796, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ibwwx"]
+gradient = SubResource("Gradient_ibwwx")
+
+[node name="HallwayCenter" type="Sprite2D" unique_id=961143467]
+texture = SubResource("GradientTexture2D_ibwwx")

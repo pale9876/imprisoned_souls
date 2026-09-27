@@ -4,9 +4,7 @@
 
 [resource]
 script = ExtResource("1_jvqyn")
-perk_description = "공격에 맞은 적은 공격당 모든 행동속도가 1초간 1.2% 감소하고 최대 7% 감소한다."
-enable = true
+perk_description = "공격에 맞은 적은 공격당 모든 행동속도가 {duration}초간 {tick}% 감소하고 최대 {limit}% 감소한다."
 name = &"Maggot"
-narrator = "Han Ul-Do"
-description = "피가 도는 것은 살아있지 않으면 썩어가기 마련이다."
+description = "물이 돌지 않는 모든 것은 썩기 마련이다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

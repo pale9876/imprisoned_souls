@@ -1,11 +1,11 @@
 extends PlayerActive
 
 
-var idle: PlayerState
+var idle: DefaultUnitFormState
 
 
-func _ready() -> void:
-	idle = get_state(^"Idle")
+#func _ready() -> void:
+	#idle = get_state(^"Idle")
 
 
 func _enter() -> void:

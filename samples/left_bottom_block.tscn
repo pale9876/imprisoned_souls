@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bp2djgehwdmmh"]
+
+[sub_resource type="Gradient" id="Gradient_y0ji4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0.56078434, 0.5647059, 0.7529412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y0ji4"]
+gradient = SubResource("Gradient_y0ji4")
+fill = 2
+
+[node name="LbBlock" type="Sprite2D" unique_id=340466561]
+texture = SubResource("GradientTexture2D_y0ji4")
+flip_v = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=511272812]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=891003971]
+polygon = PackedVector2Array(-32, -16, 16, -16, 16, 32, -32, 32)

@@ -36,8 +36,6 @@ func _ready() -> void:
 
 	GSignal.start.connect(on_start)
 	Global.main_scene = self
-	
-	
 
 
 func on_start() -> void:

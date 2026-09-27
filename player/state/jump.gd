@@ -7,7 +7,8 @@ var fall_state: LimboState
 
 
 func _enter_tree() -> void:
-	add_library()
+	#add_library()
+	pass
 
 
 func _ready() -> void:

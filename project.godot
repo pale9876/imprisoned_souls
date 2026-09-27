@@ -57,7 +57,7 @@ project/assembly_name="Holoverse"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/GodotPDForm/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_gif/plugin.cfg", "res://addons/rumblepak/plugin.cfg", "res://addons/scriptory/plugin.cfg", "res://addons/yard/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/GodotPDForm/plugin.cfg", "res://addons/breakable_2d_sprites/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_gif/plugin.cfg", "res://addons/rumblepak/plugin.cfg", "res://addons/scriptory/plugin.cfg", "res://addons/yard/plugin.cfg")
 
 [global]
 

@@ -8,7 +8,8 @@ func _enter_tree() -> void:
 
 
 func _enter() -> void:
-	play(&"idle")
+	#play(&"idle")
+	pass
 
 
 func _update(_delta: float) -> void:

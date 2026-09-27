@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Registry" format=3 uid="uid://kwps0v18mari"]
+
+[ext_resource type="Script" uid="uid://dqtv77mng5dyh" path="res://addons/yard/registry.gd" id="1_qlh8s"]
+
+[resource]
+script = ExtResource("1_qlh8s")
+_version = 2
+_scan_rulesets = Array[Dictionary]([{
+&"allowed_file_extensions": Array[String]([".tres"]),
+&"class_restrictions": Array[StringName]([&"\"res://script/resource/active_skill_information.gd\""]),
+&"recursive_scan": false,
+&"scan_directories": Array[String](["res://skill/active"]),
+&"scan_regex_exclude": "",
+&"scan_regex_include": ""
+}])

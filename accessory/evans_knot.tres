@@ -1,9 +1,21 @@
 [gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://bihd7lbd53duy"]
 
 [ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_6xm6s"]
+[ext_resource type="Script" uid="uid://b6vg11agekccy" path="res://script/resource/ae_index_stat_information.gd" id="1_jd8nt"]
+
+[sub_resource type="Resource" id="Resource_pkbpa"]
+script = ExtResource("1_jd8nt")
+atk = 4
+atk_ratio = 0.07
+def = 4
+metadata/_custom_type_script = "uid://b6vg11agekccy"
 
 [resource]
 script = ExtResource("1_6xm6s")
 name = &"매듭 장식"
 description = "새끼손가락만 들어갈 정도의 구멍만 있는 교수인 매듭 장식이다. 미마에 공방에서 제작한 어른용 장식품을 수입하여 나눠준 것이다."
+stat_description = "공격력 {atk}, {atk_ratio}
+방어력 {def}
+"
+additional_stat = SubResource("Resource_pkbpa")
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

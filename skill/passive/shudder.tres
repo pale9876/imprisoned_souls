@@ -5,10 +5,8 @@
 
 [resource]
 script = ExtResource("1_3nrdf")
-perk_description = "공격력이 25, 행동속도가 5% 증가한다."
-enable = true
+perk_description = "공격력이 {atk}, 행동속도가 {motion_speed}% 증가한다."
 name = &"Shudder"
-narrator = "???"
 description = "인간의 심연 깊은 곳에서 숨어있는 녀석을 끌어올릴 환경이 필요하다."
 ae_index_scene = ExtResource("1_npass")
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

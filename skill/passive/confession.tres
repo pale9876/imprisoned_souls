@@ -5,10 +5,9 @@
 
 [resource]
 script = ExtResource("1_tdgwo")
-perk_description = "400의 범위 안에 적이 두 명 이상 적이 접근 시, 범위 내에 있는 적들의 방어력이 20% 감소한다."
+perk_description = "{radius}의 범위 안에 적이 두 명 이상 적이 접근 시, 범위 내에 있는 적들의 방어력이 {def_ratio} 감소한다."
 enable = true
 name = &"Confession"
-narrator = "???"
-description = "무엇을 위해 이미 죽은 이들에게 사죄하는가. 기도 뿐인 참회에는 아무런 의미도 부여할 수 없다."
+description = "주와 같은 신이 어디 있으리이까. 주께서는 죄악을 사유하시며 그 기업의 남은 자의 허물을 넘기시며 인애를 기뻐하심으로 노를 항상 품지 아니하시나이다."
 ae_index_scene = ExtResource("1_2jupf")
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

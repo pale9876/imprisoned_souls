@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://b42so4nwnacef"]
+
+[sub_resource type="Gradient" id="Gradient_1mf16"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.8810103, 0.88104373, 0.890623, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pf3gk"]
+gradient = SubResource("Gradient_1mf16")
+
+[node name="Wall" type="Sprite2D" unique_id=1788777917]
+texture = SubResource("GradientTexture2D_pf3gk")

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c3uyvucse5r17"]
+
+[ext_resource type="Texture2D" uid="uid://ci3bm6l3nhg1f" path="res://aseprite/lebensborn_water_ball.png" id="1_n03c4"]
+[ext_resource type="Texture2D" uid="uid://cfdiivukr7i47" path="res://aseprite/lebensborn_pool.png" id="2_x4yuh"]
+
+[node name="LebensBorn" type="Node2D" unique_id=1875586984]
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1549547646]
+texture = ExtResource("1_n03c4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=830940760]
+texture = ExtResource("2_x4yuh")

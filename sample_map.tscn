@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cpy7o5glg4fua"]
+
+[ext_resource type="PackedScene" uid="uid://cyehfm40iykhu" path="res://samples/sample_map.tscn" id="1_niba1"]
+[ext_resource type="Shader" uid="uid://6ly1dbvypuv" path="res://shader/crt.gdshader" id="17_owent"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_165r3"]
+shader = ExtResource("17_owent")
+shader_parameter/resolution = Vector2(640, 360)
+shader_parameter/scan_line_amount = 0.222000010545
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[node name="SampleMap" type="CanvasLayer" unique_id=1576803893]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1502791893]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1671758664]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=768224]
+follow_viewport_enabled = true
+
+[node name="SampleMap" parent="SubViewportContainer/SubViewport/CanvasLayer" unique_id=557843716 instance=ExtResource("1_niba1")]
+
+[node name="CRTShader" type="ColorRect" parent="." unique_id=1115089298]
+material = SubResource("ShaderMaterial_165r3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

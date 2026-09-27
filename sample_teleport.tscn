@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://b7t71xp7q8602"]
+
+[ext_resource type="Shader" uid="uid://dll6p03eu34yk" path="res://anime_instant_transmission_fx.gdshader" id="1_dqx4t"]
+[ext_resource type="Texture2D" uid="uid://dmye5epsggscc" path="res://placeholder/maid_02.png" id="2_dqx4t"]
+
+[sub_resource type="Curve" id="Curve_dqx4t"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.025547445, 0), 0.0, 0.0, 0, 0, Vector2(0.076642334, 1), 0.0, 0.0, 0, 0, Vector2(0.1350365, 1), 0.0, 0.0, 0, 0, Vector2(0.16788322, 0), 0.0, 0.0, 0, 0, Vector2(0.2189781, 0), 0.0, 0.0, 0, 0, Vector2(0.25182483, 1), 0.0, 0.0, 0, 0, Vector2(0.38686132, 1), 0.0, 0.0, 0, 0, Vector2(0.47445258, 0), 0.0, 0.0, 0, 0, Vector2(0.5218978, 1), 0.0, 0.0, 0, 0, Vector2(0.6094891, 1), 0.0, 0.0, 0, 0, Vector2(0.6459855, 0), 0.0, 0.0, 0, 0, Vector2(0.71167886, 0), 0.0, 0.0, 0, 0, Vector2(0.73722637, 1), 0.0, 0.0, 0, 0, Vector2(0.79562044, 1), 0.0, 0.0, 0, 0, Vector2(0.83576643, 0), 0.0, 0.0, 0, 0, Vector2(0.8868613, 0), 0.0, 0.0, 0, 0, Vector2(0.9160584, 1), 0.0, 0.0, 0, 0, Vector2(0.9598541, 1), 0.0, 0.0, 0, 0, Vector2(0.9890512, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 21
+
+[sub_resource type="CurveTexture" id="CurveTexture_dqx4t"]
+texture_mode = 1
+curve = SubResource("Curve_dqx4t")
+
+[sub_resource type="Curve" id="Curve_7jywp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5875913, 0), -4.9696093, 0.0, 0, 1, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wqsic"]
+texture_mode = 1
+curve = SubResource("Curve_7jywp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nmi48"]
+shader = ExtResource("1_dqx4t")
+shader_parameter/active = false
+shader_parameter/progress = 0.0
+shader_parameter/trans_curve = SubResource("CurveTexture_wqsic")
+shader_parameter/anim_curve = SubResource("CurveTexture_dqx4t")
+
+[sub_resource type="Animation" id="Animation_0647u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dqx4t"]
+resource_name = "blink"
+length = 0.10020166742503643
+step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(0.2332583, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0647u"]
+_data = {
+&"RESET": SubResource("Animation_0647u"),
+&"blink": SubResource("Animation_dqx4t")
+}
+
+[node name="Node2D" type="Node2D" unique_id=1748393961]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1414339464]
+material = SubResource("ShaderMaterial_nmi48")
+texture = ExtResource("2_dqx4t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1574889651]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_0647u")

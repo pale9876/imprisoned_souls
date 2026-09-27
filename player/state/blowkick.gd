@@ -4,8 +4,8 @@ extends PlayerActive
 var idle: PlayerState
 
 
-func _enter_tree() -> void:
-	idle = get_state(^"Idle")
+#func _enter_tree() -> void:
+	#idle = get_state(^"Idle")
 
 
 func _ready() -> void:

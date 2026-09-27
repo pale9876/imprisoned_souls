@@ -35,8 +35,9 @@ func _guard() -> bool:
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_ENTER_TREE:
-			init_action()
-			add_library()
+			#init_action()
+			#add_library()
+			pass
 
 			InputState.punch.connect(
 				func() -> void:

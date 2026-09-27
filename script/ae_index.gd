@@ -8,6 +8,10 @@ signal updated()
 var stat: AEIndexStatInformation = AEIndexStatInformation.new()
 
 
+func format_description() -> String:
+	return ""
+
+
 func _enter_tree() -> void:
 	updated.connect(get_lib().update_total_stat)
 

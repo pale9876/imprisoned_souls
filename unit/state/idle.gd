@@ -15,7 +15,7 @@ func _enter() -> void:
 	#var unit := agent as Unit
 	move_state = get_state(^"Move")
 	fall_state = get_state(^"Fall")
-	play(&"idle")
+	#play(&"idle")
 	
 	#anim.play(&"idle")
 

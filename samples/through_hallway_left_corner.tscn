@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bm6lt15r5ahvc"]
+
+[sub_resource type="Gradient" id="Gradient_tjwd2"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.16785714, 0.31785715)
+colors = PackedColorArray(0.88235295, 0.88235295, 0.8901961, 1, 0.795028, 0.7950156, 0.80798304, 1, 0.88235295, 0.88235295, 0.8901961, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqsic"]
+gradient = SubResource("Gradient_tjwd2")
+
+[node name="ThroughHallwayLeftCorner" type="Sprite2D" unique_id=1145347592]
+texture = SubResource("GradientTexture2D_wqsic")

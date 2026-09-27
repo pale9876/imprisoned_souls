@@ -4,9 +4,7 @@
 
 [resource]
 script = ExtResource("1_ylcpb")
-perk_description = "10초 안에 120의 데미지를 받을 때, 2초간 모든 공격에 면역되고, 공격력이 10% 증가한다."
-enable = true
+perk_description = "{limit_duration}초 안에 {trigger_damage}의 데미지를 받을 때, {skill_duration}초간 모든 공격에 면역되고, 공격력이 {atk_ratio}% 증가한다."
 name = &"Fleshpound"
-narrator = "슬라바스카야 유키"
-description = "분명 평소에는 말도 잘 따르고 조용한 아이였는데, 물 가지러 가자마자 교실이......"
+description = "분명 평소에는 말도 잘 따르고 조용한 아이였는데, 자리를 비우자마자"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

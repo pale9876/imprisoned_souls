@@ -4,9 +4,7 @@
 
 [resource]
 script = ExtResource("1_tp1ir")
-perk_description = "죽인 적 한 명당 최종데미지 1%씩 최대 12% 적립된다."
-enable = true
+perk_description = "죽인 적 한 명당 최종데미지 {damage_ratio}% 씩 최대 {limit}% 적립된다."
 name = &"Come and See"
-narrator = "Ju Young-Hyeon"
-description = "사람은 두 눈으로 직접 보지 못한 경험을 되풀이한다."
+description = "사람은 필연적으로 다른 이의 경험을 되풀이한다."
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

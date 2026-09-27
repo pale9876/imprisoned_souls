@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cdi01f4vyr76n"]
+
+[sub_resource type="Gradient" id="Gradient_7orx3"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(0.5600001, 0.5653595, 0.75356174, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7jywp"]
+gradient = SubResource("Gradient_7orx3")
+fill_to = Vector2(0, 1)
+
+[node name="Floor" type="Sprite2D" unique_id=208743126]
+texture = SubResource("GradientTexture2D_7jywp")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1365581156]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=330485817]
+polygon = PackedVector2Array(-32, -16, 32, -16, 32, 32, -32, 32)

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://y7jjw618vetq"]
+
+[sub_resource type="Gradient" id="Gradient_y0ji4"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d5loy"]
+gradient = SubResource("Gradient_y0ji4")
+width = 16
+height = 16
+fill = 2
+
+[node name="RightBottomBlock" type="Sprite2D" unique_id=1043470299]
+texture = SubResource("GradientTexture2D_d5loy")
+flip_h = true
+flip_v = true

@@ -29,11 +29,11 @@ func _enter_tree() -> void:
 	pass
 
 
-func _ready() -> void:
-	var hsm := get_hsm()
-	
-	idle_state = hsm.get_state("Idle")
-	move_state = hsm.get_state("Move")
+#func _ready() -> void:
+	#var hsm := get_hsm()
+	#
+	#idle_state = hsm.get_state("Idle")
+	#move_state = hsm.get_state("Move")
 
 
 func _enter() -> void:

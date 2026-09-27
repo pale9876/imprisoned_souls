@@ -6,7 +6,8 @@ var move_state: LimboState
 
 
 func _enter_tree() -> void:
-	add_library()
+	#add_library()
+	pass
 
 
 func _ready() -> void:
@@ -16,7 +17,8 @@ func _ready() -> void:
 
 func _enter() -> void:
 	#var player := get_player()
-	play(&"fall")
+	#play(&"fall")
+	pass
 
 
 func _update(_delta: float) -> void:
