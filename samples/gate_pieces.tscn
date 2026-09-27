@@ -8,23 +8,124 @@
 [ext_resource type="PackedScene" uid="uid://d1y61jes83jla" path="res://samples/gate_piece_five.tscn" id="5_fq7qg"]
 [ext_resource type="PackedScene" uid="uid://dacowlwib1cct" path="res://samples/gate_piece_six.tscn" id="6_5r7mr"]
 
+[sub_resource type="Gradient" id="Gradient_taco0"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5046296)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqsic"]
+gradient = SubResource("Gradient_taco0")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_taco0"]
+size = Vector2(9.58, 8.66)
+
 [node name="GatePieces" type="Node2D" unique_id=303287909]
 script = ExtResource("1_taco0")
 
 [node name="GatePieceOne" parent="." unique_id=285420206 instance=ExtResource("1_fjjym")]
 position = Vector2(50, 120)
+collision_layer = 0
 
 [node name="GatePieceTwo" parent="." unique_id=452822447 instance=ExtResource("2_taco0")]
 position = Vector2(-21, -94)
+collision_layer = 0
 
 [node name="GatePieceThree" parent="." unique_id=1149751233 instance=ExtResource("3_kacgu")]
 position = Vector2(53, -79)
+collision_layer = 0
 
 [node name="GatePieceFour" parent="." unique_id=1950604896 instance=ExtResource("4_h7tn8")]
 position = Vector2(-3, -23)
+collision_layer = 0
 
 [node name="GatePieceFive" parent="." unique_id=1884431289 instance=ExtResource("5_fq7qg")]
 position = Vector2(68, 15)
+collision_layer = 0
 
 [node name="GatePieceSix" parent="." unique_id=1346638089 instance=ExtResource("6_5r7mr")]
 position = Vector2(1, 78)
+collision_layer = 0
+
+[node name="Crumple" type="RigidBody2D" parent="." unique_id=160923747]
+position = Vector2(-5, 27)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple" unique_id=657958603]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple" unique_id=1594354789]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple2" type="RigidBody2D" parent="." unique_id=1330583130]
+position = Vector2(101, -41)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple2" unique_id=707437233]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple2" unique_id=356800405]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple3" type="RigidBody2D" parent="." unique_id=523421433]
+position = Vector2(106, 89)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple3" unique_id=131085464]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple3" unique_id=500534985]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple4" type="RigidBody2D" parent="." unique_id=96481534]
+position = Vector2(-48, 83)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple4" unique_id=1353697436]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple4" unique_id=509507380]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple5" type="RigidBody2D" parent="." unique_id=332623120]
+position = Vector2(-55, -35)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple5" unique_id=1488343212]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple5" unique_id=1552790427]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple6" type="RigidBody2D" parent="." unique_id=1348046386]
+position = Vector2(101, -69)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple6" unique_id=977175779]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple6" unique_id=1672550562]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple7" type="RigidBody2D" parent="." unique_id=123091514]
+position = Vector2(93, 126)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple7" unique_id=442675401]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple7" unique_id=338060516]
+shape = SubResource("RectangleShape2D_taco0")
+
+[node name="Crumple8" type="RigidBody2D" parent="." unique_id=1268643391]
+position = Vector2(29, -125)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crumple8" unique_id=426746650]
+texture = SubResource("GradientTexture2D_wqsic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crumple8" unique_id=20761485]
+shape = SubResource("RectangleShape2D_taco0")
