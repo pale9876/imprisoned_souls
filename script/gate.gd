@@ -8,7 +8,27 @@ enum {
 }
 
 
+const GATE_PIECES: PackedScene = preload("uid://ctqwupgm3vj38")
 
+
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var collision_polygon_2d: CollisionPolygon2D = $StaticBody2D/CollisionPolygon2D
+
+
+func _ready() -> void:
+	await get_tree().create_timer(1.).timeout
+	
+	spawn_pieces()
+
+
+func spawn_pieces() -> void:
+	sprite_2d.hide()
+	collision_polygon_2d.disabled = true
+	collision_polygon_2d.hide()
+	
+	var pieces := GATE_PIECES.instantiate()
+	add_child(pieces)
+	pieces.apply_force(Vector2(32250., 0.))
 
 
 	

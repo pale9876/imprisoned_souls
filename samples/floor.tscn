@@ -13,7 +13,6 @@ fill_to = Vector2(0, 1)
 texture = SubResource("GradientTexture2D_7jywp")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1365581156]
-visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=330485817]
 polygon = PackedVector2Array(-32, -16, 32, -16, 32, 32, -32, 32)

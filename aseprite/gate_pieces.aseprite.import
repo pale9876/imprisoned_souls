@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://7nij6g0w7kuo"
+path="res://.godot/imported/gate_pieces.aseprite-5a420b9bc6ffc41363f56702e1c9a5c1.res"
+
+[deps]
+
+source_file="res://aseprite/gate_pieces.aseprite"
+dest_files=["res://.godot/imported/gate_pieces.aseprite-5a420b9bc6ffc41363f56702e1c9a5c1.res"]
+
+[params]
+

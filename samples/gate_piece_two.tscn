@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bqvriy6vudosu"]
+
+[ext_resource type="Texture2D" uid="uid://dj8684oxjxoqo" path="res://aseprite/gate_piece_one.png" id="1_t10ba"]
+
+[node name="GatePieceTwo" type="RigidBody2D" unique_id=452822447]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1954545500]
+texture = ExtResource("1_t10ba")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1652135826]
+polygon = PackedVector2Array(-32, -26, 2, -36, 33, -36, 32, 10, 10, 3, -21, 40, -32, 35)

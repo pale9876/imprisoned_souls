@@ -130,17 +130,18 @@ metadata/_custom_type_script = "uid://xuoxmo1sa6u6"
 position = Vector2(1112, 80)
 
 [node name="Gate" type="Node2D" parent="." unique_id=2003554766]
-position = Vector2(2976, -48)
+position = Vector2(2824, -48)
 script = ExtResource("20_0f6d0")
 
 [node name="Sprite2D" type="Sprite2D" parent="Gate" unique_id=728914575]
 texture = SubResource("GradientTexture2D_wqsic")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Gate" unique_id=1249128882]
-visible = false
+position = Vector2(-48, 29)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Gate/StaticBody2D" unique_id=1282991813]
 polygon = PackedVector2Array(16, -173, 80, -173, 80, 115, 16, 115)
+disabled = true
 
 [node name="ForeGroundObject" type="Node2D" parent="." unique_id=1397554467]
 
@@ -149,4 +150,5 @@ position = Vector2(984, -24)
 texture = ExtResource("14_k313b")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1019014240]
-position = Vector2(1104, 0)
+position = Vector2(2824, -64)
+zoom = Vector2(0.445, 0.445)
