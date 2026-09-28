@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://dn17wor1lvgk"]
+
+[ext_resource type="Script" uid="uid://b6vg11agekccy" path="res://script/resource/ae_index_stat_information.gd" id="1_85i0k"]
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_8560i"]
+[ext_resource type="PackedScene" uid="uid://bnmfkbcn7xi7m" path="res://accessory/scene/razor_blade.tscn" id="2_0tnld"]
+
+[sub_resource type="Resource" id="Resource_tuuap"]
+script = ExtResource("1_85i0k")
+metadata/_custom_type_script = "uid://b6vg11agekccy"
+
+[resource]
+script = ExtResource("1_8560i")
+name = &"은닉 면도날"
+stat_description = "적 타격 시, 4초간 공격력의 2%씩 데미지를 입고 적은 10초간 공격력의 4%씩 데미지를 입는다."
+scene = ExtResource("2_0tnld")
+additional_stat = SubResource("Resource_tuuap")
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

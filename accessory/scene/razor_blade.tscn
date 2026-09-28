@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bnmfkbcn7xi7m"]
+
+[ext_resource type="Script" uid="uid://bc2k7d7v3wee" path="res://script/razor_blade.gd" id="1_g37oy"]
+
+[node name="RazorBlade" type="Node" unique_id=1401745384]
+script = ExtResource("1_g37oy")
+metadata/_custom_type_script = "uid://lnnrqsjexdkn"

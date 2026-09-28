@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://dmafd4gj6msx3"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_46jqo"]
+
+[resource]
+script = ExtResource("1_46jqo")
+name = &"제세동기"
+description = "체외부에서 강한 직류로 전기충격을 가하여 심근을 불응기에 빠트린다."
+stat_description = "플레이어의 체력이 10% 이하일 때, 11프레임 동안 무적 상태 이후 "
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

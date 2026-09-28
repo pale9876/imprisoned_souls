@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://bgm28stpxlyj1"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_o03vr"]
+
+[resource]
+script = ExtResource("1_o03vr")
+name = &"페이스메이커"
+stat_description = "3초마다 체력을 5씩 영구적으로 회복한다.
+"
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

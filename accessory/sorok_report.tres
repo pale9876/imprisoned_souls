@@ -1,9 +1,15 @@
 [gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://xb1j6e6diycm"]
 
 [ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_ffan1"]
+[ext_resource type="Script" uid="uid://b6vg11agekccy" path="res://script/resource/ae_index_stat_information.gd" id="1_lj4p4"]
+
+[sub_resource type="Resource" id="Resource_krok2"]
+script = ExtResource("1_lj4p4")
+metadata/_custom_type_script = "uid://b6vg11agekccy"
 
 [resource]
 script = ExtResource("1_ffan1")
-name = &"소록 필름"
-description = "나병 환자들의 모습이 담긴 필름이다."
+name = &"감염자 필름"
+description = "수습 의료진들에게 감염 치료를 설명하기 위해 촬영된 필름이다."
+additional_stat = SubResource("Resource_krok2")
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

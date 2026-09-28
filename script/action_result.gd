@@ -9,3 +9,6 @@ enum {
 
 var result: int = NONE
 var event: StringName
+
+var from: Node2D
+var to: Node2D
