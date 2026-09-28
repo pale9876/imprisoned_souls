@@ -8,7 +8,6 @@ signal punch()
 signal kick()
 
 
-
 var input_cache: PackedStringArray = PackedStringArray()
 var prev_input_dir: int = 0
 

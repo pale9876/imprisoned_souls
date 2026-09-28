@@ -12,21 +12,31 @@ const DirectionModuler: Script = preload("uid://dghhexdudu0xy")
 		current = node
 		if node and node.is_inside_tree():
 			for child: Node in get_children():
-				if child is Node2D: child.visible = node == child
+				if child is Node2D:
+					child.visible = node == child
 
 
 @export var offset: Vector2 = Vector2(0., -64.):
 	set(value):
 		offset = value
 		for node: Node in get_children():
-			if node is KaradaModule:
+			if node is Node2D:
 				node.position = offset
 
 
+@export var cursor_frame: int = 0:
+	set(value):
+		if current != null:
+			pass
+
+
 var force: Vector2
+
+
 var time: float:
 	set(value):
 		time = maxf(0., value)
+
 var time_scale: float:
 	set(value):
 		time_scale = maxf(0., value)
@@ -51,7 +61,11 @@ func shake(_force: Vector2, _duration: float, _scale: float) -> void:
 	time = _duration
 
 
-func change(karada_name: String) -> void:
-	if has_module(karada_name):
-		var karada: KaradaModule = get_node(NodePath(karada_name)) as KaradaModule
+func change(sprite_name: String) -> void:
+	if has_module(sprite_name):
+		var karada := get_node(NodePath(sprite_name)) as Node2D
 		current = karada
+
+
+func is_sprite(node: Node) -> bool:
+	return node is KaradaModule or node is Sprite2D
