@@ -2,6 +2,7 @@
 extends CanvasLayer
 
 
+signal turn_offed()
 
 
 func _init() -> void:
@@ -38,8 +39,7 @@ func turn_off() -> void:
 	anim.play(&"turn_off")
 	
 	await anim.animation_finished
-	
-	get_tree().quit()
+	turn_offed.emit()
 
 
 

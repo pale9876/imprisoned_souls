@@ -15,7 +15,7 @@ func _ready() -> void:
 	var player := Global.player
 	player_ui.get_hp().set_val(player.get_hp_progress())
 	player_ui.get_blood().set_val(player.get_blood())
-	
+
 	player.stat.damaged.connect(player_damaged)
 	player.stat.healed.connect(player_healed)
 	player.stat.dead.connect(player_dead)

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://du7jwp04o2qdt"
+path="res://.godot/imported/leg.aseprite-da1258e1296c952aefb72e1e3aa84e84.res"
+
+[deps]
+
+source_file="res://aseprite/source/bodyparts/leg.aseprite"
+dest_files=["res://.godot/imported/leg.aseprite-da1258e1296c952aefb72e1e3aa84e84.res"]
+
+[params]
+

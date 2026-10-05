@@ -202,7 +202,6 @@ metadata/_custom_type_script = "uid://bhhy483vjefa1"
 process_mode = 3
 script = ExtResource("8_a1u5o")
 current = NodePath("Idle")
-cursor_frame = null
 
 [node name="Tail" parent="SpriteComponent" unique_id=1297482294 instance=ExtResource("5_7crtr")]
 rotation = 3.1415927

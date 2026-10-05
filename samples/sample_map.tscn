@@ -137,10 +137,9 @@ script = ExtResource("20_0f6d0")
 texture = SubResource("GradientTexture2D_wqsic")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Gate" unique_id=1249128882]
-position = Vector2(-48, 29)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Gate/StaticBody2D" unique_id=1282991813]
-polygon = PackedVector2Array(16, -173, 80, -173, 80, 115, 16, 115)
+polygon = PackedVector2Array(-32, -144, 32, -144, 32, 144, -32, 144)
 disabled = true
 
 [node name="ForeGroundObject" type="Node2D" parent="." unique_id=1397554467]

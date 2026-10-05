@@ -90,6 +90,11 @@ func get_hud() -> Hud:
 	return main_scene.hud
 
 
+
+class PlayerClassData extends Resource:
+	pass
+
+
 class Data extends Resource:
 	var class_selected: String = ""
 	var achieve: Dictionary[String, bool] = { }
@@ -132,3 +137,4 @@ class Data extends Resource:
 	
 	func get_class_property(c_name: String, property_name: String) -> Variant:
 		return class_data[c_name][property_name]
+	

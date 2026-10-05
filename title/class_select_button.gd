@@ -1,3 +1,4 @@
+# class_select_button.gd
 @tool
 extends SoundButton
 
@@ -25,8 +26,9 @@ func _enter_tree() -> void:
 	if Engine.is_editor_hint(): return
 	
 	var ui_info := get_class_ui_info()
-	get_class_label().text = ui_info.name
-	get_icon().texture = ui_info.icon
+	if ui_info:
+		get_class_label().text = ui_info.name
+		get_icon().texture = ui_info.icon
 
 
 func _ready() -> void:
@@ -53,6 +55,12 @@ func _ready() -> void:
 			
 			for attr: String in meta:
 				get_stat_attr_container().clear()
+	)
+	
+	
+	button_up.connect(
+		func() -> void:
+			get_class_ui_info()
 	)
 	
 

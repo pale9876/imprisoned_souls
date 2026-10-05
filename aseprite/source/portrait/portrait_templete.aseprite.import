@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://cgumqaj3vplfk"
+path="res://.godot/imported/portrait_templete.aseprite-905c55a423dff0432f2d27063d10f029.res"
+
+[deps]
+
+source_file="res://aseprite/source/portrait/portrait_templete.aseprite"
+dest_files=["res://.godot/imported/portrait_templete.aseprite-905c55a423dff0432f2d27063d10f029.res"]
+
+[params]
+

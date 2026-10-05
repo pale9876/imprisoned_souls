@@ -15,11 +15,12 @@ const World = preload("uid://dpn1opeegcme2")
 # Scenes
 #const START_MAP: PackedScene = preload("uid://ccd41t1qrjttn")
 
-@onready var ingame: Ingame = $Ingame
-@onready var hud: Hud = $HUD
-#@onready var option: Option = $Option
-@onready var channel: Channel = $Channel
+@onready var ingame: Ingame = %Ingame
+@onready var hud: Hud = %HUD
+#@onready var option: Option = %Option
+@onready var channel: Channel = %Channel
 @onready var title: Title = %Title
+#@onready var game_viewport: MainHeirViewport = %GameViewport
 
 
 var is_in_game: bool = false
@@ -47,10 +48,6 @@ func on_start() -> void:
 
 	ingame.process_mode = Node.PROCESS_MODE_INHERIT
 	
-	
-	#var start_map := START_MAP.instantiate() as StartMap
-	#ingame.add_child(start_map)
-	#ingame.add_child(Global.player_camera)
 	Global.player_camera.target = Global.player
 	var init_map: Map = ingame.get_world().init_map
 	init_map.add_unit(Global.player)
@@ -60,6 +57,7 @@ func on_start() -> void:
 	is_in_game = true
 
 
+
 func get_world() -> World:
 	return ingame.get_world()
 
@@ -67,14 +65,32 @@ func get_world() -> World:
 func _option_close() -> void:
 	if !is_in_game:
 		title.show()
-	
-	#option.hide()
 
 
 func _option_open() -> void:
 	if !is_in_game:
 		title.hide()
-	#option.show()
 
 
-func get_dialog_ui() -> DialogUI: return hud.dialog_ui
+func get_background() -> CanvasLayer:
+	return get_node(^"%Background")
+
+
+func get_foreground() -> CanvasLayer:
+	return get_node(^"%Foreground")
+
+
+func get_filter_layer() -> CanvasLayer:
+	return get_node(^"FilterLayer")
+
+
+func get_dialog_ui() -> DialogUI:
+	return hud.dialog_ui
+
+
+func get_anim() -> AnimationPlayer:
+	return get_node(^"AnimationPlayer")
+
+
+
+	

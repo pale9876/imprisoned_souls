@@ -1,0 +1,355 @@
+[gd_scene format=3 uid="uid://01tn8ypbctbl"]
+
+[ext_resource type="Script" uid="uid://uabem6tefg3m" path="res://script/portrait.gd" id="1_md16t"]
+[ext_resource type="Texture2D" uid="uid://c3w8y5ghl8s3p" path="res://aseprite/source/portrait/portrait_outline.png" id="1_mdiga"]
+[ext_resource type="Texture2D" uid="uid://m8adi3f3sdnf" path="res://aseprite/source/portrait/predator_background.png" id="1_nsl6j"]
+[ext_resource type="Texture2D" uid="uid://lwwcmubt7bru" path="res://aseprite/source/portrait/left_ear.png" id="1_thy6q"]
+[ext_resource type="Texture2D" uid="uid://de6ol5lqisyg5" path="res://aseprite/source/portrait/back_hair.png" id="2_8if1f"]
+[ext_resource type="Script" uid="uid://bejsd3aj1pew6" path="res://script/portrait_parts_group.gd" id="2_52f74"]
+[ext_resource type="Texture2D" uid="uid://cn0wwu8ijp7h0" path="res://aseprite/source/portrait/neck.png" id="2_an34k"]
+[ext_resource type="Texture2D" uid="uid://rn276vpe8bhs" path="res://aseprite/source/portrait/left_side_tail.png" id="2_thy6q"]
+[ext_resource type="Texture2D" uid="uid://b5d615lptmcvn" path="res://aseprite/source/portrait/body.png" id="3_8if1f"]
+[ext_resource type="Texture2D" uid="uid://dyokbinst4lvj" path="res://aseprite/source/portrait/base.png" id="3_uftp8"]
+[ext_resource type="Texture2D" uid="uid://dji1gnjndr8xh" path="res://aseprite/source/portrait/mouth.png" id="4_hpmxg"]
+[ext_resource type="Texture2D" uid="uid://dmvotm2r0ipkk" path="res://aseprite/source/portrait/trickster_background.png" id="4_iwog6"]
+[ext_resource type="Texture2D" uid="uid://cxcuvgsrlxqy7" path="res://aseprite/source/portrait/clothes.png" id="4_md16t"]
+[ext_resource type="Texture2D" uid="uid://b0kehw80dyv16" path="res://aseprite/source/portrait/puppeteer_background.png" id="4_wh1xl"]
+[ext_resource type="Texture2D" uid="uid://b313cq766f5k3" path="res://aseprite/source/portrait/nose.png" id="5_kmnre"]
+[ext_resource type="Texture2D" uid="uid://d32qg1qduogcn" path="res://aseprite/source/portrait/eye.png" id="6_toyoc"]
+[ext_resource type="Texture2D" uid="uid://dnpdo72a3utjo" path="res://aseprite/source/portrait/backrace.png" id="7_hg1er"]
+[ext_resource type="Texture2D" uid="uid://bknle8ep0xsxx" path="res://aseprite/source/portrait/mole.png" id="7_nsl6j"]
+[ext_resource type="Texture2D" uid="uid://bk50pisbhm5al" path="res://aseprite/source/portrait/right_ear.png" id="8_3q7db"]
+[ext_resource type="Texture2D" uid="uid://3tpcl712i401" path="res://aseprite/source/portrait/right_side_tail.png" id="9_nb3ur"]
+[ext_resource type="Texture2D" uid="uid://k4ribgqa3hut" path="res://aseprite/source/portrait/front_hair.png" id="10_an34k"]
+[ext_resource type="Texture2D" uid="uid://c4wguu3fb2d00" path="res://aseprite/source/portrait/predator_foreground.png" id="12_3q7db"]
+[ext_resource type="Texture2D" uid="uid://cmj7x0acotgd0" path="res://aseprite/source/portrait/puppeteer_foreground.png" id="20_1o7f7"]
+[ext_resource type="Texture2D" uid="uid://c7l3nsfj0c3a3" path="res://aseprite/source/portrait/trickster_foreground.png" id="21_hg1er"]
+
+[node name="Portrait" type="Control" unique_id=1213259895]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 180.0
+grow_vertical = 2
+script = ExtResource("1_md16t")
+_hidden = true
+
+[node name="ThemeBackground" type="Control" parent="." unique_id=1926431610 node_paths=PackedStringArray("_root")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_52f74")
+_root = NodePath("..")
+
+[node name="Predator" type="TextureRect" parent="ThemeBackground" unique_id=642204162]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_nsl6j")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Trickster" type="TextureRect" parent="ThemeBackground" unique_id=1644404486]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_iwog6")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Puppeteer" type="TextureRect" parent="ThemeBackground" unique_id=1946023492]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_wh1xl")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Unit" type="Control" parent="." unique_id=466348523]
+modulate = Color(18.892, 18.892, 18.892, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackHair" type="TextureRect" parent="Unit" unique_id=1935290704]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_8if1f")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="BackRace" type="TextureRect" parent="Unit" unique_id=126616231]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_hg1er")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Body" type="Control" parent="Unit" unique_id=617116911 node_paths=PackedStringArray("_root")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_52f74")
+_root = NodePath("../..")
+metadata/_custom_type_script = "uid://bejsd3aj1pew6"
+
+[node name="Neck" type="TextureRect" parent="Unit/Body" unique_id=686806207]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_an34k")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Body" type="TextureRect" parent="Unit/Body" unique_id=210197497]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_8if1f")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Clothes" type="TextureRect" parent="Unit/Body" unique_id=781699725]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_md16t")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Face" type="Control" parent="Unit" unique_id=1575947381 node_paths=PackedStringArray("_root")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_52f74")
+_root = NodePath("../..")
+metadata/_custom_type_script = "uid://bejsd3aj1pew6"
+
+[node name="LeftEar" type="TextureRect" parent="Unit/Face" unique_id=738602821]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_thy6q")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LeftSideTail" type="TextureRect" parent="Unit/Face" unique_id=1351016853]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_thy6q")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Base" type="TextureRect" parent="Unit/Face" unique_id=1592455211]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_uftp8")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Mouth" type="TextureRect" parent="Unit/Face" unique_id=106526202]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_hpmxg")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Nose" type="TextureRect" parent="Unit/Face" unique_id=577440380]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_kmnre")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Eye" type="TextureRect" parent="Unit/Face" unique_id=1310681655]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_toyoc")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Eyebrown" type="TextureRect" parent="Unit/Face" unique_id=1685101573]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Mole" type="TextureRect" parent="Unit/Face" unique_id=807910315]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_nsl6j")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="RightEar" type="TextureRect" parent="Unit/Face" unique_id=1547382172]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_3q7db")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="RightSideTail" type="TextureRect" parent="Unit/Face" unique_id=1468467824]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_nb3ur")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="FrontHair" type="TextureRect" parent="Unit/Face" unique_id=1693231980]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_an34k")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Tsuno" type="TextureRect" parent="Unit/Face" unique_id=1233726384]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="ThemeForeground" type="Control" parent="." unique_id=538883846 node_paths=PackedStringArray("_root")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_52f74")
+_root = NodePath("..")
+metadata/_custom_type_script = "uid://bejsd3aj1pew6"
+
+[node name="Predator" type="TextureRect" parent="ThemeForeground" unique_id=1880235867]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_3q7db")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Trickster" type="TextureRect" parent="ThemeForeground" unique_id=1125318996]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_hg1er")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Puppeteer" type="TextureRect" parent="ThemeForeground" unique_id=794981870]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_1o7f7")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PortraitOutline" type="TextureRect" parent="." unique_id=538041642]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_mdiga")
+expand_mode = 1
+stretch_mode = 4

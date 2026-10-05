@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bjegaj5006v16"
+path="res://.godot/imported/splash_screen.aseprite-89aeb6af85c9c1d81c366711e2a38c9c.res"
+
+[deps]
+
+source_file="res://aseprite/source/splash_screen.aseprite"
+dest_files=["res://.godot/imported/splash_screen.aseprite-89aeb6af85c9c1d81c366711e2a38c9c.res"]
+
+[params]
+
