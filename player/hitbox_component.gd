@@ -4,9 +4,21 @@ extends Node2D
 class_name HitboxComponent
 
 
+@export var _show: Hitbox = null:
+	set(node):
+		if is_node_ready() and node is Hitbox and has_node(NodePath(node.name)):
+			if _show != null:
+				_show.visible = false
+			_show = node
+			node.visible = true
 
-func _enter_tree() -> void:
-	set_owner(get_parent())
+
+func _find_first_node_in_child() -> Node:
+	return get_child(0) if get_child_count() > 1 else null
+
+
+func _ready() -> void:
+	_show = _find_first_node_in_child()
 
 
 func has_projectile() -> void:

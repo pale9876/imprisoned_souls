@@ -353,12 +353,11 @@ grow_vertical = 2
 show_percentage = false
 script = ExtResource("51_w7j2h")
 
-[node name="HitboxComponent" type="Node2D" parent="." unique_id=1243634124]
-visible = false
+[node name="HitboxComponent" type="Node2D" parent="." unique_id=1243634124 node_paths=PackedStringArray("_show")]
 script = ExtResource("22_uw77l")
+_show = NodePath("PunchCombo")
 
 [node name="PunchCombo" type="Area2D" parent="HitboxComponent" unique_id=776727955]
-visible = false
 collision_layer = 0
 collision_mask = 2
 input_pickable = false
