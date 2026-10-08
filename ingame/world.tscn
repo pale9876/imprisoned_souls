@@ -15,9 +15,8 @@ scene = ExtResource("2_6dhv1")
 size = Vector2i(72, 16)
 metadata/_custom_type_script = "uid://c6w0iyaft7ljo"
 
-[node name="World" type="Node2D" unique_id=1777925288 node_paths=PackedStringArray("init_map")]
+[node name="World" type="Node2D" unique_id=1777925288]
 script = ExtResource("1_50kwp")
-init_map = NodePath("StartMap")
 
 [node name="StartMap" parent="." unique_id=160920806 instance=ExtResource("2_6dhv1")]
 guidance = SubResource("Resource_jcudw")

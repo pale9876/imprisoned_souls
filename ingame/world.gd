@@ -13,24 +13,24 @@ const MapKeikai = preload("uid://o348jlsiq2tc")
 
 
 @export var tile_size: int = TILE_SIZE
-@export var init_map: Map
+@export var init_region: Region
 
 
-var guidance: Dictionary[Rect2i, Map] = {
+var guidance: Dictionary[Rect2i, Region] = {
 	
 }
 
 
-var current_map: Array[Map] = []
+var current_region: Array[Region] = []
 
 
-func append_map(map: Map) -> void:
-	current_map.push_back(map)
+func append_region(region: Region) -> void:
+	current_region.push_back(region)
 	set_keikai()
 
 
-func map_disable(map: Map) -> void:
-	current_map.erase(map)
+func region_disable(region: Region) -> void:
+	current_region.erase(region)
 
 
 func _ready() -> void:
@@ -38,12 +38,12 @@ func _ready() -> void:
 		return
 	
 	for node: Node in get_children():
-		if node is Map:
+		if node is Region:
 			if !guidance.values().has(node):
 				var rect: Rect2i = node.get_region()
 				guidance[rect] = node
 	
-	append_map(init_map)
+	append_region(init_region)
 
 
 
@@ -53,15 +53,15 @@ func add(_guide: MapGuidance) -> void:
 		printerr("해당 맵이 다른 맵과 겹치는 영역이 존재합니다.")
 		return
 	
-	var map := _guide.scene.instantiate() as Map
-	guidance[_guide.region] = map
-	add_child(map)
+	var region := _guide.scene.instantiate() as Region
+	guidance[_guide.region] = region
+	add_child(region)
 
 
 func erase(_loc: Vector2i) -> void:
-	var map := get_map(_loc)
-	guidance.erase(map.location)
-	map.queue_free()
+	var region := get_region(_loc)
+	guidance.erase(region.location)
+	region.queue_free()
 
 
 func has_overlapped(rect: Rect2i) -> bool:
@@ -73,7 +73,7 @@ func has_overlapped(rect: Rect2i) -> bool:
 	return false
 
 
-func get_map(_loc: Vector2i) -> Map:
+func get_region(_loc: Vector2i) -> Region:
 	for rect: Rect2i in guidance.values():
 		if rect.has_point(_loc):
 			return guidance[rect]
@@ -82,7 +82,7 @@ func get_map(_loc: Vector2i) -> Map:
 
 
 func clear() -> void:
-	current_map.clear()
+	current_region.clear()
 
 
 func get_ingame() -> Ingame:
@@ -92,13 +92,13 @@ func get_ingame() -> Ingame:
 func set_keikai() -> void:
 	var locs: PackedVector2Array = PackedVector2Array()
 	var dests: PackedVector2Array = PackedVector2Array()
-	locs.resize(current_map.size())
-	dests.resize(current_map.size())
+	locs.resize(current_region.size())
+	dests.resize(current_region.size())
 	
-	for i: int in range(current_map.size()):
-		var _map: Map = current_map[i]
-		locs[i] = Vector2(_map.location)
-		dests[i] = Vector2(_map.location + _map.size)
+	for i: int in range(current_region.size()):
+		var _region: Region = current_region[i]
+		locs[i] = Vector2(_region.location)
+		dests[i] = Vector2(_region.location + _region.size)
 	
 	locs.sort()
 	dests.sort()

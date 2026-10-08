@@ -24,8 +24,10 @@ const DirectionModuler: Script = preload("uid://dghhexdudu0xy")
 				node.position = offset
 
 
-@export var cursor_frame: int = 0:
+@export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_KEYING_INCREMENTS | PROPERTY_USAGE_DEFAULT)
+var cursor: int = 0:
 	set(value):
+		cursor = value
 		if current != null:
 			pass
 

@@ -1,7 +1,7 @@
 # map.gd
 @tool
 extends TileMapLayer
-class_name Map
+class_name Region
 
 
 # Import
@@ -71,7 +71,7 @@ func _draw() -> void:
 		)
 
 
-func get_region() -> Rect2i:
+func get_rect_size() -> Rect2i:
 	return Rect2i(location, size)
 
 

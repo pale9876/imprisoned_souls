@@ -2,54 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dtu3imugbu0pm" path="res://title/title.gd" id="1_y7k74"]
 [ext_resource type="PackedScene" uid="uid://d30oqfxv18ru8" path="res://title/title_ui.tscn" id="2_0tjwc"]
-[ext_resource type="Shader" uid="uid://6ly1dbvypuv" path="res://shader/crt.gdshader" id="22_povds"]
-[ext_resource type="Script" uid="uid://cl8jpoxnqv76g" path="res://title/filter_rect.gd" id="23_3jafg"]
-[ext_resource type="Shader" uid="uid://c6qc3hkvc3sta" path="res://shader/chromatic.gdshader" id="23_ahhml"]
-[ext_resource type="Shader" uid="uid://dxn8hlrd3ett5" path="res://shader/crt_turn_off.gdshader" id="24_ahhml"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_i01a6"]
-shader = ExtResource("22_povds")
-shader_parameter/resolution = Vector2(640, 360)
-shader_parameter/scan_line_amount = 0.422000020045
-shader_parameter/warp_amount = 0.0930000044175
-shader_parameter/vignette_amount = 0.166000007885
-shader_parameter/vignette_intensity = 0.36400001729
-shader_parameter/grille_amount = 0.398000018905
-shader_parameter/brightness_boost = 1.22800001083
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_povds"]
-shader = ExtResource("23_ahhml")
-shader_parameter/intensity = 1.30000001937156
-shader_parameter/threshold = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3jafg"]
-shader = ExtResource("24_ahhml")
-shader_parameter/FADE_COLOR = Color(0.06417534, 0.07080308, 0.10395581, 1)
-shader_parameter/BUFFER = 2.0
-shader_parameter/SCALE_SPEED = 1.0
-shader_parameter/progress = 0.0
 
 [sub_resource type="Animation" id="Animation_eudk5"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TurnOnOffFilterRect:material:shader_parameter/progress")
+tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -59,18 +21,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_3jafg"]
 resource_name = "turn_off"
 step = 0.0167
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TurnOnOffFilterRect:material:shader_parameter/progress")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.24148433, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_ahhml"]
 resource_name = "turn_on"
@@ -78,22 +28,10 @@ step = 0.0167
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TurnOnOffFilterRect:material:shader_parameter/progress")
+tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.2176377, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -111,77 +49,7 @@ _data = {
 visible = false
 script = ExtResource("1_y7k74")
 
-[node name="TurnOnOff" type="SubViewportContainer" parent="." unique_id=370223908]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="TurnOnOff" unique_id=1579827824]
-handle_input_locally = false
-size = Vector2i(640, 360)
-render_target_update_mode = 0
-
-[node name="Chromatic" type="SubViewportContainer" parent="TurnOnOff/SubViewport" unique_id=561673042]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="TurnOnOff/SubViewport/Chromatic" unique_id=945658051]
-handle_input_locally = false
-size = Vector2i(640, 360)
-render_target_update_mode = 4
-
-[node name="CRT" type="SubViewportContainer" parent="TurnOnOff/SubViewport/Chromatic/SubViewport" unique_id=1400195837]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TitleViewport" type="SubViewport" parent="TurnOnOff/SubViewport/Chromatic/SubViewport/CRT" unique_id=1089819371]
-unique_name_in_owner = true
-handle_input_locally = false
-size = Vector2i(640, 360)
-render_target_update_mode = 4
-
-[node name="TitleUI" parent="TurnOnOff/SubViewport/Chromatic/SubViewport/CRT/TitleViewport" unique_id=1482659797 instance=ExtResource("2_0tjwc")]
-
-[node name="CrtFilterRect" type="ColorRect" parent="TurnOnOff/SubViewport/Chromatic/SubViewport" unique_id=985019017]
-material = SubResource("ShaderMaterial_i01a6")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("23_3jafg")
-shader = SubResource("ShaderMaterial_i01a6")
-
-[node name="ChromaticFilterRect" type="ColorRect" parent="TurnOnOff/SubViewport" unique_id=1256722450]
-material = SubResource("ShaderMaterial_povds")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("23_3jafg")
-shader = SubResource("ShaderMaterial_povds")
-
-[node name="TurnOnOffFilterRect" type="ColorRect" parent="." unique_id=1264409543]
-material = SubResource("ShaderMaterial_3jafg")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("23_3jafg")
-shader = SubResource("ShaderMaterial_3jafg")
+[node name="TitleUI" parent="." unique_id=1482659797 instance=ExtResource("2_0tjwc")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=597338014]
 libraries/ = SubResource("AnimationLibrary_3jafg")
