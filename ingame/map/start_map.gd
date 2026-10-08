@@ -45,6 +45,7 @@ const Keikai: Script = preload("uid://o348jlsiq2tc")
 
 
 @export_group("DEBUG")
+@export var _draw_rect: bool = false
 @export var debug_color: Color = Color(0.0, 1.0, 0.0, 0.157):
 	set(val):
 		debug_color = val
@@ -65,7 +66,7 @@ func _enter_tree() -> void:
 
 
 func _draw() -> void:
-	if Engine.is_editor_hint() and get_world() != null:
+	if Engine.is_editor_hint() and get_world() != null and _draw_rect:
 		draw_rect(
 			Rect2(Vector2(), Vector2(size * get_tile_size())), debug_color
 		)
