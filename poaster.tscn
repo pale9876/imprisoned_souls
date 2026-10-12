@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://dss5v1ieioljj"]
+
+[ext_resource type="Texture2D" uid="uid://bj0igoqoyvkv7" path="res://title/background.png" id="1_xt2td"]
+[ext_resource type="Shader" uid="uid://cb2h4iljsnp47" path="res://radial_blur.gdshader" id="1_yh6wd"]
+[ext_resource type="Texture2D" uid="uid://b7j5nwvocfbl" path="res://title/enemy.png" id="2_gc36o"]
+[ext_resource type="Texture2D" uid="uid://cywgwo7muf63i" path="res://title/poaster_foreground.png" id="3_81gl3"]
+[ext_resource type="Texture2D" uid="uid://ce317h67tipyy" path="res://title/player_placeholder.png" id="5_gc36o"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xt2td"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_81gl3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wqsic"]
+shader = ExtResource("1_yh6wd")
+shader_parameter/blur_center = Vector2(0.5, 0.5)
+shader_parameter/blur_power = 0.0070000003325
+shader_parameter/sampling_count = 6
+
+[node name="Poaster" type="Control" unique_id=951402115]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=580201948]
+modulate = Color(0.5330367, 0.5330367, 0.5330367, 1)
+material = SubResource("CanvasItemMaterial_xt2td")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_xt2td")
+
+[node name="Enemy" type="Control" parent="." unique_id=1403819075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="TextureRect" parent="Enemy" unique_id=1436413359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_gc36o")
+
+[node name="Foreground" type="TextureRect" parent="." unique_id=280491511]
+material = SubResource("CanvasItemMaterial_81gl3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_81gl3")
+
+[node name="RadialBlurFilter" type="ColorRect" parent="." unique_id=556198269]
+material = SubResource("ShaderMaterial_wqsic")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player" type="Control" parent="." unique_id=439350493]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="TextureRect" parent="Player" unique_id=808570471]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_gc36o")
+
+[node name="Title" type="TextureRect" parent="." unique_id=550619250]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
