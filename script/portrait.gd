@@ -19,18 +19,23 @@ enum State {
 const IDLE := State.IDLE
 
 
-@export var _hidden: bool = false:
-	set(toggle):
-		_hidden = toggle
-		if Engine.is_editor_hint():
-			if is_node_ready():
-				if toggle:
-					hide_unit()
-				else:
-					relieved()
-
-
 @export var state: State = IDLE
+
+
+func _init() -> void:
+	pass
+
+
+func _ready() -> void:
+	pass
+
+
+func get_foreground() -> PortraitPartsGroup:
+	return get_node_or_null("ThemeForeground")
+
+
+func get_background() -> PortraitPartsGroup:
+	return get_node_or_null("ThemeBackground")
 
 
 func change_state(_state: State) -> void:
@@ -53,7 +58,8 @@ func hide_unit() -> void:
 
 
 func get_unit_texture() -> Control:
-	return get_node(^"Unit") as Control
+	return get_node_or_null(^"Unit") as Control
+
 
 
 static func create_parts_group(_owner: Control, _name: StringName = &"") -> Control:
@@ -61,6 +67,8 @@ static func create_parts_group(_owner: Control, _name: StringName = &"") -> Cont
 	if !_name.is_empty():
 		control.name = _name
 	return control
+
+
 
 
 

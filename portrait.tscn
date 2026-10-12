@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://de6ol5lqisyg5" path="res://aseprite/source/portrait/back_hair.png" id="2_8if1f"]
 [ext_resource type="Script" uid="uid://bejsd3aj1pew6" path="res://script/portrait_parts_group.gd" id="2_52f74"]
 [ext_resource type="Texture2D" uid="uid://cn0wwu8ijp7h0" path="res://aseprite/source/portrait/neck.png" id="2_an34k"]
+[ext_resource type="Script" uid="uid://n8skusc4gmbb" path="res://script/resource/texture_group_information.gd" id="2_fqwvc"]
 [ext_resource type="Texture2D" uid="uid://rn276vpe8bhs" path="res://aseprite/source/portrait/left_side_tail.png" id="2_thy6q"]
 [ext_resource type="Texture2D" uid="uid://b5d615lptmcvn" path="res://aseprite/source/portrait/body.png" id="3_8if1f"]
 [ext_resource type="Texture2D" uid="uid://dyokbinst4lvj" path="res://aseprite/source/portrait/base.png" id="3_uftp8"]
@@ -17,7 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://b313cq766f5k3" path="res://aseprite/source/portrait/nose.png" id="5_kmnre"]
 [ext_resource type="Texture2D" uid="uid://d32qg1qduogcn" path="res://aseprite/source/portrait/eye.png" id="6_toyoc"]
 [ext_resource type="Texture2D" uid="uid://dnpdo72a3utjo" path="res://aseprite/source/portrait/backrace.png" id="7_hg1er"]
+[ext_resource type="Script" uid="uid://dfl0o0ebel7kj" path="res://script/portrait_unit.gd" id="7_hq63a"]
 [ext_resource type="Texture2D" uid="uid://bknle8ep0xsxx" path="res://aseprite/source/portrait/mole.png" id="7_nsl6j"]
+[ext_resource type="Script" uid="uid://c2i6y2hg2fehf" path="res://script/recolored_texture.gd" id="7_oe0rn"]
 [ext_resource type="Texture2D" uid="uid://bk50pisbhm5al" path="res://aseprite/source/portrait/right_ear.png" id="8_3q7db"]
 [ext_resource type="Texture2D" uid="uid://3tpcl712i401" path="res://aseprite/source/portrait/right_side_tail.png" id="9_nb3ur"]
 [ext_resource type="Texture2D" uid="uid://k4ribgqa3hut" path="res://aseprite/source/portrait/front_hair.png" id="10_an34k"]
@@ -25,16 +28,520 @@
 [ext_resource type="Texture2D" uid="uid://cmj7x0acotgd0" path="res://aseprite/source/portrait/puppeteer_foreground.png" id="20_1o7f7"]
 [ext_resource type="Texture2D" uid="uid://c7l3nsfj0c3a3" path="res://aseprite/source/portrait/trickster_foreground.png" id="21_hg1er"]
 
-[node name="Portrait" type="Control" unique_id=1213259895]
+[sub_resource type="Resource" id="Resource_fqwvc"]
+script = ExtResource("2_fqwvc")
+group = Array[NodePath]([NodePath("Body/Body"), NodePath("Body/Neck"), NodePath("Face/Base"), NodePath("Face/RightEar"), NodePath("Face/LeftEar")])
+prev_color = Color(1, 0.9137255, 0.8862745, 1)
+metadata/_custom_type_script = "uid://n8skusc4gmbb"
+
+[sub_resource type="Resource" id="Resource_hq63a"]
+script = ExtResource("2_fqwvc")
+group = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath("")])
+metadata/_custom_type_script = "uid://n8skusc4gmbb"
+
+[sub_resource type="Shader" id="Shader_oe0rn"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqwvc"]
+shader = SubResource("Shader_oe0rn")
+shader_parameter/tolerance = 0.57999998703584
+shader_parameter/prev_color = Color(0.90588236, 0.9490196, 0.96862745, 1)
+shader_parameter/new_color = Color(0.22540002, 0.42872003, 0.46, 1)
+
+[sub_resource type="Shader" id="Shader_hq63a"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o1fl8"]
+shader = SubResource("Shader_hq63a")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_ue8u8"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3if4e"]
+shader = SubResource("Shader_ue8u8")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_td705"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rglmm"]
+shader = SubResource("Shader_td705")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_edb63"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xdbr"]
+shader = SubResource("Shader_edb63")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_yl8s6"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_70e7c"]
+shader = SubResource("Shader_yl8s6")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_5xx7i"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhwbv"]
+shader = SubResource("Shader_5xx7i")
+shader_parameter/tolerance = 0.5499999877064
+shader_parameter/prev_color = Color(0.90588236, 0.9490196, 0.96862745, 1)
+shader_parameter/new_color = Color(0.29520002, 0.82, 0.64506674, 1)
+
+[sub_resource type="Shader" id="Shader_rj2qj"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lv3y1"]
+shader = SubResource("Shader_rj2qj")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_k6kxw"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vebas"]
+shader = SubResource("Shader_k6kxw")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_rm0wi"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s87g4"]
+shader = SubResource("Shader_rm0wi")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_sau0a"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yc4j8"]
+shader = SubResource("Shader_sau0a")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_4lvok"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3jrib"]
+shader = SubResource("Shader_4lvok")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_agrlg"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcg6x"]
+shader = SubResource("Shader_agrlg")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_1cggi"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2avi7"]
+shader = SubResource("Shader_1cggi")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Shader" id="Shader_ydg45"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ail6l"]
+shader = SubResource("Shader_ydg45")
+shader_parameter/tolerance = 0.499999988824
+shader_parameter/prev_color = Color(0.90588236, 0.9490196, 0.96862745, 1)
+shader_parameter/new_color = Color(0.1848, 0.77, 0.74074, 1)
+
+[sub_resource type="Shader" id="Shader_j4fhw"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4dni"]
+shader = SubResource("Shader_j4fhw")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(0.90588236, 0.9490196, 0.96862745, 1)
+shader_parameter/new_color = Color(0.17599998, 0.88, 0.88, 1)
+
+[sub_resource type="Shader" id="Shader_vketg"]
+code = "shader_type canvas_item;
+
+
+uniform float tolerance: hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec4 prev_color: source_color = vec4(1.0);
+uniform vec4 new_color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+
+void fragment() {
+    vec4 color = texture(TEXTURE, UV);
+    vec4 initial_color = color;
+
+	float color_distance = distance(prev_color, color);
+
+    if (color_distance <= tolerance) {
+		color = mix(new_color, color, color_distance);
+		color.a = initial_color.a;
+    }
+
+    COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ejvwt"]
+shader = SubResource("Shader_vketg")
+shader_parameter/tolerance = 0.1
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0, 0, 0, 1)
+
+[node name="Portrait" type="Control" unique_id=432930676]
 layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 180.0
 grow_vertical = 2
 script = ExtResource("1_md16t")
-_hidden = true
+metadata/_custom_type_script = "uid://uabem6tefg3m"
 
-[node name="ThemeBackground" type="Control" parent="." unique_id=1926431610 node_paths=PackedStringArray("_root")]
+[node name="ThemeBackground" type="Control" parent="." unique_id=244319353 node_paths=PackedStringArray("_root")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,9 +550,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_52f74")
 _root = NodePath("..")
+metadata/_custom_type_script = "uid://bejsd3aj1pew6"
 
 [node name="Predator" type="TextureRect" parent="ThemeBackground" unique_id=642204162]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,15 +588,20 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="Unit" type="Control" parent="." unique_id=466348523]
-modulate = Color(18.892, 18.892, 18.892, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("7_hq63a")
+group = Dictionary[String, ExtResource("2_fqwvc")]({
+"hair": SubResource("Resource_hq63a"),
+"skin": SubResource("Resource_fqwvc")
+})
 
-[node name="BackHair" type="TextureRect" parent="Unit" unique_id=1935290704]
+[node name="BackHair" type="TextureRect" parent="Unit" unique_id=1496518954]
+material = SubResource("ShaderMaterial_fqwvc")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,8 +611,14 @@ grow_vertical = 2
 texture = ExtResource("2_8if1f")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="BackRace" type="TextureRect" parent="Unit" unique_id=126616231]
+[node name="BackRace" type="TextureRect" parent="Unit" unique_id=1909693694]
+material = SubResource("ShaderMaterial_o1fl8")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,8 +628,13 @@ grow_vertical = 2
 texture = ExtResource("7_hg1er")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Body" type="Control" parent="Unit" unique_id=617116911 node_paths=PackedStringArray("_root")]
+[node name="Body" type="Control" parent="Unit" unique_id=617116911]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -119,10 +642,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_52f74")
-_root = NodePath("../..")
 metadata/_custom_type_script = "uid://bejsd3aj1pew6"
 
-[node name="Neck" type="TextureRect" parent="Unit/Body" unique_id=686806207]
+[node name="Neck" type="TextureRect" parent="Unit/Body" unique_id=570265872]
+material = SubResource("ShaderMaterial_3if4e")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -132,8 +655,14 @@ grow_vertical = 2
 texture = ExtResource("2_an34k")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Body" type="TextureRect" parent="Unit/Body" unique_id=210197497]
+[node name="Body" type="TextureRect" parent="Unit/Body" unique_id=954027459]
+material = SubResource("ShaderMaterial_rglmm")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,8 +672,14 @@ grow_vertical = 2
 texture = ExtResource("3_8if1f")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Clothes" type="TextureRect" parent="Unit/Body" unique_id=781699725]
+[node name="Clothes" type="TextureRect" parent="Unit/Body" unique_id=1245672550]
+material = SubResource("ShaderMaterial_0xdbr")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,8 +689,13 @@ grow_vertical = 2
 texture = ExtResource("4_md16t")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Face" type="Control" parent="Unit" unique_id=1575947381 node_paths=PackedStringArray("_root")]
+[node name="Face" type="Control" parent="Unit" unique_id=1575947381]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -163,10 +703,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_52f74")
-_root = NodePath("../..")
 metadata/_custom_type_script = "uid://bejsd3aj1pew6"
 
-[node name="LeftEar" type="TextureRect" parent="Unit/Face" unique_id=738602821]
+[node name="LeftEar" type="TextureRect" parent="Unit/Face" unique_id=1624350259]
+material = SubResource("ShaderMaterial_70e7c")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,8 +716,14 @@ grow_vertical = 2
 texture = ExtResource("1_thy6q")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="LeftSideTail" type="TextureRect" parent="Unit/Face" unique_id=1351016853]
+[node name="LeftSideTail" type="TextureRect" parent="Unit/Face" unique_id=341915184]
+material = SubResource("ShaderMaterial_vhwbv")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -187,8 +733,14 @@ grow_vertical = 2
 texture = ExtResource("2_thy6q")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Base" type="TextureRect" parent="Unit/Face" unique_id=1592455211]
+[node name="Base" type="TextureRect" parent="Unit/Face" unique_id=922557534]
+material = SubResource("ShaderMaterial_lv3y1")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,8 +750,14 @@ grow_vertical = 2
 texture = ExtResource("3_uftp8")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Mouth" type="TextureRect" parent="Unit/Face" unique_id=106526202]
+[node name="Mouth" type="TextureRect" parent="Unit/Face" unique_id=1655895055]
+material = SubResource("ShaderMaterial_vebas")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -209,8 +767,14 @@ grow_vertical = 2
 texture = ExtResource("4_hpmxg")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Nose" type="TextureRect" parent="Unit/Face" unique_id=577440380]
+[node name="Nose" type="TextureRect" parent="Unit/Face" unique_id=1268076355]
+material = SubResource("ShaderMaterial_s87g4")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,8 +784,14 @@ grow_vertical = 2
 texture = ExtResource("5_kmnre")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Eye" type="TextureRect" parent="Unit/Face" unique_id=1310681655]
+[node name="Eye" type="TextureRect" parent="Unit/Face" unique_id=1532520577]
+material = SubResource("ShaderMaterial_yc4j8")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,8 +801,14 @@ grow_vertical = 2
 texture = ExtResource("6_toyoc")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Eyebrown" type="TextureRect" parent="Unit/Face" unique_id=1685101573]
+[node name="Eyebrown" type="TextureRect" parent="Unit/Face" unique_id=31856553]
+material = SubResource("ShaderMaterial_3jrib")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -241,8 +817,14 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Mole" type="TextureRect" parent="Unit/Face" unique_id=807910315]
+[node name="Mole" type="TextureRect" parent="Unit/Face" unique_id=2108959531]
+material = SubResource("ShaderMaterial_hcg6x")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -252,8 +834,14 @@ grow_vertical = 2
 texture = ExtResource("7_nsl6j")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="RightEar" type="TextureRect" parent="Unit/Face" unique_id=1547382172]
+[node name="RightEar" type="TextureRect" parent="Unit/Face" unique_id=1064614905]
+material = SubResource("ShaderMaterial_2avi7")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -263,8 +851,14 @@ grow_vertical = 2
 texture = ExtResource("8_3q7db")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="RightSideTail" type="TextureRect" parent="Unit/Face" unique_id=1468467824]
+[node name="RightSideTail" type="TextureRect" parent="Unit/Face" unique_id=1286036288]
+material = SubResource("ShaderMaterial_ail6l")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -274,8 +868,14 @@ grow_vertical = 2
 texture = ExtResource("9_nb3ur")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="FrontHair" type="TextureRect" parent="Unit/Face" unique_id=1693231980]
+[node name="FrontHair" type="TextureRect" parent="Unit/Face" unique_id=1792885568]
+material = SubResource("ShaderMaterial_t4dni")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -285,8 +885,14 @@ grow_vertical = 2
 texture = ExtResource("10_an34k")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
-[node name="Tsuno" type="TextureRect" parent="Unit/Face" unique_id=1233726384]
+[node name="Tsuno" type="TextureRect" parent="Unit/Face" unique_id=470643615]
+material = SubResource("ShaderMaterial_ejvwt")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -295,6 +901,11 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("7_oe0rn")
+tolerance = null
+prev_color = null
+new_color = null
+metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="ThemeForeground" type="Control" parent="." unique_id=538883846 node_paths=PackedStringArray("_root")]
 layout_mode = 1
@@ -308,7 +919,6 @@ _root = NodePath("..")
 metadata/_custom_type_script = "uid://bejsd3aj1pew6"
 
 [node name="Predator" type="TextureRect" parent="ThemeForeground" unique_id=1880235867]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
