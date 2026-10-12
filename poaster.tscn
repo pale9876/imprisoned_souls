@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b7j5nwvocfbl" path="res://title/enemy.png" id="2_gc36o"]
 [ext_resource type="Texture2D" uid="uid://cywgwo7muf63i" path="res://title/poaster_foreground.png" id="3_81gl3"]
 [ext_resource type="Texture2D" uid="uid://ce317h67tipyy" path="res://title/player_placeholder.png" id="5_gc36o"]
+[ext_resource type="Texture2D" uid="uid://c4sf7dwa0y3gg" path="res://title/title.png" id="6_lf8us"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xt2td"]
 
@@ -89,9 +90,11 @@ grow_vertical = 2
 texture = ExtResource("5_gc36o")
 
 [node name="Title" type="TextureRect" parent="." unique_id=550619250]
+modulate = Color(1, 1, 1, 0.84313726)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("6_lf8us")
