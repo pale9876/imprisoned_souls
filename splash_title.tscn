@@ -91,7 +91,15 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_iyy4x")
 
-[node name="Title" type="TextureRect" parent="." unique_id=550619250]
+[node name="Title" type="Control" parent="." unique_id=101898499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="TextureRect" parent="Title" unique_id=550619250]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
