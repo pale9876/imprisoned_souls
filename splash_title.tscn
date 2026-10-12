@@ -1,29 +1,31 @@
 [gd_scene format=3 uid="uid://dss5v1ieioljj"]
 
-[ext_resource type="Texture2D" uid="uid://bj0igoqoyvkv7" path="res://title/background.png" id="1_xt2td"]
-[ext_resource type="Shader" uid="uid://cb2h4iljsnp47" path="res://radial_blur.gdshader" id="1_yh6wd"]
-[ext_resource type="Texture2D" uid="uid://b7j5nwvocfbl" path="res://title/enemy.png" id="2_gc36o"]
-[ext_resource type="Texture2D" uid="uid://cywgwo7muf63i" path="res://title/poaster_foreground.png" id="3_81gl3"]
-[ext_resource type="Texture2D" uid="uid://ce317h67tipyy" path="res://title/player_placeholder.png" id="5_gc36o"]
-[ext_resource type="Texture2D" uid="uid://c4sf7dwa0y3gg" path="res://title/title.png" id="6_lf8us"]
+[ext_resource type="Texture2D" uid="uid://bj0igoqoyvkv7" path="res://title/background.png" id="1_cux3h"]
+[ext_resource type="Script" uid="uid://d12clsmbv1sdy" path="res://script/splash_title.gd" id="1_hwfbh"]
+[ext_resource type="Texture2D" uid="uid://b7j5nwvocfbl" path="res://title/enemy.png" id="2_hwfbh"]
+[ext_resource type="Texture2D" uid="uid://cywgwo7muf63i" path="res://title/poaster_foreground.png" id="3_jmejv"]
+[ext_resource type="Shader" uid="uid://cb2h4iljsnp47" path="res://radial_blur.gdshader" id="4_36sv0"]
+[ext_resource type="Texture2D" uid="uid://ce317h67tipyy" path="res://title/player_placeholder.png" id="5_iyy4x"]
+[ext_resource type="Texture2D" uid="uid://c4sf7dwa0y3gg" path="res://title/title.png" id="6_qu1ad"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xt2td"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_81gl3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wqsic"]
-shader = ExtResource("1_yh6wd")
+shader = ExtResource("4_36sv0")
 shader_parameter/blur_center = Vector2(0.5, 0.5)
 shader_parameter/blur_power = 0.0070000003325
 shader_parameter/sampling_count = 6
 
-[node name="Poaster" type="Control" unique_id=951402115]
+[node name="SplashTitle" type="Control" unique_id=951402115]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hwfbh")
 
 [node name="Background" type="TextureRect" parent="." unique_id=580201948]
 modulate = Color(0.5330367, 0.5330367, 0.5330367, 1)
@@ -34,7 +36,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_xt2td")
+texture = ExtResource("1_cux3h")
 
 [node name="Enemy" type="Control" parent="." unique_id=1403819075]
 layout_mode = 1
@@ -51,7 +53,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_gc36o")
+texture = ExtResource("2_hwfbh")
 
 [node name="Foreground" type="TextureRect" parent="." unique_id=280491511]
 material = SubResource("CanvasItemMaterial_81gl3")
@@ -61,7 +63,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_81gl3")
+texture = ExtResource("3_jmejv")
 
 [node name="RadialBlurFilter" type="ColorRect" parent="." unique_id=556198269]
 material = SubResource("ShaderMaterial_wqsic")
@@ -87,14 +89,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_gc36o")
+texture = ExtResource("5_iyy4x")
 
 [node name="Title" type="TextureRect" parent="." unique_id=550619250]
-modulate = Color(1, 1, 1, 0.84313726)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("6_lf8us")
+texture = ExtResource("6_qu1ad")
