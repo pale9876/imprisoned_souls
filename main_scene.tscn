@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ca7eyjftb4ahp" path="res://script/filter_layer.gd" id="2_nfk4m"]
 [ext_resource type="PackedScene" uid="uid://cvlijmgfo3neh" path="res://hud/hud.tscn" id="5_hq1ik"]
 [ext_resource type="PackedScene" uid="uid://qnolbh3cfav8" path="res://channel/channel.tscn" id="8_7ycvg"]
+[ext_resource type="PackedScene" uid="uid://c73sqmm2lwa77" path="res://foreground.tscn" id="8_qwutr"]
 [ext_resource type="Script" uid="uid://cl8jpoxnqv76g" path="res://title/filter_rect.gd" id="8_wr18j"]
 [ext_resource type="PackedScene" uid="uid://c2agrq1i4pbt2" path="res://title/title.tscn" id="9_7ycvg"]
 
@@ -93,16 +94,8 @@ unique_name_in_owner = true
 [node name="Channel" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=1466334463 instance=ExtResource("8_7ycvg")]
 unique_name_in_owner = true
 
-[node name="Foreground" type="CanvasLayer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=907939734]
+[node name="Foreground" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=484923412 instance=ExtResource("8_qwutr")]
 unique_name_in_owner = true
-
-[node name="FilterRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party/Foreground" unique_id=80448328]
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-script = ExtResource("8_wr18j")
-metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
 
 [node name="FilterRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=499874558]
 anchors_preset = 15

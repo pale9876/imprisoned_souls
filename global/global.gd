@@ -11,7 +11,7 @@ const MainScene: Script = preload("uid://cplgj2iixr7f6")
 const PlayerCamera: Script = preload("uid://b7phyhue4y3yg")
 const Hud: Script = preload("uid://dgntyiu05self")
 const Ingame: Script = preload("uid://lf1g8r7wbov3")
-const Channel: Script = preload("uid://bc33hejnp7byc")
+#const Channel: Script = preload("uid://bc33hejnp7byc")
 
 
 # Scene
@@ -31,6 +31,7 @@ var main_scene: MainScene
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	player = PLAYER_SCENE.instantiate() as Player
+	
 
 
 func _enter_tree() -> void:

@@ -33,7 +33,7 @@ func _ready() -> void:
 	hud.hide()
 	channel.hide()
 	
-	title.turn_on()
+	#title.turn_on()
 
 	GSignal.start.connect(on_start)
 	Global.main_scene = self
@@ -49,7 +49,7 @@ func on_start() -> void:
 	ingame.process_mode = Node.PROCESS_MODE_INHERIT
 	
 	Global.player_camera.target = Global.player
-	var init_map: Map = ingame.get_world().init_map
+	var init_map: Region = ingame.get_world().init_region
 	init_map.add_unit(Global.player)
 	Global.player.global_position = init_map.get_start_spawn_position().global_position
 	Global.player.input_state.unlock()

@@ -24,27 +24,27 @@ var guidance: Dictionary[Rect2i, Region] = {
 var current_region: Array[Region] = []
 
 
-func append_region(region: Region) -> void:
-	current_region.push_back(region)
-	set_keikai()
+#func append_region(region: Region) -> void:
+	#current_region.push_back(region)
+	#set_keikai()
+
+#
+#func region_disable(region: Region) -> void:
+	#current_region.erase(region)
 
 
-func region_disable(region: Region) -> void:
-	current_region.erase(region)
 
-
-func _ready() -> void:
-	if Engine.is_editor_hint():
-		return
-	
-	for node: Node in get_children():
-		if node is Region:
-			if !guidance.values().has(node):
-				var rect: Rect2i = node.get_region()
-				guidance[rect] = node
-	
-	append_region(init_region)
-
+#func _ready() -> void:
+	#if Engine.is_editor_hint():
+		#return
+	#
+	#for node: Node in get_children():
+		#if node is Region:
+			#if !guidance.values().has(node):
+				#var rect: Rect2i = node.get_rect_size()
+				#guidance[rect] = node
+	#
+	#append_region(init_region)
 
 
 func add(_guide: MapGuidance) -> void:

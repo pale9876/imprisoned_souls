@@ -27,8 +27,8 @@ func create_entry() -> Array[Marker2D]:
 	return result
 
 
-func create_map() -> Map:
-	var _map := scene.instantiate() as Map
+func create_map() -> Region:
+	var _map := scene.instantiate() as Region
 	_map.name = name
 	_map.location = location
 	_map.size = size

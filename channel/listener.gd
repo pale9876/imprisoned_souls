@@ -1,14 +1,17 @@
 extends AudioListener3D
+class_name ChannelListener
 
 
+@export var trace: Node2D
 @export var offset: Vector2 = Vector2(0., -64.)
 
 
-var trace: Node2D
+func init_player() -> void:
+	trace = Global.player
 
 
 func _ready() -> void:
-	trace = Global.player
+	init_player()
 
 
 func _process(_delta: float) -> void:
