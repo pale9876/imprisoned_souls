@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://utta0p6e0npi"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_g5j4f"]
+
+[resource]
+script = ExtResource("1_g5j4f")
+cooldown = 12.0
+name = &"발목잡기"
+description = "서 있는 상대의 얼굴을 잡아 땅에 내려꽂는다. 공중에 떠 있는 상대를 잡을 시에는 파운딩한다. 적 유닛은 10데미지를 받고 즉시 다운 상태가 된다.
+
+다운 상태일 때 기술사용 시, 근처의 가장 가까운 적 유닛을 다운 상태로 만들다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

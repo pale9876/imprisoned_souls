@@ -10,6 +10,6 @@ metadata/_custom_type_script = "uid://b6vg11agekccy"
 [resource]
 script = ExtResource("1_b44qw")
 name = &"홈 비디오 테이프"
-description = "'노아' 의 이름표를 붙힌 캠코더용 녹화 테이프이다. 기밀 테이프의 재생을 막는 구조가 존재하지 않는 일반적인 테이프인 것 같다."
+description = "'노아' 의 이름표를 붙힌 캠코더용 녹화 테이프이다. 허가된 재생기에서만 영상 재생 시킬 수 있게 되어 있다."
 additional_stat = SubResource("Resource_rtvy4")
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

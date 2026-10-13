@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_nba5g")
-cooldown = 66.0
+cooldown = 28.0
 enable = true
 name = &"역류"
-description = "35데미지의 강한 밀어내기 공격을 전개하고 325px 만큼 밀려난다. 공격을 전개하기 이전의 모션을 취소하고 사용할 수 있다."
+description = "35데미지의 강한 밀어내기 공격을 전개하고 325px 만큼 뒤로 밀려난다. 공격을 전개하기 이전의 모션을 취소하고 사용할 수 있다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

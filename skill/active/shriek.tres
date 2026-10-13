@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_ncaal")
-cooldown = 72.0
+cooldown = 25.0
 name = &"절규"
 description = "사이렌 증폭기 착용 시, 사용할 수 있다. 반경 400px 내에 피격상태에 있지 않은 모든 적들이 12프레임동안 경직 상태에 빠진다. 슈퍼아머 상태를 무시한다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

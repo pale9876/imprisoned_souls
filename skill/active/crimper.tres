@@ -6,7 +6,7 @@
 script = ExtResource("1_gschx")
 cooldown = 22.0
 name = &"압착기"
-description = "강한 돌진공격을 시전한다.
+description = "사용 시, 강한 돌진공격을 시전한다.
 
 공격당한 적은 상태와 무관하게 돌진방향으로 끌고 갈 수 있고, 적을 잡은 상태에서 피격판정이 벽과 닿을 시, 적은 23프레임 동안 기절상태빠지고, 30 데미지를 받는다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

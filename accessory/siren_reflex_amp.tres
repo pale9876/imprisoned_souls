@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_6boxs")
 name = &"사이렌 증폭기"
+description = "마이크가 내장되어 있고, 소형 배터리가 고정벨트에 달린 소리 증폭기이다."
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

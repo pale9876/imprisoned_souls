@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://c42gfwlyl4noy"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_ra4kt"]
+
+[resource]
+script = ExtResource("1_ra4kt")
+cooldown = 15.0
+name = &"트랙 분쇄"
+description = "공격 성공 이후에 사용할 수 있다. 타격한 적 유닛에게15프레임의 추가적인 경직을 준다.
+
+공중에 떠 있는 적 유닛은 타격할 수 없다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

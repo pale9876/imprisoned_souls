@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ClassInformation" format=3 uid="uid://cd5gghyc1y88v"]
+
+[ext_resource type="Script" uid="uid://c28wyh63jsxd1" path="res://script/resource/class_infomation.gd" id="1_pekvw"]
+[ext_resource type="Script" uid="uid://dl4wx13qp80c4" path="res://title/class_ui_info.gd" id="2_lh0c1"]
+
+[sub_resource type="Resource" id="Resource_5ckcr"]
+script = ExtResource("2_lh0c1")
+name = "Twin"
+metadata/_custom_type_script = "uid://dl4wx13qp80c4"
+
+[resource]
+script = ExtResource("1_pekvw")
+ui_info = SubResource("Resource_5ckcr")
+metadata/_custom_type_script = "uid://c28wyh63jsxd1"

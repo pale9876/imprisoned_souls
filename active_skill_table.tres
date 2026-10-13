@@ -16,6 +16,7 @@ _scan_rulesets = Array[Dictionary]([{
 _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://baa5vs6e7es7": &"barrage_fire",
 &"uid://c0l1tlty4s8p3": &"backstep",
+&"uid://c42gfwlyl4noy": &"track_crusher",
 &"uid://chrlkxv56w0tg": &"crimper",
 &"uid://ckfvf0dj5rtvg": &"aim_at_bow",
 &"uid://ckhwokkkfesur": &"backdraft",
@@ -25,6 +26,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://m2kjfbwjec8i": &"horei_cutter",
 &"uid://qyvdvt5qdc7e": &"shriek",
 &"uid://skct45qoax7m": &"trace",
+&"uid://utta0p6e0npi": &"sticking",
 &"uid://whpasd3obxau": &"enforcement"
 })
 _string_ids_to_uids = Dictionary[StringName, StringName]({
@@ -39,5 +41,7 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"outburst": &"uid://dokclkep0q26i",
 &"recover_consciousness": &"uid://de6yr5epmjm5e",
 &"shriek": &"uid://qyvdvt5qdc7e",
-&"trace": &"uid://skct45qoax7m"
+&"sticking": &"uid://utta0p6e0npi",
+&"trace": &"uid://skct45qoax7m",
+&"track_crusher": &"uid://c42gfwlyl4noy"
 })
