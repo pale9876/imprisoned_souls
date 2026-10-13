@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://dymdgicwn42kk"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_ubiho"]
+
+[resource]
+script = ExtResource("1_ubiho")
+cooldown = 5.0
+name = &"본보기"
+description = "근처에 피격 상태에 진입해있는 10% 이하의 체력을 가진 적 유닛이 있다면, 해당 적을 즉시 처형한다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

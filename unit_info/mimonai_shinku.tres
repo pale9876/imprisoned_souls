@@ -6,6 +6,7 @@
 script = ExtResource("1_slt2k")
 last_name = &"Mimonai"
 first_name = &"Shin-Ku"
+unique = true
 race = 3
 nation = 3
 chara_class = 16

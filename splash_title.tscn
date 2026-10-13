@@ -9,14 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://c4sf7dwa0y3gg" path="res://title/title.png" id="6_qu1ad"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xt2td"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_81gl3"]
+blend_mode = 3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wqsic"]
 shader = ExtResource("4_36sv0")
 shader_parameter/blur_center = Vector2(0.5, 0.5)
 shader_parameter/blur_power = 0.0070000003325
 shader_parameter/sampling_count = 6
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_81gl3"]
 
 [node name="SplashTitle" type="Control" unique_id=951402115]
 layout_mode = 3
@@ -28,6 +29,7 @@ grow_vertical = 2
 script = ExtResource("1_hwfbh")
 
 [node name="Background" type="TextureRect" parent="." unique_id=580201948]
+visible = false
 modulate = Color(0.5330367, 0.5330367, 0.5330367, 1)
 material = SubResource("CanvasItemMaterial_xt2td")
 layout_mode = 1
@@ -55,6 +57,15 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_hwfbh")
 
+[node name="RadialBlurFilter" type="ColorRect" parent="." unique_id=556198269]
+material = SubResource("ShaderMaterial_wqsic")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Foreground" type="TextureRect" parent="." unique_id=280491511]
 material = SubResource("CanvasItemMaterial_81gl3")
 layout_mode = 1
@@ -64,15 +75,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_jmejv")
-
-[node name="RadialBlurFilter" type="ColorRect" parent="." unique_id=556198269]
-material = SubResource("ShaderMaterial_wqsic")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Player" type="Control" parent="." unique_id=439350493]
 layout_mode = 1
