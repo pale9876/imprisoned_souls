@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://de6yr5epmjm5e"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_3ewm3"]
+
+[resource]
+script = ExtResource("1_3ewm3")
+cooldown = 60.0
+enable = true
+name = &"자세회복"
+description = "피격 상태에서 회복하고, 방향키를 누른 방향으로 600px의 거리만큼 이동한다. 벽과 너무 가깝게 맞닿아 있을 때에는 무조건 해당 벽의 방향과 반대방향으로 이동한다.
+
+공중에 떠 있을 때에 순간적으로 지면으로 내려올 수 있다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

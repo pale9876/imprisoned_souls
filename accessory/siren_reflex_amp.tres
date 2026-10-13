@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://bvk1odsqkf54c"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_6boxs"]
+
+[resource]
+script = ExtResource("1_6boxs")
+name = &"사이렌 증폭기"
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

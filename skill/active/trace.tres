@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://skct45qoax7m"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_6vuxt"]
+
+[resource]
+script = ExtResource("1_6vuxt")
+cooldown = 45.0
+name = &"추격"
+description = "마지막으로 타격한 적 유닛의 30px 앞으로 빠르게 파고든다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

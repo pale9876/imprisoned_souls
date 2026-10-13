@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://whpasd3obxau"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_4gl2l"]
+
+[resource]
+script = ExtResource("1_4gl2l")
+cooldown = 24.0
+enable = true
+name = &"집행"
+description = "원거리 공격을 반격한다. 원거리 공격을 가한 적 유닛의 뒤로 이동하여 15 데미지의 띄우기 공격을 가한다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

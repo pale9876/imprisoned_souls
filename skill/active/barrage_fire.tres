@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://baa5vs6e7es7"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_v4kyr"]
+
+[resource]
+script = ExtResource("1_v4kyr")
+cooldown = 17.0
+name = &"탄막사격"
+description = "1.5배 빠른 사속으로 모든 탄약을 소비할 때까지 사격한다. 명중률은 가장 가까운 거리(100px 기준)에서 85%로 거리가 멀어질 수록 낮아지고 최소 0.2%(1000px 이상 거리 기준)까지 낮아진다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

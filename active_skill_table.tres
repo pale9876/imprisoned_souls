@@ -13,3 +13,31 @@ _scan_rulesets = Array[Dictionary]([{
 &"scan_regex_exclude": "",
 &"scan_regex_include": ""
 }])
+_uids_to_string_ids = Dictionary[StringName, StringName]({
+&"uid://baa5vs6e7es7": &"barrage_fire",
+&"uid://c0l1tlty4s8p3": &"backstep",
+&"uid://chrlkxv56w0tg": &"crimper",
+&"uid://ckfvf0dj5rtvg": &"aim_at_bow",
+&"uid://ckhwokkkfesur": &"backdraft",
+&"uid://de6yr5epmjm5e": &"recover_consciousness",
+&"uid://dek64m3ngnee8": &"counter_penetrator",
+&"uid://dokclkep0q26i": &"outburst",
+&"uid://m2kjfbwjec8i": &"horei_cutter",
+&"uid://qyvdvt5qdc7e": &"shriek",
+&"uid://skct45qoax7m": &"trace",
+&"uid://whpasd3obxau": &"enforcement"
+})
+_string_ids_to_uids = Dictionary[StringName, StringName]({
+&"aim_at_bow": &"uid://ckfvf0dj5rtvg",
+&"backdraft": &"uid://ckhwokkkfesur",
+&"backstep": &"uid://c0l1tlty4s8p3",
+&"barrage_fire": &"uid://baa5vs6e7es7",
+&"counter_penetrator": &"uid://dek64m3ngnee8",
+&"crimper": &"uid://chrlkxv56w0tg",
+&"enforcement": &"uid://whpasd3obxau",
+&"horei_cutter": &"uid://m2kjfbwjec8i",
+&"outburst": &"uid://dokclkep0q26i",
+&"recover_consciousness": &"uid://de6yr5epmjm5e",
+&"shriek": &"uid://qyvdvt5qdc7e",
+&"trace": &"uid://skct45qoax7m"
+})

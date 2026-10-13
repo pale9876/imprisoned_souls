@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://dek64m3ngnee8"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_rsh4g"]
+
+[resource]
+script = ExtResource("1_rsh4g")
+cooldown = 85.0
+enable = true
+name = &"복부 천공"
+description = "근거리 공격을 반격한다. 근거리 공격을 가한 적 유닛은 50 데미지를 받고 쓰러지고, 350px 내에 있는 가장 가까운 적 한 명을 300px 거리만큼 강하게 밀어낸다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"
