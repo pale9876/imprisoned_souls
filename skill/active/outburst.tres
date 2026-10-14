@@ -7,5 +7,5 @@ script = ExtResource("1_mk6mv")
 cooldown = 23.0
 enable = true
 name = &"아웃버스트"
-description = "출혈과 같은 상태이상 상태가 존재할 때, 모든 상태이상을 없애고, 받을 예정이었던 데미지의 75%를 반경 25px에 존재하는 모든 주변의 적 유닛에게 돌려준다. 데미지를 받은 유닛은 총 125px 만큼 밀려난다."
+description = "출혈과 같은 상태이상 상태가 존재할 때, 모든 상태이상을 없애고, 받을 예정이었던 데미지의 75%를 반경 25px에 존재하는 모든 주변의 적 유닛에게 돌려준다. 데미지를 받은 유닛은 380px 만큼 밀려난다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

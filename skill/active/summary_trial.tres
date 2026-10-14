@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_ubiho")
 cooldown = 5.0
-name = &"본보기"
-description = "근처에 피격 상태에 진입해있는 10% 이하의 체력을 가진 적 유닛이 있다면, 해당 적을 즉시 처형한다."
+name = &"즉결심판"
+description = "타격한 적이 경직상태에 빠짐과 동시에 10% 이하로 내려간다면, 해당 적을 즉시 처형한다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

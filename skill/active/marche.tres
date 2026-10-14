@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://dmfqpl4qb5sde"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_pdrih"]
+
+[resource]
+script = ExtResource("1_pdrih")
+cooldown = 36.0
+name = &"마르쉬"
+description = " 전방 275px 이내에 존재하는 가장 가까운 적에게 빠르게 파고들어 타격하고, 반경 325px 이내에 두 번째 적이 있을 시, 첫 번째 타격한 적을 끌어들여 동시에 타격한다.
+
+첫 번째 타격은 18프레임의 경직과 20의 데미지를 주고, 두 번째 타격은 30의 데미지와 함께 공중에 띄운다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"
