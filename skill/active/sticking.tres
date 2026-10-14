@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_g5j4f")
-cooldown = 12.0
+cooldown = 12
 name = &"발목잡기"
 description = "서 있는 상대의 얼굴을 잡아 땅에 내려꽂는다. 공중에 떠 있는 상대를 잡을 시에는 파운딩한다.
 

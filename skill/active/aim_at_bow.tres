@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_64k73")
-cooldown = 55.0
+cooldown = 38
 name = &"조준사격"
 description = "300px 이상의 원거리에 있는 적을 조준하여 사격한다. 피격당한 적은 공격력의 8배에 해당하는 데미지를 입고 높이 띄워진다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

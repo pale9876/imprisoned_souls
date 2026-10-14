@@ -4,7 +4,9 @@
 
 [resource]
 script = ExtResource("1_mexwc")
-cooldown = 120.0
+cooldown = 42
 name = &"콘트라파소"
-description = "모든 근거리 공격을 반격한다."
+description = "짧은 시간동안 전방향에서 오는 근거리 공격 및 원거리 공격을 무효화한다.
+
+"
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

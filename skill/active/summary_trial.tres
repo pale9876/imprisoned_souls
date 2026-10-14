@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://dymdgicwn42kk"]
 
-[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_ubiho"]
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_x2mto"]
 
 [resource]
-script = ExtResource("1_ubiho")
-cooldown = 5.0
+script = ExtResource("1_x2mto")
+cooldown = 5
 name = &"즉결심판"
-description = "타격한 적이 경직상태에 빠짐과 동시에 10% 이하로 내려간다면, 해당 적을 즉시 처형한다."
+description = "타격한 적이 경직상태에 빠짐과 동시에 5% 이하로 내려간다면, 해당 적을 즉시 처형한다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

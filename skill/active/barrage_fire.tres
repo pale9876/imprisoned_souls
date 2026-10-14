@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_v4kyr")
-cooldown = 22.0
+cooldown = 22
 name = &"탄막사격"
 description = "1.5배 빠른 사속으로 모든 탄약을 소비할 때까지 사격한다.
 타격당한 적은 10프레임의 경직에 걸린다.

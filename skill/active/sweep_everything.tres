@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_bcska")
-cooldown = 90.0
+cooldown = 66
 name = &"쓸어버려!"
 description = "현재 위치에서 바라보는 방향에 있는 모든 적 유닛에게 70데미지를 주는 공격을 전개한다. 너무 가까이 있거나 공중에 있는 적은 맞지 않는다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

@@ -4,9 +4,7 @@
 [ext_resource type="Script" uid="uid://cy5ux4udfco7" path="res://script/ae_index_library.gd" id="2_7crtr"]
 [ext_resource type="Script" uid="uid://q16mnu0o6wme" path="res://script/ware.gd" id="2_n0b8q"]
 [ext_resource type="Script" uid="uid://nmmtety5yvve" path="res://player/state_machine.gd" id="3_2ieo8"]
-[ext_resource type="PackedScene" uid="uid://bnmfkbcn7xi7m" path="res://accessory/scene/razor_blade.tscn" id="3_jfgyi"]
 [ext_resource type="Script" uid="uid://c08p61o8pw6vo" path="res://player/state/idle.gd" id="4_bvu1k"]
-[ext_resource type="PackedScene" uid="uid://u7u26xlnj3t5" path="res://accessory/scene/evans_knot.tscn" id="4_jfgyi"]
 [ext_resource type="PackedScene" uid="uid://cum6ko7v3402w" path="res://skill/passive/scene/confession.tscn" id="4_w7j2h"]
 [ext_resource type="PackedScene" uid="uid://c1uoslrnfk3vt" path="res://player/tail.tscn" id="5_7crtr"]
 [ext_resource type="Script" uid="uid://c4q85mvv6k6wb" path="res://player/state/move.gd" id="5_40lky"]
@@ -158,10 +156,6 @@ toggles = [NodePath("StateLabel")]
 [node name="Ware" type="Node" parent="." unique_id=504440058]
 script = ExtResource("2_n0b8q")
 metadata/_custom_type_script = "uid://q16mnu0o6wme"
-
-[node name="RazorBlade" parent="Ware" unique_id=117323792 instance=ExtResource("3_jfgyi")]
-
-[node name="EvansKnot" parent="Ware" unique_id=1928680161 instance=ExtResource("4_jfgyi")]
 
 [node name="AEIndexLibrary" type="Node2D" parent="." unique_id=977612540]
 script = ExtResource("2_7crtr")

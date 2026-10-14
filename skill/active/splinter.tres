@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://n6m2xbqvpxdn"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_25tsp"]
+
+[resource]
+script = ExtResource("1_25tsp")
+cooldown = 47
+name = &"쪼개버리겠어!"
+description = "100px 내에 가장 가까운 적 1체에게 100데미지를 준다. 타격당한 적이 슈퍼아머 상태일 시, 30프레임동안 기절한다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

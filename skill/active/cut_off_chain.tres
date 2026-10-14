@@ -6,5 +6,5 @@
 script = ExtResource("1_i77kf")
 cooldown = 75.0
 name = &"사슬끊기"
-description = "전방 500px 이내에 있는 모든 유닛을 베어넘긴다. 슈퍼아머 상태를 무시하고, "
+description = "전방 600px 이내에 있는 모든 유닛을 베어넘긴다. 슈퍼아머 상태를 무시하고, "
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

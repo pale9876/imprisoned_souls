@@ -5,8 +5,7 @@
 
 [resource]
 script = ExtResource("1_foul2")
-cooldown = 20.0
-enable = true
+cooldown = 31
 name = &"병목치기"
 icon = ExtResource("1_4qal3")
 description = "날붙이 적에게 피해를 입힐 때마다 표식을 남긴다. 한 번의 타격마다 3 데미지가 적립되고 5초간 유지된다. 스킬 발동 시, 적립된 데미지를 입히고 다음과 같은 효과가 발동된다.
