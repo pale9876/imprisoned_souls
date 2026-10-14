@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://cp2fudjlox8vt"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_mexwc"]
+
+[resource]
+script = ExtResource("1_mexwc")
+cooldown = 120.0
+name = &"콘트라파소"
+description = "모든 근거리 공격을 반격한다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

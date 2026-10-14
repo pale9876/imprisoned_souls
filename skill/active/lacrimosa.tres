@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://7ogb0mtx0cm3"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_jwmcg"]
+
+[resource]
+script = ExtResource("1_jwmcg")
+cooldown = 100.0
+name = &"라크리모사"
+description = "전투중인 적이 두 명 이상일 때, 가장 가까이 있는 적 1체를 12초 동안 무력화한다.
+무력화에 빠진 적은 깨어나기 1초 전까지 플레이어의 지정 공격 타겟에서 완전히 벗어난다. 하지만 플레이어어가 범위공격을 하거나 의도한 공격을 할 경우, 해당 적의 무력화가 해제된다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"

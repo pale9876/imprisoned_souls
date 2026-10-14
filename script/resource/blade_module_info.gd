@@ -22,7 +22,8 @@ enum WeaponType
 #const TICK := BladeMotionFrame.TICK
 
 
-@export var name: StringName = ""
+@export var name: StringName
+@export_multiline() var description: String
 @export var attack_range: RangeType = RangeType.CLOSE
 @export_flags(
 	"PREDATOR",

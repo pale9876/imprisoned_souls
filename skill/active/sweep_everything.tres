@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ActiveSkillInformation" format=3 uid="uid://bqtv1nbg54y6w"]
+
+[ext_resource type="Script" uid="uid://dvl7esb756qhi" path="res://script/resource/active_skill_information.gd" id="1_bcska"]
+
+[resource]
+script = ExtResource("1_bcska")
+cooldown = 90.0
+name = &"쓸어버려!"
+description = "현재 위치에서 바라보는 방향에 있는 모든 적 유닛에게 70데미지를 주는 공격을 전개한다. 너무 가까이 있거나 공중에 있는 적은 맞지 않는다."
+metadata/_custom_type_script = "uid://dvl7esb756qhi"
