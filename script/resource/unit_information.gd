@@ -72,52 +72,26 @@ enum CharacterClass {
 
 
 @export_group("초기 스탯")
-@export var speed: float = 225. # px / sec, 초당 픽셀 이동
-@export var hp: int = 1826
+@export var speed: float = 125. # px / sec, 초당 픽셀 이동
+@export var hp: int = 75
 
 
-@export_group("etc 메타데이터")
-@export var meta: Dictionary[String, Variant] = {
+#@export_group("etc 메타데이터")
+#@export var meta: Dictionary[String, Variant] = {
 	# ! 이곳에 기록되어야 할 정도
 	# - 해당 캐릭터의 성격 및 전투 기록
 	# - 부모의 인종 데이터
-}
+#}
 
 
-func add_meta(d_name: String, data: Variant) -> void:
-	meta[d_name] = data
+#func add_meta(d_name: String, data: Variant) -> void:
+	#set_meta(d_name, data)
+	#meta[d_name] = data
 
 
-func erase_meta(d_name: String) -> void:
-	if meta.has(d_name):
-		meta.erase(d_name)
-
-
-func init_npc_stat() -> void:
-	match CharacterClass:
-		CharacterClass.CLEANER || CharacterClass.CLEANER_TEAM_LEADER:
-			speed = 135.
-			hp = 920
-		
-		CharacterClass.COUNTER:
-			speed = 175.
-			hp = 1250
-		
-		CharacterClass.COUNTER_TEAM_LEADER:
-			speed = 175.
-			hp = 1860
-		
-		CharacterClass.OFFICER:
-			speed = 175.
-			hp = 720
-		
-		CharacterClass.IMPERIOR_ORDER:
-			speed
-			hp
-		
-		CharacterClass.IMPERIOR_ORDER_LEADER:
-			speed
-			hp
+#func (d_name: String) -> void:
+	#if has_meta(d_name):
+		#remove_meta()
 
 
 func get_full_name() -> String:
