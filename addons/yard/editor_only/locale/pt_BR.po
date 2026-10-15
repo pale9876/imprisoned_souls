@@ -1,4 +1,7 @@
-# Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>, 2026.
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: CC0-1.0
 #
 #, fuzzy
 msgid ""
@@ -19,6 +22,20 @@ msgstr ""
 #: addons/yard/editor_only/ui_scenes/registry_editor.tscn
 msgid "Delete Entry"
 msgstr "Excluir entrada"
+
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+msgid "Delete Entries (%s)"
+msgstr "Excluir entradas (%s)"
+
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+#: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
+#: addons/yard/editor_only/ui_scenes/registry_editor.tscn
+msgid "Duplicate Entry"
+msgstr "Duplicar entrada"
+
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+msgid "Duplicate Entries (%s)"
+msgstr "Duplicar entradas (%s)"
 
 #: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
 #: addons/yard/editor_only/ui_scenes/registry_editor.tscn
@@ -60,10 +77,15 @@ msgid "Drop resource files here to add them to the registry."
 msgstr "Solte arquivos de recurso aqui para adicioná-los ao registro."
 
 #: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
-msgid "Toggle Files Panel"
+msgid "Toggle Registries Panel"
 msgstr "Mostrar/ocultar painel de arquivos"
 
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+msgid "Auto (registry file location)"
+msgstr "Auto (local do registro)"
+
 #: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
+#: addons/yard/editor_only/ui_scenes/registry_editor.gd
 msgid "String ID"
 msgstr "ID textual"
 
@@ -285,12 +307,16 @@ msgid "Select a registry first"
 msgstr "Selecione um registro primeiro"
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.gd
-msgid "Freeze ID Columns"
-msgstr "Fixar colunas de ID"
+msgid "ID Columns"
+msgstr "Colunas de ID"
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.gd
-msgid "Keep the UID and string ID columns visible while scrolling horizontally."
-msgstr "Mantém as colunas UID e ID textual visíveis ao rolar horizontalmente."
+msgid "UID"
+msgstr "UID"
+
+#: addons/yard/editor_only/ui_scenes/registry_editor.gd
+msgid "Frozen"
+msgstr "Fixado"
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.gd
 msgid "Show Parent Properties First"
@@ -346,6 +372,7 @@ msgid "Refresh table view from the underlying registry."
 msgstr "Atualizar a visualização a partir do registro."
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.tscn
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
 msgid "Refresh"
 msgstr "Atualizar"
 
@@ -469,3 +496,100 @@ msgstr "RegEx exclusão:"
 #: addons/yard/editor_only/ui_scenes/components/scan_ruleset_editor/scan_ruleset_editor.tscn
 msgid "e.g. `\\.tscn$|\\.scn$`"
 msgstr "ex.: `\\.tscn$|\\.scn$`"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid ""
+"Be careful. This will delete the addons/yard folder and install the new version. Any custom changes in that folder will be lost.\n"
+"To be on the safe side, use version control!"
+msgstr ""
+"Cuidado. Isso excluirá a pasta addons/yard e instalará a nova versão. Quaisquer alterações personalizadas nessa pasta serão perdidas.\n"
+"Por segurança, use controle de versão!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "No Information Available"
+msgstr "Nenhuma informação disponível"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Unable to access versions."
+msgstr "Não foi possível acessar as versões."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "You are probably not connected to the internet. Fair enough."
+msgstr "Você provavelmente não está conectado à internet. Acontece."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Huh, what happened here?"
+msgstr "Hã, o que aconteceu aqui?"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "You are in the future, Marty!"
+msgstr "Você está no futuro, Marty!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid ""
+"# You are using the WIP branch!\n"
+"Seems like you are using a version that isn't even released yet. Be careful and give us your feedback ;)"
+msgstr ""
+"# Você está usando o branch de desenvolvimento!\n"
+"Parece que você está usando uma versão que nem foi lançada ainda. Tenha cuidado e nos envie seu feedback ;)"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Where are we Doc?"
+msgstr "Onde estamos, Doc?"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Update Available!"
+msgstr "Atualização disponível!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "You are up to date:"
+msgstr "Você está atualizado:"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Published on {release_date} by {author}"
+msgstr "Publicado em {release_date} por {author}"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Installed successfully. Restart needed!"
+msgstr "Instalado com sucesso. Reinicialização necessária!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Download failed."
+msgstr "Falha no download."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Stable"
+msgstr "Estável"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Prerelease"
+msgstr "Pré-lançamento"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Downloading. This can take a moment."
+msgstr "Baixando. Isso pode levar um momento."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "YARD Update"
+msgstr "Atualização do YARD"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Close"
+msgstr "Fechar"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Update channel"
+msgstr "Canal de atualização"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Read Full Announcement"
+msgstr "Ler o anúncio completo"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Restart Now"
+msgstr "Reiniciar agora"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Install"
+msgstr "Instalar"

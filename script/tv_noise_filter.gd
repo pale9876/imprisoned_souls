@@ -9,7 +9,8 @@ const NOISE_SHADER: Shader = preload("uid://ba4s1slehob3e")
 @export_range(0., 1., .001) var alpha: float:
 	set(val):
 		alpha = val
-		(material as ShaderMaterial).set_shader_parameter("alpha", val)
+		if material:
+			(material as ShaderMaterial).set_shader_parameter("alpha", val)
 
 @export var _toggle: bool = false:
 	set(tog):

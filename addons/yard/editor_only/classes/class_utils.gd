@@ -1,9 +1,9 @@
+# SPDX-FileCopyrightText: 2025, Wagner Ferreira (WagnerGFX) <https://github.com/WagnerGFX/gdscript_utilities>
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
 extends Object
-
-# MIT LICENSE
-# Copyright (c) 2025 Wagner GFX
-# https://github.com/WagnerGFX/gdscript_utilities
-
 ## Provides utility functions to handle types directly, instead of instances or variables.
 ##
 ## This class supports user-created [Script]s and Native Classes like [Object], [Resource] and [Node].
@@ -11,12 +11,69 @@ extends Object
 ## they will probably show as a basic type, like [RefCounted] or [GDScript].
 ## [br]Only Native Classes exposed to GDScript are supported.
 
+const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
+const Compat := Namespace.Compat
+
 const _SCRIPT_BODY_EDITOR := "static func eval():
 	var class_type = %s
 	var _class_object : %s
 	return class_type"
 
 const _SCRIPT_BODY_RUNTIME := "static func eval(): return %s"
+
+## Conversions applied by [method convert_implicitly]: value type -> declared types it converts to.
+## Conversions to String are handled separately, for any value.
+const _IMPLICIT_CONVERSIONS: Dictionary[Variant.Type, Array] = {
+	TYPE_BOOL: [TYPE_INT],
+	TYPE_INT: [TYPE_FLOAT, TYPE_BOOL],
+	TYPE_FLOAT: [TYPE_INT],
+	TYPE_STRING: [TYPE_STRING_NAME],
+	TYPE_VECTOR2: [TYPE_VECTOR2I],
+	TYPE_VECTOR2I: [TYPE_VECTOR2],
+	TYPE_VECTOR3: [TYPE_VECTOR3I],
+	TYPE_VECTOR3I: [TYPE_VECTOR3],
+	TYPE_VECTOR4: [TYPE_VECTOR4I],
+	TYPE_VECTOR4I: [TYPE_VECTOR4],
+	TYPE_RECT2: [TYPE_RECT2I],
+	TYPE_RECT2I: [TYPE_RECT2],
+	TYPE_ARRAY: [
+		TYPE_PACKED_BYTE_ARRAY,
+		TYPE_PACKED_INT32_ARRAY,
+		TYPE_PACKED_INT64_ARRAY,
+		TYPE_PACKED_FLOAT32_ARRAY,
+		TYPE_PACKED_FLOAT64_ARRAY,
+		TYPE_PACKED_STRING_ARRAY,
+		TYPE_PACKED_VECTOR2_ARRAY,
+		TYPE_PACKED_VECTOR3_ARRAY,
+		TYPE_PACKED_COLOR_ARRAY,
+		TYPE_PACKED_VECTOR4_ARRAY,
+	],
+	TYPE_PACKED_BYTE_ARRAY: [TYPE_ARRAY],
+	TYPE_PACKED_INT32_ARRAY: [
+		TYPE_ARRAY,
+		TYPE_PACKED_INT64_ARRAY,
+		TYPE_PACKED_FLOAT32_ARRAY,
+		TYPE_PACKED_FLOAT64_ARRAY,
+	],
+	TYPE_PACKED_INT64_ARRAY: [TYPE_ARRAY, TYPE_PACKED_FLOAT32_ARRAY, TYPE_PACKED_FLOAT64_ARRAY],
+	TYPE_PACKED_FLOAT32_ARRAY: [
+		TYPE_ARRAY,
+		TYPE_PACKED_INT32_ARRAY,
+		TYPE_PACKED_INT64_ARRAY,
+		TYPE_PACKED_FLOAT64_ARRAY,
+	],
+	TYPE_PACKED_FLOAT64_ARRAY: [
+		TYPE_ARRAY,
+		TYPE_PACKED_INT32_ARRAY,
+		TYPE_PACKED_INT64_ARRAY,
+		TYPE_PACKED_FLOAT32_ARRAY,
+	],
+	TYPE_PACKED_STRING_ARRAY: [TYPE_ARRAY],
+	TYPE_PACKED_VECTOR2_ARRAY: [TYPE_ARRAY],
+	TYPE_PACKED_VECTOR3_ARRAY: [TYPE_ARRAY],
+	TYPE_PACKED_COLOR_ARRAY: [TYPE_ARRAY],
+	TYPE_PACKED_VECTOR4_ARRAY: [TYPE_ARRAY],
+}
 
 
 ## Returns the inheritance tree of a class type reference or name.
@@ -71,7 +128,10 @@ static func get_inheritance_list(class_type: Variant, include_self: bool = false
 	return inheritance_list
 
 
-static func get_script_inheritance_list(script: Script, include_self: bool = false) -> Array[Script]:
+static func get_script_inheritance_list(
+	script: Script,
+	include_self: bool = false,
+) -> Array[Script]:
 	var result: Array[Script] = []
 	var current: Script = script.get_base_script() if not include_self else script
 
@@ -87,12 +147,17 @@ static func get_script_inheritance_list(script: Script, include_self: bool = fal
 ## [code]resource_path[/code] if no [code]class_name[/code] is declared.
 ## Native class ancestors are appended after the script chain.
 ## [br]If [param include_self] is [code]true[/code], [param script] itself is included first.
-static func get_script_inheritance_list_strings(script: Script, include_self: bool = false) -> Array[String]:
+static func get_script_inheritance_list_strings(
+	script: Script,
+	include_self: bool = false,
+) -> Array[String]:
 	var inheritance_list_builtin := get_inheritance_list(script)
 	var inheritance_script_list := get_script_inheritance_list(script, include_self)
 	var inheritance_script_list_string: Array[String]
 	for s: Script in inheritance_script_list:
-		inheritance_script_list_string.append(str(s.get_global_name()) if s.get_global_name() else s.resource_path)
+		inheritance_script_list_string.append(
+			str(s.get_global_name()) if s.get_global_name() else s.resource_path
+		)
 
 	return inheritance_script_list_string + inheritance_list_builtin
 
@@ -110,9 +175,11 @@ static func sort_by_inheritance(classes_names: Array[String]) -> Array[String]:
 	var cache := { }
 	var ancestors_of := func(entry: String) -> Array:
 		if entry not in cache:
-			cache[entry] = (get_script_inheritance_list_strings(load(entry), false)
+			cache[entry] = (
+				get_script_inheritance_list_strings(load(entry), false)
 				if entry.begins_with("res://")
-				else get_inheritance_list(entry, false) )
+				else get_inheritance_list(entry, false)
+			)
 		return cache[entry]
 
 	# Build graph: edge i→j means class[i] is ancestor of class[j] (must come before)
@@ -130,7 +197,12 @@ static func sort_by_inheritance(classes_names: Array[String]) -> Array[String]:
 	# Kahn's topological sort
 	var queue: Array[int]
 	var result: Array[String] = []
-	queue.assign(range(n).filter(func(i: int) -> bool: return in_degree[i] == 0))
+	queue.assign(
+		range(n).filter(
+			func(i: int) -> bool:
+				return in_degree[i] == 0,
+		)
+	)
 	while not queue.is_empty():
 		var idx: int = queue.pop_front()
 		result.append(classes_names[idx])
@@ -165,9 +237,8 @@ static func get_class_name_or_path_from_prop(property_info: Dictionary) -> Strin
 ## from [method Object.get_property_list].
 static func is_class_property(property_info: Dictionary) -> bool:
 	return (
-		property_info[&"name"] != ""
-		and property_info[&"type"] == TYPE_NIL
-		and property_info[&"usage"] & (PROPERTY_USAGE_CATEGORY | PROPERTY_USAGE_GROUP) != 0
+		property_info[&"name"] != "" and property_info[&"type"] == TYPE_NIL
+		and property_info[&"usage"] & PROPERTY_USAGE_CATEGORY != 0
 		and property_info[&"hint_string"] != ""
 	)
 
@@ -183,7 +254,7 @@ static func get_type_name(obj: Variant) -> String:
 		obj = obj.get_script()
 
 	if obj is Script:
-		if is_engine_version_equal_or_newer(4, 3):
+		if Compat.is_engine_version_equal_or_newer(4, 3):
 			class_type_name = obj.get_global_name()
 		else:
 			for inner_script in ProjectSettings.get_global_class_list():
@@ -230,8 +301,7 @@ static func get_type(classname: String) -> Object:
 				break
 
 	elif (
-		ClassDB.class_exists(classname)
-		and ClassDB.is_class_enabled(classname)
+		ClassDB.class_exists(classname) and ClassDB.is_class_enabled(classname)
 		#and not GDScriptUtilities.native_classes_invalid.has(classname)
 	):
 		result = get_type_unsafe(classname)
@@ -341,7 +411,6 @@ static func get_class_property_names(class_type: Variant) -> Array[String]:
 		if obj is Script:
 			var script := obj as Script
 			var script_props := script.get_script_property_list()
-			#print(script_props)
 			for p in script_props:
 				if not p.name.is_empty() and not p.type == TYPE_NIL:
 					prop_names.append(p.name)
@@ -389,8 +458,7 @@ static func _get_typed_array_name(value: Array) -> String:
 static func _get_typed_dictionary_name(value: Dictionary) -> String:
 	var dictionary_name := type_string(typeof(value))
 
-	# Before Godot v4.4
-	if is_engine_version_older(4, 4):
+	if Compat.is_engine_version_older(4, 4):
 		return dictionary_name
 
 	# Not a typed Dictionary
@@ -422,20 +490,9 @@ static func _get_typed_dictionary_name(value: Dictionary) -> String:
 	return "%s[%s,%s]" % [dictionary_name, dictionary_key_type_name, dictionary_value_type_name]
 
 
-## Return true if the current engine version is equal or newer compared to the values provided
-static func is_engine_version_equal_or_newer(major: int, minor: int = 0, patch: int = 0) -> bool:
-	var engine_ver: Dictionary = Engine.get_version_info()
-	return engine_ver.major >= major and engine_ver.minor >= minor and engine_ver.patch >= patch
-
-
-## Return true if the current engine version is older compared to the values provided
-static func is_engine_version_older(major: int, minor: int = 0, patch: int = 0) -> bool:
-	return not is_engine_version_equal_or_newer(major, minor, patch)
-
-
 ## Returns all declared types of a property as an array of strings (e.g. ["int"], ["BaseMaterial3D","ShaderMaterial"], ...).
-static func get_property_declared_types(target: Variant, property_name: String) -> Array:
-	var types := []
+static func get_property_declared_types(target: Variant, property_name: String) -> Array[String]:
+	var types: Array[String] = []
 	var target_obj: Object = null
 	if target is String:
 		target_obj = get_type(target)
@@ -466,6 +523,31 @@ static func get_property_declared_types(target: Variant, property_name: String) 
 			for s in str(p["hint_string"]).split(","):
 				types.append(s.strip_edges())
 	return types
+
+
+## Converts [param value] to one of [param declared_types] (see [method get_property_declared_types])
+## when an implicit conversion is supported: any value to String, or one listed in
+## [constant _IMPLICIT_CONVERSIONS]. Unlike [method @GlobalScope.type_convert], returns [param value]
+## unchanged when no conversion applies, so that [method is_assignable] rejects it.
+static func convert_implicitly(value: Variant, declared_types: Array[String]) -> Variant:
+	if type_string(TYPE_STRING) in declared_types:
+		return str(value)
+	for target_type: Variant.Type in _IMPLICIT_CONVERSIONS.get(typeof(value), []):
+		if type_string(target_type) in declared_types:
+			return type_convert(value, target_type)
+	return value
+
+
+## True if [param value] can be assigned to a property declared with one of [param declared_types]
+## (see [method get_property_declared_types]). [code]null[/code] is assignable to any class type.
+static func is_assignable(value: Variant, declared_types: Array[String]) -> bool:
+	for declared_type: String in declared_types:
+		if (
+			(is_type_builtin(typeof(value)) and type_string(typeof(value)) == declared_type)
+			or is_class_of(value, declared_type) or (value == null and is_valid(declared_type))
+		):
+			return true
+	return false
 
 
 ## Returns the default (zero/empty) value for a given built-in Variant type.

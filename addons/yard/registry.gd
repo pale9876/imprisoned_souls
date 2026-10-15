@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 @icon("res://addons/yard/editor_only/assets/yard.svg")
 @warning_ignore_start("unused_private_class_variable")
@@ -159,7 +164,7 @@ func get_string_id(id: StringName) -> StringName:
 func get_string_id_of(res: Resource) -> StringName:
 	if not res or res.resource_path.is_empty():
 		return &""
-	var uid := ResourceUID.path_to_uid(res.resource_path)
+	var uid := ResourceUID.id_to_text(ResourceLoader.get_resource_uid(res.resource_path))
 	return _uids_to_string_ids.get(StringName(uid), &"")
 
 
@@ -180,9 +185,9 @@ func get_indexed_properties() -> Array[StringName]:
 ## [param type_hint] and [param cache_mode] are passed down to
 ## [method ResourceLoader.load].
 func load_entry(
-		id: StringName,
-		type_hint: String = "",
-		cache_mode: ResourceLoader.CacheMode = ResourceLoader.CACHE_MODE_REUSE,
+	id: StringName,
+	type_hint: String = "",
+	cache_mode: ResourceLoader.CacheMode = ResourceLoader.CACHE_MODE_REUSE,
 ) -> Resource:
 	var uid := get_uid(id)
 	if uid == &"" or not ResourceLoader.exists(uid):
@@ -198,18 +203,14 @@ func load_entry(
 ## [param type_hint] and [param cache_mode] are passed down to
 ## [method ResourceLoader.load].
 func load_all_blocking(
-		type_hint: String = "",
-		cache_mode: ResourceLoader.CacheMode = ResourceLoader.CACHE_MODE_REUSE,
+	type_hint: String = "",
+	cache_mode: ResourceLoader.CacheMode = ResourceLoader.CACHE_MODE_REUSE,
 ) -> Dictionary[StringName, Resource]:
 	var dict: Dictionary[StringName, Resource] = { }
 
 	for uid in get_all_uids():
 		if not uid == &"" and ResourceLoader.exists(uid):
-			dict[_uids_to_string_ids[uid]] = ResourceLoader.load(
-				uid,
-				type_hint,
-				cache_mode,
-			)
+			dict[_uids_to_string_ids[uid]] = ResourceLoader.load(uid, type_hint, cache_mode)
 
 	return dict
 
@@ -219,9 +220,9 @@ func load_all_blocking(
 ## and retrieve loaded resources as they become available.[br][br]
 ## See also [method ResourceLoader.load_threaded_request].
 func load_all_threaded_request(
-		type_hint: String = "",
-		use_sub_threads: bool = false,
-		cache_mode := ResourceLoader.CACHE_MODE_REUSE,
+	type_hint: String = "",
+	use_sub_threads: bool = false,
+	cache_mode := ResourceLoader.CACHE_MODE_REUSE,
 ) -> RegistryLoadTracker:
 	var tracker := RegistryLoadTracker.new()
 
@@ -413,18 +414,29 @@ class RegistryLoadTracker extends RefCounted:
 
 
 	func _poll() -> void:
-		var n_res_requested := 0
-		var n_res_loaded := 0.0 # allow fractional loading progress
-		for uid: String in __uids.values():
-			var res_progress := []
-			if not __requested[uid]:
-				continue
-			n_res_requested += 1
-			__status[uid] = ResourceLoader.load_threaded_get_status(uid, res_progress)
-			n_res_loaded += res_progress[0]
-			if (
-				__status[uid] == ResourceLoader.THREAD_LOAD_LOADED
-				and __resources[uid] == null
-			):
-				__resources[uid] = ResourceLoader.load_threaded_get(uid)
-		__progress = n_res_loaded / n_res_requested
+		if __requested.is_empty():
+			return
+
+		var n_res_loaded := 0.0
+
+		for string_id: String in __requested:
+			match __status[string_id]:
+				ResourceLoader.THREAD_LOAD_LOADED:
+					# Needed branch because after calling `ResourceLoader.load_threaded_get(uid)`,
+					# The status for the resource is automatically reset to THREAD_LOAD_INVALID_RESOURCE
+					n_res_loaded += 1.0
+				ResourceLoader.THREAD_LOAD_INVALID_RESOURCE, ResourceLoader.THREAD_LOAD_FAILED:
+					pass
+				ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+					var uid: String = __uids[string_id]
+					var res_progress := [] # used as an output parameter
+					var new_status := ResourceLoader.load_threaded_get_status(uid, res_progress)
+					n_res_loaded += res_progress.front()
+					__status[string_id] = new_status
+					if (
+						new_status == ResourceLoader.THREAD_LOAD_LOADED
+						and __resources[string_id] == null
+					):
+						__resources[string_id] = ResourceLoader.load_threaded_get(uid)
+
+		__progress = n_res_loaded / __requested.size()

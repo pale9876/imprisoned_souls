@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends ConfirmationDialog
 
@@ -6,24 +11,29 @@ extends ConfirmationDialog
 
 signal settings_saved
 
-enum RegistryDialogState { NEW_REGISTRY, REGISTRY_SETTINGS }
-enum FileDialogState { CLASS_RESTRICTION, SCAN_DIRECTORY, REGISTRY_PATH }
+enum RegistryDialogState {
+	NEW_REGISTRY,
+	REGISTRY_SETTINGS,
+}
+enum FileDialogState {
+	CLASS_RESTRICTION,
+	SCAN_DIRECTORY,
+	REGISTRY_PATH,
+}
 
 const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
 const SCAN_RULESET_EDITOR := preload("./scan_ruleset_editor/scan_ruleset_editor.tscn")
 const ScanRulesetEditor := preload("./scan_ruleset_editor/scan_ruleset_editor.gd")
 const RegistryIO := Namespace.RegistryIO
 const ClassUtils := Namespace.ClassUtils
+const YardLogger := Namespace.YardLogger
 const AnyIcon := Namespace.AnyIcon
 const DEFAULT_COLOR = Color(0.71, 0.722, 0.745, 1.0)
 const SUCCESS_COLOR = Color(0.45, 0.95, 0.5)
 const WARNING_COLOR = Color(0.83, 0.78, 0.62)
 const ERROR_COLOR = Color(1, 0.47, 0.42)
 
-const ADVANCED_REGISTRY_PROPERTIES: Array[StringName] = [
-	&"auto_rescan",
-	&"remove_unmatched",
-]
+const ADVANCED_REGISTRY_PROPERTIES: Array[StringName] = [&"remove_unmatched"]
 
 # would be a constant if not for the `tr()`
 # TODO: update some strings + translations to account for multiple defined classes/directories +
@@ -31,34 +41,75 @@ const ADVANCED_REGISTRY_PROPERTIES: Array[StringName] = [
 var INFO_MESSAGES: Dictionary[StringName, Array] = {
 	# --- Class restriction ---
 	&"class_valid": [tr("Class/script is a Resource subclass."), SUCCESS_COLOR],
-	&"class_invalid": [tr("Invalid class/script. Expected a Resource subclass (built-in, class_name, or [u]quoted[/u] script path)."), ERROR_COLOR],
-	&"class_empty": [tr("No class filter, all Resource files will be accepted to the registry."), WARNING_COLOR],
-
+	&"class_invalid": [
+		tr(
+			"Invalid class/script. Expected a Resource subclass (built-in, class_name, or [u]quoted[/u] script path)."
+		),
+		ERROR_COLOR,
+	],
+	&"class_empty": [
+		tr("No class filter, all Resource files will be accepted to the registry."),
+		WARNING_COLOR,
+	],
 	# --- Scan directory ---
 	&"scan_valid": [tr("Scan directory valid. Will watch for new Resources…"), SUCCESS_COLOR],
-	&"scan_root_warning": [tr("Scan directory is set to the project root ([code]res://[/code]). This will scan the entire project on every file save, which may cause significant editor lag."), WARNING_COLOR],
+	&"scan_root_warning": [
+		tr(
+			"Scan directory is set to the project root ([code]res://[/code]). This will scan the entire project on every file save, which may cause significant editor lag."
+		),
+		WARNING_COLOR,
+	],
 	&"scan_invalid": [tr("Scan directory invalid. Pick an existing directory."), ERROR_COLOR],
 	&"scan_empty": [tr("No scan directory, resources auto-discovery is disabled."), DEFAULT_COLOR],
-
 	# --- Allowed file extensions ---
-	&"file_extensions_none": [tr("File extension restrictions are optional. Separate multiple extensions with commas."), DEFAULT_COLOR],
-	&"file_extensions_valid": [tr("File extension filter active. Scan will be limited to matching extensions."), SUCCESS_COLOR],
-	&"file_extensions_empty_extension": [tr("Empty file extension detected. Remove extra commas."), ERROR_COLOR],
-	&"file_extensions_invalid_character": [tr("Invalid file extension detected. Remove disallowed characters."), ERROR_COLOR],
-
+	&"file_extensions_none": [
+		tr("File extension restrictions are optional. Separate multiple extensions with commas."),
+		DEFAULT_COLOR,
+	],
+	&"file_extensions_valid": [
+		tr("File extension filter active. Scan will be limited to matching extensions."),
+		SUCCESS_COLOR,
+	],
+	&"file_extensions_empty_extension": [
+		tr("Empty file extension detected. Remove extra commas."),
+		ERROR_COLOR,
+	],
+	&"file_extensions_invalid_character": [
+		tr("Invalid file extension detected. Remove disallowed characters."),
+		ERROR_COLOR,
+	],
 	# --- Scan regex ---
-	&"regex_include_valid": [tr("Include filter active. Only matching paths will be scanned."), SUCCESS_COLOR],
+	&"regex_include_valid": [
+		tr("Include filter active. Only matching paths will be scanned."),
+		SUCCESS_COLOR,
+	],
 	&"regex_include_invalid": [tr("Invalid include regex pattern."), ERROR_COLOR],
-	&"regex_exclude_valid": [tr("Exclude filter active. Matching paths will be skipped."), SUCCESS_COLOR],
+	&"regex_exclude_valid": [
+		tr("Exclude filter active. Matching paths will be skipped."),
+		SUCCESS_COLOR,
+	],
 	&"regex_exclude_invalid": [tr("Invalid exclude regex pattern."), ERROR_COLOR],
-
 	# --- Indexed properties ---
-	&"properties_none": [tr("Indexed properties are optional. Separate multiple properties with commas."), DEFAULT_COLOR],
-	&"properties_valid": [tr("All properties found on the specified resource class."), SUCCESS_COLOR],
-	&"properties_empty_prop": [tr("Empty property name detected. Remove extra commas."), ERROR_COLOR],
-	&"properties_class_type_mismatch": [tr("Property '{prop}' is declared on multiple classes with different types."), WARNING_COLOR],
-	&"properties_cant_verify": [tr("Property '{prop}' may not exist on class {class_n}."), WARNING_COLOR],
-
+	&"properties_none": [
+		tr("Indexed properties are optional. Separate multiple properties with commas."),
+		DEFAULT_COLOR,
+	],
+	&"properties_valid": [
+		tr("All properties found on the specified resource class."),
+		SUCCESS_COLOR,
+	],
+	&"properties_empty_prop": [
+		tr("Empty property name detected. Remove extra commas."),
+		ERROR_COLOR,
+	],
+	&"properties_class_type_mismatch": [
+		tr("Property '{prop}' is declared on multiple classes with different types."),
+		WARNING_COLOR,
+	],
+	&"properties_cant_verify": [
+		tr("Property '{prop}' may not exist on class {class_n}."),
+		WARNING_COLOR,
+	],
 	# --- Registry path ---
 	&"path_available": [tr("Will create a new registry file."), SUCCESS_COLOR],
 	&"path_invalid": [tr("Filename is invalid."), ERROR_COLOR],
@@ -77,8 +128,6 @@ var _add_ruleset_tab: ReferenceRect
 @onready var global_settings_container: PanelContainer = %GlobalSettingsContainer
 @onready var new_restriction_confirmation_dialog: ConfirmationDialog = %NewRestrictionConfirmationDialog
 @onready var indexed_properties_line_edit: LineEdit = %IndexedPropertiesLineEdit
-@onready var auto_rescan_label: Label = %AutoRescanLabel
-@onready var auto_rescan_check_box: CheckBox = %AutoRescanCheckBox
 @onready var scan_remove_unlisted_label: Label = %ScanRemoveUnlistedLabel
 @onready var scan_remove_unlisted_check_box: CheckBox = %ScanRemoveUnlistedCheckBox
 @onready var default_ruleset_editor: ScanRulesetEditor = %DefaultRulesetEditor
@@ -89,7 +138,6 @@ var _add_ruleset_tab: ReferenceRect
 @onready var info_label: RichTextLabel = %InfoLabel
 
 @onready var advanced_registry_properties_to_controls: Dictionary[StringName, Array] = {
-	&"auto_rescan": [auto_rescan_label, auto_rescan_check_box],
 	&"remove_unmatched": [scan_remove_unlisted_label, scan_remove_unlisted_check_box],
 }
 
@@ -108,11 +156,17 @@ func _ready() -> void:
 		return
 
 	add_theme_stylebox_override(&"panel", get_theme_stylebox(&"panel", &"EditorSettingsDialog"))
-	global_settings_container.add_theme_stylebox_override(&"panel", get_theme_stylebox(&"BottomPanel", &"EditorStyles"))
-	for check_box: CheckBox in [auto_rescan_check_box, scan_remove_unlisted_check_box]:
+	global_settings_container.add_theme_stylebox_override(
+		&"panel",
+		get_theme_stylebox(&"BottomPanel", &"EditorStyles"),
+	)
+	for check_box: CheckBox in [scan_remove_unlisted_check_box]:
 		check_box.add_theme_stylebox_override(&"focus", get_theme_stylebox(&"focus", &"LineEdit"))
 		for override: StringName in [&"normal", &"hover", &"pressed", &"hover_pressed"]:
-			check_box.add_theme_stylebox_override(override, get_theme_stylebox(&"normal", &"LineEdit"))
+			check_box.add_theme_stylebox_override(
+				override,
+				get_theme_stylebox(&"normal", &"LineEdit"),
+			)
 
 	about_to_popup.connect(_on_about_to_popup)
 	_file_dialog = EditorFileDialog.new()
@@ -127,7 +181,10 @@ func _ready() -> void:
 
 	_add_ruleset_tab = ReferenceRect.new()
 	scan_rulesets_tab_container.add_child(_add_ruleset_tab)
-	scan_rulesets_tab_container.set_tab_icon(_add_ruleset_tab.get_index(), get_theme_icon(&"Add", &"EditorIcons"))
+	scan_rulesets_tab_container.set_tab_icon(
+		_add_ruleset_tab.get_index(),
+		get_theme_icon(&"Add", &"EditorIcons"),
+	)
 	scan_rulesets_tab_container.set_tab_title(_add_ruleset_tab.get_index(), "")
 
 	hide()
@@ -144,7 +201,6 @@ func popup_with_state(state: RegistryDialogState, dir: String = "") -> void:
 	_state = state
 	if state == RegistryDialogState.NEW_REGISTRY:
 		var default_settings := RegistryIO.RegistrySettings.new() # to use default values
-		auto_rescan_check_box.button_pressed = default_settings.auto_rescan
 		scan_remove_unlisted_check_box.button_pressed = default_settings.remove_unmatched
 		indexed_properties_line_edit.text = default_settings.indexed_props
 		title = "Create Registry"
@@ -160,7 +216,6 @@ func popup_with_state(state: RegistryDialogState, dir: String = "") -> void:
 	elif edited_registry and state == RegistryDialogState.REGISTRY_SETTINGS:
 		var settings := RegistryIO.get_registry_settings(edited_registry)
 		indexed_properties_line_edit.text = settings.indexed_props
-		auto_rescan_check_box.button_pressed = settings.auto_rescan
 		scan_remove_unlisted_check_box.button_pressed = settings.remove_unmatched
 		default_ruleset_editor.reset_properties(settings.default_scan_ruleset)
 		for additional_ruleset in settings.additional_scan_rulesets:
@@ -182,11 +237,17 @@ func popup_with_state(state: RegistryDialogState, dir: String = "") -> void:
 				break
 
 		if not any_existing_advanced_settings:
-			any_existing_advanced_settings = ScanRulesetEditor.are_any_advanced_ruleset_settings_set(settings.default_scan_ruleset, default_settings.default_scan_ruleset)
+			any_existing_advanced_settings = ScanRulesetEditor.are_any_advanced_ruleset_settings_set(
+				settings.default_scan_ruleset,
+				default_settings.default_scan_ruleset,
+			)
 
 		if not any_existing_advanced_settings:
 			for additional_ruleset in settings.additional_scan_rulesets:
-				any_existing_advanced_settings = ScanRulesetEditor.are_any_advanced_ruleset_settings_set(additional_ruleset, default_settings.default_scan_ruleset)
+				any_existing_advanced_settings = ScanRulesetEditor.are_any_advanced_ruleset_settings_set(
+					additional_ruleset,
+					default_settings.default_scan_ruleset,
+				)
 				if any_existing_advanced_settings:
 					break
 
@@ -202,7 +263,6 @@ func popup_with_state(state: RegistryDialogState, dir: String = "") -> void:
 func _build_settings() -> RegistryIO.RegistrySettings:
 	var settings := RegistryIO.RegistrySettings.new()
 	settings.indexed_props = indexed_properties_line_edit.text.strip_edges()
-	settings.auto_rescan = auto_rescan_check_box.button_pressed
 	settings.remove_unmatched = scan_remove_unlisted_check_box.button_pressed
 	settings.default_scan_ruleset = default_ruleset_editor._build_ruleset()
 	for additional_ruleset_editor in _additional_scan_ruleset_editors_list:
@@ -234,7 +294,9 @@ func _validate_fields() -> void:
 		for i in all_ruleset_validation_step_states.size():
 			var ruleset_validation_step_state: Array = all_ruleset_validation_step_states[i]
 			var step_validation_results := ruleset_validation_results[i]
-			var step_validation_state: ScanRulesetEditor.ValidationSubState = step_validation_results[0]
+			var step_validation_state: ScanRulesetEditor.ValidationSubState = step_validation_results[
+				0
+			]
 			var step_message_key: StringName = step_validation_results[1]
 
 			if ruleset_validation_step_state.is_empty(): # The first results for this validation step
@@ -244,10 +306,17 @@ func _validate_fields() -> void:
 				ruleset_validation_step_state.append(new_message_keys_dict)
 				continue
 
-			var previous_validation_state: ScanRulesetEditor.ValidationSubState = ruleset_validation_step_state[0]
-			var previous_validation_message_keys: Dictionary[StringName, int] = ruleset_validation_step_state[1]
+			var previous_validation_state: ScanRulesetEditor.ValidationSubState = ruleset_validation_step_state[
+				0
+			]
+			var previous_validation_message_keys: Dictionary[StringName, int] = ruleset_validation_step_state[
+				1
+			]
 			if step_validation_state == previous_validation_state: # Same state severity, so add this message + increment its count
-				previous_validation_message_keys[step_message_key] = previous_validation_message_keys.get(step_message_key, 0) + 1
+				previous_validation_message_keys[step_message_key] = previous_validation_message_keys.get(
+					step_message_key,
+					0,
+				) + 1
 			elif step_validation_state > previous_validation_state: # More severe (e.g. Error > Warning)
 				ruleset_validation_step_state[0] = step_validation_state
 				previous_validation_message_keys.clear()
@@ -255,7 +324,9 @@ func _validate_fields() -> void:
 
 	# Show the corresponding (most severe) info messages for each ruleset validation step
 	for ruleset_validation_step_state: Array in all_ruleset_validation_step_states:
-		var step_validation_state: ScanRulesetEditor.ValidationSubState = ruleset_validation_step_state[0]
+		var step_validation_state: ScanRulesetEditor.ValidationSubState = ruleset_validation_step_state[
+			0
+		]
 		var step_message_keys: Dictionary[StringName, int] = ruleset_validation_step_state[1]
 
 		for message_key in step_message_keys:
@@ -281,8 +352,16 @@ func _validate_fields() -> void:
 		info_messages.append(INFO_MESSAGES.properties_none)
 	else:
 		indexed_props.assign(indexed_properties_string.split(",", true))
-		indexed_props.assign(indexed_props.map(func(s: String) -> String: return s.strip_edges()))
-		if indexed_props.any(func(s: String) -> bool: return s.is_empty()):
+		indexed_props.assign(
+			indexed_props.map(
+				func(s: String) -> String:
+					return s.strip_edges(),
+			)
+		)
+		if indexed_props.any(
+			func(s: String) -> bool:
+				return s.is_empty(),
+		):
 			_invalidate(info_messages, &"properties_empty_prop")
 		else:
 			# For every mismatched property, track its name, and an array of the different expected
@@ -290,7 +369,6 @@ func _validate_fields() -> void:
 			# TODO: Actually implement & test this mismatched types check!
 			var props_per_class: Dictionary[StringName, Array] = { }
 			#var mismatched_property_types: Dictionary[String, Array] = { }
-
 			for ruleset_editor in _all_ruleset_editors:
 				var ruleset_unique_class_strings := ruleset_editor.get_unique_class_strings()
 				for class_string in ruleset_unique_class_strings:
@@ -304,7 +382,9 @@ func _validate_fields() -> void:
 						classes_without_prop.append(class_n)
 				if not classes_without_prop.is_empty():
 					var msg := INFO_MESSAGES.properties_cant_verify.duplicate()
-					msg[0] = tr(msg[0]).format({ "prop": prop, "class_n": ", ".join(classes_without_prop) })
+					msg[0] = tr(msg[0]).format(
+						{ "prop": prop, "class_n": ", ".join(classes_without_prop) }
+					)
 					info_messages.append(msg)
 
 	if _state == RegistryDialogState.REGISTRY_SETTINGS:
@@ -333,7 +413,10 @@ func _invalidate(info_messages: Array[Array], key: StringName) -> void:
 
 # TODO: consider cleaned up approach w/_invalidate above. This updated approach lets us modify the
 # info message before invalidation in case additional details are needed.
-func _invalidate_with_full_info_message(info_messages: Array[Array], new_info_message: Array) -> void:
+func _invalidate_with_full_info_message(
+	info_messages: Array[Array],
+	new_info_message: Array,
+) -> void:
 	get_ok_button().disabled = true
 	info_messages.append(new_info_message)
 
@@ -356,7 +439,9 @@ func _fill_info_label(info_messages: Array[Array]) -> void:
 		var message: Array = info_messages[i]
 		var text: String = message[0]
 		var color: Color = message[1]
-		var applicable_ruleset_editors_count: int = message[2] if show_ruleset_editors_count and message.size() >= 3 else -1
+		var applicable_ruleset_editors_count: int = message[2] if (
+			show_ruleset_editors_count and message.size() >= 3
+		) else -1
 
 		info_label.push_color(color)
 		info_label.append_text("• " + tr(text))
@@ -365,7 +450,10 @@ func _fill_info_label(info_messages: Array[Array]) -> void:
 		info_label.pop()
 
 
-func _open_file_dialog_as_class_restriction(restriction: String, ruleset_editor: ScanRulesetEditor) -> void:
+func _open_file_dialog_as_class_restriction(
+	restriction: String,
+	ruleset_editor: ScanRulesetEditor,
+) -> void:
 	_last_file_dialog_requested_ruleset_editor = ruleset_editor
 
 	_file_dialog.title = tr("Choose Custom Resource Script")
@@ -383,7 +471,10 @@ func _open_file_dialog_as_class_restriction(restriction: String, ruleset_editor:
 	_file_dialog.popup_file_dialog()
 
 
-func _open_file_dialog_as_scan_directory(scan_dir: String, ruleset_editor: ScanRulesetEditor) -> void:
+func _open_file_dialog_as_scan_directory(
+	scan_dir: String,
+	ruleset_editor: ScanRulesetEditor,
+) -> void:
 	_last_file_dialog_requested_ruleset_editor = ruleset_editor
 
 	_file_dialog.title = tr("Choose Directory to Scan")
@@ -406,7 +497,10 @@ func _open_file_dialog_as_registry_path() -> void:
 	_file_dialog.popup_file_dialog()
 
 
-func _on_ruleset_editor_request_class_restriction_class_list_dialog(class_restriction: String, ruleset_editor: ScanRulesetEditor) -> void:
+func _on_ruleset_editor_request_class_restriction_class_list_dialog(
+	class_restriction: String,
+	ruleset_editor: ScanRulesetEditor,
+) -> void:
 	exclusive = false
 	EditorInterface.popup_create_dialog(
 		_on_class_list_dialog_confirmed.bind(ruleset_editor),
@@ -423,20 +517,28 @@ func _on_class_list_dialog_confirmed(type_name: String, ruleset_editor: ScanRule
 		return
 
 	if type_name.begins_with("res://") or type_name.begins_with("uid://"):
-		type_name = '"%s"' % type_name
+		if not ResourceLoader.exists(type_name):
+			return
+		var script: Script = load(type_name)
+		if script.get_global_name():
+			type_name = script.get_global_name()
+		else:
+			type_name = '"%s"' % type_name
 
 	ruleset_editor.update_selected_class_restriction(type_name)
 
 
-func _edit_settings_and_rebuild_index(already_built_settings: RegistryIO.RegistrySettings = null) -> void:
+func _edit_settings_and_rebuild_index(
+	already_built_settings: RegistryIO.RegistrySettings = null
+) -> void:
 	var built_settings := already_built_settings if already_built_settings != null else _build_settings()
 	var err := RegistryIO.set_registry_settings(edited_registry, built_settings)
 	if err != OK:
-		print_debug(error_string(err))
+		YardLogger.error(error_string(err))
 
 	err = RegistryIO.rebuild_property_index(edited_registry)
 	if err != OK:
-		print_debug(error_string(err))
+		YardLogger.error(error_string(err))
 	settings_saved.emit()
 
 
@@ -459,13 +561,13 @@ func _on_confirmed() -> void:
 			var registry_path := registry_path_line_edit.text.strip_edges()
 			var err := RegistryIO.create_registry_file(registry_path, _build_settings())
 			if err != OK:
-				print_debug(error_string(err))
+				YardLogger.error(error_string(err))
 				return
 			var new_registry: Registry = load(registry_path)
 			EditorInterface.edit_resource(new_registry)
 			err = RegistryIO.rebuild_property_index(new_registry)
 			if err != OK:
-				print_debug(error_string(err))
+				YardLogger.error(error_string(err))
 		RegistryDialogState.REGISTRY_SETTINGS:
 			# Do a check to see whether the updated scan settings may be more restrictive than the
 			# old ones, and if so, warn the user & require a confirmation to continue.
@@ -473,20 +575,31 @@ func _on_confirmed() -> void:
 			var new_settings := _build_settings()
 			var old_settings := RegistryIO.get_registry_settings(edited_registry)
 			var scan_rulesets_changed := false
-			if new_settings.additional_scan_rulesets.size() != old_settings.additional_scan_rulesets.size():
+			if new_settings.additional_scan_rulesets.size() != old_settings \
+					.additional_scan_rulesets \
+					.size():
 				scan_rulesets_changed = true
 			else:
-				if not new_settings.default_scan_ruleset.matches_other_ruleset(old_settings.default_scan_ruleset):
+				if not new_settings.default_scan_ruleset.matches_other_ruleset(
+					old_settings.default_scan_ruleset
+				):
 					scan_rulesets_changed = true
 				else:
 					for i in new_settings.additional_scan_rulesets.size():
 						var new_ruleset := new_settings.additional_scan_rulesets[i]
 						var old_ruleset := old_settings.additional_scan_rulesets[i]
-						if not new_ruleset.matches_other_ruleset(old_ruleset, new_settings.default_scan_ruleset, old_settings.default_scan_ruleset):
+						if not new_ruleset.matches_other_ruleset(
+							old_ruleset,
+							new_settings.default_scan_ruleset,
+							old_settings.default_scan_ruleset,
+						):
 							scan_rulesets_changed = true
 							break
 
-			if scan_rulesets_changed and RegistryIO.would_erase_entries(edited_registry, new_settings):
+			if (
+				scan_rulesets_changed
+				and RegistryIO.would_erase_entries(edited_registry, new_settings)
+			):
 				new_restriction_confirmation_dialog.popup()
 			else:
 				hide()
@@ -513,7 +626,9 @@ func _on_registry_path_filesystem_button_pressed() -> void:
 func _on_file_dialog_file_selected(file: String) -> void:
 	if _file_dialog_state == FileDialogState.CLASS_RESTRICTION:
 		if is_instance_valid(_last_file_dialog_requested_ruleset_editor):
-			_last_file_dialog_requested_ruleset_editor.update_selected_class_restriction("\"%s\"" % file)
+			_last_file_dialog_requested_ruleset_editor.update_selected_class_restriction(
+				"\"%s\"" % file
+			)
 		_validate_fields()
 	elif _file_dialog_state == FileDialogState.REGISTRY_PATH:
 		registry_path_line_edit.text = file
@@ -533,7 +648,10 @@ func _update_ruleset_tabs_bar() -> void:
 	for i in additional_ruleset_editors_count:
 		ruleset_tab_bar.set_tab_title(i + 1, tr("Ruleset %d") % (i + 2))
 
-	scan_rulesets_tab_container.tabs_visible = advanced_settings_check_button.button_pressed or not _additional_scan_ruleset_editors_list.is_empty()
+	scan_rulesets_tab_container.tabs_visible = (
+		advanced_settings_check_button.button_pressed
+		or not _additional_scan_ruleset_editors_list.is_empty()
+	)
 
 	scan_rulesets_tab_container.get_tab_bar().tab_close_display_policy = (
 		TabBar.CLOSE_BUTTON_SHOW_NEVER
@@ -561,16 +679,27 @@ func _on_new_restriction_confirmation_dialog_confirmed() -> void:
 
 func _connect_ruleset_editor(ruleset_editor: ScanRulesetEditor) -> void:
 	ruleset_editor.inputs_changed.connect(_validate_fields)
-	ruleset_editor.request_class_restriction_class_list_dialog.connect(_on_ruleset_editor_request_class_restriction_class_list_dialog.bind(ruleset_editor))
-	ruleset_editor.request_class_restriction_file_dialog.connect(_open_file_dialog_as_class_restriction.bind(ruleset_editor))
-	ruleset_editor.request_scan_directory_file_dialog.connect(_open_file_dialog_as_scan_directory.bind(ruleset_editor))
+	ruleset_editor.request_class_restriction_class_list_dialog.connect(
+		_on_ruleset_editor_request_class_restriction_class_list_dialog.bind(ruleset_editor)
+	)
+	ruleset_editor.request_class_restriction_file_dialog.connect(
+		_open_file_dialog_as_class_restriction.bind(ruleset_editor)
+	)
+	ruleset_editor.request_scan_directory_file_dialog.connect(
+		_open_file_dialog_as_scan_directory.bind(ruleset_editor)
+	)
 
 
-func _add_additional_ruleset_editor(ruleset_settings: RegistryIO.RegistryScanRuleset = null) -> void:
+func _add_additional_ruleset_editor(
+	ruleset_settings: RegistryIO.RegistryScanRuleset = null
+) -> void:
 	var additional_ruleset_editor: ScanRulesetEditor = SCAN_RULESET_EDITOR.instantiate()
 	_additional_scan_ruleset_editors_list.append(additional_ruleset_editor)
 	scan_rulesets_tab_container.add_child(additional_ruleset_editor)
-	scan_rulesets_tab_container.move_child(additional_ruleset_editor, _additional_scan_ruleset_editors_list.size())
+	scan_rulesets_tab_container.move_child(
+		additional_ruleset_editor,
+		_additional_scan_ruleset_editors_list.size(),
+	)
 
 	additional_ruleset_editor.default_ruleset_editor = default_ruleset_editor
 	additional_ruleset_editor.is_additional_ruleset = true

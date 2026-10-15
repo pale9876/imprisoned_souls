@@ -1,4 +1,7 @@
-# Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>, 2026.
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: CC0-1.0
 #
 #, fuzzy
 msgid ""
@@ -19,6 +22,20 @@ msgstr ""
 #: addons/yard/editor_only/ui_scenes/registry_editor.tscn
 msgid "Delete Entry"
 msgstr "Girişi sil"
+
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+msgid "Delete Entries (%s)"
+msgstr "Girişleri sil (%s)"
+
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+#: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
+#: addons/yard/editor_only/ui_scenes/registry_editor.tscn
+msgid "Duplicate Entry"
+msgstr "Girişi çoğalt"
+
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+msgid "Duplicate Entries (%s)"
+msgstr "Girişleri çoğalt (%s)"
 
 #: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
 #: addons/yard/editor_only/ui_scenes/registry_editor.tscn
@@ -60,10 +77,15 @@ msgid "Drop resource files here to add them to the registry."
 msgstr "Kayıt defterine eklemek için kaynak dosyalarını buraya bırakın."
 
 #: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
-msgid "Toggle Files Panel"
+msgid "Toggle Registries Panel"
 msgstr "Dosya panelini göster/gizle"
 
+#: addons/yard/editor_only/ui_scenes/registry_table_view.gd
+msgid "Auto (registry file location)"
+msgstr "Otomatik (kayıt konumu)"
+
 #: addons/yard/editor_only/ui_scenes/registry_table_view.tscn
+#: addons/yard/editor_only/ui_scenes/registry_editor.gd
 msgid "String ID"
 msgstr "Metin ID"
 
@@ -281,12 +303,16 @@ msgid "Select a registry first"
 msgstr "Önce bir kayıt defteri seçin"
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.gd
-msgid "Freeze ID Columns"
-msgstr "ID sütunlarını sabitle"
+msgid "ID Columns"
+msgstr "ID Sütunları"
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.gd
-msgid "Keep the UID and string ID columns visible while scrolling horizontally."
-msgstr "Yatay kaydırma sırasında UID ve Metin ID sütunlarını görünür tutar."
+msgid "UID"
+msgstr "UID"
+
+#: addons/yard/editor_only/ui_scenes/registry_editor.gd
+msgid "Frozen"
+msgstr "Sabit"
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.gd
 msgid "Show Parent Properties First"
@@ -342,6 +368,7 @@ msgid "Refresh table view from the underlying registry."
 msgstr "Görünümü kayıt defterinden yenile."
 
 #: addons/yard/editor_only/ui_scenes/registry_editor.tscn
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
 msgid "Refresh"
 msgstr "Yenile"
 
@@ -463,3 +490,100 @@ msgstr "RegEx Hariç Tut:"
 #: addons/yard/editor_only/ui_scenes/components/scan_ruleset_editor/scan_ruleset_editor.tscn
 msgid "e.g. `\\.tscn$|\\.scn$`"
 msgstr "örn. `\\.tscn$|\\.scn$`"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid ""
+"Be careful. This will delete the addons/yard folder and install the new version. Any custom changes in that folder will be lost.\n"
+"To be on the safe side, use version control!"
+msgstr ""
+"Dikkatli olun. Bu işlem addons/yard klasörünü silecek ve yeni sürümü yükleyecek. Bu klasördeki tüm özel değişiklikler kaybolacak.\n"
+"Güvende olmak için sürüm kontrolü kullanın!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "No Information Available"
+msgstr "Bilgi mevcut değil"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Unable to access versions."
+msgstr "Sürümlere erişilemiyor."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "You are probably not connected to the internet. Fair enough."
+msgstr "Muhtemelen internete bağlı değilsiniz. Olur öyle."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Huh, what happened here?"
+msgstr "Hıh, burada ne oldu?"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "You are in the future, Marty!"
+msgstr "Gelecektesin, Marty!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid ""
+"# You are using the WIP branch!\n"
+"Seems like you are using a version that isn't even released yet. Be careful and give us your feedback ;)"
+msgstr ""
+"# Geliştirme dalını kullanıyorsunuz!\n"
+"Henüz yayınlanmamış bir sürüm kullanıyor gibisiniz. Dikkatli olun ve bize geri bildirimde bulunun ;)"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Where are we Doc?"
+msgstr "Neredeyiz, Doc?"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Update Available!"
+msgstr "Güncelleme mevcut!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "You are up to date:"
+msgstr "Güncelsiniz:"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Published on {release_date} by {author}"
+msgstr "{author} tarafından {release_date} tarihinde yayınlandı"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Installed successfully. Restart needed!"
+msgstr "Başarıyla yüklendi. Yeniden başlatma gerekli!"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Download failed."
+msgstr "İndirme başarısız oldu."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Stable"
+msgstr "Kararlı"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Prerelease"
+msgstr "Ön sürüm"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd
+msgid "Downloading. This can take a moment."
+msgstr "İndiriliyor. Bu biraz zaman alabilir."
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "YARD Update"
+msgstr "YARD Güncellemesi"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Close"
+msgstr "Kapat"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Update channel"
+msgstr "Güncelleme kanalı"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Read Full Announcement"
+msgstr "Duyurunun tamamını oku"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Restart Now"
+msgstr "Şimdi yeniden başlat"
+
+#: addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.tscn
+msgid "Install"
+msgstr "Yükle"

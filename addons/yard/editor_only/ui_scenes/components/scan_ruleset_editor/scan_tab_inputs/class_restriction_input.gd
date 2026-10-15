@@ -1,8 +1,17 @@
-@tool
-extends ScanTabInput
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
 
+@tool
+extends "./scan_tab_input.gd"
+
+const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
+const Compat := Namespace.Compat
+const RegistryIO := Namespace.RegistryIO
 const ScanTabInput := preload("./scan_tab_input.gd")
 const ClassRestrictionInput := preload("./class_restriction_input.gd")
+
 const REQUEST_CLASS_RESTRICTION_CLASS_LIST_DIALOG_ACTION := &"request_class_restriction_class_list_dialog"
 const REQUEST_CLASS_RESTRICTION_FILE_DIALOG_ACTION := &"request_class_restriction_file_dialog"
 
@@ -31,12 +40,23 @@ func _set_disabled(value: bool) -> void:
 
 
 func get_value() -> Variant:
-	return class_restriction_line_edit.text.strip_edges()
+	var stripped := class_restriction_line_edit.text.strip_edges()
+	if RegistryIO.is_quoted_string(stripped) and RegistryIO.is_resource_class_string(stripped):
+		var unquoted := RegistryIO.unquote(stripped) # should be a path
+		var as_uid := Compat.path_to_uid(unquoted)
+		return '"%s"' % as_uid
+	else:
+		return stripped
 
 
 func set_value(value: Variant) -> void:
 	if typeof(value) == TYPE_STRING or typeof(value) == TYPE_STRING_NAME:
-		class_restriction_line_edit.text = value
+		if RegistryIO.is_quoted_string(value) and RegistryIO.is_resource_class_string(value):
+			var unquoted := RegistryIO.unquote(value) # must be a valid uid
+			var as_path := Compat.ensure_path(unquoted)
+			class_restriction_line_edit.text = '"%s"' % as_path
+		else:
+			class_restriction_line_edit.text = value
 
 
 func reset_value() -> void:
@@ -50,8 +70,14 @@ func render_validation_results(args: Variant) -> void:
 
 
 func _on_class_list_dialog_button_pressed() -> void:
-	request_action.emit(REQUEST_CLASS_RESTRICTION_CLASS_LIST_DIALOG_ACTION, class_restriction_line_edit.text)
+	request_action.emit(
+		REQUEST_CLASS_RESTRICTION_CLASS_LIST_DIALOG_ACTION,
+		class_restriction_line_edit.text,
+	)
 
 
 func _on_class_filesystem_button_pressed() -> void:
-	request_action.emit(REQUEST_CLASS_RESTRICTION_FILE_DIALOG_ACTION, class_restriction_line_edit.text)
+	request_action.emit(
+		REQUEST_CLASS_RESTRICTION_FILE_DIALOG_ACTION,
+		class_restriction_line_edit.text,
+	)

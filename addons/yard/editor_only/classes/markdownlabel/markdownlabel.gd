@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023, Daenvil <https://github.com/daenvil/MarkdownLabel>
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends RichTextLabel
 ## A control for displaying Markdown-style text.
@@ -11,14 +15,27 @@ extends RichTextLabel
 ## [br][br]
 ## You can still use BBCode tags that don't have a Markdown equivalent, such as `[u]underlined text[/u]`, allowing you to have the full functionality of RichTextLabel with the simplicity and readibility of Markdown.
 ## [br][br]
+## Images can be written as [code]![alt](url "title")[/code] or as HTML [code]<img src="url" alt="alt" width="100" height="50">[/code]. Images with an [code]http(s)://[/code] URL are downloaded and kept in memory (PNG, JPEG, WebP, BMP and SVG only); their alt text is shown if the download fails.
+## [br][br]
 ## Check out the full guide in the Github repo readme file (linked below). If encountering any unreported bug or unexpected bahaviour, please ensure that your Markdown is written as clean as possible, following best practices.
 ##
 ## @tutorial(Github repository): https://github.com/daenvil/MarkdownLabel
+
+const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
+const YardLogger := Namespace.YardLogger
 
 const _ESCAPE_PLACEHOLDER := ";$\uFFFD:%s$;"
 const _ESCAPEABLE_CHARACTERS := "\\*_~`[]()\"<>#-+.!"
 const _ESCAPEABLE_CHARACTERS_REGEX := "[\\\\\\*\\_\\~`\\[\\]\\(\\)\\\"\\<\\>#\\-\\+\\.\\!]"
 const _CHECKBOX_KEY := "markdownlabel-checkbox"
+const _REMOTE_IMAGE_MARKER := "\uFFFC%d\uFFFC"
+const _REMOTE_IMAGE_MARKER_REGEX := "\uFFFC(\\d+)\uFFFC"
+const _HTML_ALIGN_TAGS := {
+	"left": "left",
+	"center": "center",
+	"right": "right",
+	"justify": "fill",
+}
 const _FRONTMATTER_REGEX := r"^(?:(?:---|\+\+\+)\r?\n([\s\S]*?)\r?\n(?:---|\+\+\+)\r?\n)?(?:\r?\n)?([\s\S]*)$"
 
 const H1Format := preload("h1_format.gd")
@@ -47,6 +64,8 @@ signal task_checkbox_clicked(id: int, line: int, checked: bool, task_string: Str
 @export var automatic_links := true
 ## If enabled, unrecognized links will be opened as HTTPS URLs (e.g. "example.com" will be opened as "https://example.com"). If disabled, unrecognized links will be left unhandled (emitting the [signal unhandled_link_clicked] signal). Ignored if [member automatic_links] is disabled.
 @export var assume_https_links := true
+## Number of lines to skip at the start of the text before parsing, e.g. to hide raw HTML badges/headers at the top of a GitHub README.
+@export var skip_lines: int = 0
 
 @export_group("Header formats")
 ## Formatting options for level-1 headers
@@ -107,6 +126,28 @@ signal task_checkbox_clicked(id: int, line: int, checked: bool, task_string: Str
 		hr_color = new_value
 		queue_update()
 
+@export_group("Code", "code_")
+## Enables a custom text color for inline code and code blocks.
+@export var code_override_color := false:
+	set(new_value):
+		code_override_color = new_value
+		queue_update()
+## Text color applied to inline code and code blocks, if enabled.
+@export var code_color: Color = Color.WHITE:
+	set(new_value):
+		code_color = new_value
+		queue_update()
+## Enables a custom background color for inline code and code blocks.
+@export var code_override_background_color := false:
+	set(new_value):
+		code_override_background_color = new_value
+		queue_update()
+## Background color applied to inline code and code blocks, if enabled.
+@export var code_background_color: Color = Color.BLACK:
+	set(new_value):
+		code_background_color = new_value
+		queue_update()
+
 #endregion
 
 #region Private:
@@ -120,12 +161,18 @@ var _header_anchor_count := { }
 var _within_table := false
 var _table_row := -1
 var _skip_line_break := false
+var _html_paragraph_tags: Array[String] = []
 var _checkbox_id: int = 0
 var _current_line: int = 0
 var _checkbox_record := { }
 var _debug_mode := false
 var _frontmatter := ""
+var _remote_images: Array[Dictionary] = []
+var _remote_textures: Dictionary[String, Texture2D] = { }
+var _remote_image_requests: Dictionary[String, HTTPRequest] = { }
+var _failed_remote_images: Dictionary[String, bool] = { }
 #endregion
+
 
 #region Built-in methods:
 @warning_ignore("shadowed_variable")
@@ -207,6 +254,7 @@ func _notification(what: int) -> void:
 
 #endregion
 
+
 #region Public methods:
 ## Reads the specified file and displays it as markdown.[br][br]
 ## If [param handle_frontmatter] is [code]true[/code] (default), any valid YAML or TOML front-matter won't be displayed
@@ -244,6 +292,7 @@ func queue_update() -> void:
 
 #endregion
 
+
 #region Private methods:
 func _set_text(new_text: String) -> void:
 	markdown_text = new_text
@@ -258,8 +307,15 @@ func _set_markdown_text(new_text: String) -> void:
 func _update() -> void:
 	_dirty = false
 	super.clear()
-	var bbcode_text: String = _convert_markdown(TranslationServer.translate(markdown_text) as String if _can_auto_translate() else markdown_text)
-	super.parse_bbcode(bbcode_text)
+	var bbcode_text: String = _convert_markdown(
+		TranslationServer.translate(markdown_text) as String if _can_auto_translate() else markdown_text
+	)
+	var last_end := 0
+	for marker in RegEx.create_from_string(_REMOTE_IMAGE_MARKER_REGEX).search_all(bbcode_text):
+		super.append_text(bbcode_text.substr(last_end, marker.get_start() - last_end))
+		_add_remote_image(_remote_images[marker.get_string(1).to_int()])
+		last_end = marker.get_end()
+	super.append_text(bbcode_text.substr(last_end))
 
 
 func _can_auto_translate() -> bool:
@@ -301,10 +357,16 @@ func _set_h6_format(new_format: H6Format) -> void:
 
 func _convert_markdown(source_text: String = "") -> String:
 	if not bbcode_enabled:
-		push_warning("WARNING: MarkdownLabel node will not format Markdown syntax if it doesn't have 'bbcode_enabled=true'")
+		YardLogger.warn(
+			"WARNING: MarkdownLabel node will not format Markdown syntax if it doesn't have 'bbcode_enabled=true'"
+		)
 		return source_text
+	if skip_lines > 0:
+		source_text = "\n".join(source_text.split("\n").slice(skip_lines))
 	_converted_text = ""
 	var lines := source_text.split("\n")
+	var code_block_widths := _scan_code_block_widths(lines)
+	_debug("code_block_widths: %s" % code_block_widths)
 	_current_line = 0
 	_indent_level = -1
 	var indent_spaces := []
@@ -313,20 +375,23 @@ func _convert_markdown(source_text: String = "") -> String:
 	var within_tilde_block := false
 	var within_code_block := false
 	var current_code_block_char_count: int
+	var current_code_block_width: int
 	_within_table = false
 	_table_row = -1
 	_skip_line_break = false
+	_html_paragraph_tags.clear()
 	_checkbox_id = 0
+	_remote_images.clear()
 
 	for line: String in lines:
 		line = line.trim_suffix("\r")
-		_debug("Parsing line: '%s'" % line)
 		within_code_block = within_tilde_block or within_backtick_block
 		if _current_line > 0 and not _skip_line_break:
 			_converted_text += "\n"
 			_current_paragraph += 1
 		_skip_line_break = false
 		_current_line += 1
+		_debug("Parsing line: '%s' (%s)" % [line, _current_line])
 
 		line = _preprocess_line(line)
 
@@ -336,14 +401,16 @@ func _convert_markdown(source_text: String = "") -> String:
 				if line.strip_edges().length() >= current_code_block_char_count:
 					_converted_text = _converted_text.trim_suffix("\n")
 					_current_paragraph -= 1
-					_converted_text += "[/code]"
+					_converted_text += _get_code_close_tags()
 					within_backtick_block = false
 					_debug("... closing backtick block")
 					continue
 			else:
-				_converted_text += "[code]"
+				_converted_text += _get_code_open_tags()
 				within_backtick_block = true
 				current_code_block_char_count = 3 #line.strip_edges().length()
+				current_code_block_width = code_block_widths.get(_current_line, 0)
+				_skip_line_break = true
 				_debug("... opening backtick block")
 				continue
 		elif not within_backtick_block and _denotes_fenced_code_block(line, "~"):
@@ -351,18 +418,20 @@ func _convert_markdown(source_text: String = "") -> String:
 				if line.strip_edges().length() >= current_code_block_char_count:
 					_converted_text = _converted_text.trim_suffix("\n")
 					_current_paragraph -= 1
-					_converted_text += "[/code]"
+					_converted_text += _get_code_close_tags()
 					within_tilde_block = false
 					_debug("... closing tilde block")
 					continue
 			else:
-				_converted_text += "[code]"
+				_converted_text += _get_code_open_tags()
 				within_tilde_block = true
 				current_code_block_char_count = 3 #line.strip_edges().length()
+				current_code_block_width = code_block_widths.get(_current_line, 0)
+				_skip_line_break = true
 				_debug("... opening tilde block")
 				continue
 		if within_code_block: #ignore any formatting inside code block
-			_converted_text += _escape_bbcode(line)
+			_converted_text += _pad_code_line(_escape_bbcode(line), current_code_block_width)
 			continue
 
 		var _processed_line := line
@@ -374,6 +443,7 @@ func _convert_markdown(source_text: String = "") -> String:
 		_processed_line = _process_list_syntax(_processed_line, indent_spaces, indent_types)
 		_processed_line = _process_inline_code_syntax(_processed_line)
 		_processed_line = _process_image_syntax(_processed_line)
+		_processed_line = _process_html_paragraph_syntax(_processed_line)
 		_processed_line = _process_link_syntax(_processed_line)
 		_processed_line = _process_hr_syntax(_processed_line)
 		_processed_line = _process_text_formatting_syntax(_processed_line)
@@ -516,14 +586,14 @@ func _process_list_syntax(line: String, indent_spaces: Array, indent_types: Arra
 
 
 func _process_task_list_item(item: String) -> String:
-	if item.length() <= 3 or item[0] != "[" or item[2] != "]" or item[3] != " " or not item[1] in " x":
+	if (
+		item.length() <= 3 or item[0] != "[" or item[2] != "]"
+		or item[3] != " " or not item[1] in " x"
+	):
 		return item
 	var processed_item := item.erase(0, 3)
 	var checkbox: String
-	var meta := {
-		_CHECKBOX_KEY: true,
-		"id": _checkbox_id,
-	}
+	var meta := { _CHECKBOX_KEY: true, "id": _checkbox_id }
 	_checkbox_record[_checkbox_id] = _current_line - 1 # _current_line is actually the next line here
 	_checkbox_id += 1
 	if item[1] == " ":
@@ -535,7 +605,10 @@ func _process_task_list_item(item: String) -> String:
 		meta.checked = true
 		_debug("... item is a checked task item")
 	if enable_checkbox_clicks:
-		processed_item = processed_item.insert(0, "[url=%s]%s[/url]" % [JSON.stringify(meta), checkbox])
+		processed_item = processed_item.insert(
+			0,
+			"[url=%s]%s[/url]" % [JSON.stringify(meta), checkbox],
+		)
 	else:
 		processed_item = processed_item.insert(0, checkbox)
 	return processed_item
@@ -553,7 +626,10 @@ func _process_inline_code_syntax(line: String) -> String:
 		var unescaped_content := _reset_escaped_chars(result.get_string(2), true)
 		unescaped_content = _escape_bbcode(unescaped_content)
 		unescaped_content = _escape_chars(unescaped_content)
-		processed_line = processed_line.erase(_start, _end - _start).insert(_start, "[code]%s[/code]" % unescaped_content)
+		processed_line = processed_line.erase(_start, _end - _start).insert(
+			_start,
+			" " + _get_code_open_tags(true) + unescaped_content + _get_code_close_tags(true) + " ",
+		)
 		_debug("... in-line code: " + unescaped_content)
 	return processed_line
 
@@ -584,20 +660,206 @@ func _process_image_syntax(line: String) -> String:
 			if title_result:
 				title = title_result.get_string(1)
 				url = url.rstrip(" ").trim_suffix(title_result.get_string()).rstrip(" ")
-			url = _escape_chars(url)
 			processed_line = processed_line.erase(_start, _end - _start).insert(
 				_start,
-				"[img%s%s]%s[/img]" % [
-					" alt=\"%s\"" % alt_text if alt_text else "",
-					" tooltip=\"%s\"" % title if title_result and title else "",
-					url,
-				],
+				_get_image_tag(url, alt_text, title),
 			)
 			_debug("... image: " + result.get_string())
 			break
 		if not found_proper_match:
 			break
+	# HTML images, as written in GitHub release notes:
+	var html_regex := RegEx.create_from_string("(?i)<img\\s[^>]*>")
+	var attribute_regex := RegEx.create_from_string("([\\w-]+)\\s*=\\s*\"([^\"]*)\"")
+	while true:
+		var result := html_regex.search(processed_line)
+		if not result:
+			break
+		var attributes := { }
+		for attribute in attribute_regex.search_all(result.get_string()):
+			attributes[attribute.get_string(1).to_lower()] = attribute.get_string(2)
+		processed_line = processed_line \
+				.erase(result.get_start(), result.get_end() - result.get_start()) \
+				.insert(
+			result.get_start(),
+			_get_image_tag(
+				attributes.get("src", ""),
+				attributes.get("alt", ""),
+				attributes.get("title", ""),
+				attributes.get("width", "").to_int(),
+				attributes.get("height", "").to_int(),
+			),
+		)
+		_debug("... html image: " + result.get_string())
 	return processed_line
+
+
+## Turns HTML [code]<p align="...">[/code] into alignment tags. Must run before
+## [method _process_link_syntax], which would otherwise turn them into links.
+func _process_html_paragraph_syntax(line: String) -> String:
+	var regex := RegEx.create_from_string("(?i)<(/?)p(\\s[^>]*)?>")
+	var align_regex := RegEx.create_from_string("(?i)align\\s*=\\s*\"(\\w+)\"")
+	# A tag alone on its line (as in GitHub release notes) shouldn't add an empty line:
+	var stripped_line := line.strip_edges()
+	var lone_tag := regex.search(stripped_line)
+	if lone_tag and lone_tag.get_string() == stripped_line:
+		if not lone_tag.get_string(1):
+			_skip_line_break = true
+		elif _converted_text.ends_with("\n"):
+			_converted_text = _converted_text.trim_suffix("\n")
+			_current_paragraph -= 1
+	var processed_line := line
+	while true:
+		var result := regex.search(processed_line)
+		if not result:
+			break
+		var bbcode_tag := ""
+		if result.get_string(1):
+			var align_tag: String = _html_paragraph_tags.pop_back() if _html_paragraph_tags else ""
+			if align_tag:
+				bbcode_tag = "[/%s]" % align_tag
+		else:
+			var align := align_regex.search(result.get_string(2))
+			var align_tag: String = _HTML_ALIGN_TAGS.get(align.get_string(1).to_lower(), "") if align else ""
+			_html_paragraph_tags.push_back(align_tag)
+			if align_tag:
+				bbcode_tag = "[%s]" % align_tag
+		processed_line = processed_line \
+				.erase(result.get_start(), result.get_end() - result.get_start()) \
+				.insert(result.get_start(), bbcode_tag)
+		_debug("... html paragraph: " + result.get_string())
+	return processed_line
+
+
+## Returns an [code][img][/code] tag, or a marker that [method _update] replaces with
+## [method RichTextLabel.add_image] if [param url] is remote.
+func _get_image_tag(
+	url: String,
+	alt_text: String,
+	title: String,
+	width := 0,
+	height := 0,
+) -> String:
+	var raw_url := _reset_escaped_chars(url)
+	if raw_url.begins_with("http://") or raw_url.begins_with("https://"):
+		_remote_images.append(
+			{
+				"url": raw_url,
+				"alt": _reset_escaped_chars(alt_text),
+				"tooltip": _reset_escaped_chars(title),
+				"width": width,
+				"height": height,
+			},
+		)
+		return _REMOTE_IMAGE_MARKER % (_remote_images.size() - 1)
+	var options := ""
+	if width > 0:
+		options += " width=%d" % width
+	if height > 0:
+		options += " height=%d" % height
+	if alt_text:
+		options += " alt=\"%s\"" % alt_text
+	if title:
+		options += " tooltip=\"%s\"" % title
+	return "[img%s]%s[/img]" % [options, _escape_chars(url)]
+
+
+func _add_remote_image(image: Dictionary) -> void:
+	var url: String = image.url
+	if url in _failed_remote_images:
+		add_text(image.alt)
+		return
+	var texture: Texture2D = _remote_textures.get(url)
+	var is_placeholder := not texture
+	if is_placeholder:
+		texture = get_theme_icon(&"FileDeadBigThumb", &"EditorIcons")
+		_download_remote_image(url)
+	# The URL is the key, so update_image() can swap in the texture once downloaded.
+	# Padding keeps the placeholder at its own size inside the image's box.
+	add_image(
+		texture,
+		image.width,
+		image.height,
+		Color.WHITE,
+		INLINE_ALIGNMENT_CENTER,
+		Rect2(),
+		url,
+		is_placeholder,
+		image.tooltip,
+	)
+
+
+func _download_remote_image(url: String) -> void:
+	if url in _remote_image_requests:
+		return
+	var request := HTTPRequest.new()
+	add_child(request, false, INTERNAL_MODE_BACK)
+	request.request_completed.connect(_on_remote_image_request_completed.bind(url))
+	_remote_image_requests[url] = request
+	if request.request(url) != OK:
+		_on_remote_image_request_completed(
+			HTTPRequest.RESULT_CANT_CONNECT,
+			0,
+			PackedStringArray(),
+			PackedByteArray(),
+			url,
+		)
+
+
+func _on_remote_image_request_completed(
+	result: int,
+	response_code: int,
+	_headers: PackedStringArray,
+	body: PackedByteArray,
+	url: String,
+) -> void:
+	_remote_image_requests[url].queue_free()
+	_remote_image_requests.erase(url)
+	var texture: Texture2D
+	if result != HTTPRequest.RESULT_SUCCESS or response_code != HTTPClient.RESPONSE_OK:
+		YardLogger.warn(
+			"Couldn't download image (result %d, HTTP %d): %s" % [result, response_code, url]
+		)
+	else:
+		texture = _create_texture_from_buffer(body)
+		if not texture:
+			YardLogger.warn(
+				"Unsupported image format (expected PNG, JPEG, WebP, BMP or SVG): " + url
+			)
+	if not texture:
+		_failed_remote_images[url] = true
+		queue_update() # Shows the alt text instead.
+		return
+	_remote_textures[url] = texture
+	update_image(
+		url,
+		UPDATE_TEXTURE | UPDATE_PAD,
+		texture,
+		0,
+		0,
+		Color.WHITE,
+		INLINE_ALIGNMENT_CENTER,
+		Rect2(),
+		false,
+	)
+
+
+func _create_texture_from_buffer(buffer: PackedByteArray) -> Texture2D:
+	var image := Image.new()
+	var error: Error = ERR_FILE_UNRECOGNIZED
+	if buffer.slice(1, 4).get_string_from_ascii() == "PNG":
+		error = image.load_png_from_buffer(buffer)
+	elif buffer.slice(0, 3) == PackedByteArray([0xFF, 0xD8, 0xFF]):
+		error = image.load_jpg_from_buffer(buffer)
+	elif buffer.slice(8, 12).get_string_from_ascii() == "WEBP":
+		error = image.load_webp_from_buffer(buffer)
+	elif buffer.slice(0, 2).get_string_from_ascii() == "BM":
+		error = image.load_bmp_from_buffer(buffer)
+	elif "<svg" in buffer.slice(0, 1024).get_string_from_ascii():
+		error = image.load_svg_from_buffer(buffer)
+	if error != OK:
+		return null
+	return ImageTexture.create_from_image(image)
 
 
 func _process_link_syntax(line: String) -> String:
@@ -626,18 +888,17 @@ func _process_link_syntax(line: String) -> String:
 				title = title_result.get_string(1)
 				url = url.rstrip(" ").trim_suffix(title_result.get_string()).rstrip(" ")
 			url = _escape_chars(url)
-			processed_line = processed_line.erase(
-				_start + _text.get_start(),
-				_end - _start - _text.get_start(),
-			).insert(
+			processed_line = processed_line \
+					.erase(_start + _text.get_start(), _end - _start - _text.get_start()) \
+					.insert(
 				_start + _text.get_start(),
 				"[url=%s]%s[/url]" % [url, _text.get_string(1)],
 			)
 			if title_result and title:
-				processed_line = processed_line.insert(
-					_start + _text.get_start() + 12 + url.length() + _text.get_string(1).length(),
-					"[/hint]",
-				).insert(_start + _text.get_start(), "[hint=%s]" % title)
+				processed_line = processed_line \
+						.insert(_start + _text.get_start() + 12 + url.length()
+				+ _text.get_string(1).length(), "[/hint]") \
+						.insert(_start + _text.get_start(), "[hint=%s]" % title)
 			_debug("... hyperlink: " + result.get_string())
 			break
 		if not found_proper_match:
@@ -656,10 +917,16 @@ func _process_link_syntax(line: String) -> String:
 			url = mail.get_string(1)
 		url = _escape_chars(url)
 		if mail:
-			processed_line = processed_line.erase(_start, _end - _start).insert(_start, "[url=mailto:%s]%s[/url]" % [url, url])
+			processed_line = processed_line.erase(_start, _end - _start).insert(
+				_start,
+				"[url=mailto:%s]%s[/url]" % [url, url],
+			)
 			_debug("... mail link: " + result.get_string())
 		else:
-			processed_line = processed_line.erase(_start, _end - _start).insert(_start, "[url]%s[/url]" % url)
+			processed_line = processed_line.erase(_start, _end - _start).insert(
+				_start,
+				"[url]%s[/url]" % url,
+			)
 			_debug("... explicit link: " + result.get_string())
 	return processed_line
 
@@ -743,7 +1010,10 @@ func _process_header_syntax(line: String) -> String:
 		var opening_tags := _get_header_tags(header_format)
 		processed_line = processed_line.erase(_start, n + n_spaces).insert(_start, opening_tags)
 		var _end := result.get_end()
-		processed_line = processed_line.insert(_end - (n + n_spaces) + opening_tags.length(), _get_header_tags(header_format, true))
+		processed_line = processed_line.insert(
+			_end - (n + n_spaces) + opening_tags.length(),
+			_get_header_tags(header_format, true),
+		)
 		_debug("... header level %d" % n)
 		_header_anchor_paragraph[_get_header_reference(result.get_string())] = _current_paragraph
 		if header_format.get("draw_horizontal_rule"):
@@ -754,7 +1024,6 @@ func _process_header_syntax(line: String) -> String:
 					hr_width,
 					hr_color.to_html(),
 				]
-				_current_line += 1
 				_current_paragraph += 1
 	return processed_line
 
@@ -778,7 +1047,10 @@ func _process_hr_syntax(line: String) -> String:
 
 
 func _escape_bbcode(source: String) -> String:
-	return source.replacen("[", _ESCAPE_PLACEHOLDER).replacen("]", "[rb]").replacen(_ESCAPE_PLACEHOLDER, "[lb]")
+	return source.replacen("[", _ESCAPE_PLACEHOLDER).replacen("]", "[rb]").replacen(
+		_ESCAPE_PLACEHOLDER,
+		"[lb]",
+	)
 
 
 func _escape_chars(_text: String) -> String:
@@ -786,7 +1058,10 @@ func _escape_chars(_text: String) -> String:
 	for _char: String in _ESCAPEABLE_CHARACTERS:
 		if not _char in _escaped_characters_map:
 			_escaped_characters_map[_char] = _escaped_characters_map.size()
-		escaped_text = escaped_text.replacen(_char, _ESCAPE_PLACEHOLDER % _escaped_characters_map[_char])
+		escaped_text = escaped_text.replacen(
+			_char,
+			_ESCAPE_PLACEHOLDER % _escaped_characters_map[_char],
+		)
 	return escaped_text
 
 
@@ -795,7 +1070,10 @@ func _reset_escaped_chars(_text: String, code := false) -> String:
 	for _char in _ESCAPEABLE_CHARACTERS:
 		if not _char in _escaped_characters_map:
 			continue
-		unescaped_text = unescaped_text.replacen(_ESCAPE_PLACEHOLDER % _escaped_characters_map[_char], "\\" + _char if code else _char)
+		unescaped_text = unescaped_text.replacen(
+			_ESCAPE_PLACEHOLDER % _escaped_characters_map[_char],
+			"\\" + _char if code else _char,
+		)
 	return unescaped_text
 
 
@@ -814,6 +1092,39 @@ func _denotes_fenced_code_block(line: String, character: String) -> bool:
 		return false
 
 
+## Maps each fenced code block's opening line index to the max raw character
+## length found among its content lines. Used to right-pad shorter lines so
+## the block's background renders as a rectangle instead of hugging text.
+func _scan_code_block_widths(lines: PackedStringArray) -> Dictionary[int, int]:
+	var widths: Dictionary[int, int] = { }
+	var open_line := -1
+	var open_char := ""
+	var max_width := 0
+	for i in lines.size():
+		if open_line == -1:
+			if _denotes_fenced_code_block(lines[i], "`"):
+				open_line = i
+				open_char = "`"
+				max_width = 0
+			elif _denotes_fenced_code_block(lines[i], "~"):
+				open_line = i
+				open_char = "~"
+				max_width = 0
+		elif _denotes_fenced_code_block(lines[i], open_char):
+			widths[open_line + 1] = max_width
+			open_line = -1
+		else:
+			max_width = maxi(max_width, lines[i].length())
+	return widths
+
+
+func _pad_code_line(escaped_line: String, width: int) -> String:
+	var missing := width - escaped_line.length()
+	if missing <= 0:
+		return escaped_line
+	return escaped_line + "[color=#00000000]" + "-".repeat(missing) + "[/color]"
+
+
 func _process_escaped_characters(line: String) -> String:
 	var regex := RegEx.create_from_string("\\\\" + _ESCAPEABLE_CHARACTERS_REGEX)
 	var processed_line := line
@@ -825,7 +1136,10 @@ func _process_escaped_characters(line: String) -> String:
 		var _escaped_char := result.get_string()[1]
 		if not _escaped_char in _escaped_characters_map:
 			_escaped_characters_map[_escaped_char] = _escaped_characters_map.size()
-		processed_line = processed_line.erase(_start, 2).insert(_start, _ESCAPE_PLACEHOLDER % _escaped_characters_map[_escaped_char])
+		processed_line = processed_line.erase(_start, 2).insert(
+			_start,
+			_ESCAPE_PLACEHOLDER % _escaped_characters_map[_escaped_char],
+		)
 	return processed_line
 
 
@@ -874,7 +1188,7 @@ func _get_header_format(level: int) -> Resource:
 			return h5
 		6:
 			return h6
-	push_warning("Invalid header level: " + str(level))
+	YardLogger.warn("Invalid header level: " + str(level))
 	return null
 
 
@@ -897,7 +1211,9 @@ func _get_header_tags(header_format: Resource, closing := false) -> String:
 		if header_format.override_font_color and header_format.font_color:
 			tags += "[color=#%s]" % header_format.font_color.to_html()
 		if header_format.font_size:
-			tags += "[font_size=%d]" % int(header_format.font_size * self.get_theme_font_size("normal_font_size"))
+			tags += "[font_size=%d]" % int(
+				header_format.font_size * self.get_theme_font_size("normal_font_size")
+			)
 		if header_format.is_bold:
 			tags += "[b]"
 		if header_format.is_italic:
@@ -917,6 +1233,24 @@ func _get_header_reference(header_string: String) -> String:
 	return anchor
 
 
+func _get_code_open_tags(keep_color: bool = false) -> String:
+	var tags := ""
+	if code_override_background_color:
+		tags += "[bgcolor=#%s]" % code_background_color.to_html(true)
+	if code_override_color and not keep_color:
+		tags += "[color=#%s]" % code_color.to_html(false)
+	return tags + "[code]"
+
+
+func _get_code_close_tags(keep_color: bool = false) -> String:
+	var tags := "[/code]"
+	if code_override_color and not keep_color:
+		tags += "[/color]"
+	if code_override_background_color:
+		tags += "[/bgcolor]"
+	return tags
+
+
 func _on_checkbox_clicked(id: int, was_checked: bool) -> void:
 	var iline: int = _checkbox_record[id]
 	var lines := markdown_text.split("\n")
@@ -924,7 +1258,9 @@ func _on_checkbox_clicked(id: int, was_checked: bool) -> void:
 	var new_string := "[ ]" if was_checked else "[x]"
 	var i := lines[iline].find(old_string)
 	if i == -1:
-		push_error("Couldn't find the clicked task list checkbox (id=%d, line=%d)" % [id, iline]) # Shouldn't happen. Please report the bug if it happens.
+		YardLogger.error(
+			"Couldn't find the clicked task list checkbox (id=%d, line=%d)" % [id, iline]
+		) # Shouldn't happen. Please report the bug if it happens.
 		return
 	lines[iline] = lines[iline].erase(i, old_string.length()).insert(i, new_string)
 	_set("text", "\n".join(lines)) #calling [text] directly from this class does not use [_set()].

@@ -1,14 +1,20 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends Object
 
 const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
+const Compat := Namespace.Compat
 const RegistryIO := Namespace.RegistryIO
 
 const _BASE_DIR := "res://.godot/plugins/yard/"
 
 
 class RegistryCacheData:
-	const _REGISTRY_CACHE_VERSION := 2
+	const _REGISTRY_CACHE_VERSION := 3
 	const _REGISTRIES_DIR := _BASE_DIR + "registries/"
 	const _SECTION_GENERAL := "general"
 	const _SECTION_TABLE := "table"
@@ -20,7 +26,8 @@ class RegistryCacheData:
 		&"metadata/_custom_type_script",
 	]
 	var version: int = _REGISTRY_CACHE_VERSION
-	var disabled_columns: Array[StringName] = BUILTIN_RESOURCE_PROPERTIES.duplicate()
+	var disabled_columns: Array[StringName] = BUILTIN_RESOURCE_PROPERTIES.duplicate() # = hidden columns
+	var frozen_columns: Array[StringName] = [&"string_id", &"uid"]
 	var parent_props_first: bool = false
 	var uid_column_width: float = 200.0
 	var string_id_column_width: float = 200.0
@@ -37,6 +44,7 @@ class RegistryCacheData:
 		var cfg := ConfigFile.new()
 		cfg.set_value(_SECTION_GENERAL, "version", version)
 		cfg.set_value(_SECTION_TABLE, "disabled_columns", disabled_columns)
+		cfg.set_value(_SECTION_TABLE, "frozen_columns", frozen_columns)
 		cfg.set_value(_SECTION_TABLE, "parent_props_first", parent_props_first)
 		cfg.set_value(_SECTION_TABLE, "uid_column_width", uid_column_width)
 		cfg.set_value(_SECTION_TABLE, "string_id_column_width", string_id_column_width)
@@ -56,11 +64,32 @@ class RegistryCacheData:
 		if data.version != _REGISTRY_CACHE_VERSION:
 			RegistryCacheData._update_format(data, cfg)
 
-		data.disabled_columns = cfg.get_value(_SECTION_TABLE, "disabled_columns", data.disabled_columns)
-		data.parent_props_first = cfg.get_value(_SECTION_TABLE, "parent_props_first", data.parent_props_first)
-		data.uid_column_width = cfg.get_value(_SECTION_TABLE, "uid_column_width", data.uid_column_width)
-		data.string_id_column_width = cfg.get_value(_SECTION_TABLE, "string_id_column_width", data.string_id_column_width)
-		data.property_columns_widths = cfg.get_value(_SECTION_TABLE, "property_columns_widths", data.property_columns_widths)
+		data.disabled_columns = cfg.get_value(
+			_SECTION_TABLE,
+			"disabled_columns",
+			data.disabled_columns,
+		)
+		data.frozen_columns = cfg.get_value(_SECTION_TABLE, "frozen_columns", data.frozen_columns)
+		data.parent_props_first = cfg.get_value(
+			_SECTION_TABLE,
+			"parent_props_first",
+			data.parent_props_first,
+		)
+		data.uid_column_width = cfg.get_value(
+			_SECTION_TABLE,
+			"uid_column_width",
+			data.uid_column_width,
+		)
+		data.string_id_column_width = cfg.get_value(
+			_SECTION_TABLE,
+			"string_id_column_width",
+			data.string_id_column_width,
+		)
+		data.property_columns_widths = cfg.get_value(
+			_SECTION_TABLE,
+			"property_columns_widths",
+			data.property_columns_widths,
+		)
 		return data
 
 
@@ -71,7 +100,7 @@ class RegistryCacheData:
 
 
 	static func _get_registry_cache_path(registry: Registry) -> String:
-		var uid := ResourceUID.path_to_uid(registry.resource_path)
+		var uid := Compat.path_to_uid(registry.resource_path)
 		var uid_str := uid.trim_prefix("uid://")
 		return _REGISTRIES_DIR + uid_str + ".cfg"
 
@@ -81,6 +110,10 @@ class RegistryCacheData:
 		if _data.version < 2:
 			_data.parent_props_first = false
 			_data.version = 2
+
+		if _data.version < 3:
+			_data.frozen_columns = [&"string_id", &"uid"]
+			_data.version = 3
 
 		_data.version = _REGISTRY_CACHE_VERSION
 
@@ -101,7 +134,11 @@ class EditorStateData:
 		var cfg := ConfigFile.new()
 		cfg.set_value(_SECTION_GENERAL, "version", version)
 		cfg.set_value(_SECTION_RECENT, "uids", recent_registry_uids.filter(RegistryIO.is_uid_valid))
-		cfg.set_value(_SECTION_OPENED, "uids", opened_registries.keys().filter(RegistryIO.is_uid_valid))
+		cfg.set_value(
+			_SECTION_OPENED,
+			"uids",
+			opened_registries.keys().filter(RegistryIO.is_uid_valid),
+		)
 		DirAccess.make_dir_recursive_absolute(_BASE_DIR)
 		return cfg.save(_STATE_FILE)
 
@@ -143,7 +180,7 @@ class EditorStateData:
 
 
 	func add_recent(registry: Registry) -> void:
-		var uid := ResourceUID.path_to_uid(registry.resource_path)
+		var uid := Compat.path_to_uid(registry.resource_path)
 		recent_registry_uids.erase(uid)
 		recent_registry_uids.push_front(uid)
 		if recent_registry_uids.size() > _MAX_RECENT:

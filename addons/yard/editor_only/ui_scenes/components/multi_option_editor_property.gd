@@ -1,9 +1,12 @@
-## Source: String Wrangler
-## Created by Matthew Janes (IndieGameDad) - MIT 2025
+# SPDX-FileCopyrightText: 2025, Matthew Janes (IndieGameDad) <https://github.com/yulrun/stringwrangler-plugin>
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
 
+@tool
 ## A generic editor property for selecting multiple string options.
 ## Dynamically disables already-selected entries and supports clean UI expansion.
-@tool
 extends EditorProperty
 
 var available_options: Array[String] = []
@@ -21,7 +24,13 @@ var element_type: Variant.Type = TYPE_STRING
 
 
 ## Initializes the editor with a list of selectable values and currently selected items.
-func initialize(initial_values: Array[Variant], options: Array[Variant], list_name: String = "StringList", allow_duplicates: bool = false, p_type: Variant.Type = TYPE_STRING) -> void:
+func initialize(
+	initial_values: Array[Variant],
+	options: Array[Variant],
+	list_name: String = "StringList",
+	allow_duplicates: bool = false,
+	p_type: Variant.Type = TYPE_STRING,
+) -> void:
 	element_type = p_type
 	available_options = options.duplicate()
 	selected_options.clear()
@@ -107,7 +116,10 @@ func _refresh() -> void:
 	var add_button: Button = Button.new()
 	add_button.icon = get_theme_icon(&"Add", &"EditorIcons")
 	add_button.text = "Add Element"
-	add_button.add_theme_constant_override("h_separation", get_theme_constant(&"h_separation", &"InspectorActionButton"))
+	add_button.add_theme_constant_override(
+		"h_separation",
+		get_theme_constant(&"h_separation", &"InspectorActionButton"),
+	)
 	add_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	add_button.disabled = _get_unused_options().is_empty()
 	add_button.pressed.connect(_on_add_pressed)
@@ -155,12 +167,15 @@ func _build_row(index: int) -> void:
 	option_button.item_selected.connect(
 		func(i: int) -> void:
 			var selected_value: String = available_options[i]
-			if not include_duplicates and selected_value in selected_options and selected_options[index] != selected_value:
+			if (
+				not include_duplicates and selected_value in selected_options
+				and selected_options[index] != selected_value
+			):
 				option_button.select(available_options.find(selected_options[index]))
 				return
 			selected_options[index] = selected_value
 			_emit_changed()
-			call_deferred(&"_refresh")
+			call_deferred(&"_refresh"),
 	)
 
 	var remove: Button = Button.new()
@@ -171,7 +186,7 @@ func _build_row(index: int) -> void:
 		func() -> void:
 			selected_options.remove_at(index)
 			_emit_changed()
-			call_deferred(&"_refresh")
+			call_deferred(&"_refresh"),
 	)
 
 	row.add_child(option_button)

@@ -1,6 +1,6 @@
-# MIT License
-# Copyright (c) 2025 Patou (xorblo-doitus)
-# https://github.com/xorblo-doitus/AnyIcon
+# SPDX-FileCopyrightText: 2025, Patou (xorblo-doitus) <https://github.com/xorblo-doitus/AnyIcon>
+#
+# SPDX-License-Identifier: MIT
 
 @tool
 extends Object
@@ -19,12 +19,12 @@ static var allow_generating_union_icons: bool = true
 
 ## Shortcut for [method EditorInterface.get_base_control].
 static var base_control: Control = EditorInterface.get_base_control() if Engine.is_editor_hint() else Control.new():
-	set(new):
-		printerr("AnyIcon.base_control is read-only.")
+	set(_new):
+		push_error("AnyIcon.base_control is read-only.")
 ## The icon displayed when no valid icon is found.
 static var icon_not_found: Texture2D = base_control.get_theme_icon(&""):
-	set(new):
-		printerr("AnyIcon.icon_not_found is read-only.")
+	set(_new):
+		push_error("AnyIcon.icon_not_found is read-only.")
 
 static var _ICON_ANNOTATION_REGEX := RegEx.create_from_string(
 	r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)""",
@@ -55,7 +55,10 @@ static func get_variant_icon(variant: Variant, fallback: StringName = &"") -> Te
 ## [br][br][b]Note:[/b] In Godot 4.4, you can enable the dictionary typing of this method by
 ## commenting the actual typed declaration and uncommenting the typed ones in the addon
 ## code.
-static func get_all_property_icons(object: Object, usage_mask: int = PROPERTY_USAGE_SCRIPT_VARIABLE) -> Dictionary:
+static func get_all_property_icons(
+	object: Object,
+	usage_mask: int = PROPERTY_USAGE_SCRIPT_VARIABLE,
+) -> Dictionary:
 	#static func get_all_property_icons(object: Object, usage_mask: int = PROPERTY_USAGE_SCRIPT_VARIABLE) -> Dictionary[StringName, Texture2D]:
 	#var result: Dictionary[StringName, Texture2D] = {}
 	var result: Dictionary = { }
@@ -70,7 +73,11 @@ static func get_all_property_icons(object: Object, usage_mask: int = PROPERTY_US
 ## Returns the icon of the type/class of a property on an object.
 ## [br][br][b]Note:[/b] If you are getting the icon of all the properties on this object,
 ## use [method get_all_property_icons] instead for better performances.
-static func get_property_icon(object: Object, property_name: StringName, fallback: StringName = &"") -> Texture2D:
+static func get_property_icon(
+	object: Object,
+	property_name: StringName,
+	fallback: StringName = &"",
+) -> Texture2D:
 	for property_dict in object.get_property_list():
 		if property_dict["name"] == property_name:
 			return get_property_icon_from_dict(property_dict)
@@ -83,7 +90,10 @@ static func get_property_icon(object: Object, property_name: StringName, fallbac
 ## [method Object.get_property_list].
 ## [br][br][b]Note:[/b] If you are getting the icon of all the properties on an object,
 ## use [method get_all_property_icons] instead for better performances.
-static func get_property_icon_from_dict(property_dict: Dictionary, fallback: StringName = &"") -> Texture2D:
+static func get_property_icon_from_dict(
+	property_dict: Dictionary,
+	fallback: StringName = &"",
+) -> Texture2D:
 	var type: Variant.Type = property_dict["type"]
 
 	if type == TYPE_OBJECT:
@@ -126,7 +136,10 @@ static func get_script_icon(script: Script, fallback: StringName = &"") -> Textu
 ## Generates an icon for a comma-separated union of classes
 ## by concatenating thes icons from left to right.
 ## [br][br][b]Example:[/b] "CanvasItemMaterial,ShaderMaterial"
-static func generate_union_class_icon(union_name: String, fallback: StringName = &"") -> ImageTexture:
+static func generate_union_class_icon(
+	union_name: String,
+	fallback: StringName = &"",
+) -> ImageTexture:
 	if union_name in _union_cache:
 		return _union_cache[union_name]
 
@@ -135,10 +148,7 @@ static func generate_union_class_icon(union_name: String, fallback: StringName =
 	for name in union_name.split(","):
 		var icon: Texture2D = get_class_icon(name, fallback)
 		var add_at_x: int = image.get_width()
-		image.crop(
-			image.get_width() + icon.get_width(),
-			max(image.get_height(), icon.get_height()),
-		)
+		image.crop(image.get_width() + icon.get_width(), max(image.get_height(), icon.get_height()))
 		image.blit_rect(
 			icon.get_image(),
 			Rect2i(Vector2i.ZERO, icon.get_size()),
@@ -198,7 +208,10 @@ static func get_type_icon(type: Variant.Type, fallback: StringName = &"") -> Tex
 
 
 ## See also [method get_class_icon]
-static func get_builtin_class_icon(class_name_: StringName, fallback: StringName = &"") -> Texture2D:
+static func get_builtin_class_icon(
+	class_name_: StringName,
+	fallback: StringName = &"",
+) -> Texture2D:
 	if allow_generating_union_icons and "," in class_name_:
 		return generate_union_class_icon(class_name_, fallback)
 
@@ -216,7 +229,11 @@ static func get_builtin_class_icon(class_name_: StringName, fallback: StringName
 
 ## Like [method TypeAndAnyIcon.get_icon], but returns the [param fallback]
 ## if no icon is found.
-static func try_get_icon(name: StringName, fallback: StringName, theme_type: StringName = &"EditorIcons") -> Texture2D:
+static func try_get_icon(
+	name: StringName,
+	fallback: StringName,
+	theme_type: StringName = &"EditorIcons",
+) -> Texture2D:
 	var result: Texture2D = get_icon(name, theme_type)
 	if result == icon_not_found:
 		return get_icon(fallback, theme_type)

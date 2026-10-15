@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends EditorInspectorPlugin
 
@@ -10,7 +15,15 @@ func _can_handle(_object: Object) -> bool:
 	return true
 
 
-func _parse_property(object: Object, type: Variant.Type, name: String, hint: PropertyHint, hint_text: String, _usage: int, _wide: bool) -> bool:
+func _parse_property(
+	object: Object,
+	type: Variant.Type,
+	name: String,
+	hint: PropertyHint,
+	hint_text: String,
+	_usage: int,
+	_wide: bool,
+) -> bool:
 	if hint != Registry.PROPERTY_HINT_CUSTOM:
 		return false
 
@@ -34,14 +47,28 @@ func _parse_property(object: Object, type: Variant.Type, name: String, hint: Pro
 	match type:
 		TYPE_STRING, TYPE_STRING_NAME:
 			var current_value: String = str(object.get(name))
-			var editor: EditorProperty = EditorPropertyOptionWrapper.new(current_value, string_ids, show_empty, type)
+			var editor: EditorProperty = EditorPropertyOptionWrapper.new(
+				current_value,
+				string_ids,
+				show_empty,
+				type,
+			)
 			add_property_editor(name, editor, false, name.capitalize())
 			return true
 		TYPE_ARRAY:
 			var array_val: Variant = object.get(name)
-			if array_val is Array and array_val.is_typed() and array_val.get_typed_builtin() in [TYPE_STRING, TYPE_STRING_NAME]:
+			if (
+				array_val is Array and array_val.is_typed()
+				and array_val.get_typed_builtin() in [TYPE_STRING, TYPE_STRING_NAME]
+			):
 				var editor: MultiOptionEditorProperty = MultiOptionEditorProperty.new()
-				editor.initialize(array_val, string_ids, name.capitalize(), allow_duplicates, array_val.get_typed_builtin())
+				editor.initialize(
+					array_val,
+					string_ids,
+					name.capitalize(),
+					allow_duplicates,
+					array_val.get_typed_builtin(),
+				)
 				add_property_editor(name, editor, false, name.capitalize())
 				return true
 

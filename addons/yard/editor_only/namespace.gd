@@ -1,28 +1,125 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 const PluginCFG := "res://addons/yard/plugin.cfg"
 
 # Static Util Classes
+const Compat := preload("res://addons/yard/editor_only/classes/compat.gd")
 const RegistryIO := preload("res://addons/yard/editor_only/registry_io.gd")
+const ShortcutUtils := preload("res://addons/yard/editor_only/classes/shortcut_utils.gd")
 const YardEditorCache := preload("res://addons/yard/editor_only/classes/yard_editor_cache.gd")
 const ClassUtils := preload("res://addons/yard/editor_only/classes/class_utils.gd")
 const EditorThemeUtils := preload("res://addons/yard/editor_only/classes/editor_theme_utils.gd")
-const FuzzySearch := preload("res://addons/yard/editor_only/classes/fuzzy_search.gd")
+const YardFuzzySearch := preload("res://addons/yard/editor_only/classes/yard_fuzzy_search.gd")
 const AnyIcon := preload("res://addons/yard/editor_only/classes/any_icon.gd")
+const YardLogger := preload("res://addons/yard/editor_only/classes/yard_logger.gd")
+const YardSettings := preload("res://addons/yard/editor_only/classes/yard_settings.gd")
 
 # UI Scenes
 const RegistryEditor := preload("res://addons/yard/editor_only/ui_scenes/registry_editor.gd")
 const RegistryTableView := preload("res://addons/yard/editor_only/ui_scenes/registry_table_view.gd")
-const MarkdownLabel := preload("res://addons/yard/editor_only/classes/markdownlabel/markdownlabel.gd")
-const DynamicTable := preload("res://addons/yard/editor_only/ui_scenes/components/dynamic_table.gd")
-const RegistriesItemList := preload("res://addons/yard/editor_only/ui_scenes/components/registries_itemlist.gd")
-const NewRegistryDialog := preload("res://addons/yard/editor_only/ui_scenes/components/new_registry_dialog.gd")
-const EditorPropertyOptionWrapper := preload("res://addons/yard/editor_only/ui_scenes/components/editor_property_option_wrapper.gd")
-const MultiOptionEditorProperty = preload("res://addons/yard/editor_only/ui_scenes/components/multi_option_editor_property.gd")
-const REGISTRY_EDITOR_SCENE := preload("res://addons/yard/editor_only/ui_scenes/registry_editor.tscn")
-const REGISTRY_TABLE_VIEW_SCENE := preload("res://addons/yard/editor_only/ui_scenes/registry_table_view.tscn")
+const MarkdownLabel := preload(
+	"res://addons/yard/editor_only/classes/markdownlabel/markdownlabel.gd"
+)
+const RegistriesItemList := preload(
+	"res://addons/yard/editor_only/ui_scenes/components/registries_itemlist.gd"
+)
+const NewRegistryDialog := preload(
+	"res://addons/yard/editor_only/ui_scenes/components/new_registry_dialog.gd"
+)
+const UpdateManager := preload(
+	"res://addons/yard/editor_only/ui_scenes/components/update_manager/update_manager.gd"
+)
+const UpdateInstallWindow := preload(
+	"res://addons/yard/editor_only/ui_scenes/components/update_install_window/update_install_window.gd"
+)
+const EditorPropertyOptionWrapper := preload(
+	"res://addons/yard/editor_only/ui_scenes/components/editor_property_option_wrapper.gd"
+)
+const MultiOptionEditorProperty = preload(
+	"res://addons/yard/editor_only/ui_scenes/components/multi_option_editor_property.gd"
+)
+const REGISTRY_EDITOR_SCENE := preload(
+	"res://addons/yard/editor_only/ui_scenes/registry_editor.tscn"
+)
+const REGISTRY_TABLE_VIEW_SCENE := preload(
+	"res://addons/yard/editor_only/ui_scenes/registry_table_view.tscn"
+)
 
-# Misc
-const FILESYSTEM_CREATE_CONTEXT_MENU_PLUGIN = preload("res://addons/yard/editor_only/editor_context_menu_plugin.gd")
-const EDITOR_INSPECTOR_PLUGIN = preload("res://addons/yard/editor_only/editor_inspector_plugin.gd")
+# Editor Themed Controls
+const EditorIconButton = preload(
+	"res://addons/yard/editor_only/classes/editor_icon_controls/editor_icon_button.gd"
+)
+const EditorIconLineEdit = preload(
+	"res://addons/yard/editor_only/classes/editor_icon_controls/editor_icon_line_edit.gd"
+)
+const EditorIconMenuButton = preload(
+	"res://addons/yard/editor_only/classes/editor_icon_controls/editor_icon_menu_button.gd"
+)
+const EditorIconPopupMenu = preload(
+	"res://addons/yard/editor_only/classes/editor_icon_controls/editor_icon_popup_menu.gd"
+)
+const EditorIconTextureButton = preload(
+	"res://addons/yard/editor_only/classes/editor_icon_controls/editor_icon_texture_button.gd"
+)
+
+# Data Table
+const DataTable := preload("res://addons/yard/editor_only/classes/data_table/data_table.gd")
+const ColumnConfig := preload("res://addons/yard/editor_only/classes/data_table/column_config.gd")
+const CellStyle := preload("res://addons/yard/editor_only/classes/data_table/cell_style.gd")
+const CellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/cell_type.gd"
+)
+const StringCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/string_cell_type.gd"
+)
+const StringNameCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/stringname_cell_type.gd"
+)
+const MultilineCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/multiline_cell_type.gd"
+)
+const NumericCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/numeric_cell_type.gd"
+)
+const BooleanCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/boolean_cell_type.gd"
+)
+const RangeCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/range_cell_type.gd"
+)
+const ColorCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/color_cell_type.gd"
+)
+const ResourceCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/resource_cell_type.gd"
+)
+const PathCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/path_cell_type.gd"
+)
+const EnumCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/enum_cell_type.gd"
+)
+const BitFlagsCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/bitflags_cell_type.gd"
+)
+const RegistryEntryCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/registry_entry_cell_type.gd"
+)
+const CollectionCellType := preload(
+	"res://addons/yard/editor_only/classes/data_table/cell_types/collection_cell_type.gd"
+)
+
+# Plugins
+const FILESYSTEM_CREATE_CONTEXT_MENU_PLUGIN := preload(
+	"res://addons/yard/editor_only/editor_context_menu_plugin.gd"
+)
+const EDITOR_INSPECTOR_PLUGIN := preload("res://addons/yard/editor_only/editor_inspector_plugin.gd")
+const EDITOR_EXPORT_PLUGIN := preload("res://addons/yard/editor_only/editor_export_plugin.gd")
+
+# Locales
 const TRANSLATIONS := {
 	"de_DE": "res://addons/yard/editor_only/locale/de_DE.po",
 	"en_US": "res://addons/yard/editor_only/locale/en_US.po",

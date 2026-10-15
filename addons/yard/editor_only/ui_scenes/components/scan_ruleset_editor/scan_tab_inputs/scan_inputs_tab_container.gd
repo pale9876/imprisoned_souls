@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends TabContainer
 ## Holds one or more scan input controls arranged as tabs. Requires an initial child control to act
@@ -97,7 +102,7 @@ func set_all_values(values: Array[Variant]) -> void:
 func render_validation_results(args: Array[Variant]) -> void:
 	var args_count := args.size()
 	if args_count != _inputs.size():
-		printerr("Validation results args count invalid!")
+		push_error("Validation results args count invalid!")
 		return
 
 	for i in args_count:

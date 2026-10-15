@@ -1,7 +1,11 @@
-@tool
-extends ScanTabInput
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
 
-const ScanTabInput := preload("./scan_tab_input.gd")
+@tool
+extends "./scan_tab_input.gd"
+
 const ScanDirectoryInput := preload("./scan_directory_input.gd")
 const REQUEST_SCAN_DIRECTORY_FILE_DIALOG_ACTION := &"request_scan_directory_file_dialog"
 

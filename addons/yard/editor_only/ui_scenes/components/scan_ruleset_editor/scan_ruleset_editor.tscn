@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqt3d2a2exd2f"]
+[gd_scene format=3 uid="uid://cqt3d2a2exd2f"]
 
 [ext_resource type="Script" uid="uid://bg3lfbc87nwi1" path="res://addons/yard/editor_only/ui_scenes/components/scan_ruleset_editor/scan_ruleset_editor.gd" id="1_2j2pv"]
 [ext_resource type="Script" uid="uid://b4hvdt62s4fy8" path="res://addons/yard/editor_only/ui_scenes/components/scan_ruleset_editor/scan_tab_inputs/scan_inputs_tab_container.gd" id="2_moyid"]
@@ -12,7 +12,7 @@ content_margin_right = 0.0
 content_margin_bottom = 0.0
 bg_color = Color(0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nldj0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uf0vx"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -26,7 +26,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okdmp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7a70f"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -47,7 +47,7 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[node name="ScanRulesetEditor" type="HBoxContainer"]
+[node name="ScanRulesetEditor" type="HBoxContainer" unique_id=1324602800]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 66.0
@@ -55,20 +55,20 @@ grow_horizontal = 2
 theme_override_constants/separation = 12
 script = ExtResource("1_2j2pv")
 
-[node name="RulesetPropertiesGridContainer" type="GridContainer" parent="."]
+[node name="RulesetPropertiesGridContainer" type="GridContainer" parent="." unique_id=1873300298]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 12
 columns = 2
 
-[node name="ClassRestrictionsLabel" type="Label" parent="RulesetPropertiesGridContainer"]
+[node name="ClassRestrictionsLabel" type="Label" parent="RulesetPropertiesGridContainer" unique_id=85213895]
 layout_mode = 2
 tooltip_text = "Only resources of this class (or subclasses) will be accepted."
 mouse_filter = 1
 text = "Class Restriction:"
 
-[node name="ClassRestrictionsTabContainer" type="TabContainer" parent="RulesetPropertiesGridContainer"]
+[node name="ClassRestrictionsTabContainer" type="TabContainer" parent="RulesetPropertiesGridContainer" unique_id=1268628415]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -79,13 +79,13 @@ script = ExtResource("2_moyid")
 tab_display_title = "Class"
 scan_tab_input_scene = ExtResource("3_cl5ex")
 
-[node name="ScanDirectoryLabel" type="Label" parent="RulesetPropertiesGridContainer"]
+[node name="ScanDirectoryLabel" type="Label" parent="RulesetPropertiesGridContainer" unique_id=1190593846]
 layout_mode = 2
 tooltip_text = "Directory to watch for matching resource files."
 mouse_filter = 1
 text = "Scan Directory:"
 
-[node name="ScanDirectoriesTabContainer" type="TabContainer" parent="RulesetPropertiesGridContainer"]
+[node name="ScanDirectoriesTabContainer" type="TabContainer" parent="RulesetPropertiesGridContainer" unique_id=1671757036]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
@@ -96,57 +96,57 @@ script = ExtResource("2_moyid")
 tab_display_title = "Dir"
 scan_tab_input_scene = ExtResource("4_uf0vx")
 
-[node name="RecursiveScanLabel" type="Label" parent="RulesetPropertiesGridContainer"]
+[node name="RecursiveScanLabel" type="Label" parent="RulesetPropertiesGridContainer" unique_id=581653041]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Also scan subdirectories."
 mouse_filter = 1
 text = "Recursive:"
 
-[node name="RecursiveScanCheckBox" type="CheckBox" parent="RulesetPropertiesGridContainer"]
+[node name="RecursiveScanCheckBox" type="CheckBox" parent="RulesetPropertiesGridContainer" unique_id=965590434]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_nldj0")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_nldj0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nldj0")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_nldj0")
-theme_override_styles/focus = SubResource("StyleBoxFlat_okdmp")
+theme_override_styles/normal = SubResource("StyleBoxFlat_uf0vx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uf0vx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uf0vx")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_uf0vx")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7a70f")
 text = "On"
 
-[node name="AllowedFileExtensionsLabel" type="Label" parent="RulesetPropertiesGridContainer"]
+[node name="AllowedFileExtensionsLabel" type="Label" parent="RulesetPropertiesGridContainer" unique_id=368045491]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Restrict scan to these file extensions. Separate with commas."
 mouse_filter = 1
 text = "File Extensions:"
 
-[node name="AllowedFileExtensionsLineEdit" type="LineEdit" parent="RulesetPropertiesGridContainer"]
+[node name="AllowedFileExtensionsLineEdit" type="LineEdit" parent="RulesetPropertiesGridContainer" unique_id=1364367847]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "e.g. `.tres, .res`"
 
-[node name="ScanRegexIncludeLabel" type="Label" parent="RulesetPropertiesGridContainer"]
+[node name="ScanRegexIncludeLabel" type="Label" parent="RulesetPropertiesGridContainer" unique_id=1407640303]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Only paths matching this pattern will be scanned. Applied to the relative path from the scan directory."
 mouse_filter = 1
 text = "RegEx Include:"
 
-[node name="ScanRegexIncludeLineEdit" type="LineEdit" parent="RulesetPropertiesGridContainer"]
+[node name="ScanRegexIncludeLineEdit" type="LineEdit" parent="RulesetPropertiesGridContainer" unique_id=1306815938]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "e.g. `\\.tres$|\\.res$`"
 
-[node name="ScanRegexExcludeLabel" type="Label" parent="RulesetPropertiesGridContainer"]
+[node name="ScanRegexExcludeLabel" type="Label" parent="RulesetPropertiesGridContainer" unique_id=1527429246]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Paths matching this pattern will be skipped. Applied to the relative path from the scan directory."
 mouse_filter = 1
 text = "RegEx Exclude:"
 
-[node name="ScanRegexExcludeLineEdit" type="LineEdit" parent="RulesetPropertiesGridContainer"]
+[node name="ScanRegexExcludeLineEdit" type="LineEdit" parent="RulesetPropertiesGridContainer" unique_id=1707989062]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

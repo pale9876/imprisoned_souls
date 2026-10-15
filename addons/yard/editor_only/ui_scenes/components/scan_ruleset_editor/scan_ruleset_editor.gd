@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends HBoxContainer
 
@@ -6,26 +11,32 @@ signal request_class_restriction_class_list_dialog(class_restriction: String)
 signal request_class_restriction_file_dialog(class_restriction: String)
 signal request_scan_directory_file_dialog(scan_dir: String)
 
-const Namespace := preload("../../../namespace.gd")
-const OVERRIDE_DEFAULT_SETTING_TOGGLE_BUTTON := preload("./override_default_setting_toggle_button.tscn")
-const NewRegistryDialog := preload("../new_registry_dialog.gd")
+const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
+const RegistryIO := Namespace.RegistryIO
+const AnyIcon := Namespace.AnyIcon
+const NewRegistryDialog := Namespace.NewRegistryDialog
 const ScanRulesetEditor := preload("./scan_ruleset_editor.gd")
 const ScanInputsTabContainer := preload("./scan_tab_inputs/scan_inputs_tab_container.gd")
 const ClassRestrictionInput := preload("./scan_tab_inputs/class_restriction_input.gd")
 const ScanDirectoryInput := preload("./scan_tab_inputs/scan_directory_input.gd")
-const RegistryIO := Namespace.RegistryIO
-const AnyIcon := Namespace.AnyIcon
+
+const OVERRIDE_DEFAULT_SETTING_TOGGLE_BUTTON := preload(
+	"./override_default_setting_toggle_button.tscn"
+)
 
 const ADVANCED_RULESET_PROPERTIES: Array[StringName] = [
 	&"scan_regex_include",
 	&"scan_regex_exclude",
 ]
 
-const DEFAULT_OVERRIDDEN_RULESET_PROPERTIES: Array[StringName] = [
-	&"scan_directories",
-]
+const DEFAULT_OVERRIDDEN_RULESET_PROPERTIES: Array[StringName] = [&"scan_directories"]
 
-enum ValidationSubState { INFO, SUCCESS, WARNING, ERROR }
+enum ValidationSubState {
+	INFO,
+	SUCCESS,
+	WARNING,
+	ERROR,
+}
 
 @onready var ruleset_properties_grid_container: GridContainer = %RulesetPropertiesGridContainer
 @onready var class_restrictions_tab_container: TabContainer = %ClassRestrictionsTabContainer
@@ -77,12 +88,17 @@ var is_additional_ruleset := false:
 
 		if is_additional_ruleset and _registry_scan_ruleset_override_buttons.is_empty():
 			for ruleset_property in scan_ruleset_properties_to_root_edit_controls:
-				var ruleset_root_control := scan_ruleset_properties_to_root_edit_controls[ruleset_property]
+				var ruleset_root_control := scan_ruleset_properties_to_root_edit_controls[
+					ruleset_property
+				]
 				var override_button := OVERRIDE_DEFAULT_SETTING_TOGGLE_BUTTON.instantiate()
 				override_button.button_pressed = ruleset_property in DEFAULT_OVERRIDDEN_RULESET_PROPERTIES
 				_registry_scan_ruleset_override_buttons[ruleset_property] = override_button
 				ruleset_properties_grid_container.add_child(override_button)
-				ruleset_properties_grid_container.move_child(override_button, ruleset_root_control.get_index())
+				ruleset_properties_grid_container.move_child(
+					override_button,
+					ruleset_root_control.get_index(),
+				)
 				override_button.pressed.connect(_on_override_button_pressed)
 
 		elif not is_additional_ruleset and not _registry_scan_ruleset_override_buttons.is_empty():
@@ -115,22 +131,47 @@ var _registry_scan_ruleset_override_buttons: Dictionary[String, TextureButton] =
 
 
 func _ready() -> void:
-	recursive_scan_check_box.add_theme_stylebox_override(&"focus", get_theme_stylebox(&"focus", &"LineEdit"))
+	if not Engine.is_editor_hint() or EditorInterface.get_edited_scene_root() == self:
+		return
+
+	recursive_scan_check_box.add_theme_stylebox_override(
+		&"focus",
+		get_theme_stylebox(&"focus", &"LineEdit"),
+	)
 	for override: StringName in [&"normal", &"hover", &"pressed", &"hover_pressed"]:
-		recursive_scan_check_box.add_theme_stylebox_override(override, get_theme_stylebox(&"normal", &"LineEdit"))
+		recursive_scan_check_box.add_theme_stylebox_override(
+			override,
+			get_theme_stylebox(&"normal", &"LineEdit"),
+		)
 
 
 func reset_properties(ruleset_settings: RegistryIO.RegistryScanRuleset) -> void:
 	if is_additional_ruleset:
 		for override_property in _registry_scan_ruleset_override_buttons:
-			_registry_scan_ruleset_override_buttons[override_property].set_pressed_no_signal(ruleset_settings.override_properties.has(override_property))
+			_registry_scan_ruleset_override_buttons[override_property].set_pressed_no_signal(
+				ruleset_settings.override_properties.has(override_property)
+			)
 
-	var update_resource_classes := not is_additional_ruleset or ruleset_settings.override_properties.has(&"class_restrictions")
-	var update_scan_directories := not is_additional_ruleset or ruleset_settings.override_properties.has(&"scan_directories")
-	var update_recursive_scan := not is_additional_ruleset or ruleset_settings.override_properties.has(&"recursive_scan")
-	var update_allowed_file_extensions := not is_additional_ruleset or ruleset_settings.override_properties.has(&"allowed_file_extensions")
-	var update_scan_regex_include := not is_additional_ruleset or ruleset_settings.override_properties.has(&"scan_regex_include")
-	var update_scan_regex_exclude := not is_additional_ruleset or ruleset_settings.override_properties.has(&"scan_regex_exclude")
+	var update_resource_classes := (
+		not is_additional_ruleset or ruleset_settings.override_properties.has(&"class_restrictions")
+	)
+	var update_scan_directories := (
+		not is_additional_ruleset or ruleset_settings.override_properties.has(&"scan_directories")
+	)
+	var update_recursive_scan := (
+		not is_additional_ruleset or ruleset_settings.override_properties.has(&"recursive_scan")
+	)
+	var update_allowed_file_extensions := (
+		not is_additional_ruleset or ruleset_settings.override_properties.has(
+			&"allowed_file_extensions"
+		)
+	)
+	var update_scan_regex_include := (
+		not is_additional_ruleset or ruleset_settings.override_properties.has(&"scan_regex_include")
+	)
+	var update_scan_regex_exclude := (
+		not is_additional_ruleset or ruleset_settings.override_properties.has(&"scan_regex_exclude")
+	)
 
 	if update_resource_classes:
 		class_restrictions_tab_container.set_all_values(ruleset_settings.class_restrictions)
@@ -150,9 +191,14 @@ func reset_properties(ruleset_settings: RegistryIO.RegistryScanRuleset) -> void:
 	show_advanced_settings = show_advanced_settings
 
 
-static func are_any_advanced_ruleset_settings_set(ruleset_settings: RegistryIO.RegistryScanRuleset, default_ruleset_settings: RegistryIO.RegistryScanRuleset) -> bool:
+static func are_any_advanced_ruleset_settings_set(
+	ruleset_settings: RegistryIO.RegistryScanRuleset,
+	default_ruleset_settings: RegistryIO.RegistryScanRuleset,
+) -> bool:
 	for advanced_ruleset_property in ADVANCED_RULESET_PROPERTIES:
-		if ruleset_settings[advanced_ruleset_property] != default_ruleset_settings[advanced_ruleset_property]:
+		if ruleset_settings[advanced_ruleset_property] != default_ruleset_settings[
+			advanced_ruleset_property
+		]:
 			return true
 	return false
 
@@ -160,7 +206,10 @@ static func are_any_advanced_ruleset_settings_set(ruleset_settings: RegistryIO.R
 ## Get the defined class strings for this ruleset editor, but only if it is the default editor or
 ## has overridden classes, otherwise an empty string.
 func get_unique_class_strings() -> Array[String]:
-	if (not is_additional_ruleset or _registry_scan_ruleset_override_buttons[&"class_restrictions"].button_pressed):
+	if (
+		not is_additional_ruleset
+		or _registry_scan_ruleset_override_buttons[&"class_restrictions"].button_pressed
+	):
 		var class_strings: Array[String] = []
 		class_strings.assign(class_restrictions_tab_container.get_all_values(true))
 		return class_strings
@@ -182,7 +231,9 @@ func _update_overrides() -> void:
 		var override_button := _registry_scan_ruleset_override_buttons[property]
 
 		var is_property_overridden := override_button.button_pressed
-		for control_property_name: StringName in scan_ruleset_properties_to_all_control_properties[property]:
+		for control_property_name: StringName in scan_ruleset_properties_to_all_control_properties[
+			property
+		]:
 			var our_control: Control = self[control_property_name]
 			var default_control: Control = default_ruleset_editor[control_property_name]
 
@@ -246,11 +297,26 @@ func _validate_fields() -> Array[Array]:
 	var validation_messages: Array[Array] = []
 
 	# Determine which properties should actually be validated (only default or non-overridden ones)
-	var validate_resource_classes := not is_additional_ruleset or _registry_scan_ruleset_override_buttons[&"class_restrictions"].button_pressed
-	var validate_scan_directories := not is_additional_ruleset or _registry_scan_ruleset_override_buttons[&"scan_directories"].button_pressed
-	var validate_allowed_file_extensions := not is_additional_ruleset or _registry_scan_ruleset_override_buttons[&"allowed_file_extensions"].button_pressed
-	var validate_scan_regex_include := not is_additional_ruleset or _registry_scan_ruleset_override_buttons[&"scan_regex_include"].button_pressed
-	var validate_scan_regex_exclude := not is_additional_ruleset or _registry_scan_ruleset_override_buttons[&"scan_regex_exclude"].button_pressed
+	var validate_resource_classes := (
+		not is_additional_ruleset
+		or _registry_scan_ruleset_override_buttons[&"class_restrictions"].button_pressed
+	)
+	var validate_scan_directories := (
+		not is_additional_ruleset
+		or _registry_scan_ruleset_override_buttons[&"scan_directories"].button_pressed
+	)
+	var validate_allowed_file_extensions := (
+		not is_additional_ruleset
+		or _registry_scan_ruleset_override_buttons[&"allowed_file_extensions"].button_pressed
+	)
+	var validate_scan_regex_include := (
+		not is_additional_ruleset
+		or _registry_scan_ruleset_override_buttons[&"scan_regex_include"].button_pressed
+	)
+	var validate_scan_regex_exclude := (
+		not is_additional_ruleset
+		or _registry_scan_ruleset_override_buttons[&"scan_regex_exclude"].button_pressed
+	)
 
 	# Resource classes
 	if validate_resource_classes:
@@ -269,13 +335,19 @@ func _validate_fields() -> Array[Array]:
 				if is_class_valid:
 					## TODO: Fix icon size in Godot 4.6 — https://github.com/godotengine/godot/pull/95817
 					class_restriction_input_validation_icons.append(
-						AnyIcon.get_script_icon(load(RegistryIO.unquote(class_string))) if RegistryIO.is_quoted_string(class_string) else AnyIcon.get_class_icon(class_string),
+						AnyIcon.get_script_icon(load(RegistryIO.unquote(class_string))) if RegistryIO.is_quoted_string(
+							class_string
+						) else AnyIcon.get_class_icon(class_string),
 					)
 				else:
 					all_classes_valid = false
-					class_restriction_input_validation_icons.append(AnyIcon.get_icon(&"MissingResource"))
+					class_restriction_input_validation_icons.append(
+						AnyIcon.get_icon(&"MissingResource")
+					)
 
-		class_restrictions_tab_container.render_validation_results(class_restriction_input_validation_icons)
+		class_restrictions_tab_container.render_validation_results(
+			class_restriction_input_validation_icons
+		)
 
 		if all_classes_empty:
 			validation_messages.append([ValidationSubState.WARNING, &"class_empty"])
@@ -300,7 +372,10 @@ func _validate_fields() -> Array[Array]:
 					break
 
 			if all_paths_valid:
-				var has_root_dir := all_scan_paths.any(func(p: String) -> bool: return p == "res://")
+				var has_root_dir := all_scan_paths.any(
+					func(p: String) -> bool:
+						return p == "res://",
+				)
 				if has_root_dir:
 					validation_messages.append([ValidationSubState.WARNING, &"scan_root_warning"])
 				else:
@@ -314,13 +389,26 @@ func _validate_fields() -> Array[Array]:
 	if validate_allowed_file_extensions:
 		var file_extensions: Array[String] = []
 		file_extensions.assign(allowed_file_extensions_line_edit.text.split(",", true))
-		if not file_extensions.is_empty() and not (file_extensions.size() == 1 and file_extensions[0].is_empty()):
+		if (
+			not file_extensions.is_empty()
+			and not (file_extensions.size() == 1 and file_extensions[0].is_empty())
+		):
 			for i in file_extensions.size():
 				file_extensions[i] = file_extensions[i].strip_edges()
-			if file_extensions.any(func(s: String) -> bool: return s.is_empty()):
-				validation_messages.append([ValidationSubState.ERROR, &"file_extensions_empty_extension"])
-			elif file_extensions.any(func(s: String) -> bool: return not s.is_valid_filename()):
-				validation_messages.append([ValidationSubState.ERROR, &"file_extensions_invalid_character"])
+			if file_extensions.any(
+				func(s: String) -> bool:
+					return s.is_empty(),
+			):
+				validation_messages.append(
+					[ValidationSubState.ERROR, &"file_extensions_empty_extension"]
+				)
+			elif file_extensions.any(
+				func(s: String) -> bool:
+					return not s.is_valid_filename(),
+			):
+				validation_messages.append(
+					[ValidationSubState.ERROR, &"file_extensions_invalid_character"]
+				)
 			else:
 				validation_messages.append([ValidationSubState.SUCCESS, &"file_extensions_valid"])
 		else:

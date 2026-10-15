@@ -1,5 +1,8 @@
-## Source: String Wrangler
-## Created by Matthew Janes (IndieGameDad) - MIT 2025
+# SPDX-FileCopyrightText: 2025, Matthew Janes (IndieGameDad) <https://github.com/yulrun/stringwrangler-plugin>
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
 
 @tool
 extends EditorProperty
@@ -9,7 +12,12 @@ var show_empty: bool = false
 var string_type: Variant.Type # TYPE_STRING or TYPE_STRING_NAME
 
 
-func _init(current_value: Variant, string_ids: Array[String], p_show_empty: bool = false, p_type: Variant.Type = TYPE_STRING) -> void:
+func _init(
+	current_value: Variant,
+	string_ids: Array[String],
+	p_show_empty: bool = false,
+	p_type: Variant.Type = TYPE_STRING,
+) -> void:
 	string_type = p_type
 	inner_control = _build_dropdown(string_ids, str(current_value), p_show_empty)
 	show_empty = p_show_empty
@@ -17,7 +25,11 @@ func _init(current_value: Variant, string_ids: Array[String], p_show_empty: bool
 	inner_control.item_selected.connect(_on_option_selected)
 
 
-func _build_dropdown(choices: Array[String], current_value: String, p_show_empty: bool) -> OptionButton:
+func _build_dropdown(
+	choices: Array[String],
+	current_value: String,
+	p_show_empty: bool,
+) -> OptionButton:
 	var dropdown: OptionButton = OptionButton.new()
 	dropdown.flat = true
 	dropdown.fit_to_longest_item = false

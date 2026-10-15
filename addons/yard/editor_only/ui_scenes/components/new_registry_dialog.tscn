@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3g3e36v7g6kr"]
+[gd_scene format=3 uid="uid://b3g3e36v7g6kr"]
 
 [ext_resource type="Script" uid="uid://ci6vvg34c6b6o" path="res://addons/yard/editor_only/ui_scenes/components/new_registry_dialog.gd" id="1_uots1"]
-[ext_resource type="Script" uid="uid://djrr6b7fc76rw" path="res://addons/yard/editor_only/classes/editor_icon_button.gd" id="2_8x47h"]
+[ext_resource type="Script" uid="uid://djrr6b7fc76rw" path="res://addons/yard/editor_only/classes/editor_icon_controls/editor_icon_button.gd" id="2_8x47h"]
 [ext_resource type="PackedScene" uid="uid://cqt3d2a2exd2f" path="res://addons/yard/editor_only/ui_scenes/components/scan_ruleset_editor/scan_ruleset_editor.tscn" id="3_srqmm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khhqm"]
@@ -39,7 +39,7 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[node name="NewRegistryDialog" type="ConfirmationDialog"]
+[node name="NewRegistryDialog" type="ConfirmationDialog" unique_id=239429982]
 oversampling_override = 1.0
 title = "Create Registry"
 initial_position = 1
@@ -49,7 +49,7 @@ ok_button_text = "Create"
 dialog_hide_on_ok = false
 script = ExtResource("1_uots1")
 
-[node name="NewRestrictionConfirmationDialog" type="ConfirmationDialog" parent="."]
+[node name="NewRestrictionConfirmationDialog" type="ConfirmationDialog" parent="." unique_id=610467408]
 unique_name_in_owner = true
 oversampling_override = 1.0
 initial_position = 1
@@ -60,7 +60,7 @@ new class restriction and would be removed.
 
 Do you want to proceed ?"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=263576205]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -73,65 +73,48 @@ grow_vertical = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="ScanRulesetsTabContainer" type="TabContainer" parent="VBoxContainer"]
+[node name="ScanRulesetsTabContainer" type="TabContainer" parent="VBoxContainer" unique_id=2071737739]
 unique_name_in_owner = true
 layout_mode = 2
 current_tab = 0
 
-[node name="DefaultRulesetEditor" parent="VBoxContainer/ScanRulesetsTabContainer" instance=ExtResource("3_srqmm")]
+[node name="DefaultRulesetEditor" parent="VBoxContainer/ScanRulesetsTabContainer" unique_id=1712745902 instance=ExtResource("3_srqmm")]
 unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="GlobalSettingsContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="GlobalSettingsContainer" type="PanelContainer" parent="VBoxContainer" unique_id=850980646]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/GlobalSettingsContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/GlobalSettingsContainer" unique_id=1005767793]
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer" unique_id=253547246]
 layout_mode = 2
 theme_override_constants/h_separation = 12
 columns = 2
 
-[node name="IndexedPropertiesLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
+[node name="IndexedPropertiesLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer" unique_id=756819275]
 layout_mode = 2
 tooltip_text = "Properties baked into the registry index for zero-cost runtime queries. Separate with commas."
 mouse_filter = 1
 text = "Indexed Properties:"
 
-[node name="IndexedPropertiesLineEdit" type="LineEdit" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
+[node name="IndexedPropertiesLineEdit" type="LineEdit" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer" unique_id=1197757411]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AutoRescanLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Automatically sync the registry entries when the filesystem changes."
-mouse_filter = 1
-text = "Auto Rescan:"
-
-[node name="AutoRescanCheckBox" type="CheckBox" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_khhqm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_khhqm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_khhqm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_khhqm")
-theme_override_styles/focus = SubResource("StyleBoxFlat_srqmm")
-text = "On"
-
-[node name="ScanRemoveUnlistedLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
+[node name="ScanRemoveUnlistedLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer" unique_id=1716661435]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Remove entries whose file no longer exists in the scan directory, or no longer matches any scan ruleset."
 mouse_filter = 1
 text = "Remove Unlisted:"
 
-[node name="ScanRemoveUnlistedCheckBox" type="CheckBox" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
+[node name="ScanRemoveUnlistedCheckBox" type="CheckBox" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer" unique_id=1848544280]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_khhqm")
@@ -141,29 +124,29 @@ theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_khhqm")
 theme_override_styles/focus = SubResource("StyleBoxFlat_srqmm")
 text = "On"
 
-[node name="PathLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
+[node name="PathLabel" type="Label" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer" unique_id=1485783943]
 layout_mode = 2
 tooltip_text = "Path to the registry file."
 mouse_filter = 1
 text = "Path:"
 
-[node name="RegistryPath" type="HBoxContainer" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer"]
+[node name="RegistryPath" type="HBoxContainer" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer" unique_id=849036218]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RegistryPathLineEdit" type="LineEdit" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer/RegistryPath"]
+[node name="RegistryPathLineEdit" type="LineEdit" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer/RegistryPath" unique_id=1405965680]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "new_registry.tres"
 
-[node name="RegistryPathFilesystemButton" type="Button" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer/RegistryPath"]
+[node name="RegistryPathFilesystemButton" type="Button" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer/GridContainer/RegistryPath" unique_id=1255718709]
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("2_8x47h")
 icon_name = "Folder"
 
-[node name="InfoLabel" type="RichTextLabel" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer"]
+[node name="InfoLabel" type="RichTextLabel" parent="VBoxContainer/GlobalSettingsContainer/VBoxContainer" unique_id=1676968071]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(650, 0)
 layout_mode = 2
@@ -172,7 +155,7 @@ bbcode_enabled = true
 fit_content = true
 scroll_active = false
 
-[node name="AdvancedSettingsCheckButton" type="CheckButton" parent="VBoxContainer"]
+[node name="AdvancedSettingsCheckButton" type="CheckButton" parent="VBoxContainer" unique_id=1695575357]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8

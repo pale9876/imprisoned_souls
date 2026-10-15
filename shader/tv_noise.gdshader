@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 
-uniform float alpha: hint_range(0.0, 1.0, 0.001) = 1.;
+uniform float alpha: hint_range(0.0, 1.0, 0.001) = .075;
 
 float rand(vec2 co)
 {

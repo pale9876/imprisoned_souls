@@ -12,40 +12,28 @@
 [ext_resource type="PackedScene" uid="uid://c2agrq1i4pbt2" path="res://title/title.tscn" id="9_7ycvg"]
 [ext_resource type="Shader" uid="uid://c6qc3hkvc3sta" path="res://shader/chromatic.gdshader" id="9_42l1d"]
 [ext_resource type="Shader" uid="uid://6ly1dbvypuv" path="res://shader/crt.gdshader" id="9_qwutr"]
-[ext_resource type="Shader" uid="uid://cujdjrtlxkri5" path="res://shader/pulsing_blood.gdshader" id="9_u0ygc"]
-[ext_resource type="Script" uid="uid://dnrbdwpgrvf8i" path="res://script/pulsing_blood.gd" id="10_7th4q"]
 [ext_resource type="Script" uid="uid://feq0cuk073iw" path="res://script/crt_turn_on_off_filterrect.gd" id="10_671wp"]
 [ext_resource type="Script" uid="uid://prb1c3tlol3k" path="res://script/tv_noise_filter.gd" id="10_m35m6"]
 [ext_resource type="Shader" uid="uid://dxn8hlrd3ett5" path="res://shader/crt_turn_off.gdshader" id="11_671wp"]
 [ext_resource type="Script" uid="uid://b40862q3rj56v" path="res://script/crt_filter.gd" id="12_671wp"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7th4q"]
-shader = ExtResource("9_u0ygc")
-shader_parameter/blood_color = Color(1, 0, 0, 1)
-shader_parameter/size = 0.122000005795
-shader_parameter/softness = 1.0
-shader_parameter/roughness = 0.35
-shader_parameter/pulse_speed = 0.5810000275975
-shader_parameter/pulse_amount = 0.7430000352925
-shader_parameter/max_alpha = 0.4690000222775
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6jybn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m35m6"]
 shader = ExtResource("9_2jcla")
 shader_parameter/alpha = 0.075
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_84odl"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u0ygc"]
 shader = ExtResource("9_42l1d")
 shader_parameter/intensity = 1.0
 shader_parameter/threshold = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ak604"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7th4q"]
 shader = ExtResource("11_671wp")
 shader_parameter/FADE_COLOR = Color(0.0859, 0.0937, 0.1328, 1)
 shader_parameter/BUFFER = 2.0
 shader_parameter/SCALE_SPEED = 1.5
 shader_parameter/progress = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vimvf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6jybn"]
 shader = ExtResource("9_qwutr")
 shader_parameter/resolution = Vector2(640, 360)
 shader_parameter/scan_line_amount = 0.5
@@ -224,30 +212,19 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="MainHeirViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=1763939588]
+[node name="GameViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=1174733233]
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 script = ExtResource("2_hq1ik")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=254431759]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="GameViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=1174733233]
-handle_input_locally = false
-size = Vector2i(640, 360)
-render_target_update_mode = 4
-script = ExtResource("2_hq1ik")
-
-[node name="Party" type="Node2D" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport" unique_id=2103444115]
+[node name="Party" type="Node2D" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport" unique_id=2103444115]
 unique_name_in_owner = true
 
-[node name="Background" type="CanvasLayer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=416058432]
+[node name="Background" type="CanvasLayer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=416058432]
 unique_name_in_owner = true
 
-[node name="BackgroundColorRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party/Background" unique_id=1910507285]
+[node name="BackgroundColorRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party/Background" unique_id=1910507285]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -255,39 +232,27 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.006626662, 0.002099998, 0.07, 1)
 
-[node name="Ingame" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=906912944 instance=ExtResource("2_8mm7a")]
+[node name="Ingame" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=906912944 instance=ExtResource("2_8mm7a")]
 unique_name_in_owner = true
 visible = false
 
-[node name="HUD" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=765911860 instance=ExtResource("5_hq1ik")]
+[node name="HUD" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=765911860 instance=ExtResource("5_hq1ik")]
 unique_name_in_owner = true
 visible = false
 
-[node name="Title" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=419323065 instance=ExtResource("9_7ycvg")]
+[node name="Title" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=419323065 instance=ExtResource("9_7ycvg")]
 unique_name_in_owner = true
 
-[node name="Channel" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=1466334463 instance=ExtResource("8_7ycvg")]
+[node name="Channel" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=1466334463 instance=ExtResource("8_7ycvg")]
 unique_name_in_owner = true
 visible = false
 
-[node name="Foreground" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=484923412 instance=ExtResource("8_qwutr")]
+[node name="Foreground" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=484923412 instance=ExtResource("8_qwutr")]
 unique_name_in_owner = true
-
-[node name="PulsingBlood" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=892276079]
-material = SubResource("ShaderMaterial_7th4q")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
-script = ExtResource("10_7th4q")
-range_size = null
-shader = ExtResource("9_u0ygc")
-metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
 
 [node name="TVNoiseFilter" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=564635184]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_6jybn")
+material = SubResource("ShaderMaterial_m35m6")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -299,7 +264,7 @@ shader = ExtResource("9_2jcla")
 metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
 
 [node name="Chromatic" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=1743675109]
-material = SubResource("ShaderMaterial_84odl")
+material = SubResource("ShaderMaterial_u0ygc")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -310,7 +275,7 @@ shader = ExtResource("9_42l1d")
 
 [node name="TurnOnOffFilter" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=717487450]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_ak604")
+material = SubResource("ShaderMaterial_7th4q")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -321,7 +286,7 @@ shader = ExtResource("11_671wp")
 metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
 
 [node name="CRTFilter" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport" unique_id=499874558]
-material = SubResource("ShaderMaterial_vimvf")
+material = SubResource("ShaderMaterial_6jybn")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

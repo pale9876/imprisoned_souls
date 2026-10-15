@@ -33,10 +33,28 @@ var _create_filter: Callable = func() -> void:
 	move_party(viewport)
 
 
-@export_tool_button("이 필터 삭제")
+@export_tool_button("이 뷰포트 필터 삭제", "ActionCut")
 var _del_filter: Callable = func() -> void:
-	pass
-
+	if !Engine.is_editor_hint(): return
+	
+	if name == &"GameViewport":
+		printerr("게임 뷰포트는 이 기능으로 삭제할 수 없습니다.")
+		return
+	
+	var root_node: Node = get_tree().edited_scene_root
+	var container: Node = get_child(0)
+	var filter: Node = get_child(1)
+	
+	var vp: Node = container.get_child(0)
+	container.remove_child(vp)
+	
+	var p_vp := get_parent()
+	p_vp.add_child(vp)
+	vp.owner = root_node
+	
+	container.queue_free()
+	filter.queue_free()
+	queue_free()
 
 
 func _init() -> void:

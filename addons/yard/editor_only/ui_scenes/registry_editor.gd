@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: 2025-2026, Elliot Fontaine <yard-godot@elliotfontaine.anonaddy.com>
+# SPDX-FileCopyrightText: 2026-present, YARD contributors (see AUTHORS.md)
+#
+# SPDX-License-Identifier: MIT
+
 @tool
 extends Container
 
@@ -20,43 +25,44 @@ enum FileMenuAction {
 	SORT = 32,
 	CLEAR_RECENT = 40,
 }
+const ColumnMenuAction := RegistryTableView.ColumnMenuAction # Enum
 const EditMenuAction := RegistryTableView.EditMenuAction # Enum
 
 const Namespace := preload("res://addons/yard/editor_only/namespace.gd")
 const PluginCFG := Namespace.PluginCFG
+const Compat := Namespace.Compat
 const RegistryIO := Namespace.RegistryIO
 const ClassUtils := Namespace.ClassUtils
+const ShortcutUtils := Namespace.ShortcutUtils
 const EditorStateData := Namespace.YardEditorCache.EditorStateData
 const RegistryCacheData := Namespace.YardEditorCache.RegistryCacheData
 const RegistriesItemList := Namespace.RegistriesItemList
 const RegistryTableView := Namespace.RegistryTableView
 const NewRegistryDialog := Namespace.NewRegistryDialog
 const AnyIcon := Namespace.AnyIcon
-const FuzzySearch := Namespace.FuzzySearch
-const FuzzySearchResult := FuzzySearch.FuzzySearchResult
+const YardFuzzySearch := Namespace.YardFuzzySearch
+const YardLogger := Namespace.YardLogger
+const EditorThemeUtils := Namespace.EditorThemeUtils
+const UpdateManager := Namespace.UpdateManager
+const UpdateInstallWindow := Namespace.UpdateInstallWindow
+const FuzzySearchResult := YardFuzzySearch.FuzzySearchResult
 const BUILTIN_RESOURCE_PROPERTIES: Array[StringName] = RegistryCacheData.BUILTIN_RESOURCE_PROPERTIES
+const STRINGID_COLUMN := RegistryTableView.STRINGID_COLUMN
+const UID_COLUMN := RegistryTableView.UID_COLUMN
 
-const ACCELERATORS_WIN: Dictionary = {
-	FileMenuAction.NEW: KEY_MASK_CTRL | KEY_N,
-	FileMenuAction.REOPEN_CLOSED: KEY_MASK_SHIFT | KEY_MASK_CTRL | KEY_T,
-	FileMenuAction.CLOSE: KEY_MASK_CTRL | KEY_W,
-	FileMenuAction.MOVE_UP: KEY_MASK_SHIFT | KEY_MASK_ALT | KEY_UP,
-	FileMenuAction.MOVE_DOWN: KEY_MASK_SHIFT | KEY_MASK_ALT | KEY_DOWN,
-}
-
-const ACCELERATORS_MAC: Dictionary = {
-	FileMenuAction.NEW: KEY_MASK_META | KEY_N,
-	FileMenuAction.REOPEN_CLOSED: KEY_MASK_SHIFT | KEY_MASK_META | KEY_T,
-	FileMenuAction.CLOSE: KEY_MASK_META | KEY_W,
-	FileMenuAction.MOVE_UP: KEY_MASK_SHIFT | KEY_MASK_ALT | KEY_UP,
-	FileMenuAction.MOVE_DOWN: KEY_MASK_SHIFT | KEY_MASK_ALT | KEY_DOWN,
+const ACTION_SHORTCUTS: Dictionary[FileMenuAction, String] = {
+	FileMenuAction.NEW: "new_registry",
+	FileMenuAction.REOPEN_CLOSED: "reopen_closed_registry",
+	FileMenuAction.CLOSE: "close_registry",
+	FileMenuAction.MOVE_UP: "move_registry_up",
+	FileMenuAction.MOVE_DOWN: "move_registry_down",
 }
 
 var _editor_state_data: EditorStateData
 var _session_closed_uids: Array[String] = [] # Array[uid]
 var _file_dialog: EditorFileDialog
 var _current_registry_uid: String = ""
-var _fuz := FuzzySearch.new()
+var _fuz := YardFuzzySearch.new()
 
 @onready var file_menu_button: MenuButton = %FileMenuButton
 @onready var edit_menu_button: MenuButton = %EditMenuButton
@@ -73,13 +79,14 @@ var _fuz := FuzzySearch.new()
 @onready var registry_context_menu: PopupMenu = %RegistryContextMenu
 @onready var new_registry_dialog: NewRegistryDialog = %NewRegistryDialog
 @onready var read_me_window: AcceptDialog = $ReadMeWindow
+@onready var version_button: Button = %VersionButton
+@onready var update_manager: UpdateManager = %UpdateManager
+@onready var update_install_window: UpdateInstallWindow = %UpdateInstallWindow
 
 
 func _ready() -> void:
-	if not Engine.is_editor_hint() or EditorInterface.get_edited_scene_root() == self:
+	if EditorThemeUtils.is_in_edited_scene(self):
 		return
-
-	EditorInterface.get_resource_filesystem().filesystem_changed.connect(_on_filesystem_changed)
 
 	_file_dialog = EditorFileDialog.new()
 	_file_dialog.access = EditorFileDialog.ACCESS_RESOURCES
@@ -87,7 +94,8 @@ func _ready() -> void:
 	_file_dialog.title = tr("Open Registry")
 	var filter := ", ".join(
 		RegistryIO.REGISTRY_FILE_EXTENSIONS.map(
-			func(e: String) -> String: return "*.%s" % e
+			func(e: String) -> String:
+				return "*.%s" % e,
 		),
 	)
 	_file_dialog.add_filter(filter, "Registries")
@@ -95,15 +103,26 @@ func _ready() -> void:
 	add_child(_file_dialog)
 
 	_toggle_visibility_topbar_buttons()
-	_setup_accelerators()
+	_setup_shortcuts()
 
 	file_menu_button.get_popup().id_pressed.connect(_on_file_menu_id_pressed)
 	edit_menu_button.get_popup().id_pressed.connect(_on_edit_menu_id_pressed)
 	columns_menu_button.get_popup().id_pressed.connect(_on_columns_menu_id_pressed)
+	columns_menu_button.get_popup().window_input.connect(_on_columns_menu_window_input)
 	columns_menu_button.get_popup().hide_on_checkable_item_selection = false
 	registries_itemlist.registries_dropped.connect(_on_itemlist_registries_dropped)
-	registry_table_view.toggle_registry_panel_button.pressed.connect(_on_toggle_registries_pressed)
+	registry_table_view.footer.registry_panel_toggled.connect(_on_footer_registry_panel_toggled)
+	registry_table_view.registry_changed.connect(_on_registry_table_view_registry_changed)
 	new_registry_dialog.settings_saved.connect(_on_new_registry_dialog_settings_saved)
+	version_button.pressed.connect(_on_version_button_pressed)
+
+	update_manager.update_check_completed.connect(_on_update_manager_update_check_completed)
+	update_manager.download_completed.connect(update_install_window.set_download_result)
+	update_install_window.install_requested.connect(update_manager.request_update_download)
+	update_install_window.refresh_requested.connect(update_manager.request_update_check)
+	EditorInterface.get_resource_filesystem().resources_reimported.connect(_on_resources_reimported)
+	version_button.text = update_manager.get_current_version()
+	update_manager.request_update_check()
 
 	# Fuzzy Search settings
 	_fuz.max_results = 20
@@ -121,25 +140,37 @@ func _ready() -> void:
 	_update_registries_itemlist()
 
 
+func _input(event: InputEvent) -> void:
+	if is_visible_in_tree() and event is InputEventKey:
+		# runs prior to shortcut handling
+		_toggle_registry_context_menu_items()
+		_toggle_file_menu_items()
+		_toggle_edit_menu_items()
+
+
 func _shortcut_input(event: InputEvent) -> void:
-	if is_visible_in_tree() and event.is_pressed():
-		registry_context_menu.activate_item_by_event(event)
+	if not event.is_pressed() or event.is_echo():
+		return
+
+	if is_visible_in_tree() and registry_context_menu.activate_item_by_event(event):
+		get_viewport().set_input_as_handled()
 
 
 ## Open a registry from the filesystem and add it to the list of opened ones
 func open_registry(registry: Registry) -> void:
 	var filepath := registry.resource_path
-	var uid := ResourceUID.path_to_uid(filepath)
+	var uid := Compat.path_to_uid(filepath)
 
 	if uid not in _editor_state_data.opened_registries:
 		_editor_state_data.opened_registries[uid] = registry
 		_editor_state_data = _editor_state_data.save_and_reload()
+
+	if not _editor_state_data.opened_registries.has(uid):
+		YardLogger.error("UID '%s' could not be added to the cache. It must be invalid." % uid)
+		return
+
 	_update_registries_itemlist()
 	_editor_state_data.add_recent(registry)
-
-	if RegistryIO.get_registry_settings(registry).auto_rescan:
-		RegistryIO.sync_from_scan_directories(registry)
-
 	select_registry(uid)
 
 
@@ -155,6 +186,7 @@ func close_registry(uid: String) -> void:
 	elif _current_registry_uid == uid:
 		select_registry(_editor_state_data.opened_registries.keys()[0])
 
+	registry_table_view.footer.clear_add_entry_cache(uid)
 	_session_closed_uids.append(uid)
 	_update_registries_itemlist()
 
@@ -188,10 +220,14 @@ func select_registry(uid: String) -> void:
 	if EditorInterface.get_inspector().get_edited_object() != registry:
 		EditorInterface.inspect_object(registry, "", true)
 
+	if RegistryIO.get_registry_settings(registry).has_any_scan_directory():
+		RegistryIO.sync_from_scan_directories(registry)
+
 	registry_table_view.current_registry = registry
 	_toggle_visibility_topbar_buttons()
 	_toggle_file_menu_items()
 	_toggle_registry_context_menu_items()
+	_update_registries_itemlist()
 
 
 func unselect_registry() -> void:
@@ -205,24 +241,56 @@ func is_any_registry_selected() -> bool:
 	return not _current_registry_uid.is_empty()
 
 
-func _setup_accelerators() -> void:
-	# TODO: when Godot 4.6 is out, register editor shortcuts
-	# and reuse already registered ones using `EditorSettings.get_shortcut()`
-	# https://github.com/godotengine/godot/pull/102889
+func get_known_registries_uids() -> PackedStringArray:
+	var uids := _editor_state_data.opened_registries.keys()
+	uids.append_array(_editor_state_data.recent_registry_uids)
+
+	var unique_uids: Dictionary[String, bool] = { }
+	for uid: String in uids:
+		unique_uids[uid] = true # deduplicate
+
+	return PackedStringArray(unique_uids.keys())
+
+
+func rescan_known_registries() -> void:
+	for uid: String in get_known_registries_uids():
+		if RegistryIO.is_uid_valid(uid):
+			var registry: Registry = load(uid)
+			if RegistryIO.get_registry_settings(registry).has_any_scan_directory():
+				RegistryIO.sync_from_scan_directories(registry)
+
+
+func reindex_known_registries() -> void:
+	for uid: String in get_known_registries_uids():
+		if RegistryIO.is_uid_valid(uid):
+			var registry: Registry = load(uid)
+			if RegistryIO.get_registry_settings(registry).indexed_props:
+				RegistryIO.rebuild_property_index(registry)
+
+
+func _setup_shortcuts() -> void:
 	var file_menu := file_menu_button.get_popup()
-	var is_mac := OS.get_name() == "macOS"
-	var accelerators := ACCELERATORS_MAC if is_mac else ACCELERATORS_WIN
-	var edit_accelerators := RegistryTableView.ACCELERATORS_MAC if is_mac else RegistryTableView.ACCELERATORS_WIN
-	for action: FileMenuAction in accelerators:
-		if file_menu.get_item_index(action) != -1:
-			file_menu.set_item_accelerator(file_menu.get_item_index(action), accelerators.get(action))
-		if registry_context_menu.get_item_index(action) != -1:
-			registry_context_menu.set_item_accelerator(registry_context_menu.get_item_index(action), accelerators.get(action))
+	var action_shortcuts := ACTION_SHORTCUTS
+	var edit_action_shortcuts := RegistryTableView.ACTION_SHORTCUTS
+	for action: FileMenuAction in action_shortcuts:
+		var action_string: String = action_shortcuts.get(action, "")
+		var shortcut := ShortcutUtils.get_action_shortcut(action_string)
+		if shortcut and shortcut.has_valid_event():
+			if file_menu.get_item_index(action) != -1:
+				file_menu.set_item_shortcut(file_menu.get_item_index(action), shortcut)
+			if registry_context_menu.get_item_index(action) != -1:
+				registry_context_menu.set_item_shortcut(
+					registry_context_menu.get_item_index(action),
+					shortcut,
+				)
 
 	var edit_menu := edit_menu_button.get_popup()
-	for action: EditMenuAction in edit_accelerators:
+	for action: EditMenuAction in edit_action_shortcuts:
 		if edit_menu.get_item_index(action) != -1:
-			edit_menu.set_item_accelerator(edit_menu.get_item_index(action), edit_accelerators.get(action))
+			var action_string: String = edit_action_shortcuts.get(action, "")
+			var shortcut := ShortcutUtils.get_action_shortcut(action_string)
+			if shortcut and shortcut.has_valid_event():
+				edit_menu.set_item_shortcut(edit_menu.get_item_index(action), shortcut)
 
 
 ## Returns the index in the ItemList of the specified registry (by uid)
@@ -260,7 +328,12 @@ func _get_uids_to_show(all_uids: Array[String], display_name_by_uid: Dictionary)
 		return all_uids
 
 	_fuz.set_query(filter_text)
-	var targets := PackedStringArray(all_uids.map(func(uid: String) -> String: return display_name_by_uid[uid]))
+	var targets := PackedStringArray(
+		all_uids.map(
+			func(uid: String) -> String:
+				return display_name_by_uid[uid],
+		)
+	)
 	var fuzzy_results: Array[FuzzySearchResult] = []
 	_fuz.search_all(targets, fuzzy_results)
 	var result: Array[String] = []
@@ -284,7 +357,7 @@ func _add_registry_to_itemlist(uid: String, display_name: String) -> int:
 func _resolve_registry_itemlist_icon(registry: Registry) -> Texture2D:
 	var settings := RegistryIO.get_registry_settings(registry)
 
-	if settings.has_any_class_restrictions():
+	if settings.has_any_class_restriction():
 		var all_class_restrictions := settings.get_all_class_restrictions()
 		var only_class_restriction := all_class_restrictions[0] if all_class_restrictions.size() == 1 else &""
 
@@ -314,13 +387,25 @@ func _restore_selection(uid: String) -> void:
 
 func _toggle_visibility_topbar_buttons() -> void:
 	var has_registry := registry_table_view.current_registry != null
-	registry_buttons_v_separator.visible = has_registry
-	registry_settings_button.visible = has_registry
-	columns_menu_button.visible = has_registry
-	refresh_view_button.visible = false #has_registry # TODO: add project setting for showing it based on user preference
-	reindex_button.visible = has_registry
-	reindex_button.disabled = not has_registry or registry_table_view.current_registry.get_indexed_properties().is_empty()
-	rescan_button.visible = has_registry and not RegistryIO.get_registry_settings(registry_table_view.current_registry).auto_rescan
+	var registry_settings := (
+		RegistryIO.get_registry_settings(registry_table_view.current_registry)
+		if has_registry
+		else null
+	)
+
+	for control: Control in [
+		registry_buttons_v_separator,
+		registry_settings_button,
+		columns_menu_button,
+	]:
+		control.visible = has_registry
+
+	rescan_button.visible = has_registry and registry_settings.has_any_scan_directory()
+
+	# DISABLED FOR GOOD. TODO: remove and clean up.
+	refresh_view_button.visible = false #has_registry
+	reindex_button.visible = false #has_registry # Reindexing is now done on project run / export.
+	reindex_button.disabled = true #not has_registry or registry_table_view.current_registry.get_indexed_properties().is_empty()
 
 
 ## Returns uid -> display name, showing basename and prepending parent folders to disambiguate duplicates.
@@ -341,7 +426,12 @@ func _build_registry_display_names(uids: Array[String]) -> Dictionary:
 			result[group[0]] = base
 			continue
 
-		var max_depth: int = group.map(func(uid: String) -> int: return parts_by_uid[uid].size()).max()
+		var max_depth: int = group \
+				.map(
+			func(uid: String) -> int:
+				return parts_by_uid[uid].size(),
+		) \
+				.max()
 		var found_unique := false
 		for level in range(1, max_depth):
 			var seen: Dictionary = { }
@@ -411,10 +501,13 @@ func _populate_open_recent_submenu() -> void:
 	var recent := PopupMenu.new()
 	for entry in _editor_state_data.recent_registry_uids:
 		if ResourceUID.has_id(ResourceUID.text_to_id(entry)):
-			recent.add_item(ResourceUID.uid_to_path(entry))
+			recent.add_item(Compat.uid_to_path(entry))
 	recent.add_separator()
 	recent.add_item(tr("Clear Recent Registries"), FileMenuAction.CLEAR_RECENT)
-	recent.set_item_disabled(recent.get_item_index(FileMenuAction.CLEAR_RECENT), recent.get_item_count() == 2) # only the "Clear" item
+	recent.set_item_disabled(
+		recent.get_item_index(FileMenuAction.CLEAR_RECENT),
+		recent.get_item_count() == 2,
+	) # only the "Clear" item
 	recent.id_pressed.connect(
 		func(id: int) -> void:
 			if id == FileMenuAction.CLEAR_RECENT:
@@ -422,60 +515,61 @@ func _populate_open_recent_submenu() -> void:
 				return
 			var uid := _editor_state_data.recent_registry_uids[id]
 			if RegistryIO.is_uid_valid(uid):
-				@warning_ignore("standalone_ternary")
-				select_registry(uid) if _editor_state_data.opened_registries.has(uid) else open_registry(load(uid))
+				if _editor_state_data.opened_registries.has(uid):
+					select_registry(uid)
+				else:
+					open_registry(load(uid)),
 	)
 
-	file_menu.set_item_submenu_node(
-		file_menu.get_item_index(FileMenuAction.OPEN_RECENT),
-		recent,
-	)
+	file_menu.set_item_submenu_node(file_menu.get_item_index(FileMenuAction.OPEN_RECENT), recent)
 
 
 func _populate_columns_popup_menu() -> void:
 	var popup := columns_menu_button.get_popup()
-	popup.clear()
-
+	popup.clear(true)
+	# free_submenus=true, avoids leaking a PopupMenu Node per column per open
 	if not registry_table_view.current_registry:
 		popup.add_separator("Select a registry first")
 		return
 
 	_add_check_item(
 		popup,
-		tr("Freeze ID Columns"),
-		tr("Keep the UID and string ID columns visible while scrolling horizontally."),
-		registry_table_view.id_columns_frozen,
-	)
-
-	_add_check_item(
-		popup,
 		tr("Show Parent Properties First"),
 		tr(
-			"Reorder columns so parent class properties appear before subclass ones." +
-			"\nBy default, columns follow the inspector order (subclass properties first).",
+			"Reorder columns so parent class properties appear before subclass ones."
+			+ "\nBy default, columns follow the inspector order (subclass properties first).",
 		),
 		registry_table_view.current_cache_data.parent_props_first,
 	)
 
-	if not registry_table_view.properties_column_info:
+	popup.add_separator(tr("ID Columns"))
+	_add_column_submenu_item(popup, STRINGID_COLUMN, tr("String ID"), { })
+	if not registry_table_view.is_in_subresource_view():
+		_add_column_submenu_item(popup, UID_COLUMN, tr("UID"), { })
+
+	var columns_info := registry_table_view.properties_column_info
+	if not columns_info:
 		return
 
-	for prop: Dictionary in registry_table_view.properties_column_info:
+	for prop: Dictionary in columns_info:
 		var prop_name: StringName = prop[&"name"]
 		if ClassUtils.is_class_property(prop):
 			if prop_name not in [&"Resource", &"RefCounted"]:
 				var class_str: String = ClassUtils.get_class_name_or_path_from_prop(prop)
 				var separator_label := class_str.get_file() if class_str.begins_with("res://") else class_str
 				popup.add_separator(separator_label)
-				popup.set_item_auto_translate_mode(popup.item_count - 1, AUTO_TRANSLATE_MODE_DISABLED)
+				if Compat.is_engine_version_equal_or_newer(4, 5):
+					popup.set_item_auto_translate_mode(
+						popup.item_count - 1,
+						AUTO_TRANSLATE_MODE_DISABLED,
+					)
 		elif prop_name not in BUILTIN_RESOURCE_PROPERTIES:
-			_add_column_check_item(popup, prop)
+			_add_column_submenu_item(popup, prop_name, prop_name.capitalize(), prop)
 
 	popup.add_separator("Resource/RefCounted")
-	popup.set_item_auto_translate_mode(popup.item_count - 1, AUTO_TRANSLATE_MODE_DISABLED)
-	for prop: Dictionary in registry_table_view.properties_column_info:
+	for prop: Dictionary in columns_info:
 		if prop[&"name"] in BUILTIN_RESOURCE_PROPERTIES:
-			_add_column_check_item(popup, prop)
+			_add_column_submenu_item(popup, prop[&"name"], String(prop[&"name"]).capitalize(), prop)
 
 
 func _add_check_item(popup: PopupMenu, label: String, tooltip: String, checked: bool) -> void:
@@ -485,14 +579,30 @@ func _add_check_item(popup: PopupMenu, label: String, tooltip: String, checked: 
 	popup.set_item_checked(idx, checked)
 
 
-func _add_column_check_item(popup: PopupMenu, prop: Dictionary) -> void:
-	var prop_name: String = prop[&"name"]
-	popup.add_check_item(prop_name.capitalize())
+func _add_column_submenu_item(
+	popup: PopupMenu,
+	identifier: StringName,
+	label: String,
+	prop: Dictionary = { },
+) -> void:
+	popup.add_check_item(label)
 	var idx := popup.item_count - 1
-	popup.set_item_auto_translate_mode(idx, AUTO_TRANSLATE_MODE_DISABLED)
-	popup.set_item_tooltip(idx, prop_name)
-	popup.set_item_icon(idx, AnyIcon.get_property_icon_from_dict(prop))
-	popup.set_item_checked(idx, prop_name not in registry_table_view.current_cache_data.disabled_columns)
+	popup.set_item_submenu_node(idx, _build_column_submenu(identifier))
+	popup.set_item_checked(idx, not registry_table_view.is_column_disabled(identifier))
+	popup.set_item_metadata(idx, identifier)
+	if not prop.is_empty():
+		if Compat.is_engine_version_equal_or_newer(4, 5):
+			popup.set_item_auto_translate_mode(idx, AUTO_TRANSLATE_MODE_DISABLED)
+		popup.set_item_icon(idx, AnyIcon.get_property_icon_from_dict(prop))
+
+
+func _build_column_submenu(identifier: StringName) -> PopupMenu:
+	var submenu := PopupMenu.new()
+	submenu.hide_on_checkable_item_selection = false
+	submenu.add_check_item(tr("Frozen"), ColumnMenuAction.FROZEN)
+	registry_table_view.update_column_menu_items(submenu, identifier)
+	submenu.id_pressed.connect(_on_column_submenu_id_pressed.bind(identifier, submenu))
+	return submenu
 
 
 func _do_file_menu_action(action_id: int) -> void:
@@ -504,8 +614,6 @@ func _do_file_menu_action(action_id: int) -> void:
 		FileMenuAction.OPEN:
 			_file_dialog.popup_file_dialog()
 		FileMenuAction.REOPEN_CLOSED:
-			if _session_closed_uids.is_empty(): # check because of shortcut
-				return
 			for idx in range(_session_closed_uids.size() - 1, -1, -1):
 				var uid := _session_closed_uids[idx]
 				if RegistryIO.is_uid_valid(uid):
@@ -513,10 +621,9 @@ func _do_file_menu_action(action_id: int) -> void:
 					open_registry(load(uid))
 					return
 				_session_closed_uids.remove_at(idx)
-			push_warning(tr("None of the closed resources exist anymore"))
+			YardLogger.warn(tr("None of the closed resources exist anymore"))
 		FileMenuAction.CLOSE:
-			if is_any_registry_selected(): # check because of shortcut
-				close_registry(_current_registry_uid)
+			close_registry(_current_registry_uid)
 		FileMenuAction.CLOSE_OTHER_TABS:
 			_close_other_tabs(_current_registry_uid)
 		FileMenuAction.CLOSE_TABS_BELOW:
@@ -524,7 +631,7 @@ func _do_file_menu_action(action_id: int) -> void:
 		FileMenuAction.CLOSE_ALL:
 			close_all()
 		FileMenuAction.COPY_PATH:
-			var path := ResourceUID.uid_to_path(_current_registry_uid)
+			var path := Compat.uid_to_path(_current_registry_uid)
 			if path:
 				DisplayServer.clipboard_set(path)
 		FileMenuAction.COPY_UID:
@@ -540,8 +647,6 @@ func _do_file_menu_action(action_id: int) -> void:
 		FileMenuAction.SORT:
 			_sort_opened_registries_by_filename()
 			_update_registries_itemlist()
-	_toggle_file_menu_items()
-	_toggle_registry_context_menu_items()
 
 
 func _reorder_opened_registries_move(uid: String, delta: int) -> bool:
@@ -567,8 +672,17 @@ func _sort_opened_registries_by_filename() -> void:
 	var sorted: Dictionary[String, Registry] = { }
 	keys.sort_custom(
 		func(a: String, b: String) -> bool:
-			return _editor_state_data.opened_registries[a].resource_path.get_file().to_lower() \
-			< _editor_state_data.opened_registries[b].resource_path.get_file().to_lower()
+			var filename_a := _editor_state_data \
+					.opened_registries[a] \
+					.resource_path \
+					.get_file() \
+					.to_lower()
+			var filename_b := _editor_state_data \
+					.opened_registries[b] \
+					.resource_path \
+					.get_file() \
+					.to_lower()
+			return filename_a < filename_b,
 	)
 	for uid in keys:
 		sorted[uid] = _editor_state_data.opened_registries[uid]
@@ -598,7 +712,7 @@ func _close_tabs_below(uid: String) -> void:
 
 
 func _show_in_filesystem(uid: String) -> void:
-	var path := ResourceUID.uid_to_path(uid)
+	var path := Compat.uid_to_path(uid)
 	var fs := EditorInterface.get_file_system_dock()
 	fs.navigate_to_path(path)
 
@@ -647,28 +761,43 @@ func _on_registry_context_menu_id_pressed(id: int) -> void:
 	_do_file_menu_action(id)
 
 
+# Required because PopupMenu.id_pressed/index_pressed is not emitted when pressing a submenu item,
+# since the input is already consumed to open the submenu.
+func _on_columns_menu_window_input(event: InputEvent) -> void:
+	var is_left_click: bool = (
+		event is InputEventMouseButton
+		and event.button_mask & MouseButtonMask.MOUSE_BUTTON_MASK_LEFT
+	)
+	if is_left_click or event.is_action_pressed(&"ui_accept"):
+		var popup := columns_menu_button.get_popup()
+		var idx := popup.get_focused_item()
+		if popup.get_item_submenu_node(idx):
+			popup.id_pressed.emit(popup.get_item_id(idx))
+
+
 func _on_columns_menu_id_pressed(id: int) -> void:
 	var popup := columns_menu_button.get_popup()
-
+	var item_idx := popup.get_item_index(id)
+	popup.toggle_item_checked(item_idx)
+	var checked := popup.is_item_checked(item_idx)
 	match id:
-		0: # Freeze ID Columns
-			popup.toggle_item_checked(0)
-			registry_table_view.id_columns_frozen = popup.is_item_checked(0)
-		1: # Parent props first
-			popup.toggle_item_checked(1)
-			registry_table_view.current_cache_data.parent_props_first = popup.is_item_checked(1)
-			registry_table_view.current_cache_data.save()
+		0: # Parent props first
+			var cache := registry_table_view.current_cache_data
+			cache.parent_props_first = checked
+			cache.save()
 			registry_table_view.update_view()
 		_:
-			var prop_name: StringName = popup.get_item_tooltip(id)
-			popup.toggle_item_checked(id)
-			if popup.is_item_checked(id):
-				registry_table_view.current_cache_data.disabled_columns.erase(prop_name)
-			else:
-				if not prop_name in registry_table_view.current_cache_data.disabled_columns:
-					registry_table_view.current_cache_data.disabled_columns.append(prop_name)
-			registry_table_view.current_cache_data.save()
-			registry_table_view.update_view()
+			var identifier: StringName = popup.get_item_metadata(item_idx)
+			registry_table_view.set_column_disabled(identifier, not checked)
+
+
+func _on_column_submenu_id_pressed(
+	action_id: int,
+	identifier: StringName,
+	submenu: PopupMenu,
+) -> void:
+	registry_table_view.do_column_menu_action(action_id, identifier)
+	registry_table_view.update_column_menu_items(submenu, identifier)
 
 
 func _on_itemlist_registries_dropped(registries: Array[Registry]) -> void:
@@ -681,9 +810,9 @@ func _on_file_dialog_action(path: String) -> void:
 	if res is Registry:
 		open_registry(res)
 	elif res.get_script():
-		push_error("Tried to open %s as a Registry" % res.get_script().get_global_name())
+		YardLogger.error("Tried to open %s as a Registry" % res.get_script().get_global_name())
 	else:
-		push_error("Tried to open %s as a Registry" % res.get_class())
+		YardLogger.error("Tried to open %s as a Registry" % res.get_class())
 
 
 func _on_refresh_view_button_pressed() -> void:
@@ -695,7 +824,7 @@ func _on_reindex_button_pressed() -> void:
 	var registry := registry_table_view.current_registry
 	if registry:
 		RegistryIO.rebuild_property_index(registry)
-		print("Registry reindexed for %s." % ", ".join(registry.get_indexed_properties()))
+		YardLogger.info("Registry reindexed for %s." % ", ".join(registry.get_indexed_properties()))
 
 
 func _on_rescan_button_pressed() -> void:
@@ -703,6 +832,7 @@ func _on_rescan_button_pressed() -> void:
 	if registry:
 		RegistryIO.sync_from_scan_directories(registry)
 	registry_table_view.update_view()
+	_update_registries_itemlist()
 
 
 func _on_report_issue_button_pressed() -> void:
@@ -713,29 +843,21 @@ func _on_report_issue_button_pressed() -> void:
 		OS.shell_open(repo + "/issues/new?template=bug_report.yml")
 
 
-func _on_make_floating_button_pressed() -> void:
-	print_rich("Coming soon! Thanks, KoBeWi ! <3")
-	print_rich(
-		"[color=SKY_BLUE][url]",
-		"https://github.com/godotengine/godot/pull/113051",
-		"[/url][/color]",
-	)
-
-
 func _on_columns_menu_button_about_to_popup() -> void:
 	_populate_columns_popup_menu()
 
 
 func _on_registry_settings_button_pressed() -> void:
 	new_registry_dialog.edited_registry = registry_table_view.current_registry
-	new_registry_dialog.popup_with_state(
-		new_registry_dialog.RegistryDialogState.REGISTRY_SETTINGS,
-	)
+	new_registry_dialog.popup_with_state(new_registry_dialog.RegistryDialogState.REGISTRY_SETTINGS)
 
 
-func _on_toggle_registries_pressed() -> void:
-	registries_container.visible = !registries_container.visible
-	registry_table_view.toggle_button_forward = !registries_container.visible
+func _on_footer_registry_panel_toggled(toggled_on: bool) -> void:
+	registries_container.visible = toggled_on
+
+
+func _on_registry_table_view_registry_changed() -> void:
+	_update_registries_itemlist()
 
 
 func _on_new_registry_dialog_settings_saved() -> void:
@@ -747,17 +869,44 @@ func _on_new_registry_dialog_settings_saved() -> void:
 		select_registry(_current_registry_uid)
 
 
-func _on_filesystem_changed() -> void:
-	for registry: Registry in _editor_state_data.opened_registries.values():
-		if RegistryIO.get_registry_settings(registry).auto_rescan:
-			RegistryIO.sync_from_scan_directories(registry)
-	_update_registries_itemlist()
-	registry_table_view.update_view()
-
-
 func _on_open_documentation_button_pressed() -> void:
 	EditorInterface.get_script_editor().goto_help("class:Registry")
 
 
 func _on_read_me_button_pressed() -> void:
-	read_me_window.popup_centered_ratio(0.8)
+	read_me_window.popup_centered_ratio(0.5)
+
+
+func _on_version_button_pressed() -> void:
+	update_install_window.popup_centered_ratio(0.5)
+
+
+func _on_update_manager_update_check_completed(result: UpdateManager.UpdateCheckResult) -> void:
+	var color: Color
+	match result:
+		UpdateManager.UpdateCheckResult.UPDATE_AVAILABLE:
+			color = EditorThemeUtils.color_warning
+			version_button.tooltip_text = tr("Update available. Click to see details.")
+			version_button.icon = EditorThemeUtils.editor_theme.get_icon(&"Warning", &"EditorIcons")
+		UpdateManager.UpdateCheckResult.UP_TO_DATE:
+			color = EditorThemeUtils.color_message
+			version_button.tooltip_text = tr("YARD is up to date.")
+			version_button.icon = null
+		UpdateManager.UpdateCheckResult.NO_ACCESS:
+			color = EditorThemeUtils.color_message
+			version_button.tooltip_text = tr("Could not check for updates. Retry later.")
+			version_button.icon = null
+
+	var current_version := update_manager.get_current_version()
+	version_button.text = current_version
+	version_button.add_theme_color_override(&"font_color", color)
+	version_button.add_theme_color_override(&"font_hover_color", color.lightened(0.5))
+	version_button.add_theme_color_override(&"font_pressed_color", color)
+	version_button.add_theme_color_override(&"font_focus_color", color)
+
+	update_install_window.load_info(update_manager.update_info, result, current_version)
+
+
+func _on_resources_reimported(_resources: Array) -> void:
+	if update_install_window.visible:
+		update_install_window.grab_focus()
