@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dtu3imugbu0pm" path="res://title/title.gd" id="1_y7k74"]
 [ext_resource type="PackedScene" uid="uid://d30oqfxv18ru8" path="res://title/title_ui.tscn" id="2_0tjwc"]
+[ext_resource type="PackedScene" uid="uid://c3onlphxpycxe" path="res://title/gate_screen.tscn" id="3_nx56k"]
 
 [sub_resource type="Animation" id="Animation_eudk5"]
 length = 0.001
@@ -50,6 +51,11 @@ visible = false
 script = ExtResource("1_y7k74")
 
 [node name="TitleUI" parent="." unique_id=1482659797 instance=ExtResource("2_0tjwc")]
+unique_name_in_owner = true
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=597338014]
 libraries/ = SubResource("AnimationLibrary_3jafg")
+
+[node name="GateScreen" parent="." unique_id=1138408628 instance=ExtResource("3_nx56k")]
+unique_name_in_owner = true

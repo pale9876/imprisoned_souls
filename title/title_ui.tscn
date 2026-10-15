@@ -3,16 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://c1kdqekuqw0nx" path="res://aseprite/asso_project/title/MainTitle2.png" id="2_n4ayq"]
 [ext_resource type="Script" uid="uid://cgy23ubrds5ul" path="res://title/title_ui.gd" id="2_x1875"]
 [ext_resource type="PackedScene" uid="uid://h46mjm4dsjnx" path="res://title/title_ui_button.tscn" id="3_x1875"]
-[ext_resource type="Script" uid="uid://cdgr4w6hpl2ud" path="res://title/class_list.gd" id="4_w87gd"]
-[ext_resource type="PackedScene" uid="uid://dw0ovxv0s3mlv" path="res://title/class_select_button.tscn" id="5_vp20t"]
-[ext_resource type="Resource" uid="uid://b5d4qaihox42l" path="res://class_info/predator.tres" id="7_2segn"]
-[ext_resource type="Resource" uid="uid://djuxrqt1jlhwl" path="res://class_info/executioner.tres" id="8_ml3lu"]
-[ext_resource type="Resource" uid="uid://xnd2mvddrqa2" path="res://class_info/chimera.tres" id="9_4dws5"]
-[ext_resource type="Resource" uid="uid://cv0lt2ikqgq3r" path="res://class_info/trickster.tres" id="10_a66lt"]
-[ext_resource type="Resource" uid="uid://c0k466cyi4t5w" path="res://class_info/exorcist.tres" id="11_5d5gr"]
-[ext_resource type="Script" uid="uid://5kps1ydik3il" path="res://script/stat_attr_container.gd" id="12_ml3lu"]
+[ext_resource type="PackedScene" uid="uid://cx4rv6pkatvx8" path="res://title/class_settings_ui.tscn" id="4_ekv4d"]
 [ext_resource type="PackedScene" uid="uid://cy3jqego7pk8c" path="res://title/ingame_option_ui.tscn" id="14_2segn"]
-[ext_resource type="PackedScene" uid="uid://c3onlphxpycxe" path="res://title/gate_screen.tscn" id="15_ml3lu"]
 [ext_resource type="PackedScene" uid="uid://be5es7kj8my7a" path="res://title/character_list.tscn" id="19_t4lib"]
 [ext_resource type="Script" uid="uid://dq6jdkets46eg" path="res://title/character_list.gd" id="20_wif7g"]
 
@@ -234,188 +226,10 @@ size_flags_vertical = 0
 layout_mode = 2
 text = "Anti-Apocalypse Strategy Organization"
 
-[node name="ClassSettings" type="MarginContainer" parent="." unique_id=1724839874]
+[node name="ClassSettingsUI" parent="." unique_id=1366010198 instance=ExtResource("4_ekv4d")]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ClassSettings" unique_id=239699502]
-layout_mode = 2
-
-[node name="Panel" type="Panel" parent="ClassSettings/VBoxContainer" unique_id=984314681]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ClassSettings/VBoxContainer/Panel" unique_id=1809492937]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer" unique_id=2040246674]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.65
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="ClassList" type="VBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer" unique_id=966106980]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-alignment = 1
-script = ExtResource("4_w87gd")
-
-[node name="Predator" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer/ClassList" unique_id=1675104851 instance=ExtResource("5_vp20t")]
-layout_mode = 2
-class_info = ExtResource("7_2segn")
-
-[node name="Executioner" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer/ClassList" unique_id=41452571 instance=ExtResource("5_vp20t")]
-layout_mode = 2
-class_info = ExtResource("8_ml3lu")
-
-[node name="Chimera" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer/ClassList" unique_id=1697819993 instance=ExtResource("5_vp20t")]
-layout_mode = 2
-class_info = ExtResource("9_4dws5")
-
-[node name="Trickster" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer/ClassList" unique_id=1865309037 instance=ExtResource("5_vp20t")]
-layout_mode = 2
-class_info = ExtResource("10_a66lt")
-
-[node name="Puppeteer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer/ClassList" unique_id=1174702832 instance=ExtResource("5_vp20t")]
-layout_mode = 2
-class_info = ExtResource("7_2segn")
-
-[node name="Exorcist" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer/ClassList" unique_id=1931057540 instance=ExtResource("5_vp20t")]
-layout_mode = 2
-class_info = ExtResource("11_5d5gr")
-
-[node name="MarginContainer2" type="MarginContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer" unique_id=729713372]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Control" type="Control" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2" unique_id=830470005]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ClassPortrait" type="TextureRect" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Control" unique_id=937668208]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -211.0
-offset_top = -33.0
-offset_right = -191.0
-offset_bottom = 29.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Panel" type="Panel" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2" unique_id=2002684748]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel" unique_id=1371008788]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer" unique_id=1888533222]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Top" type="HBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2" unique_id=549791135]
-layout_mode = 2
-alignment = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/Top" unique_id=1333528471]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="Label" type="Label" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/Top/HBoxContainer" unique_id=830372186]
-layout_mode = 2
-text = "Level"
-
-[node name="ClassLevel" type="Label" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/Top/HBoxContainer" unique_id=808860955]
-unique_name_in_owner = true
-layout_mode = 2
-text = "0"
-
-[node name="VSeparator" type="VSeparator" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/Top" unique_id=716733103]
-layout_mode = 2
-
-[node name="Experience" type="ProgressBar" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/Top" unique_id=800980792]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HSeparator" type="HSeparator" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2" unique_id=1678591294]
-layout_mode = 2
-
-[node name="StatAttrContainer" type="HBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2" unique_id=1923472581]
-unique_name_in_owner = true
-layout_mode = 2
-script = ExtResource("12_ml3lu")
-
-[node name="StatAttrNameContainer" type="VBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/StatAttrContainer" unique_id=241788949]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.45
-
-[node name="VSeparator" type="VSeparator" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/StatAttrContainer" unique_id=1331080314]
-layout_mode = 2
-
-[node name="StatValueContainer" type="VBoxContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/StatAttrContainer" unique_id=270711098]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2" unique_id=1185453660]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="ClassDescription" type="RichTextLabel" parent="ClassSettings/VBoxContainer/Panel/HBoxContainer/MarginContainer2/Panel/MarginContainer/VBoxContainer2/MarginContainer" unique_id=1673852816]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HFlowContainer" type="HFlowContainer" parent="ClassSettings/VBoxContainer" unique_id=1834159887]
-layout_mode = 2
-alignment = 2
-
-[node name="Close" type="Button" parent="ClassSettings/VBoxContainer/HFlowContainer" unique_id=823141563]
-layout_mode = 2
-text = "Close"
+layout_mode = 0
+anchors_preset = 0
 
 [node name="PlayerAchievements" type="MarginContainer" parent="." unique_id=400119271]
 unique_name_in_owner = true
@@ -476,8 +290,4 @@ size_flags_horizontal = 3
 [node name="IngameOptionUI" parent="." unique_id=1200181442 instance=ExtResource("14_2segn")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-
-[node name="GateScreen" parent="." unique_id=1138408628 instance=ExtResource("15_ml3lu")]
-unique_name_in_owner = true
 layout_mode = 1

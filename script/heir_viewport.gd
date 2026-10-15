@@ -33,6 +33,12 @@ var _create_filter: Callable = func() -> void:
 	move_party(viewport)
 
 
+@export_tool_button("이 필터 삭제")
+var _del_filter: Callable = func() -> void:
+	pass
+
+
+
 func _init() -> void:
 	if Engine.is_editor_hint():
 		size = get_project_viewport_size()
@@ -55,7 +61,7 @@ func move_party(to: Node) -> void:
 
 
 func get_party() -> Node:
-	return get_node(^"Party")
+	return get_node(^"%Party")
 
 
 	

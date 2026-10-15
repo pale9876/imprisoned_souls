@@ -1,6 +1,9 @@
 extends Node
 
 
+signal blink()
+
+
 # Import
 const Channel: Script = preload("uid://bc33hejnp7byc")
 const Ingame: Script = preload("uid://lf1g8r7wbov3")
@@ -17,26 +20,25 @@ const World = preload("uid://dpn1opeegcme2")
 
 @onready var ingame: Ingame = %Ingame
 @onready var hud: Hud = %HUD
-#@onready var option: Option = %Option
-@onready var channel: Channel = %Channel
 @onready var title: Title = %Title
-#@onready var game_viewport: MainHeirViewport = %GameViewport
+@onready var anim: AnimationPlayer = $AnimationPlayer
 
 
 var is_in_game: bool = false
-
+var _tresv: TReservation
 
 func _ready() -> void:
 	ingame.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	ingame.hide()
 	hud.hide()
-	channel.hide()
 	
-	#title.turn_on()
+	anim.play("turn_on")
 
 	GSignal.start.connect(on_start)
 	Global.main_scene = self
+	
+	title.show()
 
 
 func on_start() -> void:
@@ -44,18 +46,28 @@ func on_start() -> void:
 	hud.show()
 	
 	title.hide()
-	channel.hide()
 
 	ingame.process_mode = Node.PROCESS_MODE_INHERIT
-	
-	Global.player_camera.target = Global.player
-	var init_map: Region = ingame.get_world().init_region
-	init_map.add_unit(Global.player)
-	Global.player.global_position = init_map.get_start_spawn_position().global_position
-	Global.player.input_state.unlock()
-	
+
 	is_in_game = true
 
+
+func transition(from: Control, to: Control) -> void:
+	if _tresv:
+		return
+	
+	_tresv = TReservation.new(from, to)
+	anim.play("transition")
+	
+	await blink
+	
+	_tresv.from.visible = false
+	_tresv.to.visible = true
+	_tresv = null
+
+
+func exec_transition() -> void:
+	blink.emit()
 
 
 func get_world() -> World:
@@ -92,5 +104,11 @@ func get_anim() -> AnimationPlayer:
 	return get_node(^"AnimationPlayer")
 
 
-
+class TReservation:
+	var from: Control
+	var to: Control
+	
+	func _init(_from: Control, _to: Control) -> void:
+		from = _from
+		to = _to
 	

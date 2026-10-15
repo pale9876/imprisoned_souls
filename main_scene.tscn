@@ -8,20 +8,162 @@
 [ext_resource type="PackedScene" uid="uid://qnolbh3cfav8" path="res://channel/channel.tscn" id="8_7ycvg"]
 [ext_resource type="PackedScene" uid="uid://c73sqmm2lwa77" path="res://foreground.tscn" id="8_qwutr"]
 [ext_resource type="Script" uid="uid://cl8jpoxnqv76g" path="res://title/filter_rect.gd" id="8_wr18j"]
+[ext_resource type="Shader" uid="uid://ba4s1slehob3e" path="res://shader/tv_noise.gdshader" id="9_2jcla"]
 [ext_resource type="PackedScene" uid="uid://c2agrq1i4pbt2" path="res://title/title.tscn" id="9_7ycvg"]
+[ext_resource type="Shader" uid="uid://c6qc3hkvc3sta" path="res://shader/chromatic.gdshader" id="9_42l1d"]
+[ext_resource type="Shader" uid="uid://6ly1dbvypuv" path="res://shader/crt.gdshader" id="9_qwutr"]
+[ext_resource type="Shader" uid="uid://cujdjrtlxkri5" path="res://shader/pulsing_blood.gdshader" id="9_u0ygc"]
+[ext_resource type="Script" uid="uid://dnrbdwpgrvf8i" path="res://script/pulsing_blood.gd" id="10_7th4q"]
+[ext_resource type="Script" uid="uid://feq0cuk073iw" path="res://script/crt_turn_on_off_filterrect.gd" id="10_671wp"]
+[ext_resource type="Script" uid="uid://prb1c3tlol3k" path="res://script/tv_noise_filter.gd" id="10_m35m6"]
+[ext_resource type="Shader" uid="uid://dxn8hlrd3ett5" path="res://shader/crt_turn_off.gdshader" id="11_671wp"]
+[ext_resource type="Script" uid="uid://b40862q3rj56v" path="res://script/crt_filter.gd" id="12_671wp"]
 
-[sub_resource type="Animation" id="Animation_66tet"]
-resource_name = "off"
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7th4q"]
+shader = ExtResource("9_u0ygc")
+shader_parameter/blood_color = Color(1, 0, 0, 1)
+shader_parameter/size = 0.122000005795
+shader_parameter/softness = 1.0
+shader_parameter/roughness = 0.35
+shader_parameter/pulse_speed = 0.5810000275975
+shader_parameter/pulse_amount = 0.7430000352925
+shader_parameter/max_alpha = 0.4690000222775
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6jybn"]
+shader = ExtResource("9_2jcla")
+shader_parameter/alpha = 0.075
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_84odl"]
+shader = ExtResource("9_42l1d")
+shader_parameter/intensity = 1.0
+shader_parameter/threshold = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ak604"]
+shader = ExtResource("11_671wp")
+shader_parameter/FADE_COLOR = Color(0.0859, 0.0937, 0.1328, 1)
+shader_parameter/BUFFER = 2.0
+shader_parameter/SCALE_SPEED = 1.5
+shader_parameter/progress = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vimvf"]
+shader = ExtResource("9_qwutr")
+shader_parameter/resolution = Vector2(640, 360)
+shader_parameter/scan_line_amount = 0.5
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[sub_resource type="Animation" id="Animation_671wp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%TurnOnOffFilter:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%TVNoiseFilter:alpha")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.075]
+}
+
+[sub_resource type="Animation" id="Animation_m35m6"]
+resource_name = "transition"
+length = 0.23333667883612216
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%TVNoiseFilter:alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.23333667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.065, 1.0, 0.07899999999999996]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../../../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"exec_transition"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_mo76n"]
+resource_name = "turn_off"
+length = 0.7515016506880522
 step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%TurnOnOffFilter:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.73333335),
+"transitions": PackedFloat32Array(0.45062527, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
 
-[sub_resource type="Animation" id="Animation_7ycvg"]
-resource_name = "turnon"
+[sub_resource type="Animation" id="Animation_qwutr"]
+resource_name = "turn_on"
+length = 0.4342016588419676
 step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%TurnOnOffFilter:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.41666666),
+"transitions": PackedFloat32Array(0.39229208, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%TVNoiseFilter:alpha")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.083333336, 0.41666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.079]
+}
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wr18j"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_671wp"]
 _data = {
-&"off": SubResource("Animation_66tet"),
-&"on": SubResource("Animation_7ycvg")
+&"RESET": SubResource("Animation_671wp"),
+&"transition": SubResource("Animation_m35m6"),
+&"turn_off": SubResource("Animation_mo76n"),
+&"turn_on": SubResource("Animation_qwutr")
 }
 
 [node name="MainScene" type="Node" unique_id=905736948]
@@ -60,19 +202,52 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="GameViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=473122314]
+[node name="MainHeirViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=473122314]
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 script = ExtResource("2_hq1ik")
 
-[node name="Party" type="Node" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport" unique_id=201193871]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=757844321]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainHeirViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=1763995243]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+script = ExtResource("2_hq1ik")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=2032004793]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainHeirViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=1763939588]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+script = ExtResource("2_hq1ik")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=254431759]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="GameViewport" type="SubViewport" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer" unique_id=1174733233]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+script = ExtResource("2_hq1ik")
+
+[node name="Party" type="Node2D" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport" unique_id=2103444115]
 unique_name_in_owner = true
 
-[node name="Background" type="CanvasLayer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=416058432]
+[node name="Background" type="CanvasLayer" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=416058432]
 unique_name_in_owner = true
 
-[node name="BackgroundColorRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party/Background" unique_id=1910507285]
+[node name="BackgroundColorRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party/Background" unique_id=1910507285]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -80,40 +255,82 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.006626662, 0.002099998, 0.07, 1)
 
-[node name="Ingame" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=906912944 instance=ExtResource("2_8mm7a")]
+[node name="Ingame" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=906912944 instance=ExtResource("2_8mm7a")]
 unique_name_in_owner = true
 visible = false
 
-[node name="HUD" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=765911860 instance=ExtResource("5_hq1ik")]
+[node name="HUD" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=765911860 instance=ExtResource("5_hq1ik")]
 unique_name_in_owner = true
 visible = false
 
-[node name="Title" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=419323065 instance=ExtResource("9_7ycvg")]
+[node name="Title" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=419323065 instance=ExtResource("9_7ycvg")]
 unique_name_in_owner = true
 
-[node name="Channel" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=1466334463 instance=ExtResource("8_7ycvg")]
+[node name="Channel" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=1466334463 instance=ExtResource("8_7ycvg")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Foreground" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=484923412 instance=ExtResource("8_qwutr")]
 unique_name_in_owner = true
 
-[node name="Foreground" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/GameViewport/Party" unique_id=484923412 instance=ExtResource("8_qwutr")]
-unique_name_in_owner = true
+[node name="PulsingBlood" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=892276079]
+material = SubResource("ShaderMaterial_7th4q")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("10_7th4q")
+range_size = null
+shader = ExtResource("9_u0ygc")
+metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
 
-[node name="FilterRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=499874558]
+[node name="TVNoiseFilter" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=564635184]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_6jybn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("10_m35m6")
+alpha = 0.075
+shader = ExtResource("9_2jcla")
+metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
+
+[node name="Chromatic" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=1743675109]
+material = SubResource("ShaderMaterial_84odl")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 script = ExtResource("8_wr18j")
-metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
+shader = ExtResource("9_42l1d")
 
-[node name="FilterRect" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport" unique_id=717487450]
+[node name="TurnOnOffFilter" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport" unique_id=717487450]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ak604")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
-script = ExtResource("8_wr18j")
+script = ExtResource("10_671wp")
+shader = ExtResource("11_671wp")
 metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=954390669]
-libraries/ = SubResource("AnimationLibrary_wr18j")
+[node name="CRTFilter" type="ColorRect" parent="FilterLayer/SubViewportContainer/MainHeirViewport" unique_id=499874558]
+material = SubResource("ShaderMaterial_vimvf")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("12_671wp")
+shader = ExtResource("9_qwutr")
+metadata/_custom_type_script = "uid://cl8jpoxnqv76g"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1685090515]
+root_node = NodePath("../FilterLayer/SubViewportContainer/MainHeirViewport/SubViewportContainer/MainHeirViewport")
+libraries/ = SubResource("AnimationLibrary_671wp")

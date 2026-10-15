@@ -6,13 +6,12 @@ class_name FilterRect
 const INIT_COLOR: Color = Color.TRANSPARENT
 
 
-@export var shader: ShaderMaterial:
+@export var shader: Shader:
 	set(val):
 		shader = val
-		if val:
-			material = shader
-	get:
-		return material as ShaderMaterial
+		var new_material := ShaderMaterial.new()
+		new_material.shader = val
+		material = new_material
 
 
 func _init() -> void:

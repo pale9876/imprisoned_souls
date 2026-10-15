@@ -2,7 +2,18 @@
 extends Control
 
 
+signal player_entered()
+
+
 @export var offset_ratio: float = .75
+@onready var enter_btn: Button = %Enter
+
+
+func _ready() -> void:
+	enter_btn.button_up.connect(
+		func() -> void:
+			player_entered.emit()
+	)
 
 
 func _draw() -> void:
@@ -23,7 +34,3 @@ func _draw() -> void:
 		Vector2(size.x, grid_y),
 		Color.WHITE
 	)
-
-
-func get_enter_btn() -> Button:
-	return get_node("%Enter") as Button

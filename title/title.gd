@@ -5,52 +5,18 @@ extends CanvasLayer
 #signal turn_offed()
 
 
-func _init() -> void:
-	visible = false
-	
-	visibility_changed.connect(
+@onready var title_ui: Control = %TitleUI
+@onready var gate_screen: Control = %GateScreen
+
+
+func _ready() -> void:
+	title_ui.visible = false
+	gate_screen.visible = true
+
+	gate_screen.player_entered.connect(
 		func () -> void:
-			pass
-			#if visible:
-				#turn_on()
-			#else:
-				#turn_off()
+			Global.main_scene.transition(gate_screen, title_ui)
 	)
-	
-	
-
-
-#func _enter_tree() -> void:
-	#turn_on()
-	#
-#
-#
-#func _notification(what: int) -> void:
-	#match what:
-		#NOTIFICATION_WM_CLOSE_REQUEST:
-			#turn_off()
-#
-#
-#func turn_on() -> void:
-	#get_anim().play(&"turn_on")
-#
-#
-#func turn_off() -> void:
-	#var anim := get_anim()
-	#anim.play(&"turn_off")
-	#
-	#await anim.animation_finished
-	#turn_offed.emit()
-#
-#
-#
-#func _input(event: InputEvent) -> void:
-	#get_main_title_viewport().push_input(event)
-#
-#
-#func get_anim() -> AnimationPlayer:
-	#return get_node(^"AnimationPlayer")
-
 
 
 func get_main_title_viewport() -> SubViewport:

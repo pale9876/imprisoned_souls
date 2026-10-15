@@ -5,7 +5,7 @@ uniform float BUFFER = 2.0f;
 uniform float SCALE_SPEED = 1.5f;
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_nearest, repeat_disable;
-uniform float progress: hint_range(0.0, 1.0, 0.001) = .75;
+uniform float progress: hint_range(0.0, 1.0, 0.001) = 0.;
 
 void fragment() {
 	float onePixelScale = ((1. / SCREEN_PIXEL_SIZE).y - 1.0f) / (1. / SCREEN_PIXEL_SIZE).y;

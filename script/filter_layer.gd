@@ -39,6 +39,12 @@ func get_filter_list() -> Array[StringName]:
 
 	return _result
 
+
+func transition(target_ui: Control) -> void:
+	
+	target_ui.visible = true
+
+
 #func get_filter_rect() -> FilterRect:
 	#return get_node(^"FilterRect") as FilterRect
 

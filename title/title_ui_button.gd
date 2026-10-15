@@ -8,6 +8,7 @@ extends SoundButton
 
 func _init() -> void:
 	super()
+	
 	if Engine.is_editor_hint(): return
 	
 	mouse_entered.connect(

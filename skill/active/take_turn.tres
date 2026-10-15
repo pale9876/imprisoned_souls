@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_17xci")
-cooldown = 9.0
+cooldown = 11
 name = &"교체"
 description = "*쌍둥이(Twin) 전용 스킬입니다.
 

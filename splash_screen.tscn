@@ -1,10 +1,122 @@
-[gd_scene format=4 uid="uid://bhdl5knoqt76u"]
+[gd_scene format=3 uid="uid://dss5v1ieioljj"]
 
-[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_c8184"]
-_data = PackedByteArray("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")
-size_override = Vector2(640, 360)
+[ext_resource type="Script" uid="uid://d12clsmbv1sdy" path="res://script/splash_title.gd" id="1_nodus"]
+[ext_resource type="Texture2D" uid="uid://bj0igoqoyvkv7" path="res://title/background.png" id="2_oc6rp"]
+[ext_resource type="Texture2D" uid="uid://b7j5nwvocfbl" path="res://title/enemy.png" id="3_hlpdx"]
+[ext_resource type="Shader" uid="uid://cb2h4iljsnp47" path="res://radial_blur.gdshader" id="4_b1scc"]
+[ext_resource type="Texture2D" uid="uid://cywgwo7muf63i" path="res://title/poaster_foreground.png" id="5_0d2yk"]
+[ext_resource type="Texture2D" uid="uid://ce317h67tipyy" path="res://title/player_placeholder.png" id="6_e186f"]
+[ext_resource type="Texture2D" uid="uid://c4sf7dwa0y3gg" path="res://title/title.png" id="7_akxoc"]
+[ext_resource type="Shader" uid="uid://irf43tsp4si6" path="res://shader/pseudo_pixel_sorting.gdshader" id="8_oc6rp"]
 
-[node name="Control" type="Control" unique_id=2079921434]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xt2td"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wqsic"]
+shader = ExtResource("4_b1scc")
+shader_parameter/blur_center = Vector2(0.5, 0.5)
+shader_parameter/blur_power = 0.0070000003325
+shader_parameter/sampling_count = 6
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_81gl3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlpdx"]
+shader = ExtResource("8_oc6rp")
+shader_parameter/mask_softness = 1.275
+shader_parameter/mask_threshold = -0.415
+shader_parameter/sort = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oc6rp"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hlpdx"]
+bg_color = Color(0.7792647, 0.011075728, 9.62615e-08, 1)
+
+[sub_resource type="Animation" id="Animation_hlpdx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeInOut:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PseudoPixelSortingFilter:material:shader_parameter/sort")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_oc6rp"]
+resource_name = "fade_out"
+length = 1.5
+step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeInOut:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PseudoPixelSortingFilter:material:shader_parameter/sort")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.0500001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 2.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hlpdx"]
+_data = {
+&"RESET": SubResource("Animation_hlpdx"),
+&"fade_out": SubResource("Animation_oc6rp")
+}
+
+[node name="SplashTitle" type="Control" unique_id=951402115]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nodus")
+main_scene = "res://main_scene.tscn"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1226495296]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=557267270]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Control" type="Control" parent="SubViewportContainer/SubViewport" unique_id=1486023409]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,34 +124,119 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=567476663]
-texture_filter = 1
+[node name="Background" type="TextureRect" parent="SubViewportContainer/SubViewport/Control" unique_id=580201948]
+modulate = Color(0.5330367, 0.5330367, 0.5330367, 1)
+material = SubResource("CanvasItemMaterial_xt2td")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("PortableCompressedTexture2D_c8184")
-metadata/_aseprite_wizard_interface_config_ = {
-"pending_changes": {}
-}
-metadata/_aseprite_wizard_config_ = {
-"convert_fps_field": 60.0,
-"convert_ms_field": 16.0,
-"convert_to_fps": false,
-"embed_tex": true,
-"i_mode": 1,
-"keep_anim_length": false,
-"layers": [],
-"o_ex_p": "",
-"o_folder": "",
-"o_name": "",
-"only_visible": false,
-"player": "",
-"scale": "1.0",
-"slice": "",
-"source": "res://aseprite/splash_screen.aseprite",
-"source_uid": -1
-}
-metadata/_aseprite_wizard_source_file_hash_ = "ae021d59e21c9d2add8c87f0022fd1ee"
+texture = ExtResource("2_oc6rp")
+
+[node name="Enemy" type="Control" parent="SubViewportContainer/SubViewport/Control" unique_id=1403819075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="TextureRect" parent="SubViewportContainer/SubViewport/Control/Enemy" unique_id=1436413359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_hlpdx")
+
+[node name="RadialBlurFilter" type="ColorRect" parent="SubViewportContainer/SubViewport/Control" unique_id=556198269]
+material = SubResource("ShaderMaterial_wqsic")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Foreground" type="TextureRect" parent="SubViewportContainer/SubViewport/Control" unique_id=280491511]
+material = SubResource("CanvasItemMaterial_81gl3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_0d2yk")
+
+[node name="Player" type="Control" parent="SubViewportContainer/SubViewport/Control" unique_id=439350493]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="TextureRect" parent="SubViewportContainer/SubViewport/Control/Player" unique_id=808570471]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_e186f")
+
+[node name="Title" type="Control" parent="SubViewportContainer/SubViewport/Control" unique_id=101898499]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="TextureRect" parent="SubViewportContainer/SubViewport/Control/Title" unique_id=550619250]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_akxoc")
+
+[node name="PseudoPixelSortingFilter" type="ColorRect" parent="." unique_id=1983068202]
+material = SubResource("ShaderMaterial_hlpdx")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FadeInOut" type="ColorRect" parent="." unique_id=1696737515]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="LoadProgress" type="ProgressBar" parent="." unique_id=1097936272]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_oc6rp")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hlpdx")
+max_value = 1.0
+step = 0.001
+show_percentage = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1741448883]
+libraries/ = SubResource("AnimationLibrary_hlpdx")

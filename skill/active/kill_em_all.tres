@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_byfhi")
-cooldown = 60
+cooldown = 50
 name = &"전부 죽여버려!"
-description = "전 방향으로 1000px의 길이를 가진 체내의 핏가지를 발사한다.
+description = "전 방향으로 반경 750px의 길이를 가진 체내의 핏가지를 발사한다.
 
 핏가지는 타격 시 30의 데미지를 주고 띄우며, 초당 5의 출혈데미지를 10초간 준다.
 

@@ -11,10 +11,17 @@ config_version=5
 [application]
 
 config/name="Imprisoned Souls"
-run/main_scene="uid://cf1orjt7ujkck"
+run/main_scene="uid://dss5v1ieioljj"
 config/features=PackedStringArray("4.7", "Forward Plus")
 run/max_fps=60
+boot_splash/bg_color=Color(0.06469653, 0.064696535, 0.0646965, 1)
+boot_splash/stretch_mode=0
+boot_splash/image="uid://dwax1oidufbap"
 config/icon="res://icon.svg"
+boot_splash+/timing/fade_out_time=0.0
+boot_splash+/background/mode=1
+boot_splash+/logo/image="uid://dwax1oidufbap"
+boot_splash+/progress_bar/show=false
 
 [aseprite]
 
@@ -190,10 +197,6 @@ mouse_left={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
-
-[internationalization]
-
-locale/translations_pot_files=PackedStringArray("res://dialogue/ending.dialogue", "res://dialogue/intel.dialogue")
 
 [layer_names]
 
