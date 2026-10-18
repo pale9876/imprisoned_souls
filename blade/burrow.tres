@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://ouheodyun1ue"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_80ldw"]
+
+[resource]
+script = ExtResource("1_80ldw")
+name = &"파고들기"
+description = "전방을 향해 빠르게 파고든다."
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

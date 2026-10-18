@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://cx6e3wf2mm5lc"]
-
-[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_fgo27"]
-
-[resource]
-script = ExtResource("1_fgo27")
-name = &"Basic Punch Combo"
-metadata/_custom_type_script = "uid://bikptipa3pwm6"

@@ -21,18 +21,19 @@ func _init() -> void:
 	value = .5 if is_edit else 1.
 	modulate = WHITE if is_edit else TRANSPARENT
 
+	if Engine.is_editor_hint(): return
+	
+	_timer.timeout.connect(
+		func() -> void:
+			fade_out()
+	)
+	
 	add_child(_timer)
 
 
-func fade_in() -> void:
-	_tween = create_tween()
-
-
-func fade_out() -> void:
-	_tween = create_tween()
-
-
 func _enter_tree() -> void:
+	if Engine.is_editor_hint(): return
+	
 	var unit := get_unit()
 	
 	unit.stat.damaged.connect(
@@ -41,8 +42,23 @@ func _enter_tree() -> void:
 	)
 
 
+func fade_in() -> void:
+	_tween = create_tween()
+	_tween.tween_property(
+		self, "modulate", WHITE, .75
+	)
+
+
+func fade_out() -> void:
+	_tween = create_tween()
+	_tween.tween_property(
+		self, "modulate", TRANSPARENT, .75
+	)
+
+
 func _damaged() -> void:
-	pass
+	fade_in()
+	_timer.start(8.)
 
 
 func get_unit() -> Unit:

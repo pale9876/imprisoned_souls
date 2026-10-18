@@ -21,6 +21,6 @@ enum Tag {
 @export var icon: Texture2D
 @export var character_tag: Array[Tag]
 @export var unit_info: UnitInformation
-
+@export var scene: PackedScene
 
 	

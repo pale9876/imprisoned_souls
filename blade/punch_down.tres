@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://cx6e3wf2mm5lc"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_1k73b"]
+
+[resource]
+script = ExtResource("1_1k73b")
+name = &"펀치 다운"
+description = "전방에 두 번 주먹을 내지른다.
+마지막 타격에 맞은 적은 다운됩니다."
+allowed = 127
+enter_command = Array[String](["punch", "punch"])
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

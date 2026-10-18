@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://cmsls046i5hqf"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_smslm"]
+
+[resource]
+script = ExtResource("1_smslm")
+name = &"강타"
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

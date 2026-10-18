@@ -6,12 +6,9 @@ const DEFAULT_SAVE_DATA_PATH: String = "res://savedata/autosave.res"
 
 
 # Import
-const Player: Script = preload("uid://c2uxhumgng18h")
 const MainScene: Script = preload("uid://cplgj2iixr7f6")
-const PlayerCamera: Script = preload("uid://b7phyhue4y3yg")
 const Hud: Script = preload("uid://dgntyiu05self")
 const Ingame: Script = preload("uid://lf1g8r7wbov3")
-#const Channel: Script = preload("uid://bc33hejnp7byc")
 
 
 # Scene
@@ -138,4 +135,3 @@ class Data extends Resource:
 	
 	func get_class_property(c_name: String, property_name: String) -> Variant:
 		return class_data[c_name][property_name]
-	
