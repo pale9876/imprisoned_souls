@@ -52,19 +52,19 @@
 [ext_resource type="Script" uid="uid://sjqmjeqxy8nt" path="res://player/health.gd" id="51_w7j2h"]
 [ext_resource type="Script" uid="uid://xbjs4cvnl1lm" path="res://player/spawn_shot.gd" id="64_35wys"]
 
-[sub_resource type="Gradient" id="Gradient_w7j2h"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7j2h"]
+size = Vector2(38, 92)
+
+[sub_resource type="Gradient" id="Gradient_n0b8q"]
 interpolation_mode = 1
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_n0b8q"]
-gradient = SubResource("Gradient_w7j2h")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jfgyi"]
+gradient = SubResource("Gradient_n0b8q")
 height = 10
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.789, 0.789)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jfgyi"]
-size = Vector2(38, 92)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_237xx"]
 size = Vector2(50, 81)
@@ -92,6 +92,22 @@ _data = {
 &"RESET": SubResource("Animation_7crtr"),
 &"sampl": SubResource("Animation_wpyo2")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7j2h"]
+bg_color = Color(0.18790352, 1.1619064e-06, 6.617978e-07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n0b8q"]
+bg_color = Color(0.66751045, 0.8457531, 0.9618806, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_sweqy"]
 var/move_list/name = &"move_list"
@@ -147,11 +163,16 @@ size = Vector2(66, 56)
 
 [node name="Player" type="CharacterBody2D" unique_id=1697822384 node_paths=PackedStringArray("toggles")]
 collision_layer = 2
-collision_mask = 3
 input_pickable = true
 floor_snap_length = 10.0
 script = ExtResource("1_bvu1k")
 toggles = [NodePath("StateLabel")]
+
+[node name="UnitCollision" type="CollisionShape2D" parent="." unique_id=1250735462]
+position = Vector2(0, -46)
+shape = SubResource("RectangleShape2D_w7j2h")
+script = ExtResource("8_pjwc4")
+metadata/_custom_type_script = "uid://bhhy483vjefa1"
 
 [node name="Ware" type="Node" parent="." unique_id=504440058]
 script = ExtResource("2_n0b8q")
@@ -164,16 +185,10 @@ metadata/_custom_type_script = "uid://cy5ux4udfco7"
 [node name="Confession" parent="AEIndexLibrary" unique_id=916381794 instance=ExtResource("4_w7j2h")]
 
 [node name="DropShadow" type="Sprite2D" parent="." unique_id=981265406]
-texture = SubResource("GradientTexture2D_n0b8q")
+texture = SubResource("GradientTexture2D_jfgyi")
 script = ExtResource("6_jbx34")
 colors = PackedColorArray(0.77870363, 0.01541409, 2.8878452e-07, 1, 1, 1, 1, 0)
 mask = 4
-
-[node name="UnitCollision" type="CollisionShape2D" parent="." unique_id=1250735462]
-position = Vector2(0, -46)
-shape = SubResource("RectangleShape2D_jfgyi")
-script = ExtResource("8_pjwc4")
-metadata/_custom_type_script = "uid://bhhy483vjefa1"
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1484439855]
 collision_layer = 2
@@ -192,14 +207,14 @@ height = 81
 offset_y = 6
 metadata/_custom_type_script = "uid://bhhy483vjefa1"
 
+[node name="Tail" parent="." unique_id=1297482294 instance=ExtResource("5_7crtr")]
+rotation = -3.1415925
+scale = Vector2(1, -1)
+
 [node name="SpriteComponent" type="Node2D" parent="." unique_id=363892716 node_paths=PackedStringArray("current")]
 process_mode = 3
 script = ExtResource("8_a1u5o")
 current = NodePath("Idle")
-
-[node name="Tail" parent="SpriteComponent" unique_id=1297482294 instance=ExtResource("5_7crtr")]
-rotation = 3.1415927
-scale = Vector2(1, -1)
 
 [node name="Idle" parent="SpriteComponent" unique_id=1893632528 instance=ExtResource("11_6wior")]
 position = Vector2(0, -64)
@@ -208,6 +223,34 @@ position = Vector2(0, -64)
 callback_mode_discrete = 0
 libraries/ = SubResource("AnimationLibrary_7crtr")
 script = ExtResource("9_55jnj")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1367097236]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -128.0
+offset_right = 40.0
+offset_bottom = -113.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_w7j2h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n0b8q")
+max_value = 1.0
+step = 0.001
+value = 0.5
+show_percentage = false
+script = ExtResource("51_w7j2h")
+
+[node name="ShowUITimer" type="Timer" parent="ProgressBar" unique_id=1183158401]
+
+[node name="StateLabel" type="Label" parent="." unique_id=1166794144]
+offset_left = -29.0
+offset_top = -128.0
+offset_right = 29.0
+offset_bottom = -105.0
 
 [node name="StateMachine" type="LimboHSM" parent="." unique_id=2015169286 node_paths=PackedStringArray("label")]
 blackboard_plan = SubResource("BlackboardPlan_sweqy")
@@ -325,27 +368,6 @@ metadata/_custom_type_script = "uid://0kxmhttvge4l"
 [node name="Shot" type="Node" parent="StateMachine/BrutalSlicer" unique_id=1439085821]
 script = ExtResource("51_jbx34")
 metadata/_custom_type_script = "uid://0kxmhttvge4l"
-
-[node name="StateLabel" type="Label" parent="." unique_id=1166794144]
-offset_left = -29.0
-offset_top = -91.0
-offset_right = 29.0
-offset_bottom = -68.0
-
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1367097236]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -118.0
-offset_right = 40.0
-offset_bottom = -103.0
-grow_horizontal = 2
-grow_vertical = 2
-show_percentage = false
-script = ExtResource("51_w7j2h")
 
 [node name="HitboxComponent" type="Node2D" parent="." unique_id=1243634124 node_paths=PackedStringArray("_show")]
 script = ExtResource("22_uw77l")

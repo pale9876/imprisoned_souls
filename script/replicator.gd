@@ -20,16 +20,6 @@ var stat: Stat = Stat.new()
 var state: Debite = Debite.new()
 
 
-func _init() -> void:
-	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
-	
-	set_collision_mask_value(1, true)
-	set_collision_mask_value(2, false)
-	
-	set_collision_layer_value(1, false)
-	set_collision_layer_value(2, true)
-
-
 func soft_pause() -> void:
 	set_process(false)
 	set_physics_process(false)

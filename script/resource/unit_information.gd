@@ -57,12 +57,20 @@ enum CharacterClass {
 	CUSTOM, # 사용자 정의
 }
 
+enum Gender {
+	UNKNOWN,
+	MALE,
+	FEMALE,
+}
+
+
 
 @export_group("캐릭터 정보")
 @export var mosaiced_name: StringName = &"Unknowned"
 @export var mosaiced: bool = false
 @export var last_name: StringName = &"Unnamed"
 @export var first_name: StringName = &"Unnamed"
+@export var male: Gender = Gender.UNKNOWN
 @export var is_replicant: bool = true # replicant가 아닐 시, NPC 진영
 @export var unique: bool = false
 @export var cannot_terminate: bool = false

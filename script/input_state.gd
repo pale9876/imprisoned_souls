@@ -6,6 +6,7 @@ const INPUT_POSTPONE: int = 10
 
 signal punch()
 signal kick()
+signal locked()
 
 
 var input_cache: PackedStringArray = PackedStringArray()
@@ -18,16 +19,20 @@ var _postpone: int = 0:
 		
 var direction: Vector2 = Vector2.ZERO:
 	set(value):
-		if !_lock:
+		if !_locked:
 			direction = value
 var _duration: float = 0.:
 	set(value):
 		_duration = maxf(0., value)
-var _lock: bool = false
+var _locked: bool = false
 
 
 func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+func _process(delta: float) -> void:
+	direction = get_input_vector()
 
 
 func _physics_process(_delta: float) -> void:
@@ -76,12 +81,16 @@ func get_cached() -> PackedStringArray:
 
 
 func lock() -> void:
-	_lock = true
+	_locked = true
 
 
 func unlock() -> void:
-	_lock = false
+	_locked = false
 
 
-func locked() -> bool:
+func get_input_vector() -> Vector2:
+	return Input.get_vector("left", "right", "up", "down")
+
+
+func is_locked() -> bool:
 	return _duration > 0.

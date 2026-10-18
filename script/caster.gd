@@ -3,9 +3,6 @@ class_name Caster
 
 
 
-var result: Dictionary = {}
-
-
 static func casting(
 	from: Node2D, to: Node2D, mask: int, exclude: Array[RID]
 	) -> Caster:
@@ -61,6 +58,36 @@ func shape_is_colliding(
 		return to_body.get_instance_id() == collider_id
 
 	return false
+
+
+func cast_motion(
+	from: Unit, motion: Vector2, margin: float, mask: int = 1, exclude: Array[RID] = []
+) -> Vector2:
+	var _param := PhysicsShapeQueryParameters2D.new()
+
+	_param.exclude = exclude
+	_param.shape = from.get_shape()
+	_param.motion = motion
+	_param.collide_with_bodies = true
+	_param.collide_with_areas = false
+	_param.collision_mask = mask
+	_param.margin = margin
+	_param.transform = from.global_transform
+	
+	var _result: PackedFloat32Array = from.get_world_2d().direct_space_state.cast_motion(_param)
+	
+	var _safe: float = _result[0]
+	var _unsafe: float = _result[1]
+	
+	return from.global_position + (motion * _safe)
+
+
+
+
+
+
+
+
 
 
 	

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://c7jlmb2yhu353"]
+
+[ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_xxygs"]
+[ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="2_h8xcc"]
+
+[sub_resource type="Resource" id="Resource_n0b8q"]
+script = ExtResource("2_h8xcc")
+metadata/_custom_type_script = "uid://c3ykemf4n3om1"
+
+[resource]
+script = ExtResource("1_xxygs")
+name = &"크리세"
+character_tag = Array[int]([0, 4])
+unit_info = SubResource("Resource_n0b8q")
+metadata/_custom_type_script = "uid://4iakh7oj3ywo"

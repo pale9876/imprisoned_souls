@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://cuxreexlpqn3j"]
+
+[ext_resource type="Texture2D" uid="uid://bt1m3lxvcgner" path="res://icon/overload/vatheia.png" id="1_2kqeo"]
+[ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_cct4o"]
+[ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="2_2kqeo"]
+
+[sub_resource type="Resource" id="Resource_xglav"]
+script = ExtResource("2_2kqeo")
+mosaiced_name = &"Vatheia"
+male = 1
+metadata/_custom_type_script = "uid://c3ykemf4n3om1"
+
+[resource]
+script = ExtResource("1_cct4o")
+name = &"바테이아"
+icon = ExtResource("1_2kqeo")
+character_tag = Array[int]([1, 3])
+unit_info = SubResource("Resource_xglav")
+metadata/_custom_type_script = "uid://4iakh7oj3ywo"

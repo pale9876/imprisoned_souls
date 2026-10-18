@@ -124,6 +124,7 @@ func move_and_collide(
 	
 	return get_replicator().move_and_collide(_motion, test, margin, false)
 
+
 func change_state(state: LimboState) -> void:
 	get_hsm().change_active_state(state)
 
@@ -186,5 +187,44 @@ func get_fall_state() -> DefaultUnitFormState:
 
 func get_jump_state() -> DefaultUnitFormState:
 	return get_state(^"Jump") as DefaultUnitFormState
+
+
+# Class
+class MotionCurve extends Curve2D:
+	var start_pos: Vector2
+	var final_pos: Vector2
+	var height: float
+	
+	
+	func _init(
+		_start: Vector2,
+		_final: Vector2,
+		_height: float,
+		frame_length: int
+	) -> void:
+		
+		start_pos = _start
+		final_pos = _final
+		height = _height
+		
+		var p0: Vector2 = start_pos
+		var dir: Vector2 = start_pos.direction_to(final_pos).rotated(- PI / 2.)
+		var p0_out: Vector2 = start_pos + (dir * height)
+		var p1: Vector2 = final_pos
+		
+		add_point(p0, Vector2(), p0_out)
+		add_point(p1)
+		
+		bake_interval = 5.
+		
+
+	func get_point(offset: float) -> Vector2:
+		return sample_baked(offset)
+
+
+
+
+
+
 
 	

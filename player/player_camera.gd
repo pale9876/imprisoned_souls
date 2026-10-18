@@ -1,9 +1,9 @@
 # player_camera.gd
 extends Camera2D
+class_name PlayerCamera
 
 
 # Import
-const Player = preload("uid://c2uxhumgng18h")
 
 
 @export var time_scale: float = 2.25
@@ -25,6 +25,10 @@ func _enter_tree() -> void:
 	global_position = player.global_position
 	
 	make_current()
+
+
+func _exit_tree() -> void:
+	target = null
 
 
 func _process(_delta: float) -> void:
@@ -59,9 +63,6 @@ func _physics_process(delta: float) -> void:
 		force = force.lerp(Vector2(), randf_range(.095, .225))
 		time = maxf(0., time - (delta * time_scale))
 
-
-func _exit_tree() -> void:
-	target = null
 
 
 func shake(_force: Vector2, _time: float) -> void:

@@ -3,7 +3,6 @@ class_name Unit
 
 
 # Import
-const Player: Script = preload("uid://c2uxhumgng18h")
 const Awareness: Script = preload("uid://bdj3moatwduju")
 
 
@@ -78,3 +77,11 @@ func get_bt() -> BTPlayer:
 
 func default() -> void:
 	set_target(null)
+
+
+func get_shape() -> Shape2D:
+	return get_collider().shape
+	
+
+
+	

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Registry" format=3 uid="uid://b7puow6ni7dhw"]
+
+[ext_resource type="Script" uid="uid://dqtv77mng5dyh" path="res://addons/yard/registry.gd" id="1_5gath"]
+
+[resource]
+script = ExtResource("1_5gath")
+_version = 2
+_scan_rulesets = Array[Dictionary]([{
+&"allowed_file_extensions": Array[String]([".tres"]),
+&"class_restrictions": Array[StringName]([&"OverloadInformation"]),
+&"recursive_scan": false,
+&"scan_directories": Array[String](["res://unit_info/overload"]),
+&"scan_regex_exclude": "",
+&"scan_regex_include": ""
+}])
+_uids_to_string_ids = Dictionary[StringName, StringName]({
+&"uid://c7jlmb2yhu353": &"chryse",
+&"uid://ck5x1uciojj8s": &"hecuba",
+&"uid://cuxreexlpqn3j": &"vatheia",
+&"uid://d4cvo27s6gy8": &"cassandra"
+})
+_string_ids_to_uids = Dictionary[StringName, StringName]({
+&"cassandra": &"uid://d4cvo27s6gy8",
+&"chryse": &"uid://c7jlmb2yhu353",
+&"hecuba": &"uid://ck5x1uciojj8s",
+&"vatheia": &"uid://cuxreexlpqn3j"
+})

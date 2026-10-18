@@ -1,5 +1,7 @@
 # player.gd
+@tool
 extends Replicator
+class_name Player
 
 
 # Import
@@ -13,19 +15,27 @@ const PlayerCamera: Script = preload("uid://b7phyhue4y3yg")
 @export_group("Debug")
 @export var toggles: Array[Node]
 
-var input_state: InputState
 
 var _prefix: StringName = &""
 
 
 func _init() -> void:
-	super()
+	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
 	
-	input_state = InputState
+	set_collision_mask_value(1, true)
+	set_collision_mask_value(2, false)
+	
+	set_collision_layer_value(1, false)
+	set_collision_layer_value(2, true)
+	
+	if Engine.is_editor_hint(): return
+	
 	state.face_changed.connect(_on_face_changed)
 
 
 func _enter_tree() -> void:
+	if Engine.is_editor_hint(): return
+	
 	GSignal.soft_pause.connect(soft_pause)
 	GSignal.resume.connect(resume)
 	
@@ -38,6 +48,8 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint(): return
+	
 	if info:
 		stat.name = name
 		stat.hp = info.hp
@@ -52,8 +64,12 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	# Input
-	input_state.direction = Input.get_vector("left", "right", "up", "down")
+	if Engine.is_editor_hint(): return
+
+
+
+func _exit_tree() -> void:
+	pass
 
 
 func _on_face_changed() -> void:
@@ -62,7 +78,7 @@ func _on_face_changed() -> void:
 
 
 func get_input_direction() -> Vector2:
-	return input_state.direction.round()
+	return InputState.direction.round()
 
 
 func get_face() -> float:
@@ -87,3 +103,12 @@ func get_shadow() -> Sprite2D:
 
 func get_hp_progress() -> float:
 	return float(stat.hp) / float(stat.max_hp)
+
+
+func get_input_dir() -> Vector2:
+	return InputState.direction
+
+
+
+
+	
