@@ -3,29 +3,13 @@ extends LimboHSM
 class_name StateMachine
 
 
-const Player: Script = preload("uid://c2uxhumgng18h")
-
-
 # CONST EV
 const EV_REVERT: StringName = &"revert"
-
-
-signal act_successed(act_result: ActionResult)
-
-
-@export var label: Label
-var input: Vector2 = Vector2()
 
 
 func _ready() -> void:
 	var idle_state := get_state(^"Idle")
 	add_transition(ANYSTATE, idle_state, EV_REVERT)
-
-	active_state_changed.connect(
-		func(current: LimboState, _prev: LimboState) -> void:
-			if label:
-				label.text = "State: %s" % current.name
-	)
 
 
 func get_states_from_category(category_path: NodePath) -> Array[LimboState]:
@@ -52,13 +36,12 @@ func has_state(node_path: String) -> bool:
 	return get_node_or_null(node_path) != null
 
 
-
-#func get_current_type() -> PlayerState.Type:
-	#return current_state().type
-
-
 func current_state() -> PlayerState:
 	return get_active_state() as PlayerState
+
+
+func add_state(state: UnitState) -> void:
+	pass
 
 
 func get_active_states() -> Array[PlayerActive]:
@@ -75,14 +58,24 @@ func get_active_states() -> Array[PlayerActive]:
 	return result
 
 
+func get_unit() -> Unit:
+	return get_unit() as Unit
+
+
 func get_player() -> Player:
 	return get_parent() as Player
 
 
+func get_input_vec() -> Vector2:
+	return InputState.get_input_vector()
+
+
+func get_body_velocity() -> Vector2:
+	return get_unit().velocity
+
 
 func get_state(state_name: NodePath) -> DefaultUnitFormState:
 	return get_node(state_name) as DefaultUnitFormState
-
 
 
 func revert() -> bool:

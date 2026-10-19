@@ -1,6 +1,9 @@
 extends UnitState
 
 
+var _remind: Vector2 = Vector2()
+
+
 func _enter_tree() -> void:
 	pass
 	#add_library()
@@ -22,12 +25,3 @@ func _update(delta: float) -> void:
 		hsm.change_active_state(get_state(^"Down"))
 	else:
 		get_gravity(2250., 25.25)
-
-func event(info: HitboxInformation, result: HitResult) -> void:
-	match info.type:
-		HitboxInformation.KNOCKBACK:
-			pass
-		
-		HitboxInformation.AERIAL:
-			pass
-	

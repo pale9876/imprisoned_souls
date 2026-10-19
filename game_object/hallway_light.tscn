@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://oooh55l374ba"]
+
+[ext_resource type="Script" uid="uid://6aqekisaf736" path="res://script/hallway_light.gd" id="1_a01yf"]
+
+[sub_resource type="Gradient" id="Gradient_af52x"]
+offsets = PackedFloat32Array(0, 0.75)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ene7"]
+gradient = SubResource("Gradient_af52x")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="HallwayLight" type="PointLight2D" unique_id=926624877]
+texture = SubResource("GradientTexture2D_2ene7")
+script = ExtResource("1_a01yf")
+metadata/_custom_type_script = "uid://6aqekisaf736"

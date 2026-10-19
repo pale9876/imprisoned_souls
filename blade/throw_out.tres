@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://dbvlenrogclom"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_dlnn4"]
+
+[resource]
+script = ExtResource("1_dlnn4")
+name = &"집어던지기"
+description = "전방의 가장 가까운 적 유닛을 잡아 던진다."
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

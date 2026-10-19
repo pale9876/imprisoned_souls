@@ -2,10 +2,6 @@ extends DefaultUnitFormState
 class_name UnitState
 
 
-# Import
-const StateMachine: Script = preload("uid://dcybwuwfqeqr3")
-
-
 
 func get_state_machine() -> StateMachine:
 	return get_parent() as StateMachine

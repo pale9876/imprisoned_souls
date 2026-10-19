@@ -203,6 +203,7 @@ mouse_left={
 2d_physics/layer_1="Terrian"
 2d_physics/layer_2="Unit"
 2d_physics/layer_3="Floor"
+2d_physics/layer_4="Pillar"
 
 [physics]
 

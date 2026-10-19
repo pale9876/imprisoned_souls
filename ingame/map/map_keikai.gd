@@ -1,24 +1,25 @@
 # keikai.gd
 @tool
 extends StaticBody2D
+class_name KeiKai
 
 
-@export var _left: int = -1:
+@export var _left: int:
 	set(value):
 		_left = mini(_right, value)
 		if Engine.is_editor_hint() and is_node_ready():
 			set_keikai(get_values())
-@export var _right: int = 1:
+@export var _right: int:
 	set(value):
 		_right = maxi(_left, value)
 		if Engine.is_editor_hint() and is_node_ready():
 			set_keikai(get_values())
-@export var _ceil: int = - 1:
+@export var _ceil: int:
 	set(value):
 		_ceil = mini(value, _floor)
 		if Engine.is_editor_hint() and is_node_ready():
 			set_keikai(get_values())
-@export var _floor: int = 1:
+@export var _floor: int:
 	set(value):
 		_floor = maxi(value, _ceil)
 		if Engine.is_editor_hint() and is_node_ready():

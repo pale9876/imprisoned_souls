@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_80157")
 name = &"쇼다운"
-description = "전방으로 돌려차기 후, 공중으로 무릎을 차올린다."
+description = "전방으로 돌려차기 후, 공중으로 무릎을 차올린다. 적 유닛은 방향으로 띄워진다."
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

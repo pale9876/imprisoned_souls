@@ -7,7 +7,7 @@ const Awareness: Script = preload("uid://bdj3moatwduju")
 
 
 @export var info: UnitInformation
-@export var rage_mode: bool = true
+@export var rage_mode: bool = false
 
 
 func get_face() -> float:

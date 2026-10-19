@@ -9,7 +9,6 @@ const World: Script = preload("uid://dpn1opeegcme2")
 const Keikai: Script = preload("uid://o348jlsiq2tc")
 
 
-
 @export_group("Guidance")
 @export var guidance: MapGuidance
 #@export var start_spawn_position: Marker2D

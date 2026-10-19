@@ -14,24 +14,17 @@
 [ext_resource type="Script" uid="uid://b0paoljcmbiys" path="res://player/sprite_component.gd" id="8_a1u5o"]
 [ext_resource type="Script" uid="uid://bhhy483vjefa1" path="res://collision/dynamic_unit_collision.gd" id="8_pjwc4"]
 [ext_resource type="Script" uid="uid://chb5h0vw5lpvq" path="res://player/motion_library.gd" id="9_55jnj"]
-[ext_resource type="Script" uid="uid://bsrhpk5urdhab" path="res://player/high_punch.gd" id="9_yllr7"]
 [ext_resource type="Script" uid="uid://tmgum3lt28ad" path="res://player/state/jump.gd" id="10_8t03j"]
 [ext_resource type="PackedScene" uid="uid://icrh2ja363p" path="res://karada_template/noru/idle.tscn" id="11_6wior"]
 [ext_resource type="Script" uid="uid://cndvhxjxpob1j" path="res://script/state_label.gd" id="13_n0b8q"]
 [ext_resource type="Script" uid="uid://c1823275u0dxi" path="res://player/state/comment.gd" id="15_fjxoa"]
-[ext_resource type="PackedScene" uid="uid://rcr22hd12ue1" path="res://player/state/slide.tscn" id="16_uw77l"]
 [ext_resource type="PackedScene" uid="uid://f6fubhe2evfi" path="res://player/state/block.tscn" id="17_uw77l"]
 [ext_resource type="Script" uid="uid://bksr64dd5dok4" path="res://player/knockback.gd" id="18_q28gw"]
-[ext_resource type="PackedScene" uid="uid://c7ovni3xc3aqc" path="res://player/state/jump_kick.tscn" id="19_r7pn3"]
-[ext_resource type="Script" uid="uid://c78eee8r755ls" path="res://player/state/jump_kick.gd" id="20_2uvqg"]
 [ext_resource type="PackedScene" uid="uid://bb8kauq734h10" path="res://hitboxes/slide_hitbox.tscn" id="20_x7c3f"]
-[ext_resource type="Script" uid="uid://b47c71dwqb34p" path="res://player/state/jump_hammer.gd" id="21_1s1yo"]
 [ext_resource type="PackedScene" uid="uid://cd03qmykfoaw7" path="res://player/state/dodge.tscn" id="21_b8hi5"]
 [ext_resource type="Script" uid="uid://0dw4edo0eshv" path="res://player/hitbox.gd" id="21_bjvpn"]
-[ext_resource type="Script" uid="uid://cuoebdxrbtlye" path="res://player/state/blowkick.gd" id="22_r7pn3"]
 [ext_resource type="Script" uid="uid://dr8n2mbhooxjo" path="res://player/hitbox_component.gd" id="22_uw77l"]
 [ext_resource type="Script" uid="uid://crbctkdtf2jqy" path="res://script/resource/unit_motion_information.gd" id="24_8pxes"]
-[ext_resource type="Script" uid="uid://b7x8s5btnaxj2" path="res://player/state/player_state.gd" id="24_art4l"]
 [ext_resource type="Script" uid="uid://d2ox33o3w3u0r" path="res://unit/hitbox_shape.gd" id="24_rptt4"]
 [ext_resource type="Script" uid="uid://ddv2b0xf2yme3" path="res://player/grab_box.gd" id="28_rptt4"]
 [ext_resource type="AudioStream" uid="uid://dx55wb37m6lso" path="res://audio/sfx/footstep/Footstep_CONCRETE_barefoot_run_01.wav" id="30_vgvch"]
@@ -39,17 +32,10 @@
 [ext_resource type="AudioStream" uid="uid://dcfwb7ybfp6ht" path="res://audio/sfx/footstep/Footstep_CONCRETE_barefoot_run_03.wav" id="32_3dxkp"]
 [ext_resource type="AudioStream" uid="uid://dfg4rq0g51nrc" path="res://audio/sfx/footstep/Footstep_CONCRETE_barefoot_run_04.wav" id="33_6wior"]
 [ext_resource type="AudioStream" uid="uid://s2f5opa84uh5" path="res://audio/sfx/footstep/Footstep_CONCRETE_barefoot_run_05.wav" id="34_p5tca"]
+[ext_resource type="Script" uid="uid://dsjnx0cxf2gu1" path="res://unit/aerial.gd" id="35_1so5t"]
 [ext_resource type="AudioStream" uid="uid://b8fuxgnql4k3p" path="res://audio/sfx/footstep/Footstep_CONCRETE_barefoot_run_06.wav" id="35_jbx34"]
 [ext_resource type="Script" uid="uid://b7b1r6qslt248" path="res://script/grab_collision.gd" id="36_ge24q"]
-[ext_resource type="Script" uid="uid://cwinkgf223ccj" path="res://player/pound_grab.gd" id="42_3dxkp"]
-[ext_resource type="Script" uid="uid://bqd5pwu72n67y" path="res://player/pound.gd" id="42_6wior"]
-[ext_resource type="Script" uid="uid://b3wmxu8rx8ed5" path="res://player/state/sub_state/left_punch.gd" id="48_hggc2"]
-[ext_resource type="Script" uid="uid://b5qf8ve045qug" path="res://player/state/sub_state/right_punch.gd" id="49_b2j0d"]
 [ext_resource type="Script" uid="uid://crcp2uhoaap08" path="res://player/hit_polygon.gd" id="49_n0b8q"]
-[ext_resource type="Script" uid="uid://blmlpb3bgobd7" path="res://player/charging_counter.gd" id="50_6wior"]
-[ext_resource type="Script" uid="uid://egqrhqmhmgjs" path="res://player/state/sub_state/hammer.gd" id="50_7l6ig"]
-[ext_resource type="Script" uid="uid://0kxmhttvge4l" path="res://player/sub_state.gd" id="51_jbx34"]
-[ext_resource type="Script" uid="uid://car8b8r8j83qa" path="res://player/brutal_slicer.gd" id="51_p5tca"]
 [ext_resource type="Script" uid="uid://sjqmjeqxy8nt" path="res://player/health.gd" id="51_w7j2h"]
 [ext_resource type="Script" uid="uid://xbjs4cvnl1lm" path="res://player/spawn_shot.gd" id="64_35wys"]
 
@@ -69,6 +55,58 @@ fill_to = Vector2(0.789, 0.789)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wpyo2"]
 size = Vector2(50, 81)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_boad6"]
+size = Vector2(45, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yllr7"]
+size = Vector2(60, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kb6p2"]
+size = Vector2(40, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jywp"]
+size = Vector2(47, 48)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_7crtr"]
+points = PackedVector2Array(0, -95, 0, -33, 0, -33, 0, -95)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ch6w5"]
+radius = 32.140316
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_greoi"]
+radius = 20.0
+height = 132.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcada"]
+size = Vector2(47, 67)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbhqi"]
+size = Vector2(44, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbx34"]
+size = Vector2(66, 56)
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_sweqy"]
+var/move_list/name = &"move_list"
+var/move_list/type = 27
+var/move_list/value = {}
+var/move_list/hint = 0
+var/move_list/hint_string = ""
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w7j2h"]
+playback_mode = 1
+streams_count = 6
+stream_0/stream = ExtResource("30_vgvch")
+stream_1/stream = ExtResource("31_a1u5o")
+stream_2/stream = ExtResource("32_3dxkp")
+stream_3/stream = ExtResource("33_6wior")
+stream_4/stream = ExtResource("34_p5tca")
+stream_5/stream = ExtResource("35_jbx34")
+
+[sub_resource type="Resource" id="Resource_mmwog"]
+script = ExtResource("24_8pxes")
+metadata/_custom_type_script = "uid://crbctkdtf2jqy"
 
 [sub_resource type="Animation" id="Animation_7crtr"]
 length = 0.001
@@ -109,58 +147,6 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.8, 0.8, 0.8, 0)
-
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_sweqy"]
-var/move_list/name = &"move_list"
-var/move_list/type = 27
-var/move_list/value = {}
-var/move_list/hint = 0
-var/move_list/hint_string = ""
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w7j2h"]
-playback_mode = 1
-streams_count = 6
-stream_0/stream = ExtResource("30_vgvch")
-stream_1/stream = ExtResource("31_a1u5o")
-stream_2/stream = ExtResource("32_3dxkp")
-stream_3/stream = ExtResource("33_6wior")
-stream_4/stream = ExtResource("34_p5tca")
-stream_5/stream = ExtResource("35_jbx34")
-
-[sub_resource type="Resource" id="Resource_mmwog"]
-script = ExtResource("24_8pxes")
-metadata/_custom_type_script = "uid://crbctkdtf2jqy"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_boad6"]
-size = Vector2(45, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yllr7"]
-size = Vector2(60, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kb6p2"]
-size = Vector2(40, 70)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jywp"]
-size = Vector2(47, 48)
-
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_7crtr"]
-points = PackedVector2Array(0, -95, 0, -33, 0, -33, 0, -95)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ch6w5"]
-radius = 32.140316
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_greoi"]
-radius = 20.0
-height = 132.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcada"]
-size = Vector2(47, 67)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbhqi"]
-size = Vector2(44, 63)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jbx34"]
-size = Vector2(66, 56)
 
 [node name="Player" type="CharacterBody2D" unique_id=1697822384]
 collision_layer = 2
@@ -218,164 +204,6 @@ current = NodePath("Idle")
 
 [node name="Idle" parent="SpriteComponent" unique_id=1893632528 instance=ExtResource("11_6wior")]
 position = Vector2(0, -64)
-
-[node name="MotionLibrary" type="AnimationPlayer" parent="." unique_id=1781161408]
-callback_mode_discrete = 0
-libraries/ = SubResource("AnimationLibrary_7crtr")
-script = ExtResource("9_55jnj")
-
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1367097236]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -128.0
-offset_right = 40.0
-offset_bottom = -113.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_w7j2h")
-theme_override_styles/fill = SubResource("StyleBoxFlat_n0b8q")
-max_value = 1.0
-step = 0.001
-value = 0.5
-show_percentage = false
-script = ExtResource("51_w7j2h")
-
-[node name="StateLabel" type="Label" parent="." unique_id=1166794144]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.5
-offset_top = -160.0
-offset_right = 75.5
-offset_bottom = -137.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "State: Hello"
-horizontal_alignment = 1
-script = ExtResource("13_n0b8q")
-
-[node name="StateMachine" type="LimboHSM" parent="." unique_id=2015169286 node_paths=PackedStringArray("label")]
-blackboard_plan = SubResource("BlackboardPlan_sweqy")
-script = ExtResource("3_2ieo8")
-label = NodePath("../StateLabel")
-
-[node name="#Default" type="LimboState" parent="StateMachine" unique_id=1422560660]
-process_mode = 4
-script = ExtResource("15_fjxoa")
-
-[node name="Idle" type="LimboState" parent="StateMachine" unique_id=382262949]
-script = ExtResource("4_bvu1k")
-
-[node name="Move" type="LimboState" parent="StateMachine" unique_id=1139494425]
-script = ExtResource("5_40lky")
-footstep_sound = SubResource("AudioStreamRandomizer_w7j2h")
-
-[node name="Fall" type="LimboState" parent="StateMachine" unique_id=216460520]
-script = ExtResource("6_yllr7")
-
-[node name="Jump" type="LimboState" parent="StateMachine" unique_id=736184237]
-script = ExtResource("10_8t03j")
-
-[node name="Block" parent="StateMachine" unique_id=1514818620 instance=ExtResource("17_uw77l")]
-
-[node name="Dodge" parent="StateMachine" unique_id=1740608329 instance=ExtResource("21_b8hi5")]
-just_time = true
-motion_info = SubResource("Resource_mmwog")
-
-[node name="#HurtState" type="LimboState" parent="StateMachine" unique_id=1837165163]
-process_mode = 4
-script = ExtResource("15_fjxoa")
-metadata/_custom_type_script = "uid://c1823275u0dxi"
-
-[node name="Knockback" type="LimboState" parent="StateMachine" unique_id=1004344550]
-script = ExtResource("18_q28gw")
-
-[node name="Aerial" type="LimboState" parent="StateMachine" unique_id=1728554025]
-script = ExtResource("24_art4l")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="Down" type="LimboState" parent="StateMachine" unique_id=1834641522]
-script = ExtResource("24_art4l")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="Pushback" type="LimboState" parent="StateMachine" unique_id=1213373009]
-script = ExtResource("24_art4l")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="Wallhit" type="LimboState" parent="StateMachine" unique_id=765613142]
-script = ExtResource("24_art4l")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="Pound" type="LimboState" parent="StateMachine" unique_id=832705334]
-script = ExtResource("42_6wior")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="#ActState" type="LimboState" parent="StateMachine" unique_id=1682804032]
-process_mode = 4
-script = ExtResource("15_fjxoa")
-metadata/_custom_type_script = "uid://c1823275u0dxi"
-
-[node name="PoundGrab" type="LimboState" parent="StateMachine" unique_id=1571972360]
-script = ExtResource("42_3dxkp")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="HighPunchCombo" type="LimboState" parent="StateMachine" unique_id=662588822 node_paths=PackedStringArray("hitbox")]
-script = ExtResource("9_yllr7")
-cooltime_frame = 6
-hitbox = NodePath("../../HitboxComponent/PunchCombo")
-
-[node name="LeftPunch" type="Node" parent="StateMachine/HighPunchCombo" unique_id=1731762629]
-script = ExtResource("48_hggc2")
-metadata/_custom_type_script = "uid://0kxmhttvge4l"
-
-[node name="RightPunch" type="Node" parent="StateMachine/HighPunchCombo" unique_id=234511514]
-script = ExtResource("49_b2j0d")
-metadata/_custom_type_script = "uid://0kxmhttvge4l"
-
-[node name="Hammer" type="Node" parent="StateMachine/HighPunchCombo" unique_id=2012358226]
-script = ExtResource("50_7l6ig")
-metadata/_custom_type_script = "uid://0kxmhttvge4l"
-
-[node name="Slide" parent="StateMachine" unique_id=591192304 node_paths=PackedStringArray("hitbox") instance=ExtResource("16_uw77l")]
-hitbox = NodePath("../../HitboxComponent/SlideHitbox")
-
-[node name="JumpKick" parent="StateMachine" unique_id=1156718825 instance=ExtResource("19_r7pn3")]
-script = ExtResource("20_2uvqg")
-cooltime_frame = 8
-just_frame = false
-hitbox_scene = null
-
-[node name="JumpHammer" type="LimboState" parent="StateMachine" unique_id=1138518008]
-script = ExtResource("21_1s1yo")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="Blowkick" type="LimboState" parent="StateMachine" unique_id=1713774209 node_paths=PackedStringArray("hitbox")]
-script = ExtResource("22_r7pn3")
-cooltime_frame = 12
-hitbox = NodePath("../../HitboxComponent/Blowkick")
-metadata/_custom_type_script = "uid://b7x8s5btnaxj2"
-
-[node name="ChargingCounter" type="LimboState" parent="StateMachine" unique_id=1052840880]
-script = ExtResource("50_6wior")
-metadata/_custom_type_script = "uid://brhdt8mkevudv"
-
-[node name="BrutalSlicer" type="LimboState" parent="StateMachine" unique_id=1202620398]
-script = ExtResource("51_p5tca")
-metadata/_custom_type_script = "uid://brhdt8mkevudv"
-
-[node name="Slice" type="Node" parent="StateMachine/BrutalSlicer" unique_id=1919473890]
-script = ExtResource("51_jbx34")
-metadata/_custom_type_script = "uid://0kxmhttvge4l"
-
-[node name="Shot" type="Node" parent="StateMachine/BrutalSlicer" unique_id=1439085821]
-script = ExtResource("51_jbx34")
-metadata/_custom_type_script = "uid://0kxmhttvge4l"
 
 [node name="HitboxComponent" type="Node2D" parent="." unique_id=1243634124 node_paths=PackedStringArray("_show")]
 script = ExtResource("22_uw77l")
@@ -519,8 +347,91 @@ metadata/_custom_type_script = "uid://d2ox33o3w3u0r"
 [node name="SpawnShot" type="Node2D" parent="HitboxComponent/BrutalSlicer" unique_id=1295598764]
 script = ExtResource("64_35wys")
 
+[node name="StateMachine" type="LimboHSM" parent="." unique_id=2015169286]
+blackboard_plan = SubResource("BlackboardPlan_sweqy")
+script = ExtResource("3_2ieo8")
+
+[node name="#Default" type="LimboState" parent="StateMachine" unique_id=1422560660]
+process_mode = 4
+script = ExtResource("15_fjxoa")
+
+[node name="Idle" type="LimboState" parent="StateMachine" unique_id=382262949]
+script = ExtResource("4_bvu1k")
+
+[node name="Move" type="LimboState" parent="StateMachine" unique_id=1139494425]
+script = ExtResource("5_40lky")
+footstep_sound = SubResource("AudioStreamRandomizer_w7j2h")
+
+[node name="Fall" type="LimboState" parent="StateMachine" unique_id=216460520]
+script = ExtResource("6_yllr7")
+
+[node name="Jump" type="LimboState" parent="StateMachine" unique_id=736184237]
+script = ExtResource("10_8t03j")
+
+[node name="Block" parent="StateMachine" unique_id=1514818620 instance=ExtResource("17_uw77l")]
+
+[node name="Dodge" parent="StateMachine" unique_id=1740608329 instance=ExtResource("21_b8hi5")]
+just_time = true
+motion_info = SubResource("Resource_mmwog")
+
+[node name="#HurtState" type="LimboState" parent="StateMachine" unique_id=1837165163]
+process_mode = 4
+script = ExtResource("15_fjxoa")
+metadata/_custom_type_script = "uid://c1823275u0dxi"
+
+[node name="Knockback" type="LimboState" parent="StateMachine" unique_id=1004344550]
+script = ExtResource("18_q28gw")
+
+[node name="UnitState" type="LimboState" parent="StateMachine" unique_id=1571237167]
+script = ExtResource("35_1so5t")
+metadata/_custom_type_script = "uid://im1wyvflgwp0"
+
+[node name="#ActState" type="LimboState" parent="StateMachine" unique_id=1682804032]
+process_mode = 4
+script = ExtResource("15_fjxoa")
+metadata/_custom_type_script = "uid://c1823275u0dxi"
+
+[node name="MotionLibrary" type="AnimationPlayer" parent="." unique_id=1781161408]
+callback_mode_discrete = 0
+libraries/ = SubResource("AnimationLibrary_7crtr")
+script = ExtResource("9_55jnj")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1367097236]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -128.0
+offset_right = 40.0
+offset_bottom = -113.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_w7j2h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n0b8q")
+max_value = 1.0
+step = 0.001
+value = 0.5
+show_percentage = false
+script = ExtResource("51_w7j2h")
+
+[node name="StateLabel" type="Label" parent="." unique_id=1166794144]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.5
+offset_top = -160.0
+offset_right = 75.5
+offset_bottom = -137.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "State: %s"
+horizontal_alignment = 1
+script = ExtResource("13_n0b8q")
+
+[editable path="HitboxComponent/SlideHitbox"]
 [editable path="StateMachine/Block"]
 [editable path="StateMachine/Dodge"]
-[editable path="StateMachine/Slide"]
-[editable path="StateMachine/JumpKick"]
-[editable path="HitboxComponent/SlideHitbox"]

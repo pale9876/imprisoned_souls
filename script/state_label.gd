@@ -11,10 +11,13 @@ func _init() -> void:
 
 
 func _enter_tree() -> void:
-	var unit := get_parent() as Unit
-	unit.get_state_machine().active_state_changed.connect(
-		func(current: LimboState, previous: LimboState) -> void:
-			text = FORMAT % String(current.name)
+	if Engine.is_editor_hint(): return
+	
+	var hsm := (get_parent() as Unit).get_state_machine()
+	
+	hsm.active_state_changed.connect(
+		func(_current: LimboState, _previous: LimboState) -> void:
+			text = FORMAT % String(_current.name)
 	)
 
 

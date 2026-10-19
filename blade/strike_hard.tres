@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_smslm")
 name = &"강타"
+description = "전방의 가장 가까운 적 유닛에게 주먹을 강하게 내지른다. 카운터 시 데미지가 증가되고 추가적인 공격이 가능하다."
 metadata/_custom_type_script = "uid://bikptipa3pwm6"
