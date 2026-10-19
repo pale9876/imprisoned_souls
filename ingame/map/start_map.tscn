@@ -97,9 +97,17 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Gradient" id="Gradient_muwxp"]
+offsets = PackedFloat32Array(0, 0.70416665)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bmgnp"]
+gradient = SubResource("Gradient_muwxp")
+fill_to = Vector2(0, 1)
+
 [sub_resource type="Gradient" id="Gradient_5cnks"]
-offsets = PackedFloat32Array(0, 0.2777778, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.8296244, 0.87652314, 1, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.27380952, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.34560573, 0.48028034, 0.999993, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7jywp"]
 gradient = SubResource("Gradient_5cnks")
@@ -211,12 +219,14 @@ metadata/_custom_type_script = "uid://xuoxmo1sa6u6"
 position = Vector2(592, 264)
 
 [node name="Floor" type="Node2D" parent="." unique_id=429571906]
-modulate = Color(0, 0.2514281, 0.2538744, 1)
 
 [node name="WallLine" type="Line2D" parent="Floor" unique_id=1235484410]
 position = Vector2(1440, 127.75)
 points = PackedVector2Array(-1448, 128.25, -1448, -135.75, 1448, -135.75, 1448, 128.25)
 width = 16.0
+default_color = Color(0.31764707, 0.3254902, 0.36862746, 1)
+texture = SubResource("GradientTexture2D_bmgnp")
+texture_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=1930746152]
 position = Vector2(1440, 288)
