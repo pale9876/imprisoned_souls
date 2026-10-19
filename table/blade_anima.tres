@@ -16,15 +16,21 @@ _scan_rulesets = Array[Dictionary]([{
 _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://b8883hhv7s8qk": &"vile_knuckles",
 &"uid://blmojtc2jcqli": &"sway",
+&"uid://c3cxpy5yuhsyq": &"parabellum",
+&"uid://c8ovbqvtvkppy": &"break_away",
 &"uid://cjyjcfxvbudn5": &"antia_rush",
 &"uid://cmsls046i5hqf": &"strike_hard",
-&"uid://cx6e3wf2mm5lc": &"punch_down",
+&"uid://cx6e3wf2mm5lc": &"punchdown",
+&"uid://dce6xhr3dd0dd": &"showdown",
 &"uid://ouheodyun1ue": &"burrow"
 })
 _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"antia_rush": &"uid://cjyjcfxvbudn5",
+&"break_away": &"uid://c8ovbqvtvkppy",
 &"burrow": &"uid://ouheodyun1ue",
-&"punch_down": &"uid://cx6e3wf2mm5lc",
+&"parabellum": &"uid://c3cxpy5yuhsyq",
+&"punchdown": &"uid://cx6e3wf2mm5lc",
+&"showdown": &"uid://dce6xhr3dd0dd",
 &"strike_hard": &"uid://cmsls046i5hqf",
 &"sway": &"uid://blmojtc2jcqli",
 &"vile_knuckles": &"uid://b8883hhv7s8qk"

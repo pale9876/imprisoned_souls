@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://c3cxpy5yuhsyq"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_4ctr5"]
+
+[resource]
+script = ExtResource("1_4ctr5")
+name = &"준비"
+description = "현재 장비를 점검한다. 근접무기는 묻은 피를 닦고, 총기류 장착 시 재장전한다."
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

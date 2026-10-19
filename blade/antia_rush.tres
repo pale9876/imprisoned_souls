@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_nlbi1")
 name = &"안티아 러시"
-description = "전방을 향해 회전하여 공격 후, 공격당한 적을 아래로 내려찍습니다."
+description = "전방을 향해 회전하여 공격 후, 공격당한 적을 아래로 내려찍는다."
 weapon_compatibility = 1
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

@@ -28,15 +28,15 @@
 [ext_resource type="Texture2D" uid="uid://cmj7x0acotgd0" path="res://aseprite/source/portrait/puppeteer_foreground.png" id="20_1o7f7"]
 [ext_resource type="Texture2D" uid="uid://c7l3nsfj0c3a3" path="res://aseprite/source/portrait/trickster_foreground.png" id="21_hg1er"]
 
+[sub_resource type="Resource" id="Resource_hq63a"]
+script = ExtResource("2_fqwvc")
+group = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath("")])
+metadata/_custom_type_script = "uid://n8skusc4gmbb"
+
 [sub_resource type="Resource" id="Resource_fqwvc"]
 script = ExtResource("2_fqwvc")
 group = Array[NodePath]([NodePath("Body/Body"), NodePath("Body/Neck"), NodePath("Face/Base"), NodePath("Face/RightEar"), NodePath("Face/LeftEar")])
 prev_color = Color(1, 0.9137255, 0.8862745, 1)
-metadata/_custom_type_script = "uid://n8skusc4gmbb"
-
-[sub_resource type="Resource" id="Resource_hq63a"]
-script = ExtResource("2_fqwvc")
-group = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath("")])
 metadata/_custom_type_script = "uid://n8skusc4gmbb"
 
 [sub_resource type="Shader" id="Shader_oe0rn"]
@@ -612,9 +612,6 @@ texture = ExtResource("2_8if1f")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="BackRace" type="TextureRect" parent="Unit" unique_id=1909693694]
@@ -629,9 +626,6 @@ texture = ExtResource("7_hg1er")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Body" type="Control" parent="Unit" unique_id=617116911]
@@ -656,9 +650,6 @@ texture = ExtResource("2_an34k")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Body" type="TextureRect" parent="Unit/Body" unique_id=954027459]
@@ -673,9 +664,6 @@ texture = ExtResource("3_8if1f")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Clothes" type="TextureRect" parent="Unit/Body" unique_id=1245672550]
@@ -690,9 +678,6 @@ texture = ExtResource("4_md16t")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Face" type="Control" parent="Unit" unique_id=1575947381]
@@ -717,9 +702,6 @@ texture = ExtResource("1_thy6q")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="LeftSideTail" type="TextureRect" parent="Unit/Face" unique_id=341915184]
@@ -734,9 +716,6 @@ texture = ExtResource("2_thy6q")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Base" type="TextureRect" parent="Unit/Face" unique_id=922557534]
@@ -751,9 +730,6 @@ texture = ExtResource("3_uftp8")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Mouth" type="TextureRect" parent="Unit/Face" unique_id=1655895055]
@@ -768,9 +744,6 @@ texture = ExtResource("4_hpmxg")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Nose" type="TextureRect" parent="Unit/Face" unique_id=1268076355]
@@ -785,9 +758,6 @@ texture = ExtResource("5_kmnre")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Eye" type="TextureRect" parent="Unit/Face" unique_id=1532520577]
@@ -802,9 +772,6 @@ texture = ExtResource("6_toyoc")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Eyebrown" type="TextureRect" parent="Unit/Face" unique_id=31856553]
@@ -818,9 +785,6 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Mole" type="TextureRect" parent="Unit/Face" unique_id=2108959531]
@@ -835,9 +799,6 @@ texture = ExtResource("7_nsl6j")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="RightEar" type="TextureRect" parent="Unit/Face" unique_id=1064614905]
@@ -852,9 +813,6 @@ texture = ExtResource("8_3q7db")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="RightSideTail" type="TextureRect" parent="Unit/Face" unique_id=1286036288]
@@ -869,9 +827,6 @@ texture = ExtResource("9_nb3ur")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="FrontHair" type="TextureRect" parent="Unit/Face" unique_id=1792885568]
@@ -886,9 +841,6 @@ texture = ExtResource("10_an34k")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="Tsuno" type="TextureRect" parent="Unit/Face" unique_id=470643615]
@@ -902,9 +854,6 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("7_oe0rn")
-tolerance = null
-prev_color = null
-new_color = null
 metadata/_custom_type_script = "uid://c2i6y2hg2fehf"
 
 [node name="ThemeForeground" type="Control" parent="." unique_id=538883846 node_paths=PackedStringArray("_root")]
