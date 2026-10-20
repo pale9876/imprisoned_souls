@@ -8,6 +8,7 @@ mosaiced_name = &"Yao-Zuba"
 mosaiced = true
 last_name = &"Rhyao"
 first_name = &"Chun-wi"
+male = 2
 is_replicant = false
 unique = true
 race = 5
