@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://dev1eakh41srx"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_q84uw"]
+
+[resource]
+script = ExtResource("1_q84uw")
+name = &"육설"
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

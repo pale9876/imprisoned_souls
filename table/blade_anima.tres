@@ -17,25 +17,35 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://6gslwgnenvv7": &"bonebreaker",
 &"uid://b8883hhv7s8qk": &"vile_knuckles",
 &"uid://blmojtc2jcqli": &"sway",
+&"uid://brb6in7ksrc6w": &"looka_bomba",
 &"uid://c3cxpy5yuhsyq": &"parabellum",
+&"uid://c5y24p6v31fl": &"pulverization",
 &"uid://c8ovbqvtvkppy": &"break_away",
 &"uid://cjyjcfxvbudn5": &"antia_rush",
 &"uid://cmsls046i5hqf": &"strike_hard",
 &"uid://cx6e3wf2mm5lc": &"punchdown",
 &"uid://dbvlenrogclom": &"throw_out",
 &"uid://dce6xhr3dd0dd": &"showdown",
-&"uid://ouheodyun1ue": &"burrow"
+&"uid://ddc7xwu0anobk": &"weapon_cursher",
+&"uid://m4qktwi562ly": &"guillotine",
+&"uid://ouheodyun1ue": &"burrow",
+&"uid://ye81gvc4wpxe": &"crumble"
 })
 _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"antia_rush": &"uid://cjyjcfxvbudn5",
 &"bonebreaker": &"uid://6gslwgnenvv7",
 &"break_away": &"uid://c8ovbqvtvkppy",
 &"burrow": &"uid://ouheodyun1ue",
+&"crumble": &"uid://ye81gvc4wpxe",
+&"guillotine": &"uid://m4qktwi562ly",
+&"looka_bomba": &"uid://brb6in7ksrc6w",
 &"parabellum": &"uid://c3cxpy5yuhsyq",
+&"pulverization": &"uid://c5y24p6v31fl",
 &"punchdown": &"uid://cx6e3wf2mm5lc",
 &"showdown": &"uid://dce6xhr3dd0dd",
 &"strike_hard": &"uid://cmsls046i5hqf",
 &"sway": &"uid://blmojtc2jcqli",
 &"throw_out": &"uid://dbvlenrogclom",
-&"vile_knuckles": &"uid://b8883hhv7s8qk"
+&"vile_knuckles": &"uid://b8883hhv7s8qk",
+&"weapon_cursher": &"uid://ddc7xwu0anobk"
 })

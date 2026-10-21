@@ -1,7 +1,12 @@
 # foreground.gd
-extends CanvasLayer
+extends Node2D
 class_name Foreground
 
 
-func get_fade_inout_rect() -> FadeInOutRect:
-	return get_node(^"FadeinoutRect") as FadeInOutRect
+
+func _init() -> void:
+	z_index = 1
+
+
+
+	

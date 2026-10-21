@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://c73sqmm2lwa77"]
 
-[ext_resource type="Script" uid="uid://c77iw4wqh2mfb" path="res://script/foreground.gd" id="1_6vt2y"]
 [ext_resource type="Script" uid="uid://b6pvh6howh7lo" path="res://script/fadeinout_rect.gd" id="1_fjn54"]
 
 [node name="Foreground" type="CanvasLayer" unique_id=484923412]
-script = ExtResource("1_6vt2y")
 
 [node name="FadeinoutRect" type="ColorRect" parent="." unique_id=1759073881]
 anchors_preset = 15

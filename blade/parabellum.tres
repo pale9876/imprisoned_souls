@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_4ctr5")
 name = &"준비"
-description = "현재 장비를 점검한다. 근접무기는 묻은 피를 닦고, 총기류 장착 시 재장전한다."
+description = "현재 장비를 점검한다. 현재 장착무기에 따라 다른 모션과 효과를 보인다."
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

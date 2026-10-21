@@ -5,5 +5,7 @@
 [resource]
 script = ExtResource("1_rv3b0")
 name = &"스웨이"
-description = "뒤로 공격을 회피하며 순간적으로 이동한다."
+description = "방향키 입력방향의 반대방향으로 공격을 회피하며 이동한다. 일부 공격 모션을 캔슬하고 다음 공격 모션을 연계할 수도 있다.
+
+일부 모션과 광범위한 공격은 회피할 수 없다."
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

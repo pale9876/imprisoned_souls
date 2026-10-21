@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://m4qktwi562ly"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_ap651"]
+
+[resource]
+script = ExtResource("1_ap651")
+name = &"길로틴"
+"공중공격" = true
+weapon_compatibility = 6
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

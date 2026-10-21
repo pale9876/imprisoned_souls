@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://lwkp4wobj6be"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_fyoex"]
+
+[resource]
+script = ExtResource("1_fyoex")
+perk_description = "모든 적 유닛의 공격 이행까지의 모션이 4프레임 느려진다.
+적 유닛의 다음 모션이 3프레임 앞 당겨져 실루엣으로 보이게 된다. 화면상에 공격판정 범위가 시각적으로 표시된다."
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

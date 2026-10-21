@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_gmqjm")
-cooldown = 25.0
+cooldown = 25
 name = &"백스텝"
-description = "모션 중 캔슬하고 400px만큼 뒤로 물러난다. 모션 발동 시, 벽과 가깝게 있다면 벽을 타고 앞으로 추친한다. 전개 시, 슈퍼아머 상태가 된다."
+description = "모션을 캔슬하고 400px만큼 뒤로 물러난다. 모션 발동 시, 벽과 가깝게 있다면 벽을 타고 앞으로 추친한다. 전개 시, 슈퍼아머 상태가 된다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

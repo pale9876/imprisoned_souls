@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_rcl0o")
 name = &"바일 너클즈"
-description = "오른발 돌려차기 후 왼주먹을 타격하여 마지막으로 타격한 적에게 블러드 불릿을 발사한다.
+description = "돌려차기 후 주먹 타격을 하여 마지막으로 타격한 적에게 블러드 불릿을 발사한다.
 
 "
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

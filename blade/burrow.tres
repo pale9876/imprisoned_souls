@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_80ldw")
 name = &"파고들기"
-description = "전방을 향해 빠르게 파고든다."
+description = "바라보는 방향을 향해 빠르게 파고든다. 일부 공격 모션을 캔슬하고 다음 공격 모션으로 연계할 수도 있다."
+"캔슬가능" = true
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

@@ -5,5 +5,12 @@
 [resource]
 script = ExtResource("1_hbsoi")
 name = &"비켜"
-description = "전방을 향해 빠른 속도로 돌진한다. 부딪힌 적은 반대방향으로 날아간다."
+description = "전방을 향해 빠른 속도로 돌진한다. 공격당한 적은 반대방향으로 날아간다.
+
+돌진방향으로 키를 유지한다면 공격하지 않고 관통하여 지나간다.
+
+카타나를 장착 중이라면 관통하여 지나간다.
+
+중형 유닛 또는 슈퍼아머 기술을 시전중인 유닛은 관통하지 못하고 충돌되며, 시전자 또한 데미지를 입는다."
+weapon_compatibility = 1
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

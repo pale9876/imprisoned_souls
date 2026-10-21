@@ -1,32 +1,64 @@
 [gd_scene format=3 uid="uid://ccd41t1qrjttn"]
 
 [ext_resource type="Script" uid="uid://bl0olstw3eapg" path="res://script/map.gd" id="1_bjcma"]
+[ext_resource type="Script" uid="uid://b8c8aspwpnr43" path="res://script/route_guide_line.gd" id="2_yegjs"]
 [ext_resource type="Texture2D" uid="uid://cue3j6hcdcy57" path="res://aseprite/tilemap/fireaxe.png" id="3_p2a57"]
 [ext_resource type="Script" uid="uid://6aqekisaf736" path="res://script/hallway_light.gd" id="3_wxk4i"]
 [ext_resource type="Script" uid="uid://xuoxmo1sa6u6" path="res://ingame/map/stage.gd" id="7_5cnks"]
 [ext_resource type="Script" uid="uid://btxuckvcyog73" path="res://script/map_trigger_region.gd" id="7_utk2m"]
+[ext_resource type="Script" uid="uid://dxg3xn47blbqr" path="res://script/keikai_line.gd" id="7_wxk4i"]
+[ext_resource type="Script" uid="uid://ury50gdrcjtc" path="res://script/ground_flow.gd" id="8_df3ex"]
 [ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="8_utk2m"]
 [ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="9_wxk4i"]
 
 [sub_resource type="Gradient" id="Gradient_utk2m"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.9465895, 0.99999994, 0.99999493, 1)
+colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5cnks"]
 gradient = SubResource("Gradient_utk2m")
 width = 2880
-height = 256
+height = 512
+
+[sub_resource type="Gradient" id="Gradient_2msmu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.30954, 0.66, 0.30359998, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqsic"]
+gradient = SubResource("Gradient_2msmu")
+width = 2880
 
 [sub_resource type="Gradient" id="Gradient_df3ex"]
-offsets = PackedFloat32Array(0, 0.75)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.98, 1, 1, 1)
+colors = PackedColorArray(0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_muwxp"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_muwxp"]
 gradient = SubResource("Gradient_df3ex")
-width = 512
+
+[sub_resource type="Curve" id="Curve_yegjs"]
+_data = [Vector2(0, 0), 0.0, 5.3871303, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.70637, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_yegjs"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.4)
+colors = PackedColorArray(0.5729883, 0.5729883, 0.5729883, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yegjs"]
+gradient = SubResource("Gradient_yegjs")
 height = 512
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_3fdsd"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.4)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_df3ex"]
+gradient = SubResource("Gradient_3fdsd")
+height = 512
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wxk4i"]
+diffuse_texture = SubResource("GradientTexture2D_yegjs")
+normal_texture = SubResource("GradientTexture2D_df3ex")
 
 [sub_resource type="Gradient" id="Gradient_k6cb8"]
 offsets = PackedFloat32Array(0, 0.75)
@@ -72,45 +104,29 @@ height = 512
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_2msmu"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.011764706, 0.47058824, 0, 0.5058824)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqsic"]
-gradient = SubResource("Gradient_2msmu")
-
-[sub_resource type="Gradient" id="Gradient_yegjs"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.2936508)
-colors = PackedColorArray(0.31061712, 0.31061712, 0.3106171, 1, 0.5449743, 0.54497427, 0.54497427, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_df3ex"]
-gradient = SubResource("Gradient_yegjs")
-height = 256
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2a57"]
 size = Vector2(48, 112)
 
 [sub_resource type="Curve2D" id="Curve2D_5cnks"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -24, 264, 0, 0, 0, 0, 1176, 264)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 512, 0, 0, 0, 0, 2880, 512)
 }
 point_count = 2
 
-[sub_resource type="Gradient" id="Gradient_muwxp"]
-offsets = PackedFloat32Array(0, 0.70416665)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_f8sw5"]
+offsets = PackedFloat32Array(0, 0.08880309, 0.6177606, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.19, 0.038, 0.038, 1, 0.73, 0.78400004, 1, 1, 0.35000002, 0.48000008, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bmgnp"]
-gradient = SubResource("Gradient_muwxp")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j57eg"]
+gradient = SubResource("Gradient_f8sw5")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_5cnks"]
-offsets = PackedFloat32Array(0, 0.27380952, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.34560573, 0.48028034, 0.999993, 1, 0, 0, 0, 0)
+[sub_resource type="Gradient" id="Gradient_muwxp"]
+offsets = PackedFloat32Array(0, 0.17374517, 0.52895755, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.8016529, 0.8016529, 0.8016529, 0.8016529, 1, 1, 1, 1, 0.84, 0.84, 0.84, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7jywp"]
-gradient = SubResource("Gradient_5cnks")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f8sw5"]
+gradient = SubResource("Gradient_muwxp")
 fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wqsic"]
@@ -119,88 +135,99 @@ size = Vector2(896, 192)
 [sub_resource type="Gradient" id="Gradient_wxk4i"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0, 0.6269841)
-colors = PackedColorArray(0.51718444, 0.5171845, 0.51718444, 1, 0.7162962, 0.7162962, 0.7162962, 1)
+colors = PackedColorArray(0.51718444, 0.5171845, 0.51718444, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_yegjs"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vpmvu"]
 gradient = SubResource("Gradient_wxk4i")
-height = 256
+height = 512
 
 [node name="Map" type="Node2D" unique_id=379907041]
 script = ExtResource("1_bjcma")
 debug_color = Color(0, 0.9098039, 0.8784314, 1)
 draw_region = true
 
-[node name="Wall" type="Sprite2D" parent="." unique_id=1603382819]
+[node name="Background" type="Node2D" parent="." unique_id=547885106]
+unique_name_in_owner = true
+
+[node name="Wall" type="Sprite2D" parent="Background" unique_id=1603382819]
 clip_children = 2
-position = Vector2(1440, 127.75)
+position = Vector2(1440, 256)
 texture = SubResource("GradientTexture2D_5cnks")
 
-[node name="HallwayLight" type="PointLight2D" parent="Wall" unique_id=1765469948]
-visible = false
-energy = 0.25
-texture = SubResource("GradientTexture2D_muwxp")
-script = ExtResource("3_wxk4i")
-metadata/_custom_type_script = "uid://6aqekisaf736"
+[node name="Sprite2D" type="Sprite2D" parent="Background/Wall" unique_id=126483095]
+position = Vector2(3.8146973e-06, 144)
+texture = SubResource("GradientTexture2D_wqsic")
 
-[node name="HallwayLight2" type="PointLight2D" parent="Wall" unique_id=331044017]
-visible = false
-position = Vector2(520, 0)
-energy = 0.25
+[node name="Wallline" type="Line2D" parent="Background" unique_id=410014299]
+points = PackedVector2Array(0, 400, 2880, 400)
+default_color = Color(0.16646415, 1.0979828e-07, 3.308989e-08, 1)
+
+[node name="RouteGuideLine" type="Line2D" parent="Background" unique_id=1720506323]
+position = Vector2(4, 208)
+points = PackedVector2Array(-4, 192, 2880, 192)
+width = 20.0
+texture = SubResource("GradientTexture1D_muwxp")
+texture_mode = 2
+script = ExtResource("2_yegjs")
+alpha_curve = SubResource("Curve_yegjs")
+progress = 1.0
+cursor_space = 0.07100000000000001
+
+[node name="FloorLine" type="Line2D" parent="Background" unique_id=1020985535]
+points = PackedVector2Array(0, 496, 2880, 496)
+width = 32.0
+default_color = Color(0.36559817, 0.08056658, 0.043294057, 1)
+
+[node name="Pillar" type="Node2D" parent="Background" unique_id=2102265721]
+position = Vector2(1136, 512)
+script = ExtResource("9_wxk4i")
+texture = SubResource("CanvasTexture_wxk4i")
+metadata/_custom_type_script = "uid://40r1tpxteoxv"
+
+[node name="Pillar2" type="Node2D" parent="Background" unique_id=759365122]
+position = Vector2(2368, 512)
+script = ExtResource("9_wxk4i")
+texture = SubResource("CanvasTexture_wxk4i")
+metadata/_custom_type_script = "uid://40r1tpxteoxv"
+
+[node name="HallwayLight" type="PointLight2D" parent="." unique_id=1765469948]
+position = Vector2(392, 88)
+energy = 0.12
+range_z_min = 0
+range_z_max = 0
 texture = SubResource("GradientTexture2D_2msmu")
 script = ExtResource("3_wxk4i")
 metadata/_custom_type_script = "uid://6aqekisaf736"
 
-[node name="HallwayLight3" type="PointLight2D" parent="Wall" unique_id=1097651176]
-visible = false
-position = Vector2(1160, 0)
-energy = 0.25
+[node name="HallwayLight2" type="PointLight2D" parent="." unique_id=331044017]
+position = Vector2(1072, 88)
+energy = 0.85
+range_z_min = 0
+range_z_max = 0
 texture = SubResource("GradientTexture2D_3fdsd")
 script = ExtResource("3_wxk4i")
 metadata/_custom_type_script = "uid://6aqekisaf736"
 
-[node name="HallwayLight4" type="PointLight2D" parent="Wall" unique_id=1272329877]
-visible = false
-position = Vector2(1824, 0)
-energy = 0.25
+[node name="HallwayLight3" type="PointLight2D" parent="." unique_id=1097651176]
+position = Vector2(1776, 88)
+energy = 0.85
+range_z_min = 0
+range_z_max = 0
 texture = SubResource("GradientTexture2D_mdcnb")
 script = ExtResource("3_wxk4i")
 metadata/_custom_type_script = "uid://6aqekisaf736"
 
-[node name="HallwayLight5" type="PointLight2D" parent="Wall" unique_id=1909220315]
-visible = false
-position = Vector2(2584, 0)
-energy = 0.25
+[node name="HallwayLight4" type="PointLight2D" parent="." unique_id=1272329877]
+position = Vector2(2504, 88)
+energy = 0.85
+range_z_min = 0
+range_z_max = 0
 texture = SubResource("GradientTexture2D_kbfqu")
 script = ExtResource("3_wxk4i")
 metadata/_custom_type_script = "uid://6aqekisaf736"
 
-[node name="Sprite2D" type="Sprite2D" parent="Wall" unique_id=126483095]
-position = Vector2(3.5762787e-06, 0.39083815)
-texture = SubResource("GradientTexture2D_wqsic")
-
-[node name="Background" type="Node2D" parent="." unique_id=547885106]
-
-[node name="InochiLine" type="Line2D" parent="Background" unique_id=1720506323]
-points = PackedVector2Array(0, 192, 2880, 192)
-width = 20.0
-default_color = Color(1, 0.8916272, 0.6665044, 1)
-
-[node name="Pillar" type="Node2D" parent="Background" unique_id=2102265721]
-position = Vector2(1168, 256)
-script = ExtResource("9_wxk4i")
-texture = SubResource("GradientTexture2D_df3ex")
-height = 256
-metadata/_custom_type_script = "uid://40r1tpxteoxv"
-
-[node name="Pillar2" type="Node2D" parent="Background" unique_id=759365122]
-position = Vector2(2400, 256)
-script = ExtResource("9_wxk4i")
-texture = SubResource("GradientTexture2D_df3ex")
-height = 256
-metadata/_custom_type_script = "uid://40r1tpxteoxv"
-
 [node name="FireAxe" type="Sprite2D" parent="." unique_id=336031001]
-position = Vector2(248, 176)
+position = Vector2(328, 416)
 texture = ExtResource("3_p2a57")
 
 [node name="InteractArea" type="Area2D" parent="FireAxe" unique_id=1842107906]
@@ -210,31 +237,38 @@ shape = SubResource("RectangleShape2D_p2a57")
 
 [node name="Stage" type="Path2D" parent="." unique_id=495166901]
 unique_name_in_owner = true
-visible = false
 curve = SubResource("Curve2D_5cnks")
 script = ExtResource("7_5cnks")
 metadata/_custom_type_script = "uid://xuoxmo1sa6u6"
 
 [node name="SandBag" parent="Stage" unique_id=2064536848 instance=ExtResource("8_utk2m")]
-position = Vector2(592, 264)
+position = Vector2(312, 512)
 
 [node name="Floor" type="Node2D" parent="." unique_id=429571906]
 
-[node name="WallLine" type="Line2D" parent="Floor" unique_id=1235484410]
-position = Vector2(1440, 127.75)
-points = PackedVector2Array(-1448, 128.25, -1448, -135.75, 1448, -135.75, 1448, 128.25)
-width = 16.0
-default_color = Color(0.31764707, 0.3254902, 0.36862746, 1)
-texture = SubResource("GradientTexture2D_bmgnp")
-texture_mode = 2
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Floor" unique_id=1102533269]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 512.0
+offset_right = 2880.0
+offset_bottom = 1064.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("8_df3ex")
+gradient_texture = SubResource("GradientTexture2D_j57eg")
+flow_movement = Vector2(-1.755, -0.915)
+distortion_movement = Vector2(-0.215, -0.615)
+normal_strength = 5.43
 
-[node name="Sprite2D" type="Sprite2D" parent="Floor" unique_id=1930746152]
-position = Vector2(1440, 288)
-scale = Vector2(45, 1)
-texture = SubResource("GradientTexture2D_7jywp")
+[node name="Keikaisen" type="Node2D" parent="Floor" unique_id=1689250500]
+script = ExtResource("7_wxk4i")
+texture = SubResource("GradientTexture2D_f8sw5")
+radius = 128
 
 [node name="StartSpawnPosition" type="Marker2D" parent="." unique_id=1159361734]
-position = Vector2(128, 256)
+position = Vector2(784, 512)
 
 [node name="SpawnPointGroup" type="Node2D" parent="." unique_id=1434909190]
 
@@ -243,23 +277,31 @@ position = Vector2(0, 32)
 script = ExtResource("7_utk2m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapTriggerRegion" unique_id=868768549]
-position = Vector2(576, 136)
+position = Vector2(704, 352)
 shape = SubResource("RectangleShape2D_wqsic")
 debug_color = Color(0, 0.6, 0.69803923, 0)
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1565813838]
+unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.73333335)
+z_index = 1
 
 [node name="Pillar" type="Node2D" parent="Foreground" unique_id=2067147131]
-position = Vector2(568, 256)
+position = Vector2(536, 512)
 script = ExtResource("9_wxk4i")
-texture = SubResource("GradientTexture2D_yegjs")
-height = 256
+texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
 [node name="Pillar3" type="Node2D" parent="Foreground" unique_id=1839977206]
-position = Vector2(1752, 256)
+position = Vector2(1752, 512)
 script = ExtResource("9_wxk4i")
-texture = SubResource("GradientTexture2D_yegjs")
-height = 256
+texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
+
+[node name="MapCamera" type="Camera2D" parent="." unique_id=18701421]
+unique_name_in_owner = true
+position = Vector2(552, 488)
+zoom = Vector2(0.495, 0.495)
+limit_left = 0
+limit_top = 0
+limit_bottom = 768

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5eeu5acijg0l"
-path="res://.godot/imported/passive_일기.png-836dd7012355edf32dc4fdd6b14599b3.ctex"
+path="res://.godot/imported/future_diary.png-2de754af091239fbf4ace24718a0ba17.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://aseprite/icon/passive_일기.png"
-dest_files=["res://.godot/imported/passive_일기.png-836dd7012355edf32dc4fdd6b14599b3.ctex"]
+source_file="res://aseprite/icon/future_diary.png"
+dest_files=["res://.godot/imported/future_diary.png-2de754af091239fbf4ace24718a0ba17.ctex"]
 
 [params]
 

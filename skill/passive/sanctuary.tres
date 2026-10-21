@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_5e334")
 perk_description = "범위 안에 있는 적 유닛 한 명당, 공격력과 행동속도가 {atk_motion_point}% 증가한다. (최대 {limit}%)"
-name = &"Sanctuary"
+name = &"성역"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

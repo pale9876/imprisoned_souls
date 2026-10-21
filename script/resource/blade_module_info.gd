@@ -4,7 +4,9 @@ class_name BladeModuleInfo
 
 
 @export var name: StringName
+@export var icon: Texture2D
 @export_multiline() var description: String
+
 
 @export var allowed: Array[IngameClassifiedData.BattleClass] = [
 	IngameClassifiedData.BattleClass.PREDATOR,
@@ -15,11 +17,13 @@ class_name BladeModuleInfo
 	IngameClassifiedData.BattleClass.EXORCIST,
 	IngameClassifiedData.BattleClass.TWINS,
 ] # 0 == ANY, 모션 호환 가능한 클래스
+@export var 공중공격: bool = false
+@export var 캔슬가능: bool = false
 
 
 @export_group("무기 호환")
 @export var activate_by_usable_weapons_only: bool = false
-@export var weapon_compatibility: IngameClassifiedData.WeaponType = IngameClassifiedData.WeaponType.NONE
+@export var weapon_compatibility: Array[IngameClassifiedData.WeaponType]
 @export var enter_command: Array[String] # 진입 커맨드
 
 

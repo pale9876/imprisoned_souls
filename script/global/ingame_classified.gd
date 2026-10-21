@@ -19,6 +19,10 @@ enum WeaponType
 	AXE,
 	PISTOL,
 	CANNON,
+	HAMMER,
+	SCYTHE,
+	SPEAR,
+	KNIFE,
 }
 
 	

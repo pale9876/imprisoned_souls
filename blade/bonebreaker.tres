@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_lj0ta")
-name = &"으스러뜨리기"
-description = "전방에 다운된 적이 있다면 최대 세 번까지 밟을 수 있다."
+name = &"본브레이커"
+description = "전방을 향해 미끄러지며 이동하며 강하게 내려찍는다.
+호환되는 무기장착 시, 피격된 적에게 추가적인 타격을 한다."
 weapon_compatibility = 2
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

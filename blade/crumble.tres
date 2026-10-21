@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://ye81gvc4wpxe"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_rb6b4"]
+
+[resource]
+script = ExtResource("1_rb6b4")
+name = &"크럼블"
+description = "발구르기로 반경 350px의 충격파를 생성한다. 피격당한 적은 반대방향으로 휘청거리며 밀린다."
+metadata/_custom_type_script = "uid://bikptipa3pwm6"
