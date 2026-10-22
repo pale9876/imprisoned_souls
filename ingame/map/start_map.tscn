@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://63r2k5ira2ix" path="res://script/flow_texture.gd" id="8_k6cb8"]
 [ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="8_utk2m"]
 [ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="9_wxk4i"]
+[ext_resource type="Script" uid="uid://devss3vthbfae" path="res://script/MapStateDebugPanel.gd" id="11_df3ex"]
 
 [sub_resource type="Gradient" id="Gradient_utk2m"]
 offsets = PackedFloat32Array(1)
@@ -114,7 +115,7 @@ _data = {
 point_count = 2
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_f8sw5"]
-viewport_path = NodePath("Floor/FlowTexture/@SubViewport@182733")
+viewport_path = NodePath("Floor/FlowTexture/@SubViewport@38898")
 
 [sub_resource type="Gradient" id="Gradient_muwxp"]
 offsets = PackedFloat32Array(0, 0.17374517, 0.52895755, 1)
@@ -246,7 +247,8 @@ position = Vector2(1440.0001, 728)
 scale = Vector2(5.6250005, 0.8515622)
 texture = SubResource("ViewportTexture_f8sw5")
 script = ExtResource("8_k6cb8")
-normal_strength = 27.03
+color = Color(1, 0.39, 0.39, 1)
+normal_strength = 40.0
 
 [node name="Keikaisen" type="Node2D" parent="Floor" unique_id=1689250500]
 script = ExtResource("7_wxk4i")
@@ -291,3 +293,27 @@ zoom = Vector2(0.495, 0.495)
 limit_left = 0
 limit_top = 0
 limit_bottom = 768
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=190470928]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=558830992]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuButton" type="MenuButton" parent="CanvasLayer/Control" unique_id=1475100214]
+layout_mode = 0
+offset_right = 248.0
+offset_bottom = 64.0
+item_count = 5
+popup/item_0/text = "SAFE"
+popup/item_0/id = 0
+popup/item_1/text = "DANGER"
+popup/item_1/id = 1
+popup/item_2/id = 2
+popup/item_3/id = 3
+popup/item_4/id = 4
+script = ExtResource("11_df3ex")

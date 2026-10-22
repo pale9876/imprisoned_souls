@@ -7,7 +7,8 @@ const FLOW_SHADER: Shader = preload("uid://cqm803kpnt7h2")
 const INIT_GRADIENT_TEXTURE: GradientTexture2D = preload("uid://bs8wwomedfv51")
 
 
-@export var _texture: GradientTexture2D = INIT_GRADIENT_TEXTURE
+@export var _map: Map
+@export var gradient_texture: GradientTexture2D = INIT_GRADIENT_TEXTURE
 @export var color: Color = Color.WHITE:
 	set(_color):
 		color = _color
@@ -32,7 +33,7 @@ const INIT_GRADIENT_TEXTURE: GradientTexture2D = preload("uid://bs8wwomedfv51")
 
 var _subviewport: SubViewport
 var _sprite: Sprite2D
-
+var _tween: Tween
 
 func _init() -> void:
 	_sprite = Sprite2D.new()
@@ -43,7 +44,7 @@ func _init() -> void:
 	_sprite.material = _material
 	
 	_sprite.centered = false
-	_sprite.texture = INIT_GRADIENT_TEXTURE
+	_sprite.texture = gradient_texture
 	
 	_subviewport.add_child(_sprite)
 	add_child(_subviewport)
@@ -52,10 +53,22 @@ func _init() -> void:
 	texture = _vt
 
 
-func free() -> void:
-	texture = null
+
+func _enter_tree() -> void:
+	if Engine.is_editor_hint(): return
+	
+	_map.state_changed.connect(
+		func() -> void:
+			var _color := _map.get_state_color()
+			_tween = create_tween()
+			_tween.tween_property(self, "color", _color, .55)
+	)
 
 
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		(texture as ViewportTexture).viewport_path = NodePath(^"")
 
 
 	
