@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://xuoxmo1sa6u6" path="res://ingame/map/stage.gd" id="7_5cnks"]
 [ext_resource type="Script" uid="uid://btxuckvcyog73" path="res://script/map_trigger_region.gd" id="7_utk2m"]
 [ext_resource type="Script" uid="uid://dxg3xn47blbqr" path="res://script/keikai_line.gd" id="7_wxk4i"]
-[ext_resource type="Script" uid="uid://ury50gdrcjtc" path="res://script/ground_flow.gd" id="8_df3ex"]
+[ext_resource type="Script" uid="uid://63r2k5ira2ix" path="res://script/flow_texture.gd" id="8_k6cb8"]
 [ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="8_utk2m"]
 [ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="9_wxk4i"]
 
@@ -113,13 +113,8 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Gradient" id="Gradient_f8sw5"]
-offsets = PackedFloat32Array(0, 0.08880309, 0.6177606, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.19, 0.038, 0.038, 1, 0.73, 0.78400004, 1, 1, 0.35000002, 0.48000008, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_j57eg"]
-gradient = SubResource("Gradient_f8sw5")
-fill_to = Vector2(0, 1)
+[sub_resource type="ViewportTexture" id="ViewportTexture_f8sw5"]
+viewport_path = NodePath("Floor/FlowTexture/@SubViewport@182733")
 
 [sub_resource type="Gradient" id="Gradient_muwxp"]
 offsets = PackedFloat32Array(0, 0.17374517, 0.52895755, 1)
@@ -246,21 +241,12 @@ position = Vector2(312, 512)
 
 [node name="Floor" type="Node2D" parent="." unique_id=429571906]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Floor" unique_id=1102533269]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 512.0
-offset_right = 2880.0
-offset_bottom = 1064.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-script = ExtResource("8_df3ex")
-gradient_texture = SubResource("GradientTexture2D_j57eg")
-flow_movement = Vector2(-1.755, -0.915)
-distortion_movement = Vector2(-0.215, -0.615)
-normal_strength = 5.43
+[node name="FlowTexture" type="Sprite2D" parent="Floor" unique_id=999238751]
+position = Vector2(1440.0001, 728)
+scale = Vector2(5.6250005, 0.8515622)
+texture = SubResource("ViewportTexture_f8sw5")
+script = ExtResource("8_k6cb8")
+normal_strength = 27.03
 
 [node name="Keikaisen" type="Node2D" parent="Floor" unique_id=1689250500]
 script = ExtResource("7_wxk4i")

@@ -8,10 +8,9 @@ class_name PortraitUnit
 	set(toggle):
 		_hidden = toggle
 		if is_node_ready():
-			for _texture: RecoloredTextureRect in get_textures():
-				(_texture.material as ShaderMaterial).set_shader_parameter(
-					&"new_color", Color.WHITE
-				)
+			var _container := ($SubViewportContainer as SubViewportContainer)
+			_container.modulate = Color(18.892, 18.892, 18.892) if toggle else Color.WHITE
+
 
 @export var group: Dictionary[String, TextureColoringGroupInformation]
 
