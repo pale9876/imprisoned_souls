@@ -30,8 +30,11 @@ enum Direction
 
 
 @export_tool_button("Play Line", "LightmapProbe")
-var _play: Callable = func() -> void:
-	play_guideline()
+var _play: Callable = func() -> void:play_guideline()
+
+@export_tool_button("Stop Line", "LightmapProbe")
+var _stop: Callable = func() -> void: stop_guide()
+
 
 var _timer: Timer
 var _tween: Tween
@@ -74,7 +77,8 @@ func update_offset() -> void:
 func play_guideline(진행방향: Direction = Direction.LEFT) -> void:
 	progress = 0. if Direction.RIGHT else 1.
 	
-	if _tween and _tween.is_running(): return
+	if is_playing():
+		return
 	
 	_tween = create_tween()
 	_tween.tween_property(
@@ -84,8 +88,23 @@ func play_guideline(진행방향: Direction = Direction.LEFT) -> void:
 		func() -> void:
 			_timer.start(interval)
 	)
-	
 
+
+func stop_guide() -> void:
+	if is_playing():
+		var alpha_tween := create_tween()
+		alpha_tween.tween_property(self, "modulate", Color.TRANSPARENT, 1.)
+		
+		await _tween.finished
+		
+		_timer.stop()
+	
+	visible = false
+
+
+
+func is_playing() -> bool:
+	return _tween and _tween.is_running()
 
 
 	

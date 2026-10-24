@@ -15,7 +15,6 @@ signal state_changed()
 	GlobalClassified.MapState.DANGER : Color(1.0, 0.41, 0.41, 1.0),
 	GlobalClassified.MapState.BATTLE : Color(1.0, 0.0, 0.017, 1.0),
 	GlobalClassified.MapState.EVENT : Color(0.36, 0.296, 0.4, 1.0),
-	
 }
 @export var region: Rect2i = Rect2i(Vector2i(0, 0), Vector2i(2880, 256)):
 	set(rect):
@@ -38,9 +37,8 @@ func get_stage() -> Path2D:
 
 
 func change_state(_state: int) -> void:
-	if GlobalClassified.MapState.has(_state):
-		state = _state as GlobalClassified.MapState
-		state_changed.emit()
+	state = _state as GlobalClassified.MapState
+	state_changed.emit()
 
 
 func get_state_color() -> Color:

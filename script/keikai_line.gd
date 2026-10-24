@@ -2,7 +2,7 @@
 extends Node2D
 class_name KeikaiSen
 
-
+@export var map: Map
 @export var color: Color = Color.WHITE:
 	set(_color):
 		color = _color
@@ -31,7 +31,7 @@ class_name KeikaiSen
 
 
 var _line: Line2D
-
+var _tween: Tween
 
 func _init() -> void:
 	_line = Line2D.new()
@@ -44,6 +44,19 @@ func _init() -> void:
 	add_child(_line)
 	
 	update_points()
+
+
+func _enter_tree() -> void:
+	if Engine.is_editor_hint(): return
+	
+	map.state_changed.connect(
+		func() -> void:
+			var _color := map.get_state_color()
+			_tween = create_tween()
+			_tween.tween_property(
+				self, "color", _color, 1.
+			)
+	)
 
 
 func _clear() -> void:

@@ -49,6 +49,8 @@ func _init() -> void:
 	_subviewport.add_child(_sprite)
 	add_child(_subviewport)
 
+	if Engine.is_editor_hint(): return 
+	
 	var _vt = _subviewport.get_texture()
 	texture = _vt
 
@@ -60,15 +62,12 @@ func _enter_tree() -> void:
 	_map.state_changed.connect(
 		func() -> void:
 			var _color := _map.get_state_color()
+			
 			_tween = create_tween()
 			_tween.tween_property(self, "color", _color, .55)
 	)
 
 
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE:
-		(texture as ViewportTexture).viewport_path = NodePath(^"")
 
 
 	

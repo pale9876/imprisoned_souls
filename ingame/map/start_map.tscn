@@ -30,7 +30,7 @@ gradient = SubResource("Gradient_2msmu")
 width = 2880
 
 [sub_resource type="Gradient" id="Gradient_df3ex"]
-offsets = PackedFloat32Array(0, 0.98, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.929, 1, 1, 1)
 colors = PackedColorArray(0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_muwxp"]
@@ -114,11 +114,8 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_f8sw5"]
-viewport_path = NodePath("Floor/FlowTexture/@SubViewport@38898")
-
 [sub_resource type="Gradient" id="Gradient_muwxp"]
-offsets = PackedFloat32Array(0, 0.17374517, 0.52895755, 1)
+offsets = PackedFloat32Array(0, 0.057915058, 0.42857143, 1)
 colors = PackedColorArray(0, 0, 0, 0, 0.8016529, 0.8016529, 0.8016529, 0.8016529, 1, 1, 1, 1, 0.84, 0.84, 0.84, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_f8sw5"]
@@ -139,6 +136,14 @@ height = 512
 
 [node name="Map" type="Node2D" unique_id=379907041]
 script = ExtResource("1_bjcma")
+state = -1
+color_variant = Dictionary[int, Color]({
+0: Color(0.7657456, 0.95833725, 0.7345308, 1),
+1: Color(0.99999994, 0.84966475, 0.6074793, 1),
+2: Color(0.85, 0.5404584, 0.04250001, 1),
+3: Color(1, 0, 0.016666412, 0.6431373),
+4: Color(0.24723494, 0.19723591, 0.27657324, 1)
+})
 debug_color = Color(0, 0.9098039, 0.8784314, 1)
 draw_region = true
 
@@ -240,18 +245,16 @@ metadata/_custom_type_script = "uid://xuoxmo1sa6u6"
 [node name="SandBag" parent="Stage" unique_id=2064536848 instance=ExtResource("8_utk2m")]
 position = Vector2(312, 512)
 
-[node name="Floor" type="Node2D" parent="." unique_id=429571906]
-
-[node name="FlowTexture" type="Sprite2D" parent="Floor" unique_id=999238751]
+[node name="FlowTexture" type="Sprite2D" parent="." unique_id=999238751 node_paths=PackedStringArray("_map")]
 position = Vector2(1440.0001, 728)
 scale = Vector2(5.6250005, 0.8515622)
-texture = SubResource("ViewportTexture_f8sw5")
 script = ExtResource("8_k6cb8")
-color = Color(1, 0.39, 0.39, 1)
+_map = NodePath("..")
 normal_strength = 40.0
 
-[node name="Keikaisen" type="Node2D" parent="Floor" unique_id=1689250500]
+[node name="Keikaisen" type="Node2D" parent="." unique_id=1689250500 node_paths=PackedStringArray("map")]
 script = ExtResource("7_wxk4i")
+map = NodePath("..")
 texture = SubResource("GradientTexture2D_f8sw5")
 radius = 128
 
@@ -275,7 +278,7 @@ modulate = Color(1, 1, 1, 0.73333335)
 z_index = 1
 
 [node name="Pillar" type="Node2D" parent="Foreground" unique_id=2067147131]
-position = Vector2(536, 512)
+position = Vector2(536, 510)
 script = ExtResource("9_wxk4i")
 texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
@@ -288,11 +291,11 @@ metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
 [node name="MapCamera" type="Camera2D" parent="." unique_id=18701421]
 unique_name_in_owner = true
-position = Vector2(552, 488)
-zoom = Vector2(0.495, 0.495)
+position = Vector2(216, 368)
+zoom = Vector2(0.8, 0.8)
 limit_left = 0
 limit_top = 0
-limit_bottom = 768
+limit_bottom = 640
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=190470928]
 
@@ -304,16 +307,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuButton" type="MenuButton" parent="CanvasLayer/Control" unique_id=1475100214]
+[node name="MenuButton" type="MenuButton" parent="CanvasLayer/Control" unique_id=1475100214 node_paths=PackedStringArray("target_map")]
 layout_mode = 0
-offset_right = 248.0
-offset_bottom = 64.0
+offset_right = 152.0
+offset_bottom = 40.0
+text = "Change Map State"
+alignment = 0
 item_count = 5
 popup/item_0/text = "SAFE"
 popup/item_0/id = 0
-popup/item_1/text = "DANGER"
+popup/item_1/text = "ALERT"
 popup/item_1/id = 1
+popup/item_2/text = "DANGER"
 popup/item_2/id = 2
+popup/item_3/text = "BATTLE"
 popup/item_3/id = 3
+popup/item_4/text = "EVENT"
 popup/item_4/id = 4
 script = ExtResource("11_df3ex")
+target_map = NodePath("../../..")
