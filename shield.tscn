@@ -3,6 +3,9 @@
 [ext_resource type="Shader" uid="uid://bd4f5p3v3qtik" path="res://shield.gdshader" id="1_vuocu"]
 [ext_resource type="Shader" uid="uid://bfspq3flp3ung" path="res://hologram.gdshader" id="2_dmnlx"]
 [ext_resource type="Texture2D" uid="uid://6i8earjob7ty" path="res://icon.svg" id="3_0vxx4"]
+[ext_resource type="Shader" uid="uid://c86hist45hua4" path="res://parallax_space.gdshader" id="4_0vxx4"]
+[ext_resource type="Shader" uid="uid://oub5qlf30tea" path="res://dark_noise_vignette.gdshader" id="5_4re53"]
+[ext_resource type="Script" uid="uid://1try4xg1mltr" path="res://script/attack_field_preview.gd" id="6_tgr6k"]
 
 [sub_resource type="Gradient" id="Gradient_vuocu"]
 offsets = PackedFloat32Array(0, 0.006451613, 0.516129)
@@ -40,18 +43,9 @@ gradient = SubResource("Gradient_nsxlm")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_dmnlx"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7jywp"]
-gradient = SubResource("Gradient_dmnlx")
-width = 256
-height = 256
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wqsic"]
 shader = ExtResource("2_dmnlx")
-shader_parameter/tint = Color(0.35, 0.9, 1, 1)
+shader_parameter/tint = Color(0.8992584, 0.8992584, 0.8992584, 1)
 shader_parameter/opacity = 1.0
 shader_parameter/edge_glow = 0.7650000363375
 shader_parameter/line_count = 90.0
@@ -61,23 +55,84 @@ shader_parameter/flicker = 0.50000002375
 shader_parameter/glitch = 0.630000029925
 shader_parameter/glitch_shift = 0.20000000298023
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_4re53"]
+viewport_path = NodePath("Sprite2D2/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vxx4"]
+shader = ExtResource("4_0vxx4")
+shader_parameter/bg_color = Color(0, 0, 0, 0)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/bigStarSlow = 2.0
+shader_parameter/mediumStarSlow = 6.0
+shader_parameter/smallStarSlow = 8.0
+shader_parameter/smallStarAmount = 0.002
+shader_parameter/mediumStarAmount = 0.01
+shader_parameter/bigStarAmount = 0.02
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgr6k"]
+shader = ExtResource("5_4re53")
+shader_parameter/radius = 0.53999998792992
+shader_parameter/speed = 0.92999997921264
+shader_parameter/effect_color = Color(0.10416666, 0.25, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_4re53"]
+offsets = PackedFloat32Array(0.22636104, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ch6w5"]
+gradient = SubResource("Gradient_4re53")
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(1, 0.5)
+
 [node name="Node2D" type="Node2D" unique_id=810744210]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=563947196]
+visible = false
 material = SubResource("ShaderMaterial_nsxlm")
+position = Vector2(280, 248)
 texture = SubResource("GradientTexture2D_wqsic")
 offset = Vector2(0, -32)
 
-[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1817912421]
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=417139842]
 visible = false
-position = Vector2(16, -48)
-texture = SubResource("GradientTexture2D_7jywp")
-
-[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1376283496]
-position = Vector2(-8, -104)
-texture = ExtResource("3_0vxx4")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D4" unique_id=417139842]
 material = SubResource("ShaderMaterial_wqsic")
-position = Vector2(72, 64)
+position = Vector2(344, 208)
 texture = ExtResource("3_0vxx4")
+
+[node name="Sprite2D4" type="Sprite2D" parent="Sprite2D5" unique_id=1376283496]
+position = Vector2(-72, -64)
+texture = ExtResource("3_0vxx4")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1746552707]
+visible = false
+position = Vector2(288.0001, 200)
+scale = Vector2(2.671875, 1.109375)
+texture = SubResource("ViewportTexture_4re53")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite2D2" unique_id=994732560]
+transparent_bg = true
+
+[node name="ColorRect" type="ColorRect" parent="Sprite2D2/SubViewport" unique_id=1936851095]
+material = SubResource("ShaderMaterial_0vxx4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1061189929]
+visible = false
+
+[node name="DarkNoiseFilter" type="ColorRect" parent="CanvasLayer" unique_id=935143987]
+material = SubResource("ShaderMaterial_tgr6k")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AttackFieldPreview" type="Sprite2D" parent="." unique_id=1380718227]
+position = Vector2(92, 0)
+scale = Vector2(3.875, 1)
+texture = SubResource("GradientTexture2D_ch6w5")
+script = ExtResource("6_tgr6k")
