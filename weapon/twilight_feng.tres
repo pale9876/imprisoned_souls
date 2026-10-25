@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_ouww7")
 name = &"트와일라잇 팽"
-description = "크리세가 소지하고 있던 장검이다. 손잡이 부분에 여러 장식을 달았는데, 가장 뛰어난 복제인간이었던 미수진의 인형을 직접 제작하여 장식하기도 했다."
+description = "크리세가 소지하고 있던 세이버다. 손잡이 부분에 여러 장식을 달았는데, 가장 뛰어난 복제인간이었던 미수진의 인형을 직접 제작하여 장식하기도 했다."
 type = 1
 metadata/_custom_type_script = "uid://r41i0c0blyva"

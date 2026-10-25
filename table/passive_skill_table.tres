@@ -19,10 +19,12 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://6ylihv402nx8": &"sanctuary",
 &"uid://b8rf1p8up0dbc": &"psychopathy",
 &"uid://bad0nyxaxq73": &"shudder",
+&"uid://bduj38qhnq0d7": &"slowburn",
 &"uid://biwt5y8u2wy1c": &"strange_mockery",
 &"uid://bs7cyhihmgpby": &"inferiority_complex",
 &"uid://cajh1nbo2ob3l": &"cannibalism",
 &"uid://cdmc66uhaspbu": &"three_alls_policy",
+&"uid://cfuom58prhylt": &"antithese",
 &"uid://cgjnx1j1vgxuf": &"fleshpound",
 &"uid://clsobwjsuywda": &"mordum",
 &"uid://cs753835ts5uf": &"commemoration",
@@ -33,6 +35,7 @@ _uids_to_string_ids = Dictionary[StringName, StringName]({
 &"uid://ptg256owpxwg": &"sabotage"
 })
 _string_ids_to_uids = Dictionary[StringName, StringName]({
+&"antithese": &"uid://cfuom58prhylt",
 &"cannibalism": &"uid://cajh1nbo2ob3l",
 &"chaosmose": &"uid://deu1afwb4ixeh",
 &"come_and_see": &"uid://dkhhme05f15ga",
@@ -47,6 +50,7 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"sabotage": &"uid://ptg256owpxwg",
 &"sanctuary": &"uid://6ylihv402nx8",
 &"shudder": &"uid://bad0nyxaxq73",
+&"slowburn": &"uid://bduj38qhnq0d7",
 &"strange_mockery": &"uid://biwt5y8u2wy1c",
 &"three_alls_policy": &"uid://cdmc66uhaspbu",
 &"undercontrolled": &"uid://2j37ys2ie36k"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://cfuom58prhylt"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_8tau1"]
+
+[resource]
+script = ExtResource("1_8tau1")
+perk_description = "최대 체력이 50% 감소하고 방어력의 10%가 공격력으로 치환된다.
+대신 체력이 초당 10%씩 자동으로 회복한다."
+name = &"안티테제"
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

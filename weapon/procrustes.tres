@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://buuo2bedtt0uu"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_7be30"]
+
+[resource]
+script = ExtResource("1_7be30")
+name = &"프로크루스테스"
+type = 6
+metadata/_custom_type_script = "uid://r41i0c0blyva"

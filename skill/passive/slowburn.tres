@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://bduj38qhnq0d7"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_m3dip"]
+
+[resource]
+script = ExtResource("1_m3dip")
+perk_description = "피격당할 때마다 방어력이 1%씩 최대 20%까지 상승한다.
+최대방어력에 도달할 시, 모든 방어력 추가 스탯을 잃고, 20초간 20%의 공격력을 얻는다."
+name = &"고조되는 감정"
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"
