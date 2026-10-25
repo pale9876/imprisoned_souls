@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_6274h")
-perk_description = "전투 상태 돌입 시, 공격속도와 공격력이 {duration}초간 {value}% 증가한다."
-name = &"Found Footage"
+perk_description = "전투 상태 돌입 시, 행동속도와 공격력이 20초간 20% 증가한다."
+name = &"출처 불명"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

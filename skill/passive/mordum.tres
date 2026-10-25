@@ -5,6 +5,5 @@
 [resource]
 script = ExtResource("1_owkot")
 perk_description = "무장한 NPC의 공격력이 {npc_atk_reduce_ratio}% 감소하고, 모든 피격 효과를 무효화한다."
-name = &"Mordum"
-description = "우리도 그 희생양들의 대열에 넣기 위해서 그런 거 아닐까?"
+name = &"위대한 실험"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

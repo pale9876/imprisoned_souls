@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://cggco8b1us2d3"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_b1b7v"]
+
+[resource]
+script = ExtResource("1_b1b7v")
+name = &"블레이드"
+description = "날에 빛을 모으는 물질을 칠하여 어두운 곳에서의 색적을 쉽게 한 검이다. "
+type = 1
+metadata/_custom_type_script = "uid://r41i0c0blyva"

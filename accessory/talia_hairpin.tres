@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://vv1xxir7gik7"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_klf1l"]
+
+[resource]
+script = ExtResource("1_klf1l")
+name = &"탈리아의 헤어핀"
+description = "복제체 탈리아가 착용하고 다녔던 유품이다."
+stat_description = "공격력 + 5, 이동속도 + 2"
+gear_type = 1
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

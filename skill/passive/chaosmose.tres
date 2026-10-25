@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_ycr0i")
+perk_description = "모든 행동속도가 16% 증가하고, 공격력이 20% 감소한다."
 name = &"혼돈의 꽃"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

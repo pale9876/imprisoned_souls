@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_tp1ir")
-perk_description = "죽인 적 한 명당 최종데미지 {damage_ratio}% 씩 최대 {limit}% 적립된다."
-name = &"Come and See"
-description = "사람은 필연적으로 다른 이의 경험을 되풀이한다."
+perk_description = "전투 중 죽인 적 한 명당 최종데미지가 {damage_ratio}% 씩 최대 {limit}% 적립된다. 전투 상태가 해제되면 데미지 비율이 6% 감소된다."
+name = &"Come And See"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_pv8xr")
-perk_description = "비전투 상태 시, 초당 {tick}씩 체력이 재생된다."
-name = &"Commemoration"
-description = "죽은 이로 하여금 죽는 이를 묻게 하라."
+perk_description = "비전투 상태 시, 1초마다 10%의 체력이 재생된다."
+name = &"추모"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

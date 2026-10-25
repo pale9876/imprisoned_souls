@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://pblot7fyien"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_432f4"]
+
+[resource]
+script = ExtResource("1_432f4")
+name = &"침묵증"
+type = 6
+metadata/_custom_type_script = "uid://r41i0c0blyva"

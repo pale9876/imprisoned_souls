@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://dn17wor1lvgk"]
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://dn17wor1lvgk"]
 
 [ext_resource type="Script" uid="uid://b6vg11agekccy" path="res://script/resource/ae_index_stat_information.gd" id="1_85i0k"]
-[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_8560i"]
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_8560i"]
 [ext_resource type="PackedScene" uid="uid://bnmfkbcn7xi7m" path="res://accessory/scene/razor_blade.tscn" id="2_0tnld"]
 
 [sub_resource type="Resource" id="Resource_tuuap"]
@@ -11,8 +11,9 @@ metadata/_custom_type_script = "uid://b6vg11agekccy"
 [resource]
 script = ExtResource("1_8560i")
 name = &"은닉 면도날"
-description = "어디에 사용하려고 한 것인지 출처도 알 수 없지만, 굉장히 날카롭게 갈려있는 작은 면도날이다."
-stat_description = "적 타격 시, 4초간 공격력의 2%씩 데미지를 입고 적은 10초간 공격력의 4%씩 데미지를 입는다."
+description = "날카롭게 갈려있는 작은 면도날이다."
+stat_description = "날붙이를 이용한 공격으로 적 타격 시, 장착자는 4초간 공격력의 2%씩 데미지를 입고 적은 10초간 공격력의 4%씩 데미지를 입는다."
+gear_type = 7
 scene = ExtResource("2_0tnld")
 additional_stat = SubResource("Resource_tuuap")
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

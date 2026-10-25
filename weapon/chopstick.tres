@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://c3t4ip5qbpvg7"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_mvghm"]
+
+[resource]
+script = ExtResource("1_mvghm")
+name = &"젓가락"
+description = "식사용 쇠젓가락이다. 주워도 유효한 공격을 먹이는 데에는 아무래도 한계가 있다."
+type = 7
+metadata/_custom_type_script = "uid://r41i0c0blyva"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://cajh1nbo2ob3l"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_hmut3"]
+
+[resource]
+script = ExtResource("1_hmut3")
+perk_description = "비 전투 상태일 때, 죽은 적 유닛의 시체를 섭취할 수 있게 된다. 전투 상태에 돌입 시 섭취한 객체 하나에 6% 데미지가 적립되고, 체력 27%가 회복된다.
+비 전투 상태가 되면 모든 효과가 제거된다."
+name = &"동족 포식"
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

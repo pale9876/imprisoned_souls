@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://bgkdwptbv0imf"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_4rcv1"]
+
+[resource]
+script = ExtResource("1_4rcv1")
+name = &"속결 반지"
+description = "복제체와 직원 모두가 사용 가능하도록 제작된 업무용 반지이다.
+반지에 내장된 바늘을 작동시키면 착용자의 목숨을 앗아갈 수 있다."
+stat_description = "상호작용 시, 체력이 5% 이하로 떨어진다."
+gear_type = 7
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

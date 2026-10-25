@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://l0v3fn1jxq4k"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_kb0cy"]
+
+[resource]
+script = ExtResource("1_kb0cy")
+name = &"보급형 기관단총"
+description = "국내에서 민간인 무장용으로 저렴하게 생산된 기관단총이다."
+type = 8
+metadata/_custom_type_script = "uid://r41i0c0blyva"

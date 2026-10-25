@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://dowoo6v34jb0"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_nrdm5"]
+
+[resource]
+script = ExtResource("1_nrdm5")
+name = &"빵칼"
+description = "딱딱한 빵을 자를 때 쓰는 칼이다."
+type = 7
+metadata/_custom_type_script = "uid://r41i0c0blyva"

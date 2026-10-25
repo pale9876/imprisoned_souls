@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://dufw3ak525ylc"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_4w1o1"]
+
+[resource]
+script = ExtResource("1_4w1o1")
+name = &"본 이터"
+description = "상지 방위군 제식 권총의 도면을 복제하여 사용되는 무허가 총기이다."
+type = 3
+metadata/_custom_type_script = "uid://r41i0c0blyva"

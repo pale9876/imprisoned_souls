@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://hx6x1ntwr0"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_r6w8f"]
+
+[resource]
+script = ExtResource("1_r6w8f")
+name = &"수술용 메스"
+description = "의외로 외부 충격에도 쉽게 부러지지 않게 내구도가 좋은 긴급 수술용 메스이다. 높은 단가와 위생문제로 더 이상 사용 및 생산되지 않는다."
+type = 7
+metadata/_custom_type_script = "uid://r41i0c0blyva"

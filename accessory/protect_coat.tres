@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://jk3dx4qpbbbu"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_0gqjg"]
+
+[resource]
+script = ExtResource("1_0gqjg")
+name = &"실험용 보호복"
+stat_description = "방어력 - 5, 행동속도 + 10
+공격당할 시, "
+gear_type = 3
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

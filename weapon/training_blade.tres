@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://br0jfccu2ksfg"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_nksah"]
+
+[resource]
+script = ExtResource("1_nksah")
+name = &"연습용 목검"
+description = "민간 대련용 개발된 저렴하고 안전한 목검이다."
+type = 1
+metadata/_custom_type_script = "uid://r41i0c0blyva"

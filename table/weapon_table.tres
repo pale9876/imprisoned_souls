@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="Registry" format=3 uid="uid://cq3wsvfjtmwb8"]
+
+[ext_resource type="Script" uid="uid://dqtv77mng5dyh" path="res://addons/yard/registry.gd" id="1_edlph"]
+
+[resource]
+script = ExtResource("1_edlph")
+_version = 2
+_scan_rulesets = Array[Dictionary]([{
+&"allowed_file_extensions": Array[String]([".tres"]),
+&"class_restrictions": Array[StringName]([&"WeaponInformation"]),
+&"recursive_scan": false,
+&"scan_directories": Array[String](["res://weapon"]),
+&"scan_regex_exclude": "",
+&"scan_regex_include": ""
+}])
+_uids_to_string_ids = Dictionary[StringName, StringName]({
+&"uid://7iowereen0r8": &"sledgehammer",
+&"uid://b3oqvjrjdirj1": &"fireaxe",
+&"uid://bd5ji86fb8idv": &"pipe_shotgun",
+&"uid://bihan88wxkg26": &"twilight_feng",
+&"uid://bobff0gyjk7yv": &"throwing_knife",
+&"uid://br0jfccu2ksfg": &"training_blade",
+&"uid://bwkvb2ynxoix2": &"widowmaker",
+&"uid://c2dnq73m2q7i6": &"monsieur_de_paris",
+&"uid://c3t4ip5qbpvg7": &"chopstick",
+&"uid://cggco8b1us2d3": &"combat_blade",
+&"uid://cir7h2nbxnye1": &"compact_power",
+&"uid://ckbcp7cexhef8": &"dragon_breath",
+&"uid://ctevdgxdp3h4q": &"hellfire_launcher",
+&"uid://da8mtne0eyua7": &"friendly_submachinegun",
+&"uid://dowoo6v34jb0": &"breadcutter",
+&"uid://dufw3ak525ylc": &"bone_eater",
+&"uid://dwfb00exfait1": &"harvester",
+&"uid://hx6x1ntwr0": &"scalpel",
+&"uid://l0v3fn1jxq4k": &"grease_gun",
+&"uid://m00ot7dp7u32": &"shingunto",
+&"uid://pblot7fyien": &"silent_mania",
+&"uid://s6mt63vfj0df": &"soul_liberator"
+})
+_string_ids_to_uids = Dictionary[StringName, StringName]({
+&"bone_eater": &"uid://dufw3ak525ylc",
+&"breadcutter": &"uid://dowoo6v34jb0",
+&"chopstick": &"uid://c3t4ip5qbpvg7",
+&"combat_blade": &"uid://cggco8b1us2d3",
+&"compact_power": &"uid://cir7h2nbxnye1",
+&"dragon_breath": &"uid://ckbcp7cexhef8",
+&"fireaxe": &"uid://b3oqvjrjdirj1",
+&"friendly_submachinegun": &"uid://da8mtne0eyua7",
+&"grease_gun": &"uid://l0v3fn1jxq4k",
+&"harvester": &"uid://dwfb00exfait1",
+&"hellfire_launcher": &"uid://ctevdgxdp3h4q",
+&"monsieur_de_paris": &"uid://c2dnq73m2q7i6",
+&"pipe_shotgun": &"uid://bd5ji86fb8idv",
+&"scalpel": &"uid://hx6x1ntwr0",
+&"shingunto": &"uid://m00ot7dp7u32",
+&"silent_mania": &"uid://pblot7fyien",
+&"sledgehammer": &"uid://7iowereen0r8",
+&"soul_liberator": &"uid://s6mt63vfj0df",
+&"throwing_knife": &"uid://bobff0gyjk7yv",
+&"training_blade": &"uid://br0jfccu2ksfg",
+&"twilight_feng": &"uid://bihan88wxkg26",
+&"widowmaker": &"uid://bwkvb2ynxoix2"
+})

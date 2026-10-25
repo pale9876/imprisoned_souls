@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://ctevdgxdp3h4q"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_b4hih"]
+
+[resource]
+script = ExtResource("1_b4hih")
+name = &"헬파이어 발사기"
+description = "유탄발사기 앞 부분만 떼어서 진압용 화기로 개조한 무기다."
+type = 4
+metadata/_custom_type_script = "uid://r41i0c0blyva"

@@ -1,15 +1,17 @@
-[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://c0y3j28ma1l3a"]
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://c0y3j28ma1l3a"]
 
 [ext_resource type="Script" uid="uid://b6vg11agekccy" path="res://script/resource/ae_index_stat_information.gd" id="1_gf2h3"]
-[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_vr43g"]
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="2_gf2h3"]
 
 [sub_resource type="Resource" id="Resource_gawmn"]
 script = ExtResource("1_gf2h3")
 metadata/_custom_type_script = "uid://b6vg11agekccy"
 
 [resource]
-script = ExtResource("1_vr43g")
-name = &"잃어버린 카드"
-description = "우연히 습득한 도어카드이다."
+script = ExtResource("2_gf2h3")
+name = &"분실 카드"
+description = "시신에서 습득한 관리자용 도어카드다."
+stat_description = "잠긴 문을 출입할 수 있다."
+gear_type = 7
 additional_stat = SubResource("Resource_gawmn")
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

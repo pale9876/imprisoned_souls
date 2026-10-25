@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://cdmc66uhaspbu"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_d5gug"]
+
+[resource]
+script = ExtResource("1_d5gug")
+perk_description = "최대체력이 17% 감소한다.
+날붙이를 이용한 적 유닛 타격 시에 피를 흡혈한다. 체력이 1% 회복되고, 공격력과 행동속도가 0.5%씩 최대 15%까지 증가한다. 효과는 영구적으로 유지된다.
+"
+name = &"삼광작전"
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

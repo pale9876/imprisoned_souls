@@ -1,12 +1,13 @@
 @tool
 extends Resource
-class_name AccessoryInformation
+class_name GearInformation
 
 
 @export_group("Meta")
 @export var name: StringName
 @export_multiline() var description: String
 @export_multiline() var stat_description: String
+@export var gear_type: GlobalClassified.GearType = GlobalClassified.GearType.NONE
 
 @export_group("Resource")
 @export var icon: Texture2D

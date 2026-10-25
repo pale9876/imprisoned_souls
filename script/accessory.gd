@@ -2,10 +2,10 @@ extends Node
 class_name Accessory
 
 
-@export var info: AccessoryInformation
+@export var info: GearInformation
 
 
-func init_info(_info: AccessoryInformation) -> void:
+func init_info(_info: GearInformation) -> void:
 	info = _info
 
 

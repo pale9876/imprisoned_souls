@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://1t3t7m1bp3nh"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_d48oc"]
+
+[resource]
+script = ExtResource("1_d48oc")
+name = &"라텍스 장갑"
+description = "다용도로 쓰고 버리는 라텍스 장갑이다. 도구가 손에서 미끄러지는 것을 방지하기도 한다."
+stat_description = "방어력 - 10, 행동속도 + 5"
+gear_type = 2
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

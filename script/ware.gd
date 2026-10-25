@@ -3,11 +3,7 @@ extends Node
 class_name Ware
 
 
-@export var head: Gear
-@export var body: Gear
-@export var leg: Gear
-@export var belt: Gear
-@export var pants: Gear
+const MAX_ACCESSORY_COUNT: int = 2
 
 
 var stat: AEIndexStatInformation
@@ -19,31 +15,16 @@ func _init() -> void:
 	stat = AEIndexStatInformation.new()
 
 
-func gear_get_type(gear: Gear) -> Gear.Type:
+func gear_get_type(gear: Gear) -> GlobalClassified.GearType:
 	return gear.type
-
-
-func set_gear(gear: Gear) -> void:
-	match gear_get_type(gear):
-		Gear.Type.HEAD:
-			head = gear
-		Gear.Type.BODY:
-			body = gear
-		Gear.Type.BELT:
-			belt = gear
-		Gear.Type.PANTS:
-			pants = gear
-		Gear.Type.LEG:
-			leg = gear
 
 
 func has_gear(_name: NodePath) -> bool:
 	return has_node(_name)
 
 
-func gear_up(gear: Gear) -> void:
-	
-	set_gear(gear)
+#func gear_up(gear: Gear) -> void:
+	#set_gear(gear)
 
 
 # Override

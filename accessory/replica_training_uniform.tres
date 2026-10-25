@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://csxsmqsol003a"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_tpqjk"]
+
+[resource]
+script = ExtResource("1_tpqjk")
+name = &"활동용 유니폼"
+stat_description = "방어력 + 1, 행동속도 + 10"
+gear_type = 3
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

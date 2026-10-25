@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_8jykf")
 perk_description = "자신을 제외한 주변의 적들의 모든 행동이 5% 느려진다."
-name = &"Sabotage"
+name = &"파괴공작"
 metadata/_custom_type_script = "uid://hdybrgm2ckpr"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://bd5ji86fb8idv"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_hx3qk"]
+
+[resource]
+script = ExtResource("1_hx3qk")
+name = &"교착 슬램뱅"
+description = "직원들의 사무실에 제공되는 비상용 파이프샷건이다. 안전핀을 제거하고 버튼을 누르면 조준한 방향을 향해 발사된다."
+type = 4
+metadata/_custom_type_script = "uid://r41i0c0blyva"

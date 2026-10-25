@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://sc32fnq003ce"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_uneia"]
+
+[resource]
+script = ExtResource("1_uneia")
+name = &"R2P 전투 군화"
+stat_description = "공격 시, 2초간 이동속도가 -10 감소하고 공격력이 20 증가한다."
+gear_type = 3
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

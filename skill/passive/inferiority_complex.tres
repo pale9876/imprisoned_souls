@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PassiveSkillInformation" format=3 uid="uid://bs7cyhihmgpby"]
+
+[ext_resource type="Script" uid="uid://hdybrgm2ckpr" path="res://script/resource/passive_information.gd" id="1_o32r7"]
+
+[resource]
+script = ExtResource("1_o32r7")
+perk_description = "타격 시, 3%씩 최대 15% 상승한다.
+피격 시, 6%씩 최소 12%까지 하락한다."
+name = &"열등감"
+metadata/_custom_type_script = "uid://hdybrgm2ckpr"

@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AccessoryInformation" format=3 uid="uid://dk747ci07bf1j"]
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://dk747ci07bf1j"]
 
-[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/accessory_information.gd" id="1_d8cm2"]
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_d8cm2"]
 
 [resource]
 script = ExtResource("1_d8cm2")
 name = &"나양의 장도"
-description = "서로 보는 장식용 칼이다."
+description = "하치가 차고 다니는 장식용 단도."
+gear_type = 5
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

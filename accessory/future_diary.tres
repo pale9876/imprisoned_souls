@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GearInformation" format=3 uid="uid://bl30eb0tw0a0k"]
+
+[ext_resource type="Script" uid="uid://bd7sb7hxg702s" path="res://script/resource/gear_information.gd" id="1_ugh8c"]
+
+[resource]
+script = ExtResource("1_ugh8c")
+name = &"미래일기"
+description = "사용자에 대한 향후 행방 또는 예측을 무작위로 기록하는 멀티미디어 전화기이다."
+stat_description = "적 유닛의 공격판정이 보이게 된다."
+gear_type = 7
+metadata/_custom_type_script = "uid://bd7sb7hxg702s"

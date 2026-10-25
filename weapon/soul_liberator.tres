@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://s6mt63vfj0df"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_y78at"]
+
+[resource]
+script = ExtResource("1_y78at")
+name = &"38식 영혼해방자"
+description = "독립전쟁 때, 수입해 온 자동권총이다. 타 권총에 비해 저렴한 편은 아니지만, 뛰어난 내구도 덕분에 오랫동안 사용되고 있다."
+type = 3
+metadata/_custom_type_script = "uid://r41i0c0blyva"

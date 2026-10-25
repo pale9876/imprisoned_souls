@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://cir7h2nbxnye1"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_wqd18"]
+
+[resource]
+script = ExtResource("1_wqd18")
+name = &"컴팩트 파워"
+description = "짧고 다루기 쉬운 호신용 권총이다. 민수용으로 대량제작되고 있다."
+type = 3
+metadata/_custom_type_script = "uid://r41i0c0blyva"

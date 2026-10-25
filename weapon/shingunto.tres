@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://m00ot7dp7u32"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_hr804"]
+
+[resource]
+script = ExtResource("1_hr804")
+name = &"제국군 하사관도"
+description = "제국군이 사용중인 중간 길이의 군도이다. 여전히 제식으로 사용중이지만, 타 국가에서도 싼 가격으로 매입할 수 있다.
+제국군 인장이 지워져있다."
+type = 1
+metadata/_custom_type_script = "uid://r41i0c0blyva"

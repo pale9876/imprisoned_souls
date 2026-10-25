@@ -2,6 +2,19 @@ extends RefCounted
 class_name GlobalClassified
 
 
+
+enum GearType {
+	NONE,
+	HEAD,
+	ARM,
+	BODY,
+	LEG,
+	BELT,
+	PANTS,
+	ACCESSORY,
+}
+
+
 enum MapState {
 	SAFE,
 	ALERT,
@@ -31,8 +44,9 @@ enum WeaponType
 	CANNON,
 	HAMMER,
 	SCYTHE,
-	SPEAR,
 	KNIFE,
+	SMG,
+	REVOLVER,
 }
 
 	

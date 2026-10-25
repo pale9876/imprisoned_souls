@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://bwkvb2ynxoix2"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_fsexm"]
+
+[resource]
+script = ExtResource("1_fsexm")
+name = &"과부 제조기"
+description = "슬레지해머를 살상용으로 개조한 프로토타입이다. 헤드에 3발의 폭발탄을 장약할 수 있다."
+type = 5
+metadata/_custom_type_script = "uid://r41i0c0blyva"

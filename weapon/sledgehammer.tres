@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://7iowereen0r8"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_qgn1e"]
+
+[resource]
+script = ExtResource("1_qgn1e")
+name = &"대형망치"
+description = "힘을 싣고 가격하는 데에는 문제없지만, 지속적인 무기로 쓰기에는 너무 무겁고 부적합하다."
+type = 5
+metadata/_custom_type_script = "uid://r41i0c0blyva"

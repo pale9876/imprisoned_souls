@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://da8mtne0eyua7"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_cntkw"]
+
+[resource]
+script = ExtResource("1_cntkw")
+name = &"프렌들리 기관총"
+description = "뛰어난 내구도를 자랑하지만 너무 빠른 연사속도로 인해 오발사고가 많아 붙여진 별명이다."
+type = 8
+metadata/_custom_type_script = "uid://r41i0c0blyva"

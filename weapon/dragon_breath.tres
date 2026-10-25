@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponInformation" format=3 uid="uid://ckbcp7cexhef8"]
+
+[ext_resource type="Script" uid="uid://r41i0c0blyva" path="res://script/resource/weapon_information.gd" id="1_dtyxc"]
+
+[resource]
+script = ExtResource("1_dtyxc")
+name = &"착화개조 산탄봉"
+description = "원래는 옷이나 피부에 화학약품을 붙게 하기 위해 만든 진압화기이지만, 더 고통스럽게 하여 저지력을 높게 하기 위해 만들어진 슬램뱅으로 재설계 및 생산하였다."
+type = 4
+metadata/_custom_type_script = "uid://r41i0c0blyva"

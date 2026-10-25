@@ -7,6 +7,8 @@
 [ext_resource type="Shader" uid="uid://c86hist45hua4" path="res://parallax_space.gdshader" id="4_0vxx4"]
 [ext_resource type="Shader" uid="uid://oub5qlf30tea" path="res://dark_noise_vignette.gdshader" id="5_4re53"]
 [ext_resource type="Script" uid="uid://1try4xg1mltr" path="res://script/attack_field_preview.gd" id="6_tgr6k"]
+[ext_resource type="Shader" uid="uid://cpj4xxh6yl0v" path="res://rain_drop.gdshader" id="8_41k7r"]
+[ext_resource type="Shader" uid="uid://dncg6uaca8v5g" path="res://glass_rect.gdshader" id="9_gdxae"]
 
 [sub_resource type="Gradient" id="Gradient_vuocu"]
 offsets = PackedFloat32Array(0.9051383, 0.9525692, 1)
@@ -33,17 +35,13 @@ shader_parameter/flow_speed = 0.9550000453625
 shader_parameter/flow_width = 0.25000001024506
 shader_parameter/pond_alpha = 0.67999998480064
 
-[sub_resource type="Gradient" id="Gradient_nsxlm"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.6175439)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+[sub_resource type="Gradient" id="Gradient_41k7r"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqsic"]
-gradient = SubResource("Gradient_nsxlm")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gdxae"]
+gradient = SubResource("Gradient_41k7r")
 width = 128
 height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wqsic"]
 shader = ExtResource("2_dmnlx")
@@ -58,7 +56,7 @@ shader_parameter/glitch = 0.630000029925
 shader_parameter/glitch_shift = 0.20000000298023
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4re53"]
-viewport_path = NodePath("Sprite2D2/SubViewport")
+viewport_path = NodePath("StarParallaxField/SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vxx4"]
 shader = ExtResource("4_0vxx4")
@@ -71,11 +69,11 @@ shader_parameter/smallStarAmount = 0.002
 shader_parameter/mediumStarAmount = 0.01
 shader_parameter/bigStarAmount = 0.02
 
-[sub_resource type="Gradient" id="Gradient_tgr6k"]
+[sub_resource type="Gradient" id="Gradient_275sl"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xc41h"]
-gradient = SubResource("Gradient_tgr6k")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kjr8o"]
+gradient = SubResource("Gradient_275sl")
 width = 1024
 height = 256
 fill = 1
@@ -88,12 +86,50 @@ shader_parameter/radius = 0.53999998792992
 shader_parameter/speed = 0.92999997921264
 shader_parameter/effect_color = Color(0.10416666, 0.25, 0, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdxae"]
+render_priority = 0
+shader = ExtResource("8_41k7r")
+shader_parameter/rain_amount = 0.242000011495
+shader_parameter/speed = 0.758000036005
+shader_parameter/blur_amount = 2.0
+shader_parameter/uv_scale = Vector2(2, -1)
+shader_parameter/frosted_blur = 0.5
+shader_parameter/distance_blur_scale = 0.1
+shader_parameter/refraction_strength = 0.05
+shader_parameter/frosted_noise_scale = 143.6050067737375
+shader_parameter/glass_thickness = 0.2
+shader_parameter/ior = 1.45
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_wqsic"]
+material = SubResource("ShaderMaterial_gdxae")
+size = Vector2(3.575, 2.33)
+orientation = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7jywp"]
+shader = ExtResource("9_gdxae")
+shader_parameter/scale = 105.5410048231975
+shader_parameter/gap = 15.50800068913
+shader_parameter/angle = 45.0
+shader_parameter/glass_tint = Color(1, 1, 1, 0.09803922)
+shader_parameter/stripe_color = Color(0.7266666, 0.6, 1, 0.03529412)
+shader_parameter/sun_color = Color(1, 1, 1, 1)
+shader_parameter/dash_cell = 6.0
+shader_parameter/dash_density = 0.078000003705
+shader_parameter/dash_size = 1.0
+shader_parameter/dashes_enabled = true
+shader_parameter/border_enabled = true
+shader_parameter/border_size = 8.046000381486481
+shader_parameter/border_dash_cell = 15.0
+shader_parameter/border_dash_density = 0.5
+shader_parameter/border_dash_size = 1.0
+shader_parameter/border_dashes_enabled = true
+
 [node name="ShaderDemo" type="Node2D" unique_id=810744210]
 
 [node name="Shield" type="Sprite2D" parent="." unique_id=563947196]
 material = SubResource("ShaderMaterial_nsxlm")
 position = Vector2(-174, 0)
-texture = SubResource("GradientTexture2D_wqsic")
+texture = SubResource("GradientTexture2D_gdxae")
 offset = Vector2(0, -64)
 script = ExtResource("2_xc41h")
 
@@ -102,14 +138,14 @@ material = SubResource("ShaderMaterial_wqsic")
 position = Vector2(344, 208)
 texture = ExtResource("3_0vxx4")
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1746552707]
-position = Vector2(288.0001, 200)
+[node name="StarParallaxField" type="Sprite2D" parent="." unique_id=1746552707]
+position = Vector2(-110, 203)
 texture = SubResource("ViewportTexture_4re53")
 
-[node name="SubViewport" type="SubViewport" parent="Sprite2D2" unique_id=994732560]
+[node name="SubViewport" type="SubViewport" parent="StarParallaxField" unique_id=994732560]
 transparent_bg = true
 
-[node name="ColorRect" type="ColorRect" parent="Sprite2D2/SubViewport" unique_id=1936851095]
+[node name="ColorRect" type="ColorRect" parent="StarParallaxField/SubViewport" unique_id=1936851095]
 material = SubResource("ShaderMaterial_0vxx4")
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,17 +154,50 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AttackFieldPreview" type="Sprite2D" parent="." unique_id=1380718227]
-texture = SubResource("GradientTexture2D_xc41h")
+texture = SubResource("GradientTexture2D_kjr8o")
 offset = Vector2(512, -128)
 script = ExtResource("6_tgr6k")
 width = 1024
 height = 256
 progress = 1.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1061189929]
+[node name="Screen1" type="CanvasLayer" parent="." unique_id=1061189929]
 
-[node name="DarkNoiseFilter" type="ColorRect" parent="CanvasLayer" unique_id=935143987]
+[node name="DarkNoise" type="ColorRect" parent="Screen1" unique_id=935143987]
 material = SubResource("ShaderMaterial_tgr6k")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Screen2" type="CanvasLayer" parent="." unique_id=1866689547]
+visible = false
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Screen2" unique_id=2093875867]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Screen2/SubViewportContainer" unique_id=1164167613]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Screen2/SubViewportContainer/SubViewport" unique_id=1413306621]
+mesh = SubResource("PlaneMesh_wqsic")
+
+[node name="Camera3D" type="Camera3D" parent="Screen2/SubViewportContainer/SubViewport" unique_id=1040936105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0585766)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1955964556]
+
+[node name="GlassFilter" type="ColorRect" parent="CanvasLayer" unique_id=515922248]
+material = SubResource("ShaderMaterial_7jywp")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
