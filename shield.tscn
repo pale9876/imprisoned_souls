@@ -11,6 +11,7 @@
 [ext_resource type="Shader" uid="uid://dncg6uaca8v5g" path="res://glass_rect.gdshader" id="9_gdxae"]
 [ext_resource type="Shader" uid="uid://c5bpy64fbjmr8" path="res://effect_progression.gdshader" id="10_kjr8o"]
 [ext_resource type="Texture2D" uid="uid://bue6yeoniv3u3" path="res://flush_vfx/Air 1.png" id="11_kjr8o"]
+[ext_resource type="Script" uid="uid://dscdfe07b8fou" path="res://addons/BurstParticles2D/BurstParticleGroup2D.gd" id="12_1e71e"]
 [ext_resource type="Script" uid="uid://cyerv4k0ak4gu" path="res://addons/BurstParticles2D/BurstParticles2D.gd" id="13_1e71e"]
 
 [sub_resource type="Gradient" id="Gradient_vuocu"]
@@ -375,17 +376,22 @@ texture = ExtResource("11_kjr8o")
 flip_v = true
 hframes = 11
 
+[node name="BurstParticleGroup2D" type="Node2D" parent="VFXSamples" unique_id=1405618429]
+script = ExtResource("12_1e71e")
+repeat = false
+autostart = false
+metadata/_custom_type_script = "uid://dscdfe07b8fou"
+
 [node name="BurstParticles2D" type="Node2D" parent="VFXSamples" unique_id=1112581107]
 script = ExtResource("13_1e71e")
 num_particles = 13
 lifetime = 0.925
 lifetime_randomness = 0.455
-free_when_finished = false
+autostart = false
 texture = SubResource("GradientTexture2D_7jywp")
 image_scale = 4.0
 image_scale_randomness = 0.74
 direction = Vector2(1, 1)
-distance = 363.032
 distance_randomness = 0.691
 align_sprite_rotation = false
 start_radius = 57.287

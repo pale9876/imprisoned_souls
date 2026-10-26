@@ -131,9 +131,9 @@ class BurstParticlesRng extends RandomNumberGenerator:
 
 @export_category("Texture")
 @export var texture: Texture2D = preload("orb_small.png")
-@export var image_scale := 1.0
-@export_range(0.0, 1.0) var image_scale_randomness := 0.0
-@export var gradient : GradientTexture1D
+@export var image_scale: float = 1.0
+@export_range(0.0, 1.0) var image_scale_randomness: float = 0.0
+@export var gradient: GradientTexture1D
 @export var blend_mode := BlendMode.Mix
 @export_range(-360.0, 360.0, 0.5, "or_greater", "or_less") var angle_degrees := 0.0
 @export_range(0.0, 1.0) var angle_randomness := 0.0
@@ -194,17 +194,20 @@ class BurstParticlesRng extends RandomNumberGenerator:
 
 var current_particle_id: int = 0
 
-var rng = BurstParticlesRng.new()
+var rng: BurstParticlesRng = BurstParticlesRng.new()
 var shared_material = null
 var current_shader = SHADER
-var finished = true
-var t = 0.0 # time elapsed
-var tween
+var finished: bool = true
+var t: float = 0.0 # time elapsed
+var tween: Tween
 var use_gradient_map:
 	get:
 		return gradient != null
+var _timer: Timer
+
 
 @onready var wait_for_siblings = get_parent() is BurstParticleGroup2D
+
 
 func _create_particle() -> int:
 	var p_id: int = _new_particle()
@@ -220,6 +223,13 @@ func _create_particle() -> int:
 
 	return p_id
 
+
+func _init() -> void:
+	_timer = Timer.new()
+	_timer.timeout.connect(_finish)
+	add_child(_timer)
+
+
 func _ready() -> void:
 	_resize_arrays()
 	rng.randomize()
@@ -230,14 +240,18 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		set_process.call_deferred(false)
 
+
 func _process(delta: float) -> void:
 	pass
+
 
 func _create_material() -> ShaderMaterial:
 	var mat = ShaderMaterial.new()
 	mat.shader = current_shader
 	mat.set_shader_parameter("gradient", gradient)
+	
 	return mat
+
 
 func _center_texture() -> Vector2:
 	return Vector2(-texture.get_width(), -texture.get_height())
@@ -267,7 +281,6 @@ func burst() -> void:
 
 		for i in range(num_particles):
 			_create_particle()
-
 
 		# start burst
 		tween = create_tween()
@@ -321,20 +334,23 @@ func burst() -> void:
 			tween.tween_property(self, "t", t_end, lifetime)
 			tween.tween_method(update_method.bind(p_id, update_functions), t_start, t_end, p_lifetime).set_delay(0.0 if !reverse else lifetime - p_lifetime)
 			tween.tween_callback(_kill_particle.bind(p_id)).set_delay(p_lifetime)
-		
-	var timer = get_tree().create_timer(lifetime, false)
-	timer.timeout.connect(_finish)
 	
-	if wait_for_siblings: return
+	#var _timer := Timer.new()
+	_timer.start(lifetime)
+	#var timer = get_tree().create_timer(lifetime, false)
+	
+	
+	
+	if wait_for_siblings:
+		return
 
-	if repeat:
-		if (!Engine.is_editor_hint() and emit) or emit:
-			timer.timeout.connect(burst)
-	else:
-		emit = false
+	#if repeat:
+		#if (!Engine.is_editor_hint() and emit) or emit:
+			#_timer.timeout.connect(burst)
 
-	if free_when_finished and !Engine.is_editor_hint():
-		timer.timeout.connect(queue_free)
+	#if free_when_finished and !Engine.is_editor_hint():
+		#_timer.timeout.connect(queue_free)
+
 
 func _finish() -> void:
 	if tween:
@@ -342,6 +358,16 @@ func _finish() -> void:
 	finished_burst.emit()
 	finished = true
 	kill()
+	
+	if !repeat:
+		emit = false
+	else:
+		if emit:
+			burst()
+	
+	if !Engine.is_editor_hint() and free_when_finished:
+		queue_free.call_deferred()
+
 
 func _get_update_functions() -> Array[Callable]:
 	# determine all the functions needed for tweening this particle and return them in an array.
