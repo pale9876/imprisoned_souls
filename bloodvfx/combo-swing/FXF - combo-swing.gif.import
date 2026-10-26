@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://bgxnpyyjk4bdr"
+path="res://.godot/imported/FXF - combo-swing.gif-514cf770e7124aa3a44d88519ef61208.res"
+
+[deps]
+
+source_file="res://bloodvfx/combo-swing/FXF - combo-swing.gif"
+dest_files=["res://.godot/imported/FXF - combo-swing.gif-514cf770e7124aa3a44d88519ef61208.res"]
+
+[params]
+
+storage/compress=true

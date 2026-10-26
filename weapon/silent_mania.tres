@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_432f4")
 name = &"침묵증"
+description = "무게감이 좋고 날을 잘 벼린 쇄겸이다. 폴릭세나가 "
 type = 6
 metadata/_custom_type_script = "uid://r41i0c0blyva"

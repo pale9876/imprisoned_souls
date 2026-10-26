@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_hh32s")
 name = &"수확자"
-description = "테마파크 정원의 잔디나 화원의 작품 거둘 때에 쓰는 대낫을 짧게 만들고 사슬과 결합하여 조잡하게 만든 무기이다."
+description = "테마파크 정원의 잔디나 화원의 작품 거둘 때에 쓰는 대낫을 짧게 만들고 사슬줄과 결합하여 만든 조잡한 무기이다."
 type = 6
 metadata/_custom_type_script = "uid://r41i0c0blyva"

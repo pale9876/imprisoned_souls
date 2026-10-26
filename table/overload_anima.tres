@@ -14,8 +14,10 @@ _scan_rulesets = Array[Dictionary]([{
 &"scan_regex_include": ""
 }])
 _uids_to_string_ids = Dictionary[StringName, StringName]({
+&"uid://bq4iw2mqpl6yg": &"polyxena",
 &"uid://c7jlmb2yhu353": &"chryse",
 &"uid://ck5x1uciojj8s": &"hecuba",
+&"uid://cnunnvwchx2ym": &"laodice",
 &"uid://cuxreexlpqn3j": &"vatheia",
 &"uid://d4cvo27s6gy8": &"cassandra"
 })
@@ -23,5 +25,7 @@ _string_ids_to_uids = Dictionary[StringName, StringName]({
 &"cassandra": &"uid://d4cvo27s6gy8",
 &"chryse": &"uid://c7jlmb2yhu353",
 &"hecuba": &"uid://ck5x1uciojj8s",
+&"laodice": &"uid://cnunnvwchx2ym",
+&"polyxena": &"uid://bq4iw2mqpl6yg",
 &"vatheia": &"uid://cuxreexlpqn3j"
 })

@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_dlnn4")
 name = &"집어던지기"
-description = "전방의 가장 가까운 적 유닛을 잡아 던진다."
+description = "전방의 가장 가까운 적 유닛을 잡아 던진다. 날아가는 유닛에 다른 적 유닛 하나가 부딪혀 추가적인 피해를 입힐 수 있다."
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

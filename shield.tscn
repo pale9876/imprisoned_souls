@@ -9,6 +9,9 @@
 [ext_resource type="Script" uid="uid://1try4xg1mltr" path="res://script/attack_field_preview.gd" id="6_tgr6k"]
 [ext_resource type="Shader" uid="uid://cpj4xxh6yl0v" path="res://rain_drop.gdshader" id="8_41k7r"]
 [ext_resource type="Shader" uid="uid://dncg6uaca8v5g" path="res://glass_rect.gdshader" id="9_gdxae"]
+[ext_resource type="Shader" uid="uid://c5bpy64fbjmr8" path="res://effect_progression.gdshader" id="10_kjr8o"]
+[ext_resource type="Texture2D" uid="uid://bue6yeoniv3u3" path="res://flush_vfx/Air 1.png" id="11_kjr8o"]
+[ext_resource type="Script" uid="uid://cyerv4k0ak4gu" path="res://addons/BurstParticles2D/BurstParticles2D.gd" id="13_1e71e"]
 
 [sub_resource type="Gradient" id="Gradient_vuocu"]
 offsets = PackedFloat32Array(0.9051383, 0.9525692, 1)
@@ -35,11 +38,11 @@ shader_parameter/flow_speed = 0.9550000453625
 shader_parameter/flow_width = 0.25000001024506
 shader_parameter/pond_alpha = 0.67999998480064
 
-[sub_resource type="Gradient" id="Gradient_41k7r"]
+[sub_resource type="Gradient" id="Gradient_vivl0"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gdxae"]
-gradient = SubResource("Gradient_41k7r")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1e71e"]
+gradient = SubResource("Gradient_vivl0")
 width = 128
 height = 128
 
@@ -55,9 +58,6 @@ shader_parameter/flicker = 0.50000002375
 shader_parameter/glitch = 0.630000029925
 shader_parameter/glitch_shift = 0.20000000298023
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4re53"]
-viewport_path = NodePath("StarParallaxField/SubViewport")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vxx4"]
 shader = ExtResource("4_0vxx4")
 shader_parameter/bg_color = Color(0, 0, 0, 0)
@@ -69,11 +69,11 @@ shader_parameter/smallStarAmount = 0.002
 shader_parameter/mediumStarAmount = 0.01
 shader_parameter/bigStarAmount = 0.02
 
-[sub_resource type="Gradient" id="Gradient_275sl"]
+[sub_resource type="Gradient" id="Gradient_n164e"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kjr8o"]
-gradient = SubResource("Gradient_275sl")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wspo6"]
+gradient = SubResource("Gradient_n164e")
 width = 1024
 height = 256
 fill = 1
@@ -124,28 +124,181 @@ shader_parameter/border_dash_density = 0.5
 shader_parameter/border_dash_size = 1.0
 shader_parameter/border_dashes_enabled = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_greoi"]
+shader = ExtResource("10_kjr8o")
+shader_parameter/inner_radius = 0.31200001482
+shader_parameter/inner_offset = Vector2(0, 0)
+shader_parameter/outer_radius = 0.462000021945
+shader_parameter/outer_offset = Vector2(0, 0)
+shader_parameter/spin_center = Vector2(-0.4, 0)
+shader_parameter/lead_angle = 0.0
+shader_parameter/tail_angle = 1.238000058805
+
+[sub_resource type="Gradient" id="Gradient_275sl"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kjr8o"]
+gradient = SubResource("Gradient_275sl")
+width = 256
+height = 256
+
+[sub_resource type="Animation" id="Animation_vivl0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lead_angle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1e71e"]
+resource_name = "slash"
+step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lead_angle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(-0.5, 0.27739242),
+"update": 0,
+"values": [0.0, 2.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mvqs3"]
+_data = {
+&"RESET": SubResource("Animation_vivl0"),
+&"slash": SubResource("Animation_1e71e")
+}
+
+[sub_resource type="Gradient" id="Gradient_mvqs3"]
+offsets = PackedFloat32Array(0.4979592, 0.75510204)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7jywp"]
+gradient = SubResource("Gradient_mvqs3")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_wspo6"]
+_data = [Vector2(0, 0.3370787), 0.0, 4.3290534, 0, 0, Vector2(0.3655914, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_mvqs3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.50595236, 0), -6.2921357, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_mvqs3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VFXSamples:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VFXSamples:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kjr8o"]
+resource_name = "air_3"
+length = 0.30060166227519514
+step = 0.0167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VFXSamples:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1, 0.13333334, 0.16666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VFXSamples:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.116666675, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n164e"]
+resource_name = "flush_1"
+step = 0.0167
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vivl0"]
+_data = {
+&"RESET": SubResource("Animation_mvqs3"),
+&"air_3": SubResource("Animation_kjr8o"),
+&"flush_1": SubResource("Animation_n164e")
+}
+
 [node name="ShaderDemo" type="Node2D" unique_id=810744210]
 
 [node name="Shield" type="Sprite2D" parent="." unique_id=563947196]
+visible = false
 material = SubResource("ShaderMaterial_nsxlm")
 position = Vector2(-174, 0)
-texture = SubResource("GradientTexture2D_gdxae")
+texture = SubResource("GradientTexture2D_1e71e")
 offset = Vector2(0, -64)
 script = ExtResource("2_xc41h")
 
 [node name="Hologram" type="Sprite2D" parent="." unique_id=417139842]
+visible = false
 material = SubResource("ShaderMaterial_wqsic")
 position = Vector2(344, 208)
 texture = ExtResource("3_0vxx4")
 
-[node name="StarParallaxField" type="Sprite2D" parent="." unique_id=1746552707]
-position = Vector2(-110, 203)
-texture = SubResource("ViewportTexture_4re53")
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=239825852]
+visible = false
 
-[node name="SubViewport" type="SubViewport" parent="StarParallaxField" unique_id=994732560]
+[node name="StarParallaxField" type="SubViewportContainer" parent="CanvasLayer2" unique_id=298012907]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer2/StarParallaxField" unique_id=994732560]
 transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 0
 
-[node name="ColorRect" type="ColorRect" parent="StarParallaxField/SubViewport" unique_id=1936851095]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2/StarParallaxField/SubViewport" unique_id=1936851095]
 material = SubResource("ShaderMaterial_0vxx4")
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,7 +307,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="AttackFieldPreview" type="Sprite2D" parent="." unique_id=1380718227]
-texture = SubResource("GradientTexture2D_kjr8o")
+visible = false
+texture = SubResource("GradientTexture2D_wspo6")
 offset = Vector2(512, -128)
 script = ExtResource("6_tgr6k")
 width = 1024
@@ -162,6 +316,7 @@ height = 256
 progress = 1.0
 
 [node name="Screen1" type="CanvasLayer" parent="." unique_id=1061189929]
+visible = false
 
 [node name="DarkNoise" type="ColorRect" parent="Screen1" unique_id=935143987]
 material = SubResource("ShaderMaterial_tgr6k")
@@ -195,6 +350,7 @@ mesh = SubResource("PlaneMesh_wqsic")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0585766)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1955964556]
+visible = false
 
 [node name="GlassFilter" type="ColorRect" parent="CanvasLayer" unique_id=515922248]
 material = SubResource("ShaderMaterial_7jywp")
@@ -203,3 +359,41 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=616273926]
+material = SubResource("ShaderMaterial_greoi")
+position = Vector2(148.0766, 124.26753)
+scale = Vector2(1.8535788, 1.4151137)
+skew = 1.1903145
+texture = SubResource("GradientTexture2D_kjr8o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1314750914]
+libraries/ = SubResource("AnimationLibrary_mvqs3")
+
+[node name="VFXSamples" type="Sprite2D" parent="." unique_id=57805593]
+texture = ExtResource("11_kjr8o")
+flip_v = true
+hframes = 11
+
+[node name="BurstParticles2D" type="Node2D" parent="VFXSamples" unique_id=1112581107]
+script = ExtResource("13_1e71e")
+num_particles = 13
+lifetime = 0.925
+lifetime_randomness = 0.455
+free_when_finished = false
+texture = SubResource("GradientTexture2D_7jywp")
+image_scale = 4.0
+image_scale_randomness = 0.74
+direction = Vector2(1, 1)
+distance = 363.032
+distance_randomness = 0.691
+align_sprite_rotation = false
+start_radius = 57.287
+percent_force_uniform = 27.429
+distance_curve = SubResource("Curve_wspo6")
+scale_curve = SubResource("Curve_mvqs3")
+metadata/_custom_type_script = "uid://cyerv4k0ak4gu"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VFXSamples" unique_id=1851692170]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_vivl0")

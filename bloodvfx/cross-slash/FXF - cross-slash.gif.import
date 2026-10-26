@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://chw56iab6t8fb"
+path="res://.godot/imported/FXF - cross-slash.gif-3e32450ae004b6c93d4b50d02d59845b.res"
+
+[deps]
+
+source_file="res://bloodvfx/cross-slash/FXF - cross-slash.gif"
+dest_files=["res://.godot/imported/FXF - cross-slash.gif-3e32450ae004b6c93d4b50d02d59845b.res"]
+
+[params]
+
+storage/compress=true

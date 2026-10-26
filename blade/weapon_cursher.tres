@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_yjhol")
 name = &"무기 파괴"
-weapon_compatibility = Array[int]([7, 4])
+description = "망치를 옆으로 크게 휘두른다. 위도우메이커 사용하고 적이 슈퍼아머 상태일 시 폭발한다."
+weapon_compatibility = Array[int]([4])
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

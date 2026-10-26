@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_ap651")
 name = &"길로틴"
+description = "상하로 두 번 회전공격을 가한다."
 "공중공격" = true
-weapon_compatibility = 6
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://wvspf0ofxvtv"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_aif7f"]
+
+[resource]
+script = ExtResource("1_aif7f")
+name = &"역천"
+description = "전방 400px 내에 있는 가장 가까운 적에게 사슬추를 날려 끌어온다. 성공하면 2번 회전공격을 추가로 이행할 수 있다."
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

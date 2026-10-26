@@ -6,5 +6,5 @@
 script = ExtResource("1_boppn")
 name = &"분쇄"
 description = "위에서 아래로 내려쳐 지면에 강한 충격파를 발생시킨다."
-weapon_compatibility = 5
+weapon_compatibility = Array[int]([5, 2])
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

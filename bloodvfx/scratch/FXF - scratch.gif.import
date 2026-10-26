@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://bbbv8k53lgfos"
+path="res://.godot/imported/FXF - scratch.gif-989734f67a34492d32a7f0afe609c6bb.res"
+
+[deps]
+
+source_file="res://bloodvfx/scratch/FXF - scratch.gif"
+dest_files=["res://.godot/imported/FXF - scratch.gif-989734f67a34492d32a7f0afe609c6bb.res"]
+
+[params]
+
+storage/compress=true

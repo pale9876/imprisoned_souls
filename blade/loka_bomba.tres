@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_lksms")
 name = &"루카 봄바"
-description = "전방의 가장 가까운 적에게 달려들어 땅바닥에 메다꽂는다. 공격에 성공하면 슈퍼아머 상태가 된다."
+description = "전방의 가장 가까운 적에게 달려들어 땅바닥에 메다꽂는다. 달려들어 잡는 공격에 성공하면 슈퍼아머 상태가 된다."
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

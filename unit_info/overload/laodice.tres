@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://cnunnvwchx2ym"]
+
+[ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_1uy72"]
+
+[resource]
+script = ExtResource("1_1uy72")
+name = &"라오디케"
+metadata/_custom_type_script = "uid://4iakh7oj3ywo"

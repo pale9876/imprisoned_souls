@@ -14,6 +14,7 @@ metadata/_custom_type_script = "uid://b6vg11agekccy"
 script = ExtResource("2_gc4eg")
 name = &"발가락 태그"
 description = "처리된 시신에 붙은 발가락 태그를 때어낸 것."
+stat_description = "공격력 +3, 이동속도 +5%"
 gear_type = 7
 additional_stat = SubResource("Resource_gr4ij")
 metadata/_custom_type_script = "uid://bd7sb7hxg702s"

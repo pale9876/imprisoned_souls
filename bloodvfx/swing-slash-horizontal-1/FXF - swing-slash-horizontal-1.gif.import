@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://dg271v2d2p54r"
+path="res://.godot/imported/FXF - swing-slash-horizontal-1.gif-c90d925d1347d3c7acbf984113652b84.res"
+
+[deps]
+
+source_file="res://bloodvfx/swing-slash-horizontal-1/FXF - swing-slash-horizontal-1.gif"
+dest_files=["res://.godot/imported/FXF - swing-slash-horizontal-1.gif-c90d925d1347d3c7acbf984113652b84.res"]
+
+[params]
+
+storage/compress=true

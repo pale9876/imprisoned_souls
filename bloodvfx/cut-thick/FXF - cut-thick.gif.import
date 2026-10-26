@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://b86m82gj7f0in"
+path="res://.godot/imported/FXF - cut-thick.gif-3a85b29ce45bfaa9ba2282b8a40aedf9.res"
+
+[deps]
+
+source_file="res://bloodvfx/cut-thick/FXF - cut-thick.gif"
+dest_files=["res://.godot/imported/FXF - cut-thick.gif-3a85b29ce45bfaa9ba2282b8a40aedf9.res"]
+
+[params]
+
+storage/compress=true

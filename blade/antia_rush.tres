@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_nlbi1")
 name = &"안티아 러시"
-description = "전방을 향해 회전베기 공격을 한 후, 아래로 내려찍는다."
+description = "전방을 향해 두 번 회전베기 공격을 한 후, 아래로 내려찍는다."
 weapon_compatibility = Array[int]([6, 1, 2])
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

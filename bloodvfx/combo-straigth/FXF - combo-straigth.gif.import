@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://dy83yclxpj7i8"
+path="res://.godot/imported/FXF - combo-straigth.gif-bab2cc5dcf81b31186be6ef953d3e969.res"
+
+[deps]
+
+source_file="res://bloodvfx/combo-straigth/FXF - combo-straigth.gif"
+dest_files=["res://.godot/imported/FXF - combo-straigth.gif-bab2cc5dcf81b31186be6ef953d3e969.res"]
+
+[params]
+
+storage/compress=true

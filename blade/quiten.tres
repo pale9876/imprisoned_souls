@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://dakjsreoubfws"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_420cb"]
+
+[resource]
+script = ExtResource("1_420cb")
+name = &"회천"
+description = "카타나 두 개 이상 소지 시 사용 가능함.
+상하로 회전하여 공격 후, 전방에 원거리 범위공격을 한다."
+weapon_compatibility = Array[int]([1])
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://dgykqr0yfwtks"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_2hjv4"]
+
+[resource]
+script = ExtResource("1_2hjv4")
+name = &"공성추"
+description = "전방에 무게를 실어서 돌진공격을 가한다. "
+weapon_compatibility = Array[int]([5, 10])
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

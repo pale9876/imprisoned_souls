@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://cf8j7n1arbetn"
+path="res://.godot/imported/FXF - pierce.gif-ad531e1f83f96e4e4b3b1f0098bfe0d0.res"
+
+[deps]
+
+source_file="res://bloodvfx/pierce/FXF - pierce.gif"
+dest_files=["res://.godot/imported/FXF - pierce.gif-ad531e1f83f96e4e4b3b1f0098bfe0d0.res"]
+
+[params]
+
+storage/compress=true

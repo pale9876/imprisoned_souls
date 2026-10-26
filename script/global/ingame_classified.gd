@@ -47,6 +47,7 @@ enum WeaponType
 	KNIFE,
 	SMG,
 	REVOLVER,
+	SPEAR,
 }
 
 	

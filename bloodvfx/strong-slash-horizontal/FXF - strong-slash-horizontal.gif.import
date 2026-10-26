@@ -1,0 +1,16 @@
+[remap]
+
+importer="texture_gif"
+importer_version=2
+type="GIFTexture"
+uid="uid://b640sdyu6qf43"
+path="res://.godot/imported/FXF - strong-slash-horizontal.gif-bb31db82bdb82f79d3b701fc40ab9824.res"
+
+[deps]
+
+source_file="res://bloodvfx/strong-slash-horizontal/FXF - strong-slash-horizontal.gif"
+dest_files=["res://.godot/imported/FXF - strong-slash-horizontal.gif-bb31db82bdb82f79d3b701fc40ab9824.res"]
+
+[params]
+
+storage/compress=true
