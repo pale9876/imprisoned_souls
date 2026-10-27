@@ -2,11 +2,13 @@ extends Resource
 class_name OverloadInformation
 
 
-enum Tag {
+enum Personality {
 	DEFENSIVE, # 방어적
 	AGGRESSIVE, # 공격적
-	# ---------------------
-	
+}
+
+
+enum CharacterTag {
 	PRIDE, # 오만
 	CAUTIOUS, # 신중
 	CELERITY, # 민첩함
@@ -18,7 +20,8 @@ enum Tag {
 @export var name: StringName
 @export var icon: Texture2D
 @export_multiline() var description: String
-@export var character_tag: Array[Tag]
+@export var personality: Personality = Personality.DEFENSIVE
+@export var character_tag: CharacterTag = CharacterTag.PRIDE
 @export var unit_info: UnitInformation
 
 

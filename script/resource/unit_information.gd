@@ -47,6 +47,7 @@ enum CharacterClass {
 	CLEANER_TEAM_LEADER, # 청소부 관리인
 	COUNTER, # 대응팀
 	COUNTER_TEAM_LEADER, # 대응 분대장
+	OVERLOAD,
 	
 	IMPERIOR_ORDER,
 	IMPERIOR_ORDER_LEADER,
@@ -54,7 +55,7 @@ enum CharacterClass {
 	CIVILIAN, # 민간인
 	SUBJECT, # 피실험자
 	
-	CUSTOM, # 사용자 정의
+	#CUSTOM, # 사용자 정의
 }
 
 enum Gender {

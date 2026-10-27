@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bl0olstw3eapg" path="res://script/map.gd" id="1_bjcma"]
 [ext_resource type="Script" uid="uid://b8c8aspwpnr43" path="res://script/route_guide_line.gd" id="2_yegjs"]
 [ext_resource type="Texture2D" uid="uid://cue3j6hcdcy57" path="res://aseprite/tilemap/fireaxe.png" id="3_p2a57"]
-[ext_resource type="Script" uid="uid://6aqekisaf736" path="res://script/hallway_light.gd" id="3_wxk4i"]
 [ext_resource type="Script" uid="uid://xuoxmo1sa6u6" path="res://ingame/map/stage.gd" id="7_5cnks"]
 [ext_resource type="Script" uid="uid://btxuckvcyog73" path="res://script/map_trigger_region.gd" id="7_utk2m"]
 [ext_resource type="Script" uid="uid://dxg3xn47blbqr" path="res://script/keikai_line.gd" id="7_wxk4i"]
@@ -30,7 +29,7 @@ gradient = SubResource("Gradient_2msmu")
 width = 2880
 
 [sub_resource type="Gradient" id="Gradient_df3ex"]
-offsets = PackedFloat32Array(0, 0.929, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.98, 1, 1, 1)
 colors = PackedColorArray(0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_muwxp"]
@@ -61,49 +60,60 @@ height = 512
 diffuse_texture = SubResource("GradientTexture2D_yegjs")
 normal_texture = SubResource("GradientTexture2D_df3ex")
 
+[sub_resource type="Gradient" id="Gradient_vpmvu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tuwyy"]
+gradient = SubResource("Gradient_vpmvu")
+width = 2880
+height = 512
+
 [sub_resource type="Gradient" id="Gradient_k6cb8"]
-offsets = PackedFloat32Array(0, 0.75)
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.87218046)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_2msmu"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_guff7"]
 gradient = SubResource("Gradient_k6cb8")
-width = 512
-height = 512
+width = 8
+height = 8
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_latmj"]
-offsets = PackedFloat32Array(0, 0.75)
+offsets = PackedFloat32Array(0.22072072, 0.8918919)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3fdsd"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yegjs"]
 gradient = SubResource("Gradient_latmj")
-width = 512
-height = 512
-fill = 1
-fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_vpmvu"]
-offsets = PackedFloat32Array(0, 0.75)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+[sub_resource type="Curve" id="Curve_df3ex"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.4314516, 0), -6.6048126, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdcnb"]
-gradient = SubResource("Gradient_vpmvu")
-width = 512
-height = 512
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+[sub_resource type="CurveTexture" id="CurveTexture_yegjs"]
+curve = SubResource("Curve_df3ex")
 
-[sub_resource type="Gradient" id="Gradient_bmgnp"]
-offsets = PackedFloat32Array(0, 0.75)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kbfqu"]
-gradient = SubResource("Gradient_bmgnp")
-width = 512
-height = 512
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2msmu"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(1440, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1696, 1, 0)
+direction = Vector3(1, 1, 0)
+spread = 22.5
+initial_velocity_min = 118.88
+initial_velocity_max = 279.72
+gravity = Vector3(0, 98, 0)
+linear_accel_min = 10.489998
+linear_accel_max = 22.379997
+scale_min = 0.35
+scale_max = 0.84999996
+scale_curve = SubResource("CurveTexture_yegjs")
+color_ramp = SubResource("GradientTexture1D_yegjs")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2a57"]
 size = Vector2(48, 112)
@@ -134,9 +144,35 @@ colors = PackedColorArray(0.51718444, 0.5171845, 0.51718444, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_wxk4i")
 height = 512
 
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_muwxp"]
+gradient = SubResource("Gradient_k6cb8")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k6cb8"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(1440, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1696, 1, 0)
+direction = Vector3(1, 1, 0)
+spread = 22.5
+initial_velocity_min = 118.88
+initial_velocity_max = 279.72
+gravity = Vector3(0, 98, 0)
+linear_accel_min = 10.489998
+linear_accel_max = 22.379997
+scale_min = 0.35
+scale_max = 0.84999996
+scale_curve = SubResource("CurveTexture_yegjs")
+color_ramp = SubResource("GradientTexture1D_yegjs")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
 [node name="Map" type="Node2D" unique_id=379907041]
 script = ExtResource("1_bjcma")
-state = -1
 color_variant = Dictionary[int, Color]({
 0: Color(0.7657456, 0.95833725, 0.7345308, 1),
 1: Color(0.99999994, 0.84966475, 0.6074793, 1),
@@ -191,41 +227,22 @@ script = ExtResource("9_wxk4i")
 texture = SubResource("CanvasTexture_wxk4i")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
-[node name="HallwayLight" type="PointLight2D" parent="." unique_id=1765469948]
-position = Vector2(392, 88)
-energy = 0.12
-range_z_min = 0
-range_z_max = 0
-texture = SubResource("GradientTexture2D_2msmu")
-script = ExtResource("3_wxk4i")
-metadata/_custom_type_script = "uid://6aqekisaf736"
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=2115428245]
 
-[node name="HallwayLight2" type="PointLight2D" parent="." unique_id=331044017]
-position = Vector2(1072, 88)
-energy = 0.85
-range_z_min = 0
-range_z_max = 0
-texture = SubResource("GradientTexture2D_3fdsd")
-script = ExtResource("3_wxk4i")
-metadata/_custom_type_script = "uid://6aqekisaf736"
+[node name="SnowWindow" type="Sprite2D" parent="Background" unique_id=1723624390]
+clip_children = 1
+texture = SubResource("GradientTexture2D_tuwyy")
+centered = false
 
-[node name="HallwayLight3" type="PointLight2D" parent="." unique_id=1097651176]
-position = Vector2(1776, 88)
-energy = 0.85
-range_z_min = 0
-range_z_max = 0
-texture = SubResource("GradientTexture2D_mdcnb")
-script = ExtResource("3_wxk4i")
-metadata/_custom_type_script = "uid://6aqekisaf736"
-
-[node name="HallwayLight4" type="PointLight2D" parent="." unique_id=1272329877]
-position = Vector2(2504, 88)
-energy = 0.85
-range_z_min = 0
-range_z_max = 0
-texture = SubResource("GradientTexture2D_kbfqu")
-script = ExtResource("3_wxk4i")
-metadata/_custom_type_script = "uid://6aqekisaf736"
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Background/SnowWindow" unique_id=858327951]
+position = Vector2(0, -128)
+amount = 512
+texture = SubResource("GradientTexture2D_guff7")
+lifetime = 7.25
+preprocess = 7.0
+randomness = 0.42
+visibility_rect = Rect2(0, 0, 2880, 512)
+process_material = SubResource("ParticleProcessMaterial_2msmu")
 
 [node name="FireAxe" type="Sprite2D" parent="." unique_id=336031001]
 position = Vector2(328, 416)
@@ -274,20 +291,36 @@ debug_color = Color(0, 0.6, 0.69803923, 0)
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1565813838]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.73333335)
 z_index = 1
 
 [node name="Pillar" type="Node2D" parent="Foreground" unique_id=2067147131]
+modulate = Color(1, 1, 1, 0.627451)
 position = Vector2(536, 510)
 script = ExtResource("9_wxk4i")
 texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
 [node name="Pillar3" type="Node2D" parent="Foreground" unique_id=1839977206]
+modulate = Color(1, 1, 1, 0.627451)
 position = Vector2(1752, 512)
 script = ExtResource("9_wxk4i")
 texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
+
+[node name="SnowWindow" type="Sprite2D" parent="Foreground" unique_id=1484656501]
+clip_children = 1
+texture = SubResource("GradientTexture2D_tuwyy")
+centered = false
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Foreground/SnowWindow" unique_id=769237000]
+position = Vector2(0, -128)
+amount = 512
+texture = SubResource("GradientTexture2D_muwxp")
+lifetime = 7.25
+preprocess = 7.0
+randomness = 0.67
+visibility_rect = Rect2(0, 0, 2880, 512)
+process_material = SubResource("ParticleProcessMaterial_k6cb8")
 
 [node name="MapCamera" type="Camera2D" parent="." unique_id=18701421]
 unique_name_in_owner = true

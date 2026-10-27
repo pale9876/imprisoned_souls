@@ -1,8 +1,15 @@
 [gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://cnunnvwchx2ym"]
 
 [ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_1uy72"]
+[ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="2_m6fgb"]
+
+[sub_resource type="Resource" id="Resource_yegjs"]
+script = ExtResource("2_m6fgb")
+metadata/_custom_type_script = "uid://c3ykemf4n3om1"
 
 [resource]
 script = ExtResource("1_1uy72")
 name = &"라오디케"
+character_tag = Array[int]([0, 6])
+unit_info = SubResource("Resource_yegjs")
 metadata/_custom_type_script = "uid://4iakh7oj3ywo"
