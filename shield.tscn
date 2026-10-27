@@ -39,11 +39,11 @@ shader_parameter/flow_speed = 0.9550000453625
 shader_parameter/flow_width = 0.25000001024506
 shader_parameter/pond_alpha = 0.67999998480064
 
-[sub_resource type="Gradient" id="Gradient_vivl0"]
+[sub_resource type="Gradient" id="Gradient_1e71e"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1e71e"]
-gradient = SubResource("Gradient_vivl0")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mvqs3"]
+gradient = SubResource("Gradient_1e71e")
 width = 128
 height = 128
 
@@ -272,7 +272,7 @@ _data = {
 visible = false
 material = SubResource("ShaderMaterial_nsxlm")
 position = Vector2(-174, 0)
-texture = SubResource("GradientTexture2D_1e71e")
+texture = SubResource("GradientTexture2D_mvqs3")
 offset = Vector2(0, -64)
 script = ExtResource("2_xc41h")
 

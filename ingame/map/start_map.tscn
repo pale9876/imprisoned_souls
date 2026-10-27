@@ -13,24 +13,16 @@
 
 [sub_resource type="Gradient" id="Gradient_utk2m"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0, 0, 0, 1)
+colors = PackedColorArray(0.89, 0.89, 0.89, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5cnks"]
 gradient = SubResource("Gradient_utk2m")
 width = 2880
 height = 512
 
-[sub_resource type="Gradient" id="Gradient_2msmu"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.30954, 0.66, 0.30359998, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_wqsic"]
-gradient = SubResource("Gradient_2msmu")
-width = 2880
-
 [sub_resource type="Gradient" id="Gradient_df3ex"]
-offsets = PackedFloat32Array(0, 0.98, 1, 1, 1)
-colors = PackedColorArray(0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.929, 1, 1, 1)
+colors = PackedColorArray(0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_muwxp"]
 gradient = SubResource("Gradient_df3ex")
@@ -38,6 +30,16 @@ gradient = SubResource("Gradient_df3ex")
 [sub_resource type="Curve" id="Curve_yegjs"]
 _data = [Vector2(0, 0), 0.0, 5.3871303, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.70637, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_2msmu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.06374502, 0.19521913, 0.8286853, 0.9561753)
+colors = PackedColorArray(0.6313726, 0.6313726, 0.6313726, 1, 0.89411765, 0.89411765, 0.89411765, 1, 0.11858138, 0.11858138, 0.11858138, 1, 0.89411765, 0.89411765, 0.89411765, 1, 0.63, 0.63, 0.63, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7jywp"]
+gradient = SubResource("Gradient_2msmu")
+width = 512
+height = 512
 
 [sub_resource type="Gradient" id="Gradient_yegjs"]
 interpolation_mode = 1
@@ -59,6 +61,19 @@ height = 512
 [sub_resource type="CanvasTexture" id="CanvasTexture_wxk4i"]
 diffuse_texture = SubResource("GradientTexture2D_yegjs")
 normal_texture = SubResource("GradientTexture2D_df3ex")
+
+[sub_resource type="Gradient" id="Gradient_mdcnb"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.9442231, 1)
+colors = PackedColorArray(0, 0.12876362, 0.16082978, 1, 0.15409331, 0.26, 0.1378, 1, 0.45635328, 0.77, 0.40809998, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2msmu"]
+gradient = SubResource("Gradient_mdcnb")
+width = 256
+height = 256
+fill = 2
+fill_from = Vector2(0.5, 0.5811966)
+fill_to = Vector2(0.9529914, 0.15811966)
 
 [sub_resource type="Gradient" id="Gradient_vpmvu"]
 offsets = PackedFloat32Array(1)
@@ -82,7 +97,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_latmj"]
-offsets = PackedFloat32Array(0.22072072, 0.8918919)
+offsets = PackedFloat32Array(0, 0.294686)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_yegjs"]
@@ -115,6 +130,39 @@ collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 0.0
 
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k6cb8"]
+gradient = SubResource("Gradient_vpmvu")
+width = 2880
+height = 512
+
+[sub_resource type="Curve" id="Curve_muwxp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5064378, 0), -5.410489, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_df3ex"]
+curve = SubResource("Curve_muwxp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_latmj"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(1440, 0, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1805, 1, 0)
+direction = Vector3(0.5, 1, 0)
+spread = 9.922
+flatness = 0.095
+initial_velocity_min = 421.46
+initial_velocity_max = 733.86
+gravity = Vector3(0, 98, 0)
+linear_accel_min = 10.489998
+linear_accel_max = 22.379997
+scale_min = 0.049999997
+scale_max = 0.45
+scale_curve = SubResource("CurveTexture_yegjs")
+scale_over_velocity_min = 62.73
+scale_over_velocity_max = 110.7
+color_ramp = SubResource("GradientTexture1D_yegjs")
+alpha_curve = SubResource("CurveTexture_df3ex")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p2a57"]
 size = Vector2(48, 112)
 
@@ -125,8 +173,8 @@ _data = {
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_muwxp"]
-offsets = PackedFloat32Array(0, 0.057915058, 0.42857143, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0.8016529, 0.8016529, 0.8016529, 0.8016529, 1, 1, 1, 1, 0.84, 0.84, 0.84, 0)
+offsets = PackedFloat32Array(0, 0.45019922, 0.47011954, 0.55378485, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.8016529, 0.8016529, 0.8016529, 0.8016529, 1, 1, 1, 1, 0.9899213, 0.9899213, 0.9899213, 0.93700784, 0.84, 0.84, 0.84, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_f8sw5"]
 gradient = SubResource("Gradient_muwxp")
@@ -191,22 +239,25 @@ clip_children = 2
 position = Vector2(1440, 256)
 texture = SubResource("GradientTexture2D_5cnks")
 
-[node name="Sprite2D" type="Sprite2D" parent="Background/Wall" unique_id=126483095]
-position = Vector2(3.8146973e-06, 144)
-texture = SubResource("GradientTexture2D_wqsic")
+[node name="Line2D" type="Line2D" parent="Background/Wall" unique_id=319588236]
+points = PackedVector2Array(-1440, 144, 1440, 144)
+width = 40.0
+default_color = Color(0.54901963, 0.80784315, 0.50980395, 1)
 
 [node name="Wallline" type="Line2D" parent="Background" unique_id=410014299]
 points = PackedVector2Array(0, 400, 2880, 400)
-default_color = Color(0.16646415, 1.0979828e-07, 3.308989e-08, 1)
+default_color = Color(1, 0.7025, 0.14999998, 1)
 
 [node name="RouteGuideLine" type="Line2D" parent="Background" unique_id=1720506323]
 position = Vector2(4, 208)
-points = PackedVector2Array(-4, 192, 2880, 192)
-width = 20.0
+points = PackedVector2Array(-4, 192, 828, 192)
+width = 25.0
 texture = SubResource("GradientTexture1D_muwxp")
 texture_mode = 2
 script = ExtResource("2_yegjs")
+direction = 1
 alpha_curve = SubResource("Curve_yegjs")
+point_color = Color(0.95, 0.06649999, 0.06649999, 1)
 progress = 1.0
 cursor_space = 0.07100000000000001
 
@@ -215,8 +266,12 @@ points = PackedVector2Array(0, 496, 2880, 496)
 width = 32.0
 default_color = Color(0.36559817, 0.08056658, 0.043294057, 1)
 
+[node name="Hallway" type="Sprite2D" parent="Background" unique_id=1400576293]
+position = Vector2(1408, 256)
+texture = SubResource("GradientTexture2D_7jywp")
+
 [node name="Pillar" type="Node2D" parent="Background" unique_id=2102265721]
-position = Vector2(1136, 512)
+position = Vector2(1088, 512)
 script = ExtResource("9_wxk4i")
 texture = SubResource("CanvasTexture_wxk4i")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
@@ -227,9 +282,13 @@ script = ExtResource("9_wxk4i")
 texture = SubResource("CanvasTexture_wxk4i")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
-[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=2115428245]
+[node name="Gate" type="Sprite2D" parent="Background" unique_id=2115428245]
+visible = false
+position = Vector2(960, 384)
+texture = SubResource("GradientTexture2D_2msmu")
 
 [node name="SnowWindow" type="Sprite2D" parent="Background" unique_id=1723624390]
+visible = false
 clip_children = 1
 texture = SubResource("GradientTexture2D_tuwyy")
 centered = false
@@ -243,6 +302,23 @@ preprocess = 7.0
 randomness = 0.42
 visibility_rect = Rect2(0, 0, 2880, 512)
 process_material = SubResource("ParticleProcessMaterial_2msmu")
+
+[node name="RainParticleBackground" type="Sprite2D" parent="Background" unique_id=985076435]
+visible = false
+clip_children = 1
+texture = SubResource("GradientTexture2D_k6cb8")
+centered = false
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Background/RainParticleBackground" unique_id=1624869864]
+position = Vector2(0, -128)
+amount = 1024
+texture = SubResource("GradientTexture2D_guff7")
+lifetime = 5.31
+preprocess = 4.46
+visibility_rect = Rect2(0, 0, 2880, 512)
+trail_enabled = true
+trail_lifetime = 0.08
+process_material = SubResource("ParticleProcessMaterial_latmj")
 
 [node name="FireAxe" type="Sprite2D" parent="." unique_id=336031001]
 position = Vector2(328, 416)
@@ -308,6 +384,7 @@ texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
 [node name="SnowWindow" type="Sprite2D" parent="Foreground" unique_id=1484656501]
+visible = false
 clip_children = 1
 texture = SubResource("GradientTexture2D_tuwyy")
 centered = false

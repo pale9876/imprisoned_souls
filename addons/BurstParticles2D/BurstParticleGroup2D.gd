@@ -1,7 +1,7 @@
 @tool
 extends Node2D
-
 class_name BurstParticleGroup2D
+
 
 @export var repeat: bool = true
 @export var free_when_finished: bool = true
@@ -23,9 +23,10 @@ func _ready():
 		
 		if child is BurstParticles2D:
 			child.finished_burst.connect(_on_child_finished)
+
 		update_children()
 
-	if autostart or Engine.is_editor_hint():
+	if autostart and !Engine.is_editor_hint():
 		burst()
 
 
@@ -36,11 +37,12 @@ func _on_child_entered_tree(child: Node):
 	if child is BurstParticles2D:
 		if !child.finished_burst.is_connected(_on_child_finished):
 			child.finished_burst.connect(_on_child_finished)
+
 		if autostart or Engine.is_editor_hint():
 			burst()
 
 
-func update_children():
+func update_children() -> void:
 	lifetime = 0.
 
 	for child in get_children():
@@ -52,7 +54,7 @@ func update_children():
 			child.autostart = autostart
 
 
-func burst():
+func burst() -> void:
 	finished = false
 	
 	update_children()

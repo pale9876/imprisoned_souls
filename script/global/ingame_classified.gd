@@ -38,7 +38,7 @@ enum BattleClass{
 enum WeaponType
 {
 	NONE,
-	KATANA,
+	BLADE,
 	AXE,
 	PISTOL,
 	CANNON,

@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_hs1uq")
-name = &"저주받은 탄생"
+name = &"피어나는 저주"
 weapon_compatibility = Array[int]([6])
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

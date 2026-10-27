@@ -10,6 +10,7 @@
 script = ExtResource("1_50kwp")
 
 [node name="Map" parent="." unique_id=160920806 instance=ExtResource("2_6dhv1")]
+draw_region = false
 
 [node name="Keikai" parent="Map" unique_id=1292865989 instance=ExtResource("5_2286k")]
 unique_name_in_owner = true

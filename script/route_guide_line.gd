@@ -9,13 +9,14 @@ enum Direction
 	RIGHT = 1,
 }
 
-
+@export var direction: Direction = Direction.LEFT
 @export var auto_play: bool = true
 @export var alpha_curve: Curve
 
 @export var point_color: Color = Color(0.914, 0.0, 0.0, 1.0):
 	set(_color):
 		point_color = _color
+		update_colors()
 
 
 @export_range(0., 1., .001) var progress: float = 0.:
@@ -62,6 +63,14 @@ func _init() -> void:
 	add_child(_timer)
 
 
+func update_colors() -> void:
+	var b_color: Color = point_color * Color.TRANSPARENT
+	
+	(texture as GradientTexture1D).gradient.colors = [
+		b_color, b_color, point_color, b_color, b_color
+	]
+
+
 func update_offset() -> void:
 	var cursur_min: float = clampf(progress - cursor_space, 0., 1.)
 	var cursur_max: float = clampf(progress + cursor_space, 0., 1.)
@@ -74,15 +83,15 @@ func update_offset() -> void:
 	(texture as GradientTexture1D).gradient.colors = _arr
 
 
-func play_guideline(진행방향: Direction = Direction.LEFT) -> void:
-	progress = 0. if Direction.RIGHT else 1.
+func play_guideline() -> void:
+	progress = 0. if direction == Direction.RIGHT else 1.
 	
 	if is_playing():
 		return
 	
 	_tween = create_tween()
 	_tween.tween_property(
-		self, "progress", 1. if Direction.RIGHT else 0., play_time
+		self, "progress", 1. if direction == Direction.RIGHT else 0., play_time
 	)
 	_tween.finished.connect(
 		func() -> void:

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://bsf4vx4o1afqm"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_j7oxb"]
+
+[resource]
+script = ExtResource("1_j7oxb")
+name = &"무력화"
+description = "개머리판으로 가격 후 사격한다. 사용하는 무기에 따라 효과가 다르다."
+activate_by_usable_weapons_only = true
+weapon_compatibility = Array[int]([3, 8, 4])
+metadata/_custom_type_script = "uid://bikptipa3pwm6"
