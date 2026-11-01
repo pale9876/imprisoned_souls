@@ -1,5 +1,4 @@
 extends CanvasLayer
-class_name Channel
 
 
 var _bgm: BGMPlayer

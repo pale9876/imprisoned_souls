@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://63r2k5ira2ix" path="res://script/flow_texture.gd" id="8_k6cb8"]
 [ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="8_utk2m"]
 [ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="9_wxk4i"]
+[ext_resource type="Script" uid="uid://dxsid3k467hlh" path="res://script/MusicSpeaker.cs" id="10_df3ex"]
 [ext_resource type="Script" uid="uid://devss3vthbfae" path="res://script/MapStateDebugPanel.gd" id="11_df3ex"]
 
 [sub_resource type="Gradient" id="Gradient_utk2m"]
@@ -20,12 +21,12 @@ gradient = SubResource("Gradient_utk2m")
 width = 2880
 height = 512
 
-[sub_resource type="Gradient" id="Gradient_df3ex"]
-offsets = PackedFloat32Array(0, 0.929, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_bmgnp"]
+offsets = PackedFloat32Array(0, 0.98, 1, 1, 1)
 colors = PackedColorArray(0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_muwxp"]
-gradient = SubResource("Gradient_df3ex")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kbfqu"]
+gradient = SubResource("Gradient_bmgnp")
 
 [sub_resource type="Curve" id="Curve_yegjs"]
 _data = [Vector2(0, 0), 0.0, 5.3871303, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.70637, 0.0, 0, 0]
@@ -252,7 +253,7 @@ default_color = Color(1, 0.7025, 0.14999998, 1)
 position = Vector2(4, 208)
 points = PackedVector2Array(-4, 192, 828, 192)
 width = 25.0
-texture = SubResource("GradientTexture1D_muwxp")
+texture = SubResource("GradientTexture1D_kbfqu")
 texture_mode = 2
 script = ExtResource("2_yegjs")
 direction = 1
@@ -399,13 +400,9 @@ randomness = 0.67
 visibility_rect = Rect2(0, 0, 2880, 512)
 process_material = SubResource("ParticleProcessMaterial_k6cb8")
 
-[node name="MapCamera" type="Camera2D" parent="." unique_id=18701421]
-unique_name_in_owner = true
-position = Vector2(216, 368)
-zoom = Vector2(0.8, 0.8)
-limit_left = 0
-limit_top = 0
-limit_bottom = 640
+[node name="MusicSpeaker" type="Node2D" parent="." unique_id=931606575]
+position = Vector2(192, -2)
+script = ExtResource("10_df3ex")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=190470928]
 

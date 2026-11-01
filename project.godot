@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Imprisoned Souls"
 run/main_scene="uid://dss5v1ieioljj"
-config/features=PackedStringArray("4.7", "Forward Plus")
+config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 run/max_fps=60
 boot_splash/bg_color=Color(0.06469653, 0.064696535, 0.0646965, 1)
 boot_splash/stretch_mode=0
@@ -33,16 +33,17 @@ buses/default_bus_layout="uid://w8hk2j6ewb5f"
 
 [autoload]
 
-InputState="*uid://dv50hrkfe2ifw"
-GSignal="*uid://bjpdnvlv58vit"
+DialogueManager="*uid://c3rodes2l3gxb"
 Global="*uid://o1g358yfihj8"
+GSignal="*uid://bjpdnvlv58vit"
+InputState="*uid://dv50hrkfe2ifw"
+Channel="*uid://qnolbh3cfav8"
 RumblePak="*uid://cf4u12dx32nt7"
 EventHorizon="*uid://bwlhcpcfc837b"
 SpawningPool="*uid://dj84j0yu4jr3v"
 UnitGenerator="*uid://cxglnv6na8ms4"
 Gmotion="*uid://5kgxu2bov14j"
 PDF="*uid://crqknxquwocqh"
-DialogueManager="*uid://c3rodes2l3gxb"
 Dice="*uid://2ovl8inv5dmr"
 Chrono="*uid://c0xakatc4cp2i"
 UISound="*uid://cbkksbu4u8ubf"

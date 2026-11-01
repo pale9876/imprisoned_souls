@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holoverse", "Holoverse.csproj", "{A32E4300-47E5-4759-8B0D-772EE965EF57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A32E4300-47E5-4759-8B0D-772EE965EF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32E4300-47E5-4759-8B0D-772EE965EF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32E4300-47E5-4759-8B0D-772EE965EF57}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{A32E4300-47E5-4759-8B0D-772EE965EF57}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{A32E4300-47E5-4759-8B0D-772EE965EF57}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{A32E4300-47E5-4759-8B0D-772EE965EF57}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

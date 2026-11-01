@@ -14,6 +14,5 @@ metadata/_custom_type_script = "uid://c3ykemf4n3om1"
 script = ExtResource("1_cct4o")
 name = &"바테이아"
 icon = ExtResource("1_2kqeo")
-character_tag = Array[int]([1, 3])
 unit_info = SubResource("Resource_xglav")
 metadata/_custom_type_script = "uid://4iakh7oj3ywo"

@@ -5,13 +5,11 @@ signal blink()
 
 
 # Import
-const Channel: Script = preload("uid://bc33hejnp7byc")
 const Ingame: Script = preload("uid://lf1g8r7wbov3")
 const Option: Script = preload("uid://b6wu325meysae")
 const Title: Script = preload("uid://dtu3imugbu0pm")
 const Hud: Script = preload("uid://dgntyiu05self")
 const DialogUI: Script = preload("uid://borjea45xky04")
-#const StartMap: Script = preload("uid://di5e7qxe7d0dj")
 const World = preload("uid://dpn1opeegcme2")
 
 

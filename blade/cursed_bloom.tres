@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_hs1uq")
 name = &"피어나는 저주"
+description = "전방의 350px 범위에 있는 적들에게 마구 채찍을 휘두른다."
 weapon_compatibility = Array[int]([6])
 metadata/_custom_type_script = "uid://bikptipa3pwm6"

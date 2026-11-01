@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dsgtg783d3w44"]
+
+[ext_resource type="Script" uid="uid://bnsjcl3bguhhr" path="res://script/PoissonPath.cs" id="1_64p2c"]
+[ext_resource type="Script" uid="uid://c6nf0jd2gg8wq" path="res://script/PoissonPolygon.cs" id="2_ut318"]
+
+[sub_resource type="Curve2D" id="Curve2D_4v7eb"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 220, 323, 0, 0, 0, 0, 408, 280, 0, 0, 0, 0, 405, 132, 0, 0, 0, 0, 590, 101)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_64p2c"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 136, 39, 0, 0, 0, 0, 66, 166, 0, 0, 0, 0, 232, 195, 0, 0, 0, 0, 276, 74, 0, 0, 0, 0, 136, 39)
+}
+point_count = 5
+
+[node name="PoissonClassesDemo" type="Node2D" unique_id=656705667]
+
+[node name="PoissonPath" type="Path2D" parent="." unique_id=1624266963]
+curve = SubResource("Curve2D_4v7eb")
+script = ExtResource("1_64p2c")
+
+[node name="PoissonPolygon" type="Path2D" parent="." unique_id=1710012216]
+curve = SubResource("Curve2D_64p2c")
+script = ExtResource("2_ut318")

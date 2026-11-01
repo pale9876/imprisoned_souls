@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://gadxbi47dqs8"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_pa12w"]
+
+[resource]
+script = ExtResource("1_pa12w")
+name = &"추진격"
+description = "전방으로 빠르게 추진하여 주먹을 날린다. 추진 모션동안 상단 공격을 전부 회피한다."
+metadata/_custom_type_script = "uid://bikptipa3pwm6"

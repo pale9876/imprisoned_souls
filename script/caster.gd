@@ -2,12 +2,29 @@ extends RefCounted
 class_name Caster
 
 
+static func get_front_from_cast_point(point: Node2D, mask: int, exclude: Array[RID]) -> Dictionary:
+	var state := point.get_world_2d().direct_space_state
+	
+	var param := PhysicsPointQueryParameters2D.new()
+	param.position = point.global_position
+	param.collision_mask = mask
+	param.exclude = exclude
+	param.collide_with_bodies = true
+	param.collide_with_areas = false
+	
+	var _result := state.intersect_point(param)
+	
+	if _result.is_empty():
+		return state.intersect_point(param)[0]
+	
+	return {}
+	
+	
+
 
 static func casting(
 	from: Node2D, to: Node2D, mask: int, exclude: Array[RID]
-	) -> Caster:
-	var caster := Caster.new()
-	
+	) -> Dictionary:
 	var direct_space_state: PhysicsDirectSpaceState2D = from.get_world_2d().direct_space_state
 	var param := PhysicsRayQueryParameters2D.create(
 		from.global_position,
@@ -15,8 +32,7 @@ static func casting(
 		mask, exclude
 	)
 	
-	caster.result = direct_space_state.intersect_ray(param)
-	return caster
+	return direct_space_state.intersect_ray(param)
 
 
 func shape_cast(

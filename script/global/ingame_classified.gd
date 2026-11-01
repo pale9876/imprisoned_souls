@@ -38,16 +38,18 @@ enum BattleClass{
 enum WeaponType
 {
 	NONE,
-	BLADE,
+	BLADE, # 일본도 또는 환도
 	AXE,
 	PISTOL,
-	CANNON,
+	CANNON, # 타겟에 대고 쏘는 샷건
 	HAMMER,
-	SCYTHE,
+	SCYTHE, # 사슬낫
 	KNIFE,
-	SMG,
-	REVOLVER,
-	SPEAR,
+	SMG, # 기관단총
+	REVOLVER, # 리볼버 9mm
+	SPEAR, # 창, 찌르개
+	WHIP, # 채찍
+	GAUNTLET, # 건틀렛
 }
 
 	

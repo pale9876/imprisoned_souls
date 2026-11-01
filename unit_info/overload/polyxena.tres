@@ -1,7 +1,20 @@
 [gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://bq4iw2mqpl6yg"]
 
+[ext_resource type="Script" uid="uid://cy81gr8mcq6n0" path="res://script/resource/react_dialog.gd" id="1_0xur4"]
 [ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_y42eu"]
 [ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="2_1hxy1"]
+
+[sub_resource type="Resource" id="Resource_733mc"]
+script = ExtResource("1_0xur4")
+awakening = Array[String](["잠시 빌리겠어.", "이 몸... 빌릴게."])
+"적발견시" = Array[String](["여기다!", "저기에 있다!", "여기야!"])
+blind = Array[String]([""])
+"적사거리이탈" = Array[String](["추격해!"])
+"근접피격시" = Array[String](["읏!", "젠장!"])
+"원거리피격시" = Array[String](["맞았..."])
+"콤보시작시" = Array[String](["스위치!", "이어받아!"])
+taunt = Array[String](["게임보다 쉽네.", "사지를 찢어주마"])
+metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
 
 [sub_resource type="Resource" id="Resource_df3ex"]
 script = ExtResource("2_1hxy1")
@@ -10,5 +23,8 @@ metadata/_custom_type_script = "uid://c3ykemf4n3om1"
 [resource]
 script = ExtResource("1_y42eu")
 name = &"폴릭세네"
+personality = 1
+character_tag = 2
 unit_info = SubResource("Resource_df3ex")
+dialog = SubResource("Resource_733mc")
 metadata/_custom_type_script = "uid://4iakh7oj3ywo"

@@ -14,6 +14,8 @@ enum CharacterTag {
 	CELERITY, # 민첩함
 	DREADNOUGHT, # 두려움없는
 	PARANOID, # 편집증적
+	IGNOBLE, # 비열한
+	TWISTED, # 뒤틀린
 }
 
 
@@ -25,10 +27,10 @@ enum CharacterTag {
 @export var unit_info: UnitInformation
 
 
-@export_category("유닛 씬")
+@export_category("Unit Meta")
 @export var unit_scene: PackedScene
 @export var spawn_pool: Array[PackedScene]
 @export var bt: BehaviorTree
-
+@export var dialog: NPCReactDialog
 
 	

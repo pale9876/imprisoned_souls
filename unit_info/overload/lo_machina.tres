@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://ickcv70nb4pk"]
+
+[ext_resource type="Script" uid="uid://cy81gr8mcq6n0" path="res://script/resource/react_dialog.gd" id="1_4bdea"]
+[ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_o1p04"]
+
+[sub_resource type="Resource" id="Resource_0gvo5"]
+script = ExtResource("1_4bdea")
+awakening = Array[String](["시작하지.", ""])
+metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
+
+[resource]
+script = ExtResource("1_o1p04")
+name = &"마키나"
+character_tag = 6
+dialog = SubResource("Resource_0gvo5")
+metadata/_custom_type_script = "uid://4iakh7oj3ywo"

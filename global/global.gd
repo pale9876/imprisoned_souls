@@ -76,8 +76,8 @@ func load_data(path: String = "") -> bool:
 	return exist
 
 
-func get_channel() -> Channel:
-	return main_scene.channel
+#func get_channel() -> Channel:
+	#return main_scene.channel
 
 
 func get_ingame_scene() -> Ingame:

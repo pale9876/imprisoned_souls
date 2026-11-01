@@ -1,8 +1,20 @@
 [gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://d4cvo27s6gy8"]
 
+[ext_resource type="Script" uid="uid://cy81gr8mcq6n0" path="res://script/resource/react_dialog.gd" id="1_frlc7"]
 [ext_resource type="Texture2D" uid="uid://duexyiwhnjskf" path="res://icon/overload/cassandra.png" id="1_j13v6"]
 [ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_oy1hg"]
 [ext_resource type="Script" uid="uid://c3ykemf4n3om1" path="res://script/resource/unit_information.gd" id="2_j13v6"]
+
+[sub_resource type="Resource" id="Resource_m35m6"]
+script = ExtResource("1_frlc7")
+awakening = Array[String](["명령...", "기동..."])
+"적발견시" = Array[String](["전방, 적이다!", "저기, 적이다!"])
+in_battle = Array[String](["대형으로!", "사살해!"])
+blind = Array[String](["안 보여!...", "눈이!..."])
+"적사거리이탈" = Array[String](["쫓아!", "놓치지마!"])
+"근접피격시" = null
+"원거리피격시" = null
+metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
 
 [sub_resource type="Resource" id="Resource_w7j2h"]
 script = ExtResource("2_j13v6")
@@ -12,6 +24,7 @@ metadata/_custom_type_script = "uid://c3ykemf4n3om1"
 script = ExtResource("1_oy1hg")
 name = &"카산드라"
 icon = ExtResource("1_j13v6")
-character_tag = Array[int]([1, 2])
+character_tag = 1
 unit_info = SubResource("Resource_w7j2h")
+dialog = SubResource("Resource_m35m6")
 metadata/_custom_type_script = "uid://4iakh7oj3ywo"

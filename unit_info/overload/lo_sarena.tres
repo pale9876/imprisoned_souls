@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://dm2fctjqdbjc6"]
+
+[ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_0gvo5"]
+[ext_resource type="Script" uid="uid://cy81gr8mcq6n0" path="res://script/resource/react_dialog.gd" id="1_dfppq"]
+
+[sub_resource type="Resource" id="Resource_4bdea"]
+script = ExtResource("1_dfppq")
+awakening = Array[String](["작동 개시."])
+"적발견시" = Array[String](["적 발견!"])
+in_battle = Array[String](["전투개시!"])
+metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
+
+[resource]
+script = ExtResource("1_0gvo5")
+name = &"사레나"
+personality = 1
+character_tag = 3
+dialog = SubResource("Resource_4bdea")
+metadata/_custom_type_script = "uid://4iakh7oj3ywo"

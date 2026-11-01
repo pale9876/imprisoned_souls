@@ -5,7 +5,7 @@ class_name MotionLibrary
 
 
 # Import
-const Player: Script = preload("uid://c2uxhumgng18h")
+#const Player: Script = preload("uid://c2uxhumgng18h")
 
 
 var freeze_frame: int = 0
@@ -36,14 +36,6 @@ func _exit_tree() -> void:
 		Gmotion.player_motion_scale_changed.disconnect(player_motion_scale_changed)
 
 
-func player_motion_scale_changed() -> void:
-	speed_scale = get_motion_scale()
-
-
-func global_motion_scale_changed() -> void:
-	speed_scale = get_motion_scale()
-
-
 func _physics_process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
@@ -54,6 +46,13 @@ func _physics_process(_delta: float) -> void:
 	else:
 		freeze_frame -= 1
 
+
+func player_motion_scale_changed() -> void:
+	speed_scale = get_motion_scale()
+
+
+func global_motion_scale_changed() -> void:
+	speed_scale = get_motion_scale()
 
 func freeze(frame: int) -> void:
 	freeze_frame = maxi(frame, 0)

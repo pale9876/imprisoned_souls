@@ -4,9 +4,7 @@
 
 [resource]
 script = ExtResource("1_mexwc")
-cooldown = 42
+cooldown = 32
 name = &"콘트라파소"
-description = "짧은 시간동안 전방향에서 오는 근거리 공격 및 원거리 공격을 무효화한다.
-
-"
+description = "짧은 시간동안 공격차징을 하며, 바라보는 방향에서 오는 근거리 공격 및 원거리 공격을 모두 무효화한다. 차징시간이 끝남과 동시에 자신을 공격한 인원들에게 공격을 되돌려준다."
 metadata/_custom_type_script = "uid://dvl7esb756qhi"

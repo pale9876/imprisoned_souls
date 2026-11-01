@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BladeModuleInfo" format=3 uid="uid://dkbxbna6u4vv"]
+
+[ext_resource type="Script" uid="uid://bikptipa3pwm6" path="res://script/resource/blade_module_info.gd" id="1_y74s7"]
+
+[resource]
+script = ExtResource("1_y74s7")
+name = &"완만도달"
+weapon_compatibility = Array[int]([12])
+metadata/_custom_type_script = "uid://bikptipa3pwm6"
