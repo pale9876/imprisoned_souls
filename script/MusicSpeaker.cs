@@ -1,10 +1,22 @@
 using Godot;
-using System;
 
-public partial class MusicSpeaker : Node2D
+
+
+[Tool]
+public partial class MusicSpeaker : AudioStreamPlayer2D
 {
 
-	
+    public MusicSpeaker()
+    {
+        Bus = "SFX";
+        
+        if (!Engine.IsEditorHint())
+        {
+            Autoplay = true;
+            Playing = true;
+            
+        }
+    }
 
 	
 }

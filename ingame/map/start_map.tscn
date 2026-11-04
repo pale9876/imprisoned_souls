@@ -10,7 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="8_utk2m"]
 [ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="9_wxk4i"]
 [ext_resource type="Script" uid="uid://dxsid3k467hlh" path="res://script/MusicSpeaker.cs" id="10_df3ex"]
+[ext_resource type="AudioStream" uid="uid://cpb5k4jupenut" path="res://music/Tonight_You_Belong_to_Me.mp3" id="10_k6cb8"]
 [ext_resource type="Script" uid="uid://devss3vthbfae" path="res://script/MapStateDebugPanel.gd" id="11_df3ex"]
+[ext_resource type="Texture2D" uid="uid://bh0wda61b0y5w" path="res://icon/2d/office/icon-volume-2d.svg" id="11_muwxp"]
 
 [sub_resource type="Gradient" id="Gradient_utk2m"]
 offsets = PackedFloat32Array(1)
@@ -220,6 +222,10 @@ collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 0.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wqsic"]
+streams_count = 1
+stream_0/stream = ExtResource("10_k6cb8")
+
 [node name="Map" type="Node2D" unique_id=379907041]
 script = ExtResource("1_bjcma")
 color_variant = Dictionary[int, Color]({
@@ -400,9 +406,15 @@ randomness = 0.67
 visibility_rect = Rect2(0, 0, 2880, 512)
 process_material = SubResource("ParticleProcessMaterial_k6cb8")
 
-[node name="MusicSpeaker" type="Node2D" parent="." unique_id=931606575]
-position = Vector2(192, -2)
+[node name="MusicSpeaker" type="AudioStreamPlayer2D" parent="." unique_id=1929033998]
+position = Vector2(240, 24)
+stream = SubResource("AudioStreamRandomizer_wqsic")
+autoplay = true
+bus = &"SFX"
 script = ExtResource("10_df3ex")
+
+[node name="Sprite2D" type="Sprite2D" parent="MusicSpeaker" unique_id=1249851618]
+texture = ExtResource("11_muwxp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=190470928]
 

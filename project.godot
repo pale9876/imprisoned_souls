@@ -48,6 +48,10 @@ Dice="*uid://2ovl8inv5dmr"
 Chrono="*uid://c0xakatc4cp2i"
 UISound="*uid://cbkksbu4u8ubf"
 
+[dialogue_manager]
+
+runtime/advanced/uses_dotnet=true
+
 [display]
 
 window/size/viewport_width=640
