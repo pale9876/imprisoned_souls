@@ -1,9 +1,19 @@
 [gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://dt6jnnrprfhcv"]
 
 [ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_1vo5e"]
+[ext_resource type="Script" uid="uid://cy81gr8mcq6n0" path="res://script/resource/react_dialog.gd" id="1_ehjdi"]
+
+[sub_resource type="Resource" id="Resource_8ka0v"]
+script = ExtResource("1_ehjdi")
+awakening = Array[String](["어쩔 수 없네."])
+"적발견시" = Array[String](["적 포착."])
+in_battle = Array[String](["알았어."])
+"범위공격시전시" = Array[String](["공격 개시."])
+metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
 
 [resource]
 script = ExtResource("1_1vo5e")
 name = &"X-02"
 character_tag = 1
+dialog = SubResource("Resource_8ka0v")
 metadata/_custom_type_script = "uid://4iakh7oj3ywo"

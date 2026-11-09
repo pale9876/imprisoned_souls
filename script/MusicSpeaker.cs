@@ -1,7 +1,6 @@
 using Godot;
 
 
-
 [Tool]
 public partial class MusicSpeaker : AudioStreamPlayer2D
 {
@@ -9,13 +8,13 @@ public partial class MusicSpeaker : AudioStreamPlayer2D
     public MusicSpeaker()
     {
         Bus = "SFX";
-        
-        if (!Engine.IsEditorHint())
-        {
-            Autoplay = true;
-            Playing = true;
-            
-        }
+        Autoplay = true;
+    }
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+
     }
 
 	

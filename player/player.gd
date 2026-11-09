@@ -30,13 +30,6 @@ func _enter_tree() -> void:
 	
 	GSignal.soft_pause.connect(soft_pause)
 	GSignal.resume.connect(resume)
-	
-	#Global.debug_toggled.connect(
-		#func() -> void:
-			#for node: Node in toggles:
-				#if node is Node2D or node is Control:
-					#node.hide()
-	#)
 
 
 func _ready() -> void:

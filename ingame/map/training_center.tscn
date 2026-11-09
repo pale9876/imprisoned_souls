@@ -1,18 +1,17 @@
 [gd_scene format=3 uid="uid://ccd41t1qrjttn"]
 
-[ext_resource type="Script" uid="uid://bl0olstw3eapg" path="res://script/map.gd" id="1_bjcma"]
-[ext_resource type="Script" uid="uid://b8c8aspwpnr43" path="res://script/route_guide_line.gd" id="2_yegjs"]
-[ext_resource type="Texture2D" uid="uid://cue3j6hcdcy57" path="res://aseprite/tilemap/fireaxe.png" id="3_p2a57"]
-[ext_resource type="Script" uid="uid://xuoxmo1sa6u6" path="res://ingame/map/stage.gd" id="7_5cnks"]
-[ext_resource type="Script" uid="uid://btxuckvcyog73" path="res://script/map_trigger_region.gd" id="7_utk2m"]
-[ext_resource type="Script" uid="uid://dxg3xn47blbqr" path="res://script/keikai_line.gd" id="7_wxk4i"]
-[ext_resource type="Script" uid="uid://63r2k5ira2ix" path="res://script/flow_texture.gd" id="8_k6cb8"]
-[ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="8_utk2m"]
-[ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="9_wxk4i"]
-[ext_resource type="Script" uid="uid://dxsid3k467hlh" path="res://script/MusicSpeaker.cs" id="10_df3ex"]
-[ext_resource type="AudioStream" uid="uid://cpb5k4jupenut" path="res://music/Tonight_You_Belong_to_Me.mp3" id="10_k6cb8"]
-[ext_resource type="Script" uid="uid://devss3vthbfae" path="res://script/MapStateDebugPanel.gd" id="11_df3ex"]
-[ext_resource type="Texture2D" uid="uid://bh0wda61b0y5w" path="res://icon/2d/office/icon-volume-2d.svg" id="11_muwxp"]
+[ext_resource type="Script" uid="uid://bl0olstw3eapg" path="res://script/map.gd" id="1_2bbkv"]
+[ext_resource type="Script" uid="uid://b8c8aspwpnr43" path="res://script/route_guide_line.gd" id="2_cbop0"]
+[ext_resource type="Script" uid="uid://40r1tpxteoxv" path="res://script/pillar.gd" id="3_m02i6"]
+[ext_resource type="Texture2D" uid="uid://cue3j6hcdcy57" path="res://aseprite/tilemap/fireaxe.png" id="4_21i8w"]
+[ext_resource type="Script" uid="uid://xuoxmo1sa6u6" path="res://ingame/map/stage.gd" id="5_lx182"]
+[ext_resource type="PackedScene" uid="uid://bpojlualakpuu" path="res://unit/sand_bag.tscn" id="6_o6crk"]
+[ext_resource type="Script" uid="uid://63r2k5ira2ix" path="res://script/flow_texture.gd" id="7_v08yr"]
+[ext_resource type="Script" uid="uid://dxg3xn47blbqr" path="res://script/keikai_line.gd" id="8_g21xf"]
+[ext_resource type="Script" uid="uid://btxuckvcyog73" path="res://script/map_trigger_region.gd" id="9_7tqye"]
+[ext_resource type="AudioStream" uid="uid://cpb5k4jupenut" path="res://music/Tonight_You_Belong_to_Me.mp3" id="10_1ynr8"]
+[ext_resource type="Script" uid="uid://dxsid3k467hlh" path="res://script/MusicSpeaker.cs" id="11_yqs1f"]
+[ext_resource type="Script" uid="uid://devss3vthbfae" path="res://script/MapStateDebugPanel.gd" id="12_spekj"]
 
 [sub_resource type="Gradient" id="Gradient_utk2m"]
 offsets = PackedFloat32Array(1)
@@ -23,12 +22,12 @@ gradient = SubResource("Gradient_utk2m")
 width = 2880
 height = 512
 
-[sub_resource type="Gradient" id="Gradient_bmgnp"]
+[sub_resource type="Gradient" id="Gradient_j8vbj"]
 offsets = PackedFloat32Array(0, 0.98, 1, 1, 1)
 colors = PackedColorArray(0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0, 0.95, 0.06649999, 0.06649999, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_kbfqu"]
-gradient = SubResource("Gradient_bmgnp")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rk31c"]
+gradient = SubResource("Gradient_j8vbj")
 
 [sub_resource type="Curve" id="Curve_yegjs"]
 _data = [Vector2(0, 0), 0.0, 5.3871303, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.70637, 0.0, 0, 0]
@@ -224,10 +223,19 @@ collision_bounce = 0.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wqsic"]
 streams_count = 1
-stream_0/stream = ExtResource("10_k6cb8")
+stream_0/stream = ExtResource("10_1ynr8")
 
-[node name="Map" type="Node2D" unique_id=379907041]
-script = ExtResource("1_bjcma")
+[sub_resource type="Gradient" id="Gradient_kbfqu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.29718876)
+colors = PackedColorArray(0, 0, 0, 1, 0.23031491, 0.23031494, 0.23031494, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gawmn"]
+gradient = SubResource("Gradient_kbfqu")
+height = 96
+
+[node name="TrainingCenter" type="Node2D" unique_id=379907041]
+script = ExtResource("1_2bbkv")
 color_variant = Dictionary[int, Color]({
 0: Color(0.7657456, 0.95833725, 0.7345308, 1),
 1: Color(0.99999994, 0.84966475, 0.6074793, 1),
@@ -259,9 +267,9 @@ default_color = Color(1, 0.7025, 0.14999998, 1)
 position = Vector2(4, 208)
 points = PackedVector2Array(-4, 192, 828, 192)
 width = 25.0
-texture = SubResource("GradientTexture1D_kbfqu")
+texture = SubResource("GradientTexture1D_rk31c")
 texture_mode = 2
-script = ExtResource("2_yegjs")
+script = ExtResource("2_cbop0")
 direction = 1
 alpha_curve = SubResource("Curve_yegjs")
 point_color = Color(0.95, 0.06649999, 0.06649999, 1)
@@ -279,13 +287,13 @@ texture = SubResource("GradientTexture2D_7jywp")
 
 [node name="Pillar" type="Node2D" parent="Background" unique_id=2102265721]
 position = Vector2(1088, 512)
-script = ExtResource("9_wxk4i")
+script = ExtResource("3_m02i6")
 texture = SubResource("CanvasTexture_wxk4i")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
 [node name="Pillar2" type="Node2D" parent="Background" unique_id=759365122]
 position = Vector2(2368, 512)
-script = ExtResource("9_wxk4i")
+script = ExtResource("3_m02i6")
 texture = SubResource("CanvasTexture_wxk4i")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
@@ -329,7 +337,7 @@ process_material = SubResource("ParticleProcessMaterial_latmj")
 
 [node name="FireAxe" type="Sprite2D" parent="." unique_id=336031001]
 position = Vector2(328, 416)
-texture = ExtResource("3_p2a57")
+texture = ExtResource("4_21i8w")
 
 [node name="InteractArea" type="Area2D" parent="FireAxe" unique_id=1842107906]
 
@@ -339,21 +347,21 @@ shape = SubResource("RectangleShape2D_p2a57")
 [node name="Stage" type="Path2D" parent="." unique_id=495166901]
 unique_name_in_owner = true
 curve = SubResource("Curve2D_5cnks")
-script = ExtResource("7_5cnks")
+script = ExtResource("5_lx182")
 metadata/_custom_type_script = "uid://xuoxmo1sa6u6"
 
-[node name="SandBag" parent="Stage" unique_id=2064536848 instance=ExtResource("8_utk2m")]
+[node name="SandBag" parent="Stage" unique_id=2064536848 instance=ExtResource("6_o6crk")]
 position = Vector2(312, 512)
 
 [node name="FlowTexture" type="Sprite2D" parent="." unique_id=999238751 node_paths=PackedStringArray("_map")]
 position = Vector2(1440.0001, 728)
 scale = Vector2(5.6250005, 0.8515622)
-script = ExtResource("8_k6cb8")
+script = ExtResource("7_v08yr")
 _map = NodePath("..")
 normal_strength = 40.0
 
 [node name="Keikaisen" type="Node2D" parent="." unique_id=1689250500 node_paths=PackedStringArray("map")]
-script = ExtResource("7_wxk4i")
+script = ExtResource("8_g21xf")
 map = NodePath("..")
 texture = SubResource("GradientTexture2D_f8sw5")
 radius = 128
@@ -365,7 +373,7 @@ position = Vector2(784, 512)
 
 [node name="MapTriggerRegion" type="Area2D" parent="." unique_id=1414759223]
 position = Vector2(0, 32)
-script = ExtResource("7_utk2m")
+script = ExtResource("9_7tqye")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapTriggerRegion" unique_id=868768549]
 position = Vector2(704, 352)
@@ -379,14 +387,14 @@ z_index = 1
 [node name="Pillar" type="Node2D" parent="Foreground" unique_id=2067147131]
 modulate = Color(1, 1, 1, 0.627451)
 position = Vector2(536, 510)
-script = ExtResource("9_wxk4i")
+script = ExtResource("3_m02i6")
 texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
 [node name="Pillar3" type="Node2D" parent="Foreground" unique_id=1839977206]
 modulate = Color(1, 1, 1, 0.627451)
 position = Vector2(1752, 512)
-script = ExtResource("9_wxk4i")
+script = ExtResource("3_m02i6")
 texture = SubResource("GradientTexture2D_vpmvu")
 metadata/_custom_type_script = "uid://40r1tpxteoxv"
 
@@ -407,14 +415,16 @@ visibility_rect = Rect2(0, 0, 2880, 512)
 process_material = SubResource("ParticleProcessMaterial_k6cb8")
 
 [node name="MusicSpeaker" type="AudioStreamPlayer2D" parent="." unique_id=1929033998]
-position = Vector2(240, 24)
+position = Vector2(232, 72)
 stream = SubResource("AudioStreamRandomizer_wqsic")
 autoplay = true
 bus = &"SFX"
-script = ExtResource("10_df3ex")
+script = ExtResource("11_yqs1f")
 
 [node name="Sprite2D" type="Sprite2D" parent="MusicSpeaker" unique_id=1249851618]
-texture = ExtResource("11_muwxp")
+position = Vector2(-16, 8)
+texture = SubResource("GradientTexture2D_gawmn")
+offset = Vector2(16, -8)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=190470928]
 
@@ -443,5 +453,5 @@ popup/item_3/text = "BATTLE"
 popup/item_3/id = 3
 popup/item_4/text = "EVENT"
 popup/item_4/id = 4
-script = ExtResource("11_df3ex")
+script = ExtResource("12_spekj")
 target_map = NodePath("../../..")

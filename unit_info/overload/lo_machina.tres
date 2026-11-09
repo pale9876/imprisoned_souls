@@ -5,7 +5,15 @@
 
 [sub_resource type="Resource" id="Resource_0gvo5"]
 script = ExtResource("1_4bdea")
-awakening = Array[String](["시작하지.", ""])
+awakening = Array[String](["구원을....", "기회를...."])
+"적발견시" = Array[String](["시작하죠."])
+in_battle = Array[String](["연주를."])
+blind = Array[String](["어리석었네요."])
+"적사거리이탈" = Array[String](["적을 놓쳤어요."])
+"콤보시작시" = Array[String](["스위치 요"])
+taunt = Array[String](["안식을."])
+"범위공격시전시" = Array[String](["여기서 잠드세요.", "없애버리죠."])
+"강공격시전시" = Array[String](["빈 껍데기일 뿐..."])
 metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
 
 [resource]

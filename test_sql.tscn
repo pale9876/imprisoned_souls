@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dgbii4bk66mcq"]
+
+[ext_resource type="Script" uid="uid://cavjuwwws3cv7" path="res://script/TestSql.cs" id="1_vabjg"]
+
+[node name="TestSQL" type="Node" unique_id=1579949434]
+script = ExtResource("1_vabjg")

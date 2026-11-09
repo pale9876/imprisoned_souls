@@ -6,8 +6,10 @@
 
 [sub_resource type="Resource" id="Resource_0xur4"]
 script = ExtResource("1_38jxb")
-awakening = Array[String](["내놔!", "이리와!"])
-"적발견시" = Array[String](["다져줄게.", ""])
+awakening = Array[String](["절멸을....", "이리와..."])
+"적발견시" = Array[String](["다져줄게."])
+"범위공격시전시" = Array[String](["사지를 찢어주마!"])
+"강공격시전시" = Array[String](["버텨봐!"])
 metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
 
 [sub_resource type="Resource" id="Resource_yegjs"]

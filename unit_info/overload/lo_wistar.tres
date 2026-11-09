@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="OverloadInformation" format=3 uid="uid://rl85pjubs5f4"]
+
+[ext_resource type="Script" uid="uid://cy81gr8mcq6n0" path="res://script/resource/react_dialog.gd" id="1_5dlbw"]
+[ext_resource type="Script" uid="uid://4iakh7oj3ywo" path="res://script/resource/overload_information.gd" id="1_so1ml"]
+
+[sub_resource type="Resource" id="Resource_so1ml"]
+script = ExtResource("1_5dlbw")
+awakening = Array[String](["나랑... 놀래...", "목소리... 들려...."])
+"적발견시" = Array[String](["저기에...."])
+in_battle = Array[String](["같이 가...."])
+"적사거리이탈" = Array[String](["놓쳤어...."])
+"근접피격시" = Array[String](["몸이...", "아야...."])
+"원거리피격시" = Array[String](["안 아파...."])
+taunt = Array[String](["안 해..."])
+"범위공격시전시" = Array[String](["잘 견뎌..."])
+"강공격시전시" = Array[String](["아픔...."])
+metadata/_custom_type_script = "uid://cy81gr8mcq6n0"
+
+[resource]
+script = ExtResource("1_so1ml")
+name = &"위스타"
+personality = 1
+character_tag = 6
+dialog = SubResource("Resource_so1ml")
+metadata/_custom_type_script = "uid://4iakh7oj3ywo"

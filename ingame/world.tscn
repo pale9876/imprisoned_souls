@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cf7q8iua00ikf"]
 
 [ext_resource type="Script" uid="uid://dpn1opeegcme2" path="res://ingame/world.gd" id="1_50kwp"]
-[ext_resource type="PackedScene" uid="uid://ccd41t1qrjttn" path="res://ingame/map/start_map.tscn" id="2_6dhv1"]
+[ext_resource type="PackedScene" uid="uid://ccd41t1qrjttn" path="res://ingame/map/training_center.tscn" id="2_6dhv1"]
 [ext_resource type="PackedScene" uid="uid://cgjxkmo53vf01" path="res://ingame/map/keikai.tscn" id="5_2286k"]
 [ext_resource type="Script" uid="uid://b7phyhue4y3yg" path="res://player/player_camera.gd" id="6_vow8m"]
 [ext_resource type="Script" uid="uid://oxsm8uvgi23h" path="res://ingame/spectre.gd" id="7_177aw"]
